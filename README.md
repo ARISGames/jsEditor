@@ -8,6 +8,7 @@ Requirements
 ------------
 
 | Library    | Version |
+|------------|---------|
 | require.js | 2.1.10  |
 | jquery     | 1.10.2  |
 | marionette | 1.4.1   |
