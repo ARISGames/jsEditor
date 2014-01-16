@@ -16,10 +16,24 @@ define([
 			}
 		},
 
-		login: function(user, password) {
-			$.cookie('auth_token', '123456');
+		login: function(options) {
+			$.ajax({
+				url:"http://arisgames.org/server/json.php/v1.editors.getToken/"+options.username+"/"+options.password+"/read_write",
+				success: function(data) {
+					var json = JSON.parse(data);
+					if(json.returnCode == 0) {
+						$.cookie('editor_id', json.data.editor_id);
+						$.cookie('auth_token', json.data.read_write_token);
 
-			vent.trigger('session.login');
+						vent.trigger('session.login');
+					}
+					else {
+						alert(json.returnCodeDescription);
+					}
+				}
+			});
+
+
 		}
 	});
 });

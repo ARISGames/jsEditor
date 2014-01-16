@@ -20,7 +20,10 @@ define([
 
 		onClickLogin: function() {
 			var session = new Session;
-			session.login();
+			session.login({
+				username: this.$el.find('.username').val(),
+				password: this.$el.find('.password').val()
+			});
 		}
 	});
 });
