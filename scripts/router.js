@@ -23,9 +23,11 @@ define([
 
 		showGames: function() {
 			games = new GameCollection;
-			games.add(new Game);
-			games.add(new Game);
-			vent.trigger("application.show", new GamesView({collection: games}));
+			games.fetch({
+				success: function() {
+					vent.trigger("application.show", new GamesView({collection: games}));
+				}
+			});
 		},
 
 		showGame: function(game_id) {
