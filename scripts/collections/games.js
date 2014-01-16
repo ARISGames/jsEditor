@@ -19,7 +19,7 @@ define([
 					json = JSON.parse(data);
 
 					_.each(json.data, function(game_json) {
-						self.add(new Game);
+						self.add(new Game(game_json));
 					});
 
 					options.success.call();

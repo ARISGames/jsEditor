@@ -8,8 +8,6 @@ define([
 	'i18n!../locale/nls/login.js'
 ], function($, _, Backbone, Marionette, Session, Template, t) {
 	return Backbone.Marionette.ItemView.extend({
-		template: _.template(Template),
-
 		template: function(data) {
 			return _.template(Template, _.extend(data, {t:t}));
 		},

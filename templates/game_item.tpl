@@ -1,1 +1,1 @@
-<p>game</p>
+<p>Game: <%= name %></p>
