@@ -5,6 +5,7 @@ require.config({
 		/* Using AMD forks for non AMD compliant libraries */
 
 		text: 'library/require.text',
+		i18n: 'library/require.i18n',
 
 		jquery: 'library/jquery',
 		cookie: 'library/jquery.cookie',

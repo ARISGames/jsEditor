@@ -4,11 +4,16 @@ define([
 	'backbone',
 	'marionette',
 	'models/session',
-	'text!../../templates/login.tpl'
-], function($, _, Backbone, Marionette, Session, Template) {
+	'text!../../templates/login.tpl',
+	'i18n!../locale/nls/login.js'
+], function($, _, Backbone, Marionette, Session, Template, t) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
+		template: function(data) {
+			return _.template(Template, _.extend(data, {t:t}));
+		},
+	
 		events: {
 			"click .login": "onClickLogin"
 		},
