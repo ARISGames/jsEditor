@@ -32,8 +32,14 @@ define([
 					}
 				}
 			});
+		},
 
+		editor_id: function() {
+			return $.cookie('editor_id');
+		},
 
+		auth_token: function () {
+			return $.cookie('auth_token');
 		}
 	});
 });
