@@ -9,14 +9,10 @@ define([
 	return Backbone.Router.extend({
 
 		routes: {
-			"": "showWelcome",
+			"": "showGames",
 			"login": "showLogin",
 			"games": "showGames",
 			"games/:game_id": "showGame"
-		},
-
-		showWelcome: function() {
-			console.log("show welcome");
 		},
 
 		showLogin: function() {

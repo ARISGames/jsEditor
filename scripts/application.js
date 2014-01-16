@@ -28,10 +28,11 @@ define([
 	});
 
 
+	// Authorization Redirect
+	//
 	application.on("initialize:after", function() {
-		// Login and redirect to intended destination
-		// TODO move this into the router instead
 		if(!this.session.logged_in()) {
+			this.intended_destination = window.location.hash;
 			Backbone.history.start({silent: true});
 			Backbone.history.navigate("#login", {trigger: true});
 		}
@@ -45,6 +46,13 @@ define([
 	//
 	vent.on("application.show", function(view) {
 		application.main_region.show(view);
+	});
+
+
+	// Redirect back to intended destination after authorization
+	//
+	vent.on("session.login", function(view) {
+		Backbone.history.navigate(application.intended_destination, {trigger: true});
 	});
 
 
