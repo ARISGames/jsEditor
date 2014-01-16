@@ -4,8 +4,10 @@ define([
 	'backbone',
 	'views/login',
 	'views/games',
-	'vent'
-], function($, _, Backbone, LoginView, GamesView, vent) {
+	'vent',
+	'collections/games',
+	'models/game'
+], function($, _, Backbone, LoginView, GamesView, vent, GameCollection, Game) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -20,7 +22,10 @@ define([
 		},
 
 		showGames: function() {
-			vent.trigger("application.show", new GamesView);
+			games = new GameCollection;
+			games.add(new Game);
+			games.add(new Game);
+			vent.trigger("application.show", new GamesView({collection: games}));
 		},
 
 		showGame: function(game_id) {

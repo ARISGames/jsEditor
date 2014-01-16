@@ -7,7 +7,6 @@ define([
 	'models/game',
 ], function($, _, Backbone, Marionette, Template, Game) {
 	return Backbone.Marionette.ItemView.extend({
-
-
+		template: _.template(Template)
 	});
 });
