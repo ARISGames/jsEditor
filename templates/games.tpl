@@ -1,1 +1,6 @@
-<h2>Game List</h2>
+<thead>
+	<tr>
+		<th>Game</th>
+		<th>Actions</th>
+	</tr>
+</thead>

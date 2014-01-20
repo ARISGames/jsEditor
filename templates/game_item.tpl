@@ -1,1 +1,6 @@
-<p class="show">Game:  <%= name %></p>
+<td>
+	<%= name %>
+</td>
+<td>
+	<button class="show btn btn-xs btn-default">Edit</button>
+</td>

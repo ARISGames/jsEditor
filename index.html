@@ -5,12 +5,24 @@
 		<meta name="description" content="ARIS Web Editor">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+		<!-- Bootstrap CDN CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
 		<title>ARIS</title>
 	</head>
 
 	<body>
-		<h1>arisJS</h1>
-		<div id="main"></div>
+		<!-- TODO move this into a layout region -->
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">arisJS</a>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div id="main"></div>
+		</div>
+
 		<script src="scripts/library/require.js" data-main="scripts/main"></script>
 	</body>
 </html>

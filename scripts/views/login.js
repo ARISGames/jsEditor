@@ -13,15 +13,21 @@ define([
 		},
 	
 		events: {
-			"click .login": "onClickLogin"
+			"click #login": "onClickLogin"
 		},
 
 		onClickLogin: function() {
+			// TODO add field validation
+			// and trigger event instead of relying on session.
+			//
 			var session = new Session;
 			session.login({
-				username: this.$el.find('.username').val(),
-				password: this.$el.find('.password').val()
+				username: this.$el.find('#username').val(),
+				password: this.$el.find('#password').val()
 			});
+
+			// Don't submit form
+			event.preventDefault();
 		}
 	});
 });

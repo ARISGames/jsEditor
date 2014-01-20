@@ -1,8 +1,21 @@
-<p><%= t.greeting %></p>
+<div class="jumbotron">
+	<p><%= t.greeting %></p>
+</div>
 
-<input class="username" type="text"     placeholder="Username"></input>
-<input class="password" type="password" placeholder="Password"></input>
+<form class="form-inline" role="form">
+	<div class="form-group">
+		<label class="sr-only" for="username">Username</label>
+		<input id="username" type="text" class="form-control" placeholder="Username"></input>
+	</div>
 
-<button class="login">
-	<%= t.login_button %>
-</button>
+	<div class="form-group">
+		<label class="sr-only" for="password">Password</label>
+		<input id="password" type="password" class="form-control" placeholder="Password"></input>
+	</div>
+
+	<button id="login" class="btn btn-primary">
+		<%= t.login_button %>
+	</button>
+</form>
+
+

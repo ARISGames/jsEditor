@@ -7,9 +7,13 @@ define([
 	'collections/games',
 	'views/game_item',
 ], function($, _, Backbone, Marionette, Template, GameCollection, GameItemView) {
-	return Backbone.Marionette.CollectionView.extend({
+	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: GameItemView
+		itemView: GameItemView,
+
+	    // Bootstrap wrapper
+		tagName: "table",
+		className: "table"
 	});
 });

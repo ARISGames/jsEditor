@@ -8,6 +8,9 @@ define([
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
+		// Bootstrap
+		tagName: 'tr',
+
 		events: {
 			"click .show": "onClickShow"
 		},
