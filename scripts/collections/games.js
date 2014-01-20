@@ -10,21 +10,16 @@ define([
 
 		model: Game,
 
-		fetch: function(options) {
+
+		url: function() {
 			var session = new Session;
-			var self = this;
-			$.ajax({
-				url: "http://arisgames.org/server/json.php/v1.games.getGamesForEditor/"+session.editor_id()+"/"+session.auth_token(),
-				success: function(data) {
-					json = JSON.parse(data);
+			return "http://arisgames.org/server/json.php/v1.games.getGamesForEditor/"+session.editor_id()+"/"+session.auth_token();
+		},
 
-					_.each(json.data, function(game_json) {
-						self.add(new Game(game_json));
-					});
 
-					options.success.call();
-				}
-			});
-		}
+		parse: function(json, response) {
+			return json.data;
+		},
+
 	});
 });
