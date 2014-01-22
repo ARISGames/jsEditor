@@ -5,7 +5,8 @@ define([
 	'backbone',
 	'marionette',
 	'text!../../templates/game.tpl',
-], function(module, $, _, Backbone, Marionette, Template) {
+	'vent'
+], function(module, $, _, Backbone, Marionette, Template, vent) {
     console.log(module.id);
 
 	return Backbone.Marionette.ItemView.extend({
@@ -18,9 +19,13 @@ define([
 		onClickSave: function() {
 			// TODO mass assign attributes from form serialize/or a whitelist of attributes
 			//
-			this.model.set("name", this.$el.find("#name").val());
+			this.model.set("name",        this.$el.find("#name").val());
 			this.model.set("description", this.$el.find("#description").val());
-			this.model.save();
+			this.model.save({}, {
+				success: function() {
+					Backbone.history.navigate('#games', {trigger: true});
+				}
+			});
 
 			event.preventDefault();
 		}

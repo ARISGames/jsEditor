@@ -72,6 +72,7 @@ define([
 			// Build url from model attributes for update
 			if(method === "update") {
 				options.type = "POST";
+
 				var model_attributes_url = $.map(this.amfphp_url_attributes, function(key) {
 					if(_.include(_.keys(model.attributes), key)) {
 						return model.attributes[key];
