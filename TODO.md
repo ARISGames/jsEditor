@@ -23,10 +23,13 @@ TODO
 ----
 - Marionette layout of items
 - Event decoupling for click events (to avoid calling navigate everywhere)
+  (And how to do best.. events on views, on models, through vent?)
 - Session singleton?
 - Remove extra requires (is marionette needed if backbone is already there?)
 - Refactor to single amfPHP model and collection.
 - Subclass views so they all inject i18n
+- Navigation prevention (warning) on changed forms
+- codeception tests and unit tests
 
 
 DOING

@@ -4,9 +4,8 @@ define([
 	'underscore',
 	'backbone',
 	'marionette',
-	'models/session',
 	'text!../../templates/game.tpl',
-], function(module, $, _, Backbone, Marionette, Session, Template) {
+], function(module, $, _, Backbone, Marionette, Template) {
     console.log(module.id);
 
 	return Backbone.Marionette.ItemView.extend({
@@ -17,9 +16,10 @@ define([
 		},
 
 		onClickSave: function() {
-			// TODO mass assign attributes from form serialize?
+			// TODO mass assign attributes from form serialize/or a whitelist of attributes
 			//
 			this.model.set("name", this.$el.find("#name").val());
+			this.model.set("description", this.$el.find("#description").val());
 			this.model.save();
 
 			event.preventDefault();

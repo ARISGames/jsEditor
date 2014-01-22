@@ -7,7 +7,14 @@
 		<!-- TODO populate from view instead of template insertion -->
 		<label class="col-sm-2 control-label" for="name">Name</label>
 		<div   class="col-sm-10">
-			<input id="name" type="text" class="form-control" value="<%=  name %>">
+			<input id="name" type="text" class="form-control" value="<%= name %>">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label" for="description">Description</label>
+		<div   class="col-sm-10">
+			<input id="description" type="text" class="form-control" value="<%= description %>">
 		</div>
 	</div>
 
