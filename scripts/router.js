@@ -7,11 +7,15 @@ define([
 	'views/game',
 	'views/edit_game',
 	'views/plaques',
+	'views/characters',
+	'views/items',
 	'vent',
 	'collections/games',
 	'collections/plaques',
+	'collections/characters',
+	'collections/items',
 	'models/game'
-], function($, _, Backbone, LoginView, GamesView, GameView, EditGameView, PlaquesView, vent, GameCollection, PlaqueCollection, Game) {
+], function($, _, Backbone, LoginView, GamesView, GameView, EditGameView, PlaquesView, CharactersView, ItemsView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, Game) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -23,6 +27,8 @@ define([
 			"games/:game_id/edit": "editGame",
 
 			"games/:game_id/plaques": "showPlaques",
+			"games/:game_id/characters": "showCharacters",
+			"games/:game_id/items": "showItems",
 		},
 
 		showLogin: function() {
@@ -62,6 +68,26 @@ define([
 			plaques.fetch({
 				success: function() {
 					vent.trigger("application.show", new PlaquesView({collection: plaques}));
+				}
+			});
+		},
+
+		showCharacters: function(game_id) {
+			var game       = new Game({game_id: game_id});
+			var characters = new CharacterCollection([], {parent: game});
+			characters.fetch({
+				success: function() {
+					vent.trigger("application.show", new CharactersView({collection: characters}));
+				}
+			});
+		},
+
+		showItems: function(game_id) {
+			var game  = new Game({game_id: game_id});
+			var items = new ItemCollection([], {parent: game});
+			items.fetch({
+				success: function() {
+					vent.trigger("application.show", new ItemsView({collection: items}));
 				}
 			});
 		},

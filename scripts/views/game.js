@@ -13,11 +13,21 @@ define([
 		template:  _.template(Template),
 	
 		events: {
-			"click .plaques": "onClickPlaques"
+			"click .plaques":    "onClickPlaques",
+			"click .items":      "onClickItems",
+			"click .characters": "onClickCharacters"
 		},
 
 		onClickPlaques: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/plaques", {trigger: true});
 		},
+
+		onClickItems: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/items", {trigger: true});
+		},
+
+		onClickCharacters: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/characters", {trigger: true});
+		}
 	});
 });
