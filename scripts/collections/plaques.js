@@ -3,39 +3,16 @@ define([
 	'underscore',
 	'backbone',
 	'models/plaque',
-	'models/session',
+	'collections/row_collection_base',
 	'vent'
-], function($, _, Backbone, Plaque, Session, vent) {
-	return Backbone.Collection.extend({
+], function($, _, Backbone, Plaque, RowCollectionBase, vent) {
+	return RowCollectionBase.extend({
 
 		model: Plaque,
-
-		initialize: function(models, options) {
-			this.parent = options.parent;
-		},
 
 
 		url: function() {
 			return "http://arisgames.org/server/json.php/v1.nodes.getNodes/"+this.parent.get('game_id');
 		},
-
-
-		parse: function(json, response) {
-			var header = json.data.columns;
-			var rows   = json.data.rows;
-
-			var objects = _.map(rows, function(row) {
-				var object = {};
-
-				_.each(row, function(attribute, index) {
-					object[header[index]] = attribute;
-				});
-
-				return object;
-			});
-
-			return objects;
-		},
-
 	});
 });
