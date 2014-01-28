@@ -5,7 +5,11 @@
 	<%= description %>
 </td>
 <td>
-	<button class="show btn btn-xs btn-default">
+	<button class="view btn btn-xs btn-default">
+		<span class="glyphicon glyphicon-pencil"></span> Show
+	</button>
+
+	<button class="edit btn btn-xs btn-default">
 		<span class="glyphicon glyphicon-pencil"></span> Edit
 	</button>
 </td>

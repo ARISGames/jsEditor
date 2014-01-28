@@ -12,12 +12,17 @@ define([
 		tagName: 'tr',
 
 		events: {
-			"click .show": "onClickShow"
+			"click .view": "onClickShow",
+			"click .edit": "onClickEdit"
 		},
 
 		onClickShow: function() {
 			// TODO Move this to an event ie gamelist.game.clicked
 			Backbone.history.navigate("#games/"+this.model.get('game_id'), {trigger: true});
+		},
+
+		onClickEdit: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/edit", {trigger: true});
 		}
 
 	});

@@ -35,6 +35,7 @@ TODO
 DOING
 -----
 - Sync with AMFphp stuff
+- Add game create, plaque create/edit/delete
 
 
 JS THINGS
