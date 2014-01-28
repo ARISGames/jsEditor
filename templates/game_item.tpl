@@ -6,7 +6,7 @@
 </td>
 <td>
 	<button class="view btn btn-xs btn-default">
-		<span class="glyphicon glyphicon-pencil"></span> Show
+		<span class="glyphicon glyphicon-eye-open"></span> Show
 	</button>
 
 	<button class="edit btn btn-xs btn-default">

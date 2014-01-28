@@ -4,7 +4,7 @@ define([
 	'underscore',
 	'backbone',
 	'marionette',
-	'text!../../templates/game.tpl',
+	'text!../../templates/edit_game.tpl',
 	'vent'
 ], function(module, $, _, Backbone, Marionette, Template, vent) {
     console.log(module.id);
