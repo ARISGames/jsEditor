@@ -8,6 +8,8 @@
   <dd><%= description %></dd>
 </dl>
 
-<button class="plaques    btn btn-default">Plaques   </button>
-<button class="characters btn btn-default">Characters</button>
-<button class="items      btn btn-default">Items     </button>
+<button class="plaques    btn btn-default"><span class="glyphicon glyphicon-comment"></span> Plaques</button>
+<button class="characters btn btn-default"><span class="glyphicon glyphicon-user"></span> Characters</button>
+<button class="items      btn btn-default"><span class="glyphicon glyphicon-tag"></span> Items</button>
+<button class="quests     btn btn-default"><span class="glyphicon glyphicon-exclamation-sign"></span> Quests</button>
+<button class="locations  btn btn-default"><span class="glyphicon glyphicon-map-marker"></span> Locations</button>
