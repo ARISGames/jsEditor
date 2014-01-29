@@ -5,12 +5,13 @@ define([
 	'views/login',
 	'views/games',
 	'views/game',
-	'views/edit_game',
 	'views/plaques',
 	'views/characters',
 	'views/items',
 	'views/quests',
 	'views/locations',
+	'views/edit_game',
+	'views/edit_plaque',
 	'vent',
 	'collections/games',
 	'collections/plaques',
@@ -18,8 +19,9 @@ define([
 	'collections/items',
 	'collections/quests',
 	'collections/locations',
-	'models/game'
-], function($, _, Backbone, LoginView, GamesView, GameView, EditGameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, Game) {
+	'models/game',
+	'models/plaque'
+], function($, _, Backbone, LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, EditGameView, EditPlaqueView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, Game, Plaque) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -34,7 +36,9 @@ define([
 			"games/:game_id/characters": "showCharacters",
 			"games/:game_id/items":      "showItems",
 			"games/:game_id/quests":     "showQuests",
-			"games/:game_id/locations":  "showLocations"
+			"games/:game_id/locations":  "showLocations",
+
+			"games/:game_id/plaques/:plaq_id/edit": "editPlaque",
 		},
 
 		showLogin: function() {
@@ -99,7 +103,7 @@ define([
 		},
 
 		showQuests: function(game_id) {
-			var game  = new Game({game_id: game_id});
+			var game   = new Game({game_id: game_id});
 			var quests = new QuestCollection([], {parent: game});
 			quests.fetch({
 				success: function() {
@@ -109,11 +113,20 @@ define([
 		},
 
 		showLocations: function(game_id) {
-			var game  = new Game({game_id: game_id});
+			var game      = new Game({game_id: game_id});
 			var locations = new LocationCollection([], {parent: game});
 			locations.fetch({
 				success: function() {
 					vent.trigger("application.show", new LocationsView({collection: locations}));
+				}
+			});
+		},
+
+		editPlaque: function(game_id, plaque_id) {
+			var plaque = new Plaque({game_id: game_id, node_id: plaque_id})
+			plaque.fetch({
+				success: function() {
+					vent.trigger("application.show", new EditPlaqueView({model: plaque}));
 				}
 			});
 		}
