@@ -15,7 +15,9 @@ define([
 		events: {
 			"click .plaques":    "onClickPlaques",
 			"click .items":      "onClickItems",
-			"click .characters": "onClickCharacters"
+			"click .characters": "onClickCharacters",
+			"click .quests":     "onClickQuests",
+			"click .locations":  "onClickLocations"
 		},
 
 		onClickPlaques: function() {
@@ -28,6 +30,14 @@ define([
 
 		onClickCharacters: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/characters", {trigger: true});
+		},
+
+		onClickQuests: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/quests", {trigger: true});
+		},
+
+		onClickLocations: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations", {trigger: true});
 		}
 	});
 });

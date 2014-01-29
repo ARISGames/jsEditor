@@ -9,13 +9,17 @@ define([
 	'views/plaques',
 	'views/characters',
 	'views/items',
+	'views/quests',
+	'views/locations',
 	'vent',
 	'collections/games',
 	'collections/plaques',
 	'collections/characters',
 	'collections/items',
+	'collections/quests',
+	'collections/locations',
 	'models/game'
-], function($, _, Backbone, LoginView, GamesView, GameView, EditGameView, PlaquesView, CharactersView, ItemsView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, Game) {
+], function($, _, Backbone, LoginView, GamesView, GameView, EditGameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, Game) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -26,9 +30,11 @@ define([
 			"games/:game_id": "showGame",
 			"games/:game_id/edit": "editGame",
 
-			"games/:game_id/plaques": "showPlaques",
+			"games/:game_id/plaques":    "showPlaques",
 			"games/:game_id/characters": "showCharacters",
-			"games/:game_id/items": "showItems",
+			"games/:game_id/items":      "showItems",
+			"games/:game_id/quests":     "showQuests",
+			"games/:game_id/locations":  "showLocations"
 		},
 
 		showLogin: function() {
@@ -91,6 +97,26 @@ define([
 				}
 			});
 		},
+
+		showQuests: function(game_id) {
+			var game  = new Game({game_id: game_id});
+			var quests = new QuestCollection([], {parent: game});
+			quests.fetch({
+				success: function() {
+					vent.trigger("application.show", new QuestsView({collection: quests}));
+				}
+			});
+		},
+
+		showLocations: function(game_id) {
+			var game  = new Game({game_id: game_id});
+			var locations = new LocationCollection([], {parent: game});
+			locations.fetch({
+				success: function() {
+					vent.trigger("application.show", new LocationsView({collection: locations}));
+				}
+			});
+		}
 
 	});
 });
