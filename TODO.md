@@ -36,6 +36,7 @@ DOING
 -----
 - Add create/delete on game objects
 - Logout event coupled view for menu bar
+- Refactor url pattern into base model
 
 
 JS THINGS
