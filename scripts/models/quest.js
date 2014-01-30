@@ -2,10 +2,11 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'models/session',
-], function($, _, Backbone, Session) {
+	'models/amf_base',
+	'models/session'
+], function($, _, Backbone, AmfBaseModel, Session) {
 
-	return Backbone.Model.extend({
+	return AmfBaseModel.extend({
 		idAttribute: 'quest_id'
 	});
 });
