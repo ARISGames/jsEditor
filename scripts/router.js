@@ -12,6 +12,7 @@ define([
 	'views/locations',
 	'views/edit_game',
 	'views/edit_plaque',
+	'views/edit_character',
 	'vent',
 	'collections/games',
 	'collections/plaques',
@@ -20,8 +21,9 @@ define([
 	'collections/quests',
 	'collections/locations',
 	'models/game',
-	'models/plaque'
-], function($, _, Backbone, LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, EditGameView, EditPlaqueView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, Game, Plaque) {
+	'models/plaque',
+	'models/character'
+], function($, _, Backbone, LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, EditGameView, EditPlaqueView, EditCharacterView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, Game, Plaque, Character) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -38,7 +40,8 @@ define([
 			"games/:game_id/quests":     "showQuests",
 			"games/:game_id/locations":  "showLocations",
 
-			"games/:game_id/plaques/:plaq_id/edit": "editPlaque",
+			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
+			"games/:game_id/characters/:character_id/edit": "editCharacter"
 		},
 
 		showLogin: function() {
@@ -127,6 +130,15 @@ define([
 			plaque.fetch({
 				success: function() {
 					vent.trigger("application.show", new EditPlaqueView({model: plaque}));
+				}
+			});
+		},
+
+		editCharacter: function(game_id, character_id) {
+			var character = new Character({game_id: game_id, node_id: character_id})
+			character.fetch({
+				success: function() {
+					vent.trigger("application.show", new EditCharacterView({model: character}));
 				}
 			});
 		}
