@@ -12,7 +12,8 @@ define([
 
 		amfphp_url_templates: {
 			read:   "games.getGame",
-			update: "games.updateGame"
+			update: "games.updateGame",
+			create: "games.createGame"
 		},
 
 
@@ -45,6 +46,30 @@ define([
 			"full_quick_travel",
 			"inventory_weight_cap",
 			"allow_trading"
-		]
+		],
+
+
+		defaults: {
+			name: "",
+			description: "",
+			icon_media_id: 0,
+			media_id: 0,
+			ready_for_public: 0,
+			is_locational: 1,
+			on_launch_node_id: 0,
+			game_complete_node_id: 0,
+			allow_share_note_to_map: 1,
+			allow_share_note_to_book: 1,
+			allow_player_tags: 1,
+			allow_note_comments: 1,
+			allow_note_likes: 1,
+			pc_media_id: 0,
+			use_player_pic: 1,
+			map_type: "STREET",
+			show_player_location: 1,
+			full_quick_travel: 0,
+			inventory_weight_cap: 0,
+			allow_trading: 0
+		}
 	});
 });

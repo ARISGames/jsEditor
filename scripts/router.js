@@ -30,8 +30,9 @@ define([
 			"": "showGames",
 			"login": "showLogin",
 
-			"games": "showGames",
-			"games/:game_id": "showGame",
+			"games":               "showGames",
+			"games/new":           "newGame",
+			"games/:game_id":      "showGame",
 			"games/:game_id/edit": "editGame",
 
 			"games/:game_id/plaques":    "showPlaques",
@@ -154,7 +155,12 @@ define([
 
 		newCharacter: function(game_id) {
 			var character = new Character({game_id: game_id});
-			vent.trigger("application.show", new EditCharacterView({model: character}));
+			vent.trigger("application.show", new editCharacterView({model: character}));
+		},
+
+		newGame: function() {
+			var game = new Game();
+			vent.trigger("application.show", new EditGameView({model: game}));
 		}
 
 	});
