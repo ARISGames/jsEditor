@@ -26,19 +26,20 @@ TODO
   (And how to do best.. events on views, on models, through vent?)
 - Session singleton?
 - Remove extra requires (is marionette needed if backbone is already there?)
-- Refactor to single amfPHP model and collection.
 - Subclass views so they all inject i18n
 - Navigation prevention (warning) on changed forms
 - codeception tests and unit tests
+- Form builder for rendering out all fields with i18n and bootstrap classes and validation
 
 
 DOING
 -----
-- Sync with AMFphp stuff
-- Add game create, plaque create/edit/delete
+- Add create/delete on game objects
+- Logout event coupled view for menu bar
 
 
 JS THINGS
 ---------
 - return false in an event is the same as event.preventDefault();
 - backbone wraps all its views in DIVS. some views set tagName to style Bootstrap or avoid invalid HTML.
+- return null in a map function excludes that item :(
