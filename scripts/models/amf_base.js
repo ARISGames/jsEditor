@@ -8,10 +8,12 @@ define([
 	return Backbone.Model.extend({
 
 		parse: function(json) {
-			// Being called from Collection.fetch vs Model.fetch
+			// Remove the outer json attribute {data: ...}
 			if(this.collection == undefined) {
 				return json.data;
 			}
+
+			// Being called from collection which has already parsed.
 			else {
 				return json;
 			}
@@ -38,10 +40,13 @@ define([
 				options.type = "POST";
 
 				var model_attributes_url = $.map(this.amfphp_url_attributes, function(key) {
+
+					// On create don't include the id field
 					if(key === model.idAttribute && method === "create") {
 						return;
 					}
 
+					// Grab the values of each attribute listed for model
 					if(_.include(_.keys(model.attributes), key)) {
 						var value = model.attributes[key];
 
@@ -72,7 +77,6 @@ define([
 			// TODO make sure this does not break expected callback argument order for error vs success.
 			options.success = function(data, success, success_options) {
 				if(data.faultCode) {
-					// options.error.apply(this, arguments);
 					throw "amf Fault: "+data.faultString;
 				}
 				else {
@@ -80,8 +84,6 @@ define([
 				}
 			}
 
-			// TODO Catch success and trigger error method if parsed data has non 0 response code or has fault code
-			//
 			return Backbone.sync.apply(this, arguments);
 		}
 

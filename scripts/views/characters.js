@@ -14,6 +14,16 @@ define([
 
 	    // Bootstrap wrapper
 		tagName: "table",
-		className: "table"
+		className: "table",
+
+
+		events: {
+			"click .new": "onClickNew"
+		},
+
+
+		onClickNew: function() {
+			Backbone.history.navigate("#games/"+this.collection.parent.get('game_id')+"/characters/new", {trigger: true});
+		}
 	});
 });

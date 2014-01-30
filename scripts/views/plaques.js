@@ -12,6 +12,7 @@ define([
 
 		itemView: PlaqueItemView,
 
+		// TODO move these into template and add itemViewContainer
 	    // Bootstrap wrapper
 		tagName: "table",
 		className: "table",

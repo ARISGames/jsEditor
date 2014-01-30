@@ -41,6 +41,7 @@ define([
 			"games/:game_id/locations":  "showLocations",
 
 			"games/:game_id/plaques/new":    "newPlaque",
+			"games/:game_id/characters/new":    "newCharacter",
 
 			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
 			"games/:game_id/characters/:character_id/edit": "editCharacter"
@@ -138,7 +139,7 @@ define([
 		},
 
 		editCharacter: function(game_id, character_id) {
-			var character = new Character({game_id: game_id, node_id: character_id})
+			var character = new Character({game_id: game_id, npc_id: character_id})
 			character.fetch({
 				success: function() {
 					vent.trigger("application.show", new EditCharacterView({model: character}));
@@ -149,6 +150,11 @@ define([
 		newPlaque: function(game_id) {
 			var plaque = new Plaque({game_id: game_id});
 			vent.trigger("application.show", new EditPlaqueView({model: plaque}));
+		},
+
+		newCharacter: function(game_id) {
+			var character = new Character({game_id: game_id});
+			vent.trigger("application.show", new EditCharacterView({model: character}));
 		}
 
 	});
