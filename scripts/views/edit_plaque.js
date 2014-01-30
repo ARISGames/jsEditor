@@ -16,6 +16,7 @@ define([
 			"click #save": "onClickSave"
 		},
 
+
 		onClickSave: function() {
 			var self = this;
 

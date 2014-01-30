@@ -40,8 +40,11 @@ define([
 			"games/:game_id/quests":     "showQuests",
 			"games/:game_id/locations":  "showLocations",
 
+			"games/:game_id/plaques/new":    "newPlaque",
+
 			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
 			"games/:game_id/characters/:character_id/edit": "editCharacter"
+
 		},
 
 		showLogin: function() {
@@ -141,6 +144,11 @@ define([
 					vent.trigger("application.show", new EditCharacterView({model: character}));
 				}
 			});
+		},
+
+		newPlaque: function(game_id) {
+			var plaque = new Plaque({game_id: game_id});
+			vent.trigger("application.show", new EditPlaqueView({model: plaque}));
 		}
 
 	});

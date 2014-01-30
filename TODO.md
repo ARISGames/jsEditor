@@ -24,6 +24,7 @@ TODO
 - Marionette layout of items
 - Event decoupling for click events (to avoid calling navigate everywhere)
   (And how to do best.. events on views, on models, through vent?)
+  Probably with controllers that can listen to events, and the router or the rest of the app triggers them.
 - Session singleton?
 - Remove extra requires (is marionette needed if backbone is already there?)
 - Subclass views so they all inject i18n

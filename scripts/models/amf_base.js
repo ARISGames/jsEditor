@@ -34,10 +34,14 @@ define([
 			_.extend(template_values, {editor_id: session.editor_id(), editor_token: session.auth_token()});
 
 			// Build url from model attributes for update
-			if(method === "update") {
+			if(method === "update" || method === "create") {
 				options.type = "POST";
 
 				var model_attributes_url = $.map(this.amfphp_url_attributes, function(key) {
+					if(key === model.idAttribute && method === "create") {
+						return;
+					}
+
 					if(_.include(_.keys(model.attributes), key)) {
 						var value = model.attributes[key];
 
