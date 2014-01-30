@@ -9,10 +9,11 @@ define([
 	return AmfBaseModel.extend({
 		idAttribute: 'npc_id',
 
+
 		amfphp_url_templates: {
-			read:   _.template("http://arisgames.org/server/json.php/v1.npcs.getNpc/<%= game_id %>/<%= npc_id %>"),
-			update: _.template("http://arisgames.org/server/json.php/v1.npcs.updateNpc/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"),
-			create: _.template("http://arisgames.org/server/json.php/v1.npcs.createNpc/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>")
+			read:   "npcs.getNpc",
+			update: "npcs.updateNpc",
+			create: "npcs.createNpc"
 		},
 
 
@@ -26,6 +27,7 @@ define([
 			"media_id",
 			"icon_media_id"
 		],
+
 
 		defaults: {
 			name: "",

@@ -20,6 +20,16 @@ define([
 		},
 
 
+		amfphp_url_root: "http://arisgames.org/server/json.php/v1.",
+
+
+		amfphp_url_patterns: {
+			read:   "/<%= game_id %>/<%= id %>",
+			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"
+		},
+
+
 		sync: function(method, model, options) {
 			options || (options = {});
 
@@ -31,6 +41,7 @@ define([
 			// Collect needed values for url
 			var template_values = {}
 			_.extend(template_values, model.attributes);
+			_.extend(template_values, {id: model.id});
 
 			var session = new Session;
 			_.extend(template_values, {editor_id: session.editor_id(), editor_token: session.auth_token()});
@@ -67,7 +78,8 @@ define([
 			}
 			
 			// Render url with values
-			var template = this.amfphp_url_templates[method];
+			var url      = this.amfphp_url_root + this.amfphp_url_templates[method] + this.amfphp_url_patterns[method];
+			var template = _.template(url);
 			options.url  = template(template_values);
 
 

@@ -11,8 +11,15 @@ define([
 
 
 		amfphp_url_templates: {
-			read:   _.template("http://arisgames.org/server/json.php/v1.games.getGame/<%= game_id %>"),
-			update: _.template("http://arisgames.org/server/json.php/v1.games.updateGame/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>")
+			read:   "games.getGame",
+			update: "games.updateGame"
+		},
+
+
+		amfphp_url_patterns: {
+			read:   "/<%= id %>",
+			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
 

@@ -9,15 +9,14 @@ define([
 	return AmfBaseModel.extend({
 		idAttribute: 'node_id',
 
+
 		amfphp_url_templates: {
-			read:   _.template("http://arisgames.org/server/json.php/v1.nodes.getNode/<%= game_id %>/<%= node_id %>"),
-			update: _.template("http://arisgames.org/server/json.php/v1.nodes.updateNode/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"),
-			create: _.template("http://arisgames.org/server/json.php/v1.nodes.createNode/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>")
+			read:   "nodes.getNode",
+			update: "nodes.updateNode",
+			create: "nodes.createNode"
 		},
 
 
-		// attribute order for url here
-		// TODO seems a bit clever, a long template list might bet better ie {game_id}/{name}/{description}?
 		amfphp_url_attributes: [
 			"game_id",
 			"node_id",
