@@ -24,11 +24,7 @@ define([
 			this.model.set("text",        this.$el.find("#text").val());
 			this.model.save({}, {
 				success: function() {
-					//Backbone.history.navigate('#games/'+self.model.get('game_id')+'/characters', {trigger: true});
-					console.info("SUCCESS SAVE", arguments);
-				},
-				error: function() {
-					console.info("ERROR SAVE", arguments);
+					Backbone.history.navigate('#games/'+self.model.get('game_id')+'/characters', {trigger: true});
 				}
 			});
 

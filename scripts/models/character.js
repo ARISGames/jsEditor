@@ -16,7 +16,13 @@ define([
 
 		amfphp_url_attributes: [
 			"game_id",
-			"npc_id"
+			"npc_id",
+			"name",
+			"description",
+			"text",
+			"closing",
+			"media_id",
+			"icon_media_id"
 		],
 
 
@@ -82,7 +88,7 @@ define([
 			options.success = function(data, success, success_options) {
 				if(data.faultCode) {
 					// options.error.apply(this, arguments);
-					throw "amfPHP Fault"+data.faultString;
+					throw "amf Fault: "+data.faultString;
 				}
 				else {
 					success_callback.apply(this, arguments);
