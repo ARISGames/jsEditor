@@ -10,7 +10,17 @@ define([
 		parse: function(json) {
 			// Remove the outer json attribute {data: ...}
 			if(this.collection == undefined) {
-				return json.data;
+				// Got an ID back on create
+				if(typeof json.data === "number") {
+					var data = {};
+					data[this.idAttribute] = json.data;
+					return data;
+				}
+
+				// Full json object on read
+				else {
+					return json.data;
+				}
 			}
 
 			// Being called from collection which has already parsed.
@@ -28,6 +38,30 @@ define([
 			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
 			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"
 		},
+
+
+		// Callback on create and update
+		save: function(attrs, options) {
+			options || (options = {});
+
+			var model = this;
+			var success_callback = options.success;
+
+			options.success = function() {
+				if(model.changedAttributes()[model.idAttribute])
+				{
+					model.trigger("create", model);
+				}
+				else {
+					model.trigger("update", model);
+				}
+
+				success_callback.apply(this, arguments);
+			}
+
+			return Backbone.Model.prototype.save.call(this, attrs, options);
+		},
+
 
 
 		sync: function(method, model, options) {
@@ -53,7 +87,7 @@ define([
 				var model_attributes_url = $.map(this.amfphp_url_attributes, function(key) {
 
 					// On create don't include the id field
-					if(key === model.idAttribute && method === "create") {
+					if(key === model.idAttribute && model.attributes[key] == null) {
 						return;
 					}
 
@@ -92,6 +126,7 @@ define([
 					throw "amf Fault: "+data.faultString;
 				}
 				else {
+					// Call original callback
 					success_callback.apply(this, arguments);
 				}
 			}

@@ -3,11 +3,22 @@ define([
 	'underscore',
 	'backbone',
 	'models/amf_base',
-	'models/session'
-], function($, _, Backbone, AmfBaseModel, Session) {
+	'models/session',
+	'models/content'
+], function($, _, Backbone, AmfBaseModel, Session, Content) {
 
 	return AmfBaseModel.extend({
 		idAttribute: 'node_id',
+
+
+		initialize: function() {
+			this.on("create", function(model) {
+				var folder = new Content({content_id: model.get(model.idAttribute), content_type: "Node", game_id: model.get("game_id")});
+				folder.save({}, {
+					success: function() { console.log("FOLDER ENTRY CREATED"); }
+				});
+			});
+		},
 
 
 		amfphp_url_templates: {

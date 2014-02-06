@@ -155,7 +155,7 @@ define([
 
 		newCharacter: function(game_id) {
 			var character = new Character({game_id: game_id});
-			vent.trigger("application.show", new editCharacterView({model: character}));
+			vent.trigger("application.show", new EditCharacterView({model: character}));
 		},
 
 		newGame: function() {
