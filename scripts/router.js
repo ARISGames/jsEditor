@@ -13,7 +13,7 @@ define([
 	'views/edit_game',
 	'views/edit_plaque',
 	'views/edit_character',
-	'vent',
+	'views/edit_item',
 	'collections/games',
 	'collections/plaques',
 	'collections/characters',
@@ -22,8 +22,15 @@ define([
 	'collections/locations',
 	'models/game',
 	'models/plaque',
-	'models/character'
-], function($, _, Backbone, LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, EditGameView, EditPlaqueView, EditCharacterView, vent, GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, Game, Plaque, Character) {
+	'models/character',
+	'models/item',
+	'vent'
+], function($, _, Backbone,
+	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView,
+	EditGameView, EditPlaqueView, EditCharacterView, EditItemView,
+	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection,
+	Game, Plaque, Character, Item,
+	vent) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -42,10 +49,12 @@ define([
 			"games/:game_id/locations":  "showLocations",
 
 			"games/:game_id/plaques/new":    "newPlaque",
-			"games/:game_id/characters/new":    "newCharacter",
+			"games/:game_id/characters/new": "newCharacter",
+			"games/:game_id/items/new":      "newItem",
 
 			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
-			"games/:game_id/characters/:character_id/edit": "editCharacter"
+			"games/:game_id/characters/:character_id/edit": "editCharacter",
+			"games/:game_id/items/:item_id/edit":           "editItem"
 
 		},
 
@@ -148,6 +157,15 @@ define([
 			});
 		},
 
+		editItem: function(game_id, item_id) {
+			var item = new Item({game_id: game_id, item_id: item_id})
+			item.fetch({
+				success: function() {
+					vent.trigger("application.show", new EditItemView({model: item}));
+				}
+			});
+		},
+
 		newPlaque: function(game_id) {
 			var plaque = new Plaque({game_id: game_id});
 			vent.trigger("application.show", new EditPlaqueView({model: plaque}));
@@ -156,6 +174,11 @@ define([
 		newCharacter: function(game_id) {
 			var character = new Character({game_id: game_id});
 			vent.trigger("application.show", new EditCharacterView({model: character}));
+		},
+
+		newItem: function(game_id) {
+			var item = new Item({game_id: game_id});
+			vent.trigger("application.show", new EditItemView({model: item}));
 		},
 
 		newGame: function() {

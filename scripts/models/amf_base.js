@@ -56,7 +56,9 @@ define([
 					model.trigger("update", model);
 				}
 
-				success_callback.apply(this, arguments);
+				if(success_callback) {
+					success_callback.apply(this, arguments);
+				}
 			}
 
 			return Backbone.Model.prototype.save.call(this, attrs, options);
@@ -127,7 +129,9 @@ define([
 				}
 				else {
 					// Call original callback
-					success_callback.apply(this, arguments);
+					if(success_callback) {
+						success_callback.apply(this, arguments);
+					}
 				}
 			}
 

@@ -9,6 +9,15 @@ define([
 		template: _.template(Template),
 
 		// Bootstrap
-		tagName: 'tr'
+		tagName: 'tr',
+
+		events: {
+			"click .edit": "onClickEdit"
+		},
+
+
+		onClickEdit: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/items/"+this.model.get('item_id')+"/edit", {trigger: true});
+		}
 	});
 });
