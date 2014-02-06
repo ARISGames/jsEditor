@@ -3,11 +3,19 @@ define([
 	'underscore',
 	'backbone',
 	'models/amf_base',
-	'models/session'
-], function($, _, Backbone, AmfBaseModel, Session) {
+	'models/content'
+], function($, _, Backbone, AmfBaseModel, Content) {
 
 	return AmfBaseModel.extend({
 		idAttribute: 'npc_id',
+
+
+		initialize: function() {
+			this.on("create", function(model) {
+				var folder = new Content({content_id: model.get(model.idAttribute), content_type: "Npc", game_id: model.get("game_id")});
+				folder.save();
+			});
+		},
 
 
 		amfphp_url_templates: {
