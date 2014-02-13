@@ -10,10 +10,6 @@ define([
 	'views/items',
 	'views/quests',
 	'views/locations',
-	'views/edit_game',
-	'views/edit_plaque',
-	'views/edit_character',
-	'views/edit_item',
 	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
@@ -28,7 +24,7 @@ define([
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView,
-	EditGameView, EditPlaqueView, EditCharacterView, EditItemView, EditAmfModelView,
+	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection,
 	Game, Plaque, Character, Item,
 	vent) {
@@ -85,7 +81,7 @@ define([
 			var game = new Game({game_id: game_id});
 			game.fetch({
 				success: function() {
-					vent.trigger("application.show", new EditGameView({model: game}));
+					vent.trigger("application.show", new EditAmfModelView({model: game}));
 				}
 			});
 		},
@@ -144,7 +140,7 @@ define([
 			var plaque = new Plaque({game_id: game_id, node_id: plaque_id})
 			plaque.fetch({
 				success: function() {
-					vent.trigger("application.show", new EditPlaqueView({model: plaque}));
+					vent.trigger("application.show", new EditAmfModelView({model: plaque}));
 				}
 			});
 		},
@@ -162,29 +158,29 @@ define([
 			var item = new Item({game_id: game_id, item_id: item_id})
 			item.fetch({
 				success: function() {
-					vent.trigger("application.show", new EditItemView({model: item}));
+					vent.trigger("application.show", new EditAmfModelView({model: item}));
 				}
 			});
 		},
 
 		newPlaque: function(game_id) {
 			var plaque = new Plaque({game_id: game_id});
-			vent.trigger("application.show", new EditPlaqueView({model: plaque}));
+			vent.trigger("application.show", new EditAmfModelView({model: plaque}));
 		},
 
 		newCharacter: function(game_id) {
 			var character = new Character({game_id: game_id});
-			vent.trigger("application.show", new EditCharacterView({model: character}));
+			vent.trigger("application.show", new EditAmfModelView({model: character}));
 		},
 
 		newItem: function(game_id) {
 			var item = new Item({game_id: game_id});
-			vent.trigger("application.show", new EditItemView({model: item}));
+			vent.trigger("application.show", new EditAmfModelView({model: item}));
 		},
 
 		newGame: function() {
 			var game = new Game();
-			vent.trigger("application.show", new EditGameView({model: game}));
+			vent.trigger("application.show", new EditAmfModelView({model: game}));
 		}
 
 	});

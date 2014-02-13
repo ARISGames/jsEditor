@@ -21,7 +21,8 @@ define([
 		amfphp_url_templates: {
 			read:   "nodes.getNode",
 			update: "nodes.updateNode",
-			create: "nodes.createNode"
+			create: "nodes.createNode",
+			delete: "nodes.deleteNode"
 		},
 
 

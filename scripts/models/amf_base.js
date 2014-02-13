@@ -36,7 +36,8 @@ define([
 		amfphp_url_patterns: {
 			read:   "/<%= game_id %>/<%= id %>",
 			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
-			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"
+			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			delete: "/<%= game_id %>/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
 
@@ -99,7 +100,7 @@ define([
 			_.extend(template_values, {editor_id: session.editor_id(), editor_token: session.auth_token()});
 
 			// Build url from model attributes for update
-			if(method === "update" || method === "create") {
+			if(method === "update" || method === "create" || method === "delete") {
 				options.type = "POST";
 
 				var model_attributes_url = $.map(this.amfphp_url_attributes, function(key) {

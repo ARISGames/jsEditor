@@ -1,4 +1,4 @@
-<h3>Editing <small><%= model.to_s() %></small></h3>
+<h3><%= model.isNew() ? "Create" : "Editing" %> <small><%= model.to_s() %></small></h3>
 
 <form class="form-horizontal" role="form">
 
@@ -14,5 +14,8 @@
 	<% }) %>
 
 	<button id="save" class="btn btn-primary">Save</button>
+	<% if(!model.isNew()) { %>
+		<button id="delete", class="btn btn-danger">Delete</button>
+	<% } %>
 
 </form>

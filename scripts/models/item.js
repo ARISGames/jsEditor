@@ -21,7 +21,8 @@ define([
 		amfphp_url_templates: {
 			read:   "items.getItem",
 			update: "items.updateItem",
-			create: "items.createItem"
+			create: "items.createItem",
+			delete: "items.deleteItem"
 		},
 
 

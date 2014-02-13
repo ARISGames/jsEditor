@@ -13,14 +13,16 @@ define([
 		amfphp_url_templates: {
 			read:   "games.getGame",
 			update: "games.updateGame",
-			create: "games.createGame"
+			create: "games.createGame",
+			delete: "games.deleteGame"
 		},
 
 
 		amfphp_url_patterns: {
 			read:   "/<%= id %>",
 			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
-			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>"
+			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			delete: "/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
 

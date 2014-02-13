@@ -35,10 +35,12 @@ TODO
 
 DOING
 -----
-- Add create/delete on game objects
+- Add delete on game objects
 - Logout event coupled view for menu bar
-- Refactor url pattern into base model
-
+- Locations and Quests
+- Requirements editor for different objects
+- Map view for locations
+- Media viewer
 
 JS THINGS
 ---------

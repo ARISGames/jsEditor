@@ -21,7 +21,8 @@ define([
 		amfphp_url_templates: {
 			read:   "npcs.getNpc",
 			update: "npcs.updateNpc",
-			create: "npcs.createNpc"
+			create: "npcs.createNpc",
+			delete: "npcs.deleteNpc"
 		},
 
 
