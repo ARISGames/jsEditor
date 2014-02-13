@@ -14,6 +14,7 @@ define([
 	'views/edit_plaque',
 	'views/edit_character',
 	'views/edit_item',
+	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
 	'collections/characters',
@@ -27,7 +28,7 @@ define([
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView,
-	EditGameView, EditPlaqueView, EditCharacterView, EditItemView,
+	EditGameView, EditPlaqueView, EditCharacterView, EditItemView, EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection,
 	Game, Plaque, Character, Item,
 	vent) {
@@ -152,7 +153,7 @@ define([
 			var character = new Character({game_id: game_id, npc_id: character_id})
 			character.fetch({
 				success: function() {
-					vent.trigger("application.show", new EditCharacterView({model: character}));
+					vent.trigger("application.show", new EditAmfModelView({model: character}));
 				}
 			});
 		},

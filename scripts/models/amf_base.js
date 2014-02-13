@@ -40,6 +40,22 @@ define([
 		},
 
 
+		// Fields to iterate over for quick form building
+		editable_attributes: function() {
+			var model = this;
+
+			return _.reject(this.amfphp_url_attributes, function(attribute_name) {
+				return attribute_name === "game_id" || attribute_name === model.idAttribute;
+			});
+		},
+
+
+		// Main value to display (usually name or title)
+		to_s: function() {
+			return this.get(_.first(this.editable_attributes()));
+		},
+
+
 		// Callback on create and update
 		save: function(attrs, options) {
 			options || (options = {});

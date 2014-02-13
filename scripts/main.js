@@ -13,11 +13,18 @@ require.config({
 		/* Backbone */
 		underscore: 'library/underscore',
 		backbone: 'library/backbone',
+		'underscore.string': 'library/underscore.string',
 
 		/* Marionette */
 		'backbone.babysitter': 'library/backbone.babysitter',
 		'backbone.wreqr': 'library/backbone.wreqr',
 		marionette: 'library/backbone.marionette',
+	},
+
+	shim: {
+	   'underscore.string': {
+			deps: ['underscore'],
+		}
 	}
 });
 
