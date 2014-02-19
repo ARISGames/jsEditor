@@ -51,13 +51,15 @@ define([
 			"games/:game_id/characters/new": "newCharacter",
 			"games/:game_id/items/new":      "newItem",
 			"games/:game_id/quests/new":     "newQuest",
+			"games/:game_id/quests/new":     "new",
 
 			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
 			"games/:game_id/characters/:character_id/edit": "editCharacter",
 			"games/:game_id/items/:item_id/edit":           "editItem",
 			"games/:game_id/quests/:quest_id/edit":         "editQuest",
-			"games/:game_id/locations/:location_id/edit":   "editLocation"
+			"games/:game_id/locations/:location_id/edit":   "editLocation",
 
+			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},
 
 		showLogin: function() {
@@ -204,6 +206,11 @@ define([
 		newQuest: function(game_id) {
 			var quest = new Quest({game_id: game_id});
 			vent.trigger("application.show", new EditAmfModelView({model: quest}));
+		},
+
+		newLocation: function(game_id) {
+			var location = new Location({game_id: game_id});
+			vent.trigger("application.show", new EditAmfModelView({model: location}));
 		},
 
 		newGame: function() {
