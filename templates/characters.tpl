@@ -1,6 +1,6 @@
 <thead>
 	<tr>
-		<th colspan="3">
+		<th colspan="4">
 			<button class="new btn btn-primary">New Character</button>
 		</th>
 	</tr>

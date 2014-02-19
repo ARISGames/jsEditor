@@ -21,12 +21,14 @@ define([
 	'models/plaque',
 	'models/character',
 	'models/item',
+	'models/quest',
+	'models/location',
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView,
 	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection,
-	Game, Plaque, Character, Item,
+	Game, Plaque, Character, Item, Quest, Location,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -48,10 +50,13 @@ define([
 			"games/:game_id/plaques/new":    "newPlaque",
 			"games/:game_id/characters/new": "newCharacter",
 			"games/:game_id/items/new":      "newItem",
+			"games/:game_id/quests/new":     "newQuest",
 
 			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
 			"games/:game_id/characters/:character_id/edit": "editCharacter",
-			"games/:game_id/items/:item_id/edit":           "editItem"
+			"games/:game_id/items/:item_id/edit":           "editItem",
+			"games/:game_id/quests/:quest_id/edit":         "editQuest",
+			"games/:game_id/locations/:location_id/edit":   "editLocation"
 
 		},
 
@@ -163,6 +168,24 @@ define([
 			});
 		},
 
+		editQuest: function(game_id, quest_id) {
+			var quest = new Quest({game_id: game_id, quest_id: quest_id})
+			quest.fetch({
+				success: function() {
+					vent.trigger("application.show", new EditAmfModelView({model: quest}));
+				}
+			});
+		},
+
+		editLocation: function(game_id, location_id) {
+			var location = new Location({game_id: game_id, location_id: location_id})
+			location.fetch({
+				success: function() {
+					vent.trigger("application.show", new EditAmfModelView({model: location}));
+				}
+			});
+		},
+
 		newPlaque: function(game_id) {
 			var plaque = new Plaque({game_id: game_id});
 			vent.trigger("application.show", new EditAmfModelView({model: plaque}));
@@ -176,6 +199,11 @@ define([
 		newItem: function(game_id) {
 			var item = new Item({game_id: game_id});
 			vent.trigger("application.show", new EditAmfModelView({model: item}));
+		},
+
+		newQuest: function(game_id) {
+			var quest = new Quest({game_id: game_id});
+			vent.trigger("application.show", new EditAmfModelView({model: quest}));
 		},
 
 		newGame: function() {

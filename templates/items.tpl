@@ -9,5 +9,6 @@
 	<tr>
 		<th>Item</th>
 		<th>Description</th>
+		<th>Actions</th>
 	</tr>
 </thead>
