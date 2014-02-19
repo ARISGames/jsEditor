@@ -41,11 +41,26 @@ define([
 		},
 
 
+		// Allow editable attributes to be defined conditionally for new/existing.
+		// used for Quests.
+		get_amfphp_url_attributes: function()
+		{
+			if(_.isFunction(this.amfphp_url_attributes))
+			{
+				return this.amfphp_url_attributes.call(this);
+			}
+			else
+			{
+				return this.amfphp_url_attributes;
+			}
+		},
+
+
 		// Fields to iterate over for quick form building
 		editable_attributes: function() {
 			var model = this;
 
-			return _.reject(this.amfphp_url_attributes, function(attribute_name) {
+			return _.reject(this.get_amfphp_url_attributes(), function(attribute_name) {
 				return attribute_name === "game_id" || attribute_name === model.idAttribute;
 			});
 		},
@@ -103,7 +118,7 @@ define([
 			if(method === "update" || method === "create" || method === "delete") {
 				options.type = "POST";
 
-				var model_attributes_url = $.map(this.amfphp_url_attributes, function(key) {
+				var model_attributes_url = $.map(this.get_amfphp_url_attributes(), function(key) {
 
 					// On create don't include the id field
 					if(key === model.idAttribute && model.attributes[key] == null) {

@@ -17,28 +17,43 @@ define([
 		},
 
 
-		amfphp_url_attributes: [
-			"game_id",
-			"quest_id",
-			"name",
-			"description",
-			"text_when_complete",
-			"description_notification",
-			"text_when_complete_notification",
-			"active_media_id",
-			"complete_media_id",
-			"active_icon_media_id",
-			"complete_icon_media_id",
-			"go_function",
-			"complete_go_function",
-			"notif_go_function",
-			"complete_notif_go_function",
-			"full_screen_notify",
-			"complete_full_screen_notify",
-			"active_notif_show_dismiss",
-			"complete_notif_show_dismiss",
-			"sort_index"
-		],
+		amfphp_url_attributes: function()
+		{
+			if(this.isNew())
+			{
+				return [
+					"game_id",
+					"quest_id",
+					"name",
+					"sort_index"
+				];	
+			}
+			else
+			{
+				return [
+					"game_id",
+					"quest_id",
+					"name",
+					"description",
+					"text_when_complete",
+					"description_notification",
+					"text_when_complete_notification",
+					"active_media_id",
+					"complete_media_id",
+					"active_icon_media_id",
+					"complete_icon_media_id",
+					"go_function",
+					"complete_go_function",
+					"notif_go_function",
+					"complete_notif_go_function",
+					"full_screen_notify",
+					"complete_full_screen_notify",
+					"active_notif_show_dismiss",
+					"complete_notif_show_dismiss",
+					"sort_index"
+				];
+			}
+		},
 
 		defaults: {
 			active_icon_media_id: 0,
