@@ -38,14 +38,19 @@ define([
 					"text_when_complete",
 					"description_notification",
 					"text_when_complete_notification",
+
 					"active_media_id",
 					"complete_media_id",
 					"active_icon_media_id",
 					"complete_icon_media_id",
+					"active_notification_media_id",
+					"complete_notification_media_id",
+
 					"go_function",
 					"complete_go_function",
 					"notif_go_function",
 					"complete_notif_go_function",
+
 					"full_screen_notify",
 					"complete_full_screen_notify",
 					"active_notif_show_dismiss",
