@@ -51,7 +51,7 @@ define([
 			"games/:game_id/characters/new": "newCharacter",
 			"games/:game_id/items/new":      "newItem",
 			"games/:game_id/quests/new":     "newQuest",
-			"games/:game_id/quests/new":     "new",
+			"games/:game_id/locations/new":  "newLocation",
 
 			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
 			"games/:game_id/characters/:character_id/edit": "editCharacter",

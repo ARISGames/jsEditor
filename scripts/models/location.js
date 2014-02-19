@@ -11,8 +11,8 @@ define([
 
 		amfphp_url_templates: {
 			read:   "locations.getLocation",
-			update: "locations.updateLocation",
-			create: "locations.createLocation",
+			update: "locations.updateLocationWithQrCode",
+			create: "locations.createLocationWithQrCode",
 			delete: "locations.deleteLocation"
 		},
 
@@ -31,7 +31,29 @@ define([
 			"force_view",
 			"allow_quick_travel",
 			"wiggle",
-			"show_title"
-		]
+			"show_title",
+			"code",
+			"match_media_id",
+			"fail_text"
+		],
+
+		defaults: {
+			name: "",
+			icon_media_id: 0,
+			latitude: 43.07,
+			longitude: -89.40,
+			error: 30,
+			type: "",
+			type_id: "",
+			item_qty: 1,
+			hidden: "",
+			force_view: "",
+			allow_quick_travel: 0,
+			wiggle: 0,
+			show_title: 0,
+			code: 1234,
+			match_media_id: 0,
+			fail_text: ""
+		}
 	});
 });

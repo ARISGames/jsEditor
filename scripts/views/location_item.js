@@ -4,7 +4,9 @@ define([
 	'backbone',
 	'marionette',
 	'text!../../templates/location_item.tpl',
-], function($, _, Backbone, Marionette, Template) {
+	'vent',
+	'views/edit_amf_model',
+], function($, _, Backbone, Marionette, Template, vent, EditAmfModelView) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -18,7 +20,8 @@ define([
 
 
 		onClickEdit: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations/"+this.model.get('location_id')+"/edit", {trigger: true});
+			vent.trigger("application.show", new EditAmfModelView({model: this.model}));
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations/"+this.model.get('location_id')+"/edit", {trigger: false});
 		}
 	});
 });
