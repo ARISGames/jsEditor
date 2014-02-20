@@ -24,6 +24,7 @@ define([
 
 		onClickNew: function() {
 			// this needs to be smart to know the type of parent we're using.
+			Backbone.history.navigate("#games/"+this.collection.parent.get('game_id')+"/requirements/new", {trigger: true});
 		}
 	});
 });

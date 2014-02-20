@@ -25,12 +25,13 @@ define([
 	'models/item',
 	'models/quest',
 	'models/location',
+	'models/requirement',
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView,
 	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection,
-	Game, Plaque, Character, Item, Quest, Location,
+	Game, Plaque, Character, Item, Quest, Location, Requirement,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -49,22 +50,24 @@ define([
 			"games/:game_id/quests":     "listQuests",
 			"games/:game_id/locations":  "listLocations",
 
-			"games/:game_id/locations/:location_id/requirements":     "listLocationRequirements",
+			"games/:game_id/locations/:location_id/requirements":    "listLocationRequirements",
 			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
 			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestCompleteRequirements",
 			"games/:game_id/characters/:character_id/conversations": "listCharacterConversations",
 
-			"games/:game_id/plaques/new":    "newPlaque",
-			"games/:game_id/characters/new": "newCharacter",
-			"games/:game_id/items/new":      "newItem",
-			"games/:game_id/quests/new":     "newQuest",
-			"games/:game_id/locations/new":  "newLocation",
+			"games/:game_id/plaques/new":       "newPlaque",
+			"games/:game_id/characters/new":    "newCharacter",
+			"games/:game_id/items/new":         "newItem",
+			"games/:game_id/quests/new":        "newQuest",
+			"games/:game_id/locations/new":     "newLocation",
+			"games/:game_id/requirements/new":  "newRequirement",
 
-			"games/:game_id/plaques/:plaque_id/edit":       "editPlaque",
-			"games/:game_id/characters/:character_id/edit": "editCharacter",
-			"games/:game_id/items/:item_id/edit":           "editItem",
-			"games/:game_id/quests/:quest_id/edit":         "editQuest",
-			"games/:game_id/locations/:location_id/edit":   "editLocation",
+			"games/:game_id/plaques/:plaque_id/edit":           "editPlaque",
+			"games/:game_id/characters/:character_id/edit":     "editCharacter",
+			"games/:game_id/items/:item_id/edit":               "editItem",
+			"games/:game_id/quests/:quest_id/edit":             "editQuest",
+			"games/:game_id/locations/:location_id/edit":       "editLocation",
+			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
 
 			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},
@@ -77,7 +80,6 @@ define([
 		/* Game Routes ************************/
 
 		listGames: function() {
-			console.log("hi");
 			var games = new GameCollection;
 			games.fetch({
 				success: function() {
@@ -233,6 +235,11 @@ define([
 			vent.trigger("application.show", new EditAmfModelView({model: location}));
 		},
 
+		newRequirement: function(game_id) {
+			var requirement = new Requirement({game_id: game_id});
+			vent.trigger("application.show", new EditAmfModelView({model: requirement}));
+		},
+
 		newGame: function() {
 			var game = new Game();
 			vent.trigger("application.show", new EditAmfModelView({model: game}));
@@ -250,7 +257,16 @@ define([
 					vent.trigger("application.show", new RequirementsView({collection: requirements}));
 				}
 			});
-		}
+		},
+
+		editRequirement: function(game_id, requirement_id) {
+			var requirement = new Requirement({game_id: game_id, requirement_id: requirement_id})
+			requirement.fetch({
+				success: function() {
+					vent.trigger("application.show", new EditAmfModelView({model: requirement}));
+				}
+			});
+		},
 
 	});
 });

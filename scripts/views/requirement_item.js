@@ -18,7 +18,7 @@ define([
 
 
 		onClickEdit: function() {
-			// enough information to make get call and save call
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/requirements/"+this.model.get('requirement_id')+"/edit", {trigger: true});
 		}
 	});
 });

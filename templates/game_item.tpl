@@ -5,7 +5,7 @@
 	<%= description %>
 </td>
 <td>
-	<button class="view btn btn-xs btn-default">
+	<button class="view btn btn-xs btn-link">
 		<span class="glyphicon glyphicon-eye-open"></span> Show
 	</button>
 
