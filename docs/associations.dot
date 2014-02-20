@@ -1,0 +1,23 @@
+digraph G {
+
+	node [
+		shape = "record"
+	];
+
+	Game->Plaque;
+	Game->Character;
+	Game->Item;
+	Game->Quest;
+	Game->Location;
+
+	Plaque->Location;
+	Character->Location;
+	Item->Location;
+
+	Character->Conversation;
+
+	Location->Requirement;
+	Conversation->Requirement;
+	Quest->RequirementToComplete->Requirement;
+	Quest->RequirementToDisplay->Requirement;
+}
