@@ -1,7 +1,8 @@
 digraph G {
 
 	node [
-		shape = "record"
+		style = "rounded"
+		shape = "box"
 	];
 
 	Game->Plaque;
