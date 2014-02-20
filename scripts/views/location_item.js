@@ -15,13 +15,18 @@ define([
 
 
 		events: {
-			"click .edit": "onClickEdit"
+			"click .edit":         "onClickEdit",
+			"click .requirements": "onClickRequirements"
 		},
 
 
 		onClickEdit: function() {
 			vent.trigger("application.show", new EditAmfModelView({model: this.model}));
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations/"+this.model.get('location_id')+"/edit", {trigger: false});
+		},
+
+		onClickRequirements: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations/"+this.model.get('location_id')+"/requirements", {trigger: true});
 		}
 	});
 });

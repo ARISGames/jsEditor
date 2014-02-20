@@ -10,6 +10,7 @@ define([
 	'views/items',
 	'views/quests',
 	'views/locations',
+	'views/requirements',
 	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
@@ -17,6 +18,7 @@ define([
 	'collections/items',
 	'collections/quests',
 	'collections/locations',
+	'collections/requirements',
 	'models/game',
 	'models/plaque',
 	'models/character',
@@ -25,9 +27,9 @@ define([
 	'models/location',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView,
+	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView,
 	EditAmfModelView,
-	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection,
+	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection,
 	Game, Plaque, Character, Item, Quest, Location,
 	vent) {
 	return Backbone.Router.extend({
@@ -47,6 +49,7 @@ define([
 			"games/:game_id/quests":     "listQuests",
 			"games/:game_id/locations":  "listLocations",
 
+			"games/:game_id/locations/:location_id/requirements":     "listLocationRequirements",
 			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
 			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestCompleteRequirements",
 			"games/:game_id/characters/:character_id/conversations": "listCharacterConversations",
@@ -233,6 +236,20 @@ define([
 		newGame: function() {
 			var game = new Game();
 			vent.trigger("application.show", new EditAmfModelView({model: game}));
+		},
+
+
+		/* Requirement Routes *****************/
+
+		listLocationRequirements: function(game_id, location_id) {
+			var location = new Location({game_id: game_id, location_id: location_id});
+			var requirements = new RequirementCollection([], {parent: location});
+
+			requirements.fetch({
+				success: function() {
+					vent.trigger("application.show", new RequirementsView({collection: requirements}));
+				}
+			});
 		}
 
 	});
