@@ -33,19 +33,23 @@ define([
 	return Backbone.Router.extend({
 
 		routes: {
-			"": "showGames",
+			"": "listGames",
 			"login": "showLogin",
 
-			"games":               "showGames",
+			"games":               "listGames",
 			"games/new":           "newGame",
 			"games/:game_id":      "showGame",
 			"games/:game_id/edit": "editGame",
 
-			"games/:game_id/plaques":    "showPlaques",
-			"games/:game_id/characters": "showCharacters",
-			"games/:game_id/items":      "showItems",
-			"games/:game_id/quests":     "showQuests",
-			"games/:game_id/locations":  "showLocations",
+			"games/:game_id/plaques":    "listPlaques",
+			"games/:game_id/characters": "listCharacters",
+			"games/:game_id/items":      "listItems",
+			"games/:game_id/quests":     "listQuests",
+			"games/:game_id/locations":  "listLocations",
+
+			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
+			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestCompleteRequirements",
+			"games/:game_id/characters/:character_id/conversations": "listCharacterConversations",
 
 			"games/:game_id/plaques/new":    "newPlaque",
 			"games/:game_id/characters/new": "newCharacter",
@@ -66,7 +70,11 @@ define([
 			vent.trigger("application.show", new LoginView);
 		},
 
-		showGames: function() {
+
+		/* Game Routes ************************/
+
+		listGames: function() {
+			console.log("hi");
 			var games = new GameCollection;
 			games.fetch({
 				success: function() {
@@ -93,7 +101,10 @@ define([
 			});
 		},
 
-		showPlaques: function(game_id) {
+
+		/* List Routes ************************/
+
+		listPlaques: function(game_id) {
 			var game    = new Game({game_id: game_id});
 			var plaques = new PlaqueCollection([], {parent: game});
 			plaques.fetch({
@@ -103,7 +114,7 @@ define([
 			});
 		},
 
-		showCharacters: function(game_id) {
+		listCharacters: function(game_id) {
 			var game       = new Game({game_id: game_id});
 			var characters = new CharacterCollection([], {parent: game});
 			characters.fetch({
@@ -113,7 +124,7 @@ define([
 			});
 		},
 
-		showItems: function(game_id) {
+		listItems: function(game_id) {
 			var game  = new Game({game_id: game_id});
 			var items = new ItemCollection([], {parent: game});
 			items.fetch({
@@ -123,7 +134,7 @@ define([
 			});
 		},
 
-		showQuests: function(game_id) {
+		listQuests: function(game_id) {
 			var game   = new Game({game_id: game_id});
 			var quests = new QuestCollection([], {parent: game});
 			quests.fetch({
@@ -133,7 +144,7 @@ define([
 			});
 		},
 
-		showLocations: function(game_id) {
+		listLocations: function(game_id) {
 			var game      = new Game({game_id: game_id});
 			var locations = new LocationCollection([], {parent: game});
 			locations.fetch({
@@ -142,6 +153,9 @@ define([
 				}
 			});
 		},
+
+
+		/* Edit Routes ************************/
 
 		editPlaque: function(game_id, plaque_id) {
 			var plaque = new Plaque({game_id: game_id, node_id: plaque_id})
@@ -187,6 +201,9 @@ define([
 				}
 			});
 		},
+
+
+		/* New Routes *************************/
 
 		newPlaque: function(game_id) {
 			var plaque = new Plaque({game_id: game_id});
