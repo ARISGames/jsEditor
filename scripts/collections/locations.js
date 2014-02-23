@@ -12,7 +12,7 @@ define([
 
 
 		url: function() {
-			return "http://arisgames.org/server/json.php/v1.locations.getLocationsWithQrCode/"+this.parent.get('game_id');
+			return this.amfphp_url_root+"locations.getLocationsWithQrCode/"+this.parent.get('game_id');
 		},
 	});
 });

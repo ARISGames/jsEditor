@@ -30,7 +30,7 @@ define([
 		},
 
 
-		amfphp_url_root: "http://arisgames.org/server/json.php/v1.",
+		amfphp_url_root: "https://arisgames.org/server/json.php/v1.",
 
 
 		amfphp_url_patterns: {

@@ -12,7 +12,7 @@ define([
 
 
 		url: function() {
-			return "http://arisgames.org/server/json.php/v1.npcs.getNpcs/"+this.parent.get('game_id');
+			return this.amfphp_url_root+'npcs.getNpcs/'+this.parent.get('game_id');
 		},
 	});
 });

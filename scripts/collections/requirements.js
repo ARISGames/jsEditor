@@ -16,7 +16,7 @@ define([
 			var session = new Session;
 
 			// hard coded for location temporarily
-			return "http://arisgames.org/server/json.php/v1.requirements.getRequirementsForObject/"+this.parent.get('game_id')+"/Location/"+this.parent.get('location_id')+"/"+session.editor_id()+"/"+session.auth_token();
+			return this.amfphp_url_root+"requirements.getRequirementsForObject/"+this.parent.get('game_id')+"/Location/"+this.parent.get('location_id')+"/"+session.editor_id()+"/"+session.auth_token();
 		},
 	});
 });
