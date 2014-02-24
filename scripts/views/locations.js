@@ -6,7 +6,9 @@ define([
 	'text!../../templates/locations.tpl',
 	'collections/locations',
 	'views/location_item',
-], function($, _, Backbone, Marionette, Template, LocationCollection, LocationItemView) {
+	'views/edit_amf_model',
+	'vent'
+], function($, _, Backbone, Marionette, Template, LocationCollection, LocationItemView, EditAmfModelView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -44,8 +46,39 @@ define([
 
 				var marker = new google.maps.Marker({
 					position: location_position,
+					draggable: true,
 					map: map,
 					title: location.get('name')
+				});
+
+
+				// Info Window
+				var info_window = new google.maps.InfoWindow({
+					content: location.get('name')
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					info_window.open(map, marker);
+				});
+
+
+				// Double Click
+				google.maps.event.addListener(marker, 'dblclick', function() {
+					vent.trigger("application.show", new EditAmfModelView({model: location}));
+					Backbone.history.navigate("#games/"+location.get('game_id')+"/locations/"+location.get('location_id')+"/edit", {trigger: false});
+				});
+
+
+				// Drag End
+				google.maps.event.addListener(marker, 'dragend', function(event) {
+					location.set('latitude',  event.latLng.lat());
+					location.set('longitude', event.latLng.lng());
+					location.save({}, {
+						success: function() {
+							// vent trigger location.update
+							console.log("updated");
+						}
+					});
 				});
 			});
 
