@@ -14,7 +14,7 @@ define([
 
 		itemView: LocationItemView,
 		itemViewContainer: ".itemViewContainer",
-	
+
 
 		events: {
 			"click .new": "onClickNew"
@@ -57,9 +57,13 @@ define([
 					content: location.get('name')
 				});
 
-				google.maps.event.addListener(marker, 'click', function() {
+				google.maps.event.addListener(marker, 'mouseover', function() {
 					info_window.open(map, marker);
 				});
+
+				google.maps.event.addListener(marker, 'mouseout', function() {
+					info_window.close();
+				});				
 
 
 				// Double Click
