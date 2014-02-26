@@ -17,13 +17,29 @@ define([
 		},
 
 
-		amfphp_url_attributes: [
-			"game_id",
-			"conversation_id",
-			"conversation_text",
-			"text",
-			"index"
-		],
+		amfphp_url_attributes: function() {
+			if(this.isNew())
+			{
+				return [
+					"game_id",
+					"npc_id",
+					"conversation_text",
+					"text",
+					"index"
+				];
+			}
+			else
+			{
+				return [
+					"game_id",
+					"conversation_id",
+					"conversation_text",
+					"text",
+					"index"
+				];
+
+			}
+		},
 
 
 		defaults: {

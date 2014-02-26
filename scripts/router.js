@@ -28,12 +28,13 @@ define([
 	'models/quest',
 	'models/location',
 	'models/requirement',
+	'models/conversation',
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView,
 	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection,
-	Game, Plaque, Character, Item, Quest, Location, Requirement,
+	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -73,6 +74,7 @@ define([
 			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
 
 			"games/:game_id/characters/:character_id/conversations/:conversation_id/edit": "editConversation",
+			"games/:game_id/characters/:character_id/conversations/new": "newConversation",
 
 			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},
@@ -258,6 +260,11 @@ define([
 		newRequirement: function(game_id) {
 			var requirement = new Requirement({game_id: game_id});
 			vent.trigger("application.show", new EditAmfModelView({model: requirement}));
+		},
+
+		newConversation: function(game_id, character_id) {
+			var conversation = new Conversation({game_id: game_id, npc_id: character_id});
+			vent.trigger("application.show", new EditAmfModelView({model: conversation}));
 		},
 
 		newGame: function() {
