@@ -72,6 +72,8 @@ define([
 			"games/:game_id/locations/:location_id/edit":       "editLocation",
 			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
 
+			"games/:game_id/characters/:character_id/conversations/:conversation_id/edit": "editConversation",
+
 			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},
 
@@ -219,6 +221,10 @@ define([
 					vent.trigger("application.show", new EditAmfModelView({model: location}));
 				}
 			});
+		},
+
+		editLocation: function(game_id, character_id, conversation_id) {
+			// Triggered from vent because there is no getConversation
 		},
 
 
