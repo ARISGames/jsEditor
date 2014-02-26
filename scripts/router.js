@@ -11,6 +11,7 @@ define([
 	'views/quests',
 	'views/locations',
 	'views/requirements',
+	'views/conversations',
 	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
@@ -19,6 +20,7 @@ define([
 	'collections/quests',
 	'collections/locations',
 	'collections/requirements',
+	'collections/conversations',
 	'models/game',
 	'models/plaque',
 	'models/character',
@@ -28,9 +30,9 @@ define([
 	'models/requirement',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView,
+	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView,
 	EditAmfModelView,
-	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection,
+	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection,
 	Game, Plaque, Character, Item, Quest, Location, Requirement,
 	vent) {
 	return Backbone.Router.extend({
@@ -51,9 +53,10 @@ define([
 			"games/:game_id/locations":  "listLocations",
 
 			"games/:game_id/locations/:location_id/requirements":    "listLocationRequirements",
-			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
-			"games/:game_id/quests/:quest_id/requirements/display":  "listQuestCompleteRequirements",
+			//"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
+			//"games/:game_id/quests/:quest_id/requirements/display":  "listQuestCompleteRequirements",
 			"games/:game_id/characters/:character_id/conversations": "listCharacterConversations",
+
 
 			"games/:game_id/plaques/new":       "newPlaque",
 			"games/:game_id/characters/new":    "newCharacter",
@@ -159,6 +162,17 @@ define([
 			});
 		},
 
+		listCharacterConversations: function(game_id, character_id) {
+			var	character = new Character({game_id: game_id, npc_id: character_id});
+			var conversations = new ConversationCollection([], {parent: character});
+
+			conversations.fetch({
+				success: function() {
+					vent.trigger("application.show", new ConversationsView({collection: conversations}));
+				}
+			});
+		},
+
 
 		/* Edit Routes ************************/
 
@@ -172,7 +186,7 @@ define([
 		},
 
 		editCharacter: function(game_id, character_id) {
-			var character = new Character({game_id: game_id, npc_id: character_id})
+			var character = new Character({game_id: game_id, npc_id: character_id});
 			character.fetch({
 				success: function() {
 					vent.trigger("application.show", new EditAmfModelView({model: character}));

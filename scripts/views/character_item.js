@@ -13,12 +13,17 @@ define([
 
 
 		events: {
-			"click .edit": "onClickEdit"
+			"click .edit": "onClickEdit",
+			"click .conversations": "onClickConversations"
 		},
 
 
 		onClickEdit: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/characters/"+this.model.get('npc_id')+"/edit", {trigger: true});
+		},
+
+		onClickConversations: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/characters/"+this.model.get('npc_id')+"/conversations", {trigger: true});
 		}
 	});
 });
