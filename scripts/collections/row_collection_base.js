@@ -2,16 +2,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'collections/amf_collection_base',
 	'vent'
-], function($, _, Backbone, vent) {
-	return Backbone.Collection.extend({
-
-		initialize: function(models, options) {
-			options || (options = {});
-			this.parent = options.parent;
-		},
-
-		amfphp_url_root: 'https://arisgames.org/server/json.php/v1.',
+], function($, _, Backbone, AmfCollectionBase, vent) {
+	return AmfCollectionBase.extend({
 
 		parse: function(json, response) {
 			var header = json.data.columns;

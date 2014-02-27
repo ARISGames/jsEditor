@@ -12,6 +12,7 @@ define([
 	'views/locations',
 	'views/requirements',
 	'views/conversations',
+	'views/media_list',
 	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
@@ -21,6 +22,7 @@ define([
 	'collections/locations',
 	'collections/requirements',
 	'collections/conversations',
+	'collections/media',
 	'models/game',
 	'models/plaque',
 	'models/character',
@@ -31,9 +33,9 @@ define([
 	'models/conversation',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView,
+	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView,
 	EditAmfModelView,
-	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection,
+	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,
 	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation,
 	vent) {
 	return Backbone.Router.extend({
@@ -52,6 +54,7 @@ define([
 			"games/:game_id/items":      "listItems",
 			"games/:game_id/quests":     "listQuests",
 			"games/:game_id/locations":  "listLocations",
+			"games/:game_id/media":      "listMedia",
 
 			"games/:game_id/locations/:location_id/requirements":    "listLocationRequirements",
 			//"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
@@ -75,6 +78,7 @@ define([
 
 			"games/:game_id/characters/:character_id/conversations/:conversation_id/edit": "editConversation",
 			"games/:game_id/characters/:character_id/conversations/new": "newConversation",
+
 
 			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},
@@ -173,6 +177,16 @@ define([
 			conversations.fetch({
 				success: function() {
 					vent.trigger("application.show", new ConversationsView({collection: conversations}));
+				}
+			});
+		},
+
+		listMedia: function(game_id) {
+			var game  = new Game({game_id: game_id});
+			var media = new MediaCollection([], {parent: game});
+			media.fetch({
+				success: function() {
+					vent.trigger("application.show", new MediaListView({collection: media}));
 				}
 			});
 		},
