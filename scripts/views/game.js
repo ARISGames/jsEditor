@@ -17,7 +17,8 @@ define([
 			"click .items":      "onClickItems",
 			"click .characters": "onClickCharacters",
 			"click .quests":     "onClickQuests",
-			"click .locations":  "onClickLocations"
+			"click .locations":  "onClickLocations",
+			"click .medialist":  "onClickMedia"
 		},
 
 		onClickPlaques: function() {
@@ -38,6 +39,10 @@ define([
 
 		onClickLocations: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations", {trigger: true});
+		},
+
+		onClickMedia: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/media", {trigger: true});
 		}
 	});
 });

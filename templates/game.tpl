@@ -13,3 +13,4 @@
 <button class="items      btn btn-default"><span class="glyphicon glyphicon-tag"></span> Items</button>
 <button class="quests     btn btn-default"><span class="glyphicon glyphicon-exclamation-sign"></span> Quests</button>
 <button class="locations  btn btn-default"><span class="glyphicon glyphicon-map-marker"></span> Locations</button>
+<button class="medialist  btn btn-default"><span class="glyphicon glyphicon-picture"></span> Media</button>

@@ -13,6 +13,7 @@ define([
 	'views/requirements',
 	'views/conversations',
 	'views/media_list',
+	'views/upload_media',
 	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
@@ -31,12 +32,13 @@ define([
 	'models/location',
 	'models/requirement',
 	'models/conversation',
+	'models/media',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView,
+	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
 	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,
-	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation,
+	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -68,6 +70,7 @@ define([
 			"games/:game_id/quests/new":        "newQuest",
 			"games/:game_id/locations/new":     "newLocation",
 			"games/:game_id/requirements/new":  "newRequirement",
+			"games/:game_id/media/new":         "newMedia",
 
 			"games/:game_id/plaques/:plaque_id/edit":           "editPlaque",
 			"games/:game_id/characters/:character_id/edit":     "editCharacter",
@@ -279,6 +282,11 @@ define([
 		newConversation: function(game_id, character_id) {
 			var conversation = new Conversation({game_id: game_id, npc_id: character_id});
 			vent.trigger("application.show", new EditAmfModelView({model: conversation}));
+		},
+
+		newMedia: function(game_id) {
+			var media = new Media({game_id: game_id});
+			vent.trigger("application.show", new UploadMediaView({model: media}));
 		},
 
 		newGame: function() {

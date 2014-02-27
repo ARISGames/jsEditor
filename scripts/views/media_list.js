@@ -11,7 +11,15 @@ define([
 		template: _.template(Template),
 
 		itemView: MediaItemView,
-		itemViewContainer: '.itemViewContainer'
+		itemViewContainer: '.itemViewContainer',
+
+		events: {
+			"click .new": "onClickNew"
+		},
+
+		onClickNew: function() {
+			Backbone.history.navigate("#games/"+this.collection.parent.get('game_id')+"/media/new", {trigger: true});
+		}
 
 	});
 });
