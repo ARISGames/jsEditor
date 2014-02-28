@@ -29,12 +29,14 @@ define([
 		amfphp_url_attributes: [
 			"game_id",
 			"media_id",
+			"name",
 			"file_name",
 			"is_icon"
 		],
 
 
 		defaults: {
+			name: "",
 			file_name: "",
 			is_icon: 0
 		}

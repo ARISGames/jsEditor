@@ -31,15 +31,31 @@ define([
 		onClickSave: function() {
 			event.preventDefault();
 
-			var form_data = new FormData(this.$el.find('#file_form').get(0));
+			var form_data = new FormData()
+
+			form_data.append('file',   this.$el.find('#file_data').get(0).files[0]);
+			form_data.append('gameID', this.model.get('game_id'));
+
+			var name = this.$el.find('#file_name').val();
+			var media = this.model;
 
 			$.ajax({
-				url: "https://arisgames.org/services/v1/uploadHandler.php",
+				url: "https://arisgames.org/server/services/v1/uploadHandler.php",
 				data: form_data,
 				type: 'POST',
 				processData: false,
+				contentType: false,
 				success: function(data) {
-					console.log("uploadHandle Response", data);
+
+					media.set('name',      name);
+					media.set('file_name', data);
+
+					media.save({
+						success: function() {
+							console.log("WAHOO");
+							Backbone.history.navigate('#games', {trigger: true});
+						}
+					});
 				}
 			});
 

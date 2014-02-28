@@ -5,14 +5,14 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label" for="file_data"><%= t['file_data'] || _.str.humanize('file_data') %></label>
 		<div   class="col-sm-10">
-			<input id="file_data" type="file" name="file">
+			<input id="file_data" type="file">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label" for="file_name"><%= t['file_name'] || _.str.humanize('file_name') %></label>
 		<div   class="col-sm-10">
-			<input id="file_name" type="text" class="form-control" name="path">
+			<input id="file_name" type="text" class="form-control">
 		</div>
 	</div>
 
