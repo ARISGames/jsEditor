@@ -9,6 +9,7 @@ require.config({
 
 		jquery: 'library/jquery',
 		cookie: 'library/jquery.cookie',
+		jqueryui: 'library/jquery.ui',
 
 		/* Backbone */
 		underscore: 'library/underscore',
@@ -24,7 +25,12 @@ require.config({
 	shim: {
 	   'underscore.string': {
 			deps: ['underscore'],
-		}
+		},
+
+        "jqueryui": {
+            exports: "$",
+            deps: ['jquery']
+        },
 	}
 });
 

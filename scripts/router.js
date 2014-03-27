@@ -5,6 +5,7 @@ define([
 	'views/login',
 	'views/games',
 	'views/game',
+	'views/game_scenes',
 	'views/game_nav_menu',
 	'views/game_item_panel',
 	'views/plaques',
@@ -37,7 +38,7 @@ define([
 	'models/media',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, GameNavMenu, GameItemPanel, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
+	LoginView, GamesView, GameView, GameScenesView, GameNavMenu, GameItemPanel, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
 	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,
 	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation, Media,
@@ -52,6 +53,8 @@ define([
 			"games/new":           "newGame",
 			"games/:game_id":      "showGame",
 			"games/:game_id/edit": "editGame",
+
+			"games/:game_id/scenes":     "showSceneEditor",
 
 			"games/:game_id/plaques":    "listPlaques",
 			"games/:game_id/characters": "listCharacters",
@@ -100,6 +103,25 @@ define([
 			games.fetch({
 				success: function() {
 					vent.trigger("application.show", new GamesView({collection: games}));
+				}
+			});
+		},
+
+		showSceneEditor: function(game_id) {
+			var game = new Game({game_id: game_id});
+			game.fetch({
+				success: function() {
+
+					// get all the game items (or the folder?) for the sidebar
+					//
+					var characters = new CharacterCollection([], {parent: game});
+					characters.fetch({
+						success: function() {
+							vent.trigger("application.show",      new GameScenesView ({model: game}));
+							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game}));
+							vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
+						}
+					});
 				}
 			});
 		},
@@ -181,6 +203,8 @@ define([
 			locations.fetch({
 				success: function() {
 					vent.trigger("application.show", new LocationsView({collection: locations}));
+					// TODO draw 3 pane layout here too. with model updates reflecting.
+					// name change, location drag, or field edit in right pane
 				}
 			});
 		},

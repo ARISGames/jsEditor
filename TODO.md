@@ -18,6 +18,11 @@ FLOW
 - Check logged in cookie
 - Present login OR Navigate
 
+- Navigation triggers route
+- Route triggers controller (TODO)
+- Controller loads views into different parts of layout
+- Views remove when needed
+
 
 TODO
 ----
@@ -34,12 +39,10 @@ TODO
 
 DOING
 -----
-- Add delete on game objects
-- Logout event coupled view for menu bar
-- Locations and Quests
+- Scene Dragging/Adding (With mock objects)
+- Location view as 3-pane
 - Requirements editor for different objects
-- Map view for locations
-- Media viewer
+- Media picker
 
 JS THINGS
 ---------

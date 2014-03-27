@@ -1,2 +1,2 @@
-<h2><%= name %></h2>
+<h4><%= name %></h4>
 <p><%= description %></p>

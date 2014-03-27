@@ -18,7 +18,7 @@ define([
 
 		onClickShow: function() {
 			// TODO Move this to an event ie gamelist.game.clicked
-			Backbone.history.navigate("#games/"+this.model.get('game_id'), {trigger: true});
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
 		},
 
 		onClickEdit: function() {
