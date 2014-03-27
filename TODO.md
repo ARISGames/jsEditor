@@ -21,17 +21,16 @@ FLOW
 
 TODO
 ----
-- Marionette layout of items
+- Subclass views so they all inject i18n and avoid redundant requires
 - Event decoupling for click events (to avoid calling navigate everywhere)
   (And how to do best.. events on views, on models, through vent?)
   Probably with controllers that can listen to events, and the router or the rest of the app triggers them.
 - Session singleton?
 - Remove extra requires (is marionette needed if backbone is already there?)
-- Subclass views so they all inject i18n
 - Navigation prevention (warning) on changed forms
 - codeception tests and unit tests
 - Form builder for rendering out all fields with i18n and bootstrap classes and validation
-
+- _.result to clean up where hash or function returning a hash is passed to base
 
 DOING
 -----

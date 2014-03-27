@@ -6,7 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<!-- Bootstrap CDN CSS -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="styles/bootstrap.css">
 		<link rel="stylesheet" href="styles/arisjs.css">
 
 		<title>ARIS</title>
@@ -18,14 +19,30 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">arisJS</a>
 			</div>
+
+			<div id="navigation" class="navbar-header">
+			</div>
+
 			<!-- Move into user status region -->
-			<!-- <button class="navbar-btn navbar-right btn btn-info">Logout</button> -->
+			<div id="user" class="navbar-header navbar-right">
+			</div>
 		</nav>
 
 		<!-- Breadcrumb/nav region ? -->
 
-		<div class="container">
-			<div id="main"></div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-2">
+					<div id="list"></div>
+				</div>
+				<div class="col-xs-7">
+					main content
+					<div id="main"></div>
+				</div>
+				<div class="col-xs-3">
+					<div id="info"></div>
+				</div>
+			</div>
 		</div>
 
 		<!-- google maps api. move to requireJS -->

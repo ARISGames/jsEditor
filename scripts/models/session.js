@@ -22,6 +22,7 @@ define([
 				success: function(data) {
 					var json = JSON.parse(data);
 					if(json.returnCode == 0) {
+						$.cookie('username',   options.username);
 						$.cookie('editor_id',  json.data.editor_id);
 						$.cookie('auth_token', json.data.read_write_token);
 
@@ -32,6 +33,18 @@ define([
 					}
 				}
 			});
+		},
+
+		logout: function() {
+			$.removeCookie('username');
+			$.removeCookie('editor_id');
+			$.removeCookie('auth_token');
+
+			vent.trigger('session.logout');
+		},
+
+		username: function() {
+			return $.cookie('username');
 		},
 
 		editor_id: function() {

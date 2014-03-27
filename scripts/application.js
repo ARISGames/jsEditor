@@ -7,8 +7,9 @@ define([
 	'marionette',
 	'models/session',
 	'vent',
-	'router'
-], function($, _, Backbone, Marionette, Session, vent, Router) {
+	'router',
+	'views/user_nav_menu'
+], function($, _, Backbone, Marionette, Session, vent, Router, UserNavMenuView) {
 
 	var application = new Marionette.Application();
 
@@ -16,7 +17,11 @@ define([
 	// Application Layout
 	//
 	application.addRegions({
-		main_region: "#main"
+		main_region: "#main",
+		 nav_region: "#navigation",
+		user_region: "#user",
+		list_region: "#list",
+		info_region: "#info"
 	});
 
 
@@ -38,6 +43,7 @@ define([
 		}
 		else {
 			Backbone.history.start();
+			vent.trigger("application:user:show");
 		}
 	});
 
@@ -48,11 +54,36 @@ define([
 		application.main_region.show(view);
 	});
 
+	vent.on("application:nav:show", function(view) {
+		application.nav_region.show(view);
+	});
+
+	vent.on("application:list:show", function(view) {
+		application.list_region.show(view);
+	});
+
+	vent.on("application:info:show", function(view) {
+		application.info_region.show(view);
+	});
+
+	vent.on("application:user:show", function() {
+		application.user_region.show(new UserNavMenuView());
+	});
 
 	// Redirect back to intended destination after authorization
 	//
-	vent.on("session.login", function(view) {
+	vent.on("session.login", function() {
 		Backbone.history.navigate(application.intended_destination, {trigger: true});
+		vent.trigger("application:user:show");
+	});
+
+
+	vent.on("session.logout", function() {
+		application.info_region.reset();
+		application.list_region.reset();
+		application.nav_region.reset();
+		application.user_region.reset();
+		Backbone.history.navigate("#login", {trigger: true});
 	});
 
 

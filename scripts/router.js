@@ -5,6 +5,8 @@ define([
 	'views/login',
 	'views/games',
 	'views/game',
+	'views/game_nav_menu',
+	'views/game_item_panel',
 	'views/plaques',
 	'views/characters',
 	'views/items',
@@ -35,7 +37,7 @@ define([
 	'models/media',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
+	LoginView, GamesView, GameView, GameNavMenu, GameItemPanel, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
 	EditAmfModelView,
 	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,
 	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation, Media,
@@ -106,7 +108,17 @@ define([
 			var game = new Game({game_id: game_id});
 			game.fetch({
 				success: function() {
-					vent.trigger("application.show", new GameView({model: game}));
+
+					// get all the game items (or the folder?) for the sidebar
+					//
+					var characters = new CharacterCollection([], {parent: game});
+					characters.fetch({
+						success: function() {
+							vent.trigger("application.show",      new GameView      ({model: game}));
+							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game}));
+							vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
+						}
+					});
 				}
 			});
 		},

@@ -1,2 +1,5 @@
 .DS_Store
-*.swp
+
+# Temporary vim editor files
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
