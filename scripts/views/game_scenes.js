@@ -17,7 +17,7 @@ define([
 			// make draggable
 			console.log("FIND", this.$el.find(".scene"));
 			$(this.$el.find(".scene")).draggable({ containment: "parent" });
-			$(this.$el.find(".scene-item")).draggable({ containment: "parent" });
+			$(this.$el.find(".scene-item")).draggable({ containment: "parent", delay: 100 });
 		}
 
 	});
