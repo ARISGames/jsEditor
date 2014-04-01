@@ -54,7 +54,7 @@
 </div>
 
 <svg class="scenes-overlay" preserveAspectRatio="xMinYMin meet">
-  <path class="link-line" d="M0 0 L10 10" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="4,4" fill="none" stroke-width="2.5" />
-  <path class="link-line" d="M0 0 L10 20" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="4,4" fill="none" stroke-width="2.5" />
-  <path class="link-line" d="M0 0 L10 30" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="4,4" fill="none" stroke-width="2.5" />
+  <path class="link-line" d="M0 0 L10 10" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
+  <path class="link-line" d="M0 0 L10 20" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
+  <path class="link-line" d="M0 0 L10 30" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
 </svg>

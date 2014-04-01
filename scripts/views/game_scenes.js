@@ -39,13 +39,21 @@ define([
 			var link_lines  = this.$el.find('.link-line' );
 
 			this.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui) {
-				link_starts.each(function(index, link_start)
-				{
-					var end_pos   = view.getPos( link_ends.get(index), scene_container );
-					var start_pos = view.getPos( link_start,           scene_container );
+				view.drawLinks(link_starts, link_ends, link_lines, scene_container);
+			});
 
-					$(link_lines.get(index)).attr("d", "M" + (start_pos[0] + 37) + " " + (start_pos[1] + 27) + " L" + (end_pos[0] + 37) + " " + (end_pos[1] + 27));
-				});
+			setTimeout(function(){ view.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
+		},
+
+		drawLinks: function(link_starts, link_ends, link_lines, scene_container) {
+			var view = this;
+
+			link_starts.each(function(index, link_start)
+			{
+				var end_pos   = view.getPos( link_ends.get(index), scene_container );
+				var start_pos = view.getPos( link_start,           scene_container );
+
+				$(link_lines.get(index)).attr("d", "M" + (start_pos[0] + 37) + " " + (start_pos[1] + 27) + " L" + (end_pos[0] + 37) + " " + (end_pos[1] + 27));
 			});
 		}
 
