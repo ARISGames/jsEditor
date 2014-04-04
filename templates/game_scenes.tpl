@@ -1,3 +1,7 @@
+<button type="button" class="new-scene btn btn-default">
+	<span class="glyphicon glyphicon-plus-sign"></span>
+	Add Scene
+</button>
 <div class="scenes">
 	<div class="scene">
 		<h4>Exhibit Room</h4>
