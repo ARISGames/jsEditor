@@ -1,0 +1,66 @@
+.nowrap {
+  white-space: nowrap;
+}
+.scenes {
+  /*position: absolute;*/
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: #333333;
+  height: 500px;
+  width: 100%;
+}
+.scenes-overlay {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  height: 500px;
+  width: 100%;
+  pointer-events: none;
+  /*background: rgba(255,0,255,0.5);*/
+}
+.scene {
+  position: relative;
+  z-index: 10;
+  float: left;
+  border: 1px solid #323232;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 0.5em;
+  background: #ffffff;
+  width: 200px;
+}
+.scene h4 {
+  border-bottom: 1px solid grey;
+  overflow: hidden;
+  margin-top: 0;
+}
+.scene-items {
+  margin-bottom: 0;
+}
+.scene-items .item-icon {
+  text-align: center;
+}
+.scene-items .item-label {
+  margin: 0;
+}
+.scene-items .scene-item {
+  position: relative;
+  z-index: 40;
+  height: 55px;
+  width: 75px;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+.game-item-info h4 {
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid grey;
+}
+.new-scene {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
