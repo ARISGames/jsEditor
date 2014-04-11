@@ -2,20 +2,28 @@
 
 <div class="scenes">
 	<div class="btn-group new-scene-dropdown">
-		<button type="button" class="new-scene btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<button type="button" class="new-scene btn btn-primary dropdown-toggle" data-toggle="dropdown">
 			<span class="glyphicon glyphicon-plus-sign"></span>
+			<br />
 			Add Scene
 		</button>
-		<ul class="dropdown-menu" role="menu">
-			<li><a>Action</a></li>
-			<li><a>Another action</a></li>
-			<li><a>Something else here</a></li>
-			<li class="divider"></li>
-			<li><a>Separated link</a></li>
-		</ul>
 	</div>
 	<div class="scene">
-		<h4>Exhibit Room</h4>
+		<h4 class="title">Exhibit Room</h4>
+		<div class="btn-group new-item-dropdown">
+			<button type="button" class="new-item btn btn-link dropdown-toggle" data-toggle="dropdown">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a>Action</a></li>
+				<li><a>Another action</a></li>
+				<li><a>Something else here</a></li>
+				<li class="divider"></li>
+				<li><a>Separated link</a></li>
+			</ul>
+		</div>
+		<div class="clear"></div>
+
 		<ul class="list-inline scene-items">
 			<li class="scene-item link-start">
 				<div class="item-icon"><span class="glyphicon glyphicon-user"></span></div>
@@ -69,7 +77,7 @@
 </div>
 
 <svg class="scenes-overlay" preserveAspectRatio="xMinYMin meet">
-  <path class="link-line" d="M0 0 L10 10" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
-  <path class="link-line" d="M0 0 L10 20" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
-  <path class="link-line" d="M0 0 L10 30" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
+  <path class="link-line" d="M0 0 L0 0" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
+  <path class="link-line" d="M0 0 L0 0" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
+  <path class="link-line" d="M0 0 L0 0" stroke="rgba(200, 0, 200, 0.75)" stroke-dasharray="3,3" fill="none" stroke-width="2.5" />
 </svg>

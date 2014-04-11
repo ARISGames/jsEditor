@@ -45,10 +45,18 @@
   background: #ffffff;
   width: 200px;
 }
-.scene h4 {
+.scene .title {
   border-bottom: 1px solid grey;
   overflow: hidden;
   margin-top: 0;
+  float: left;
+}
+.scene .new-item-dropdown {
+  float: right;
+}
+.new-scene,
+.new-item {
+  font-size: 125%;
 }
 .scene-items {
   margin-bottom: 0;

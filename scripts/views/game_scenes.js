@@ -40,10 +40,10 @@ define([
 			var link_lines  = this.$el.find('.link-line' );
 
 			this.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui) {
-				view.drawLinks(link_starts, link_ends, link_lines, scene_container);
+				//view.drawLinks(link_starts, link_ends, link_lines, scene_container);
 			});
 
-			setTimeout(function(){ view.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
+			//setTimeout(function(){ view.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
 		},
 
 		drawLinks: function(link_starts, link_ends, link_lines, scene_container) {

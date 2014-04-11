@@ -119,7 +119,7 @@ define([
 						success: function() {
 							vent.trigger("application.show",      new GameScenesView ({model: game}));
 							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game}));
-							vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
+							//vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
 						}
 					});
 				}
@@ -138,7 +138,7 @@ define([
 						success: function() {
 							vent.trigger("application.show",      new GameView      ({model: game}));
 							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game}));
-							vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
+							//vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
 						}
 					});
 				}
