@@ -4,10 +4,11 @@ define([
 	'backbone',
 	'marionette',
 	'jqueryui',
+	'bootstrap',
 	'text!../../templates/game_scenes.tpl',
 	//'collections/scenes',
 	//'views/game_scene',
-], function($, _, Backbone, Marionette, jQueryUi, Template, GameCollection, GameItemView) {
+], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, GameCollection, GameItemView) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 

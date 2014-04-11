@@ -20,6 +20,9 @@ require.config({
 		'backbone.babysitter': 'library/backbone.babysitter',
 		'backbone.wreqr': 'library/backbone.wreqr',
 		marionette: 'library/backbone.marionette',
+
+		/* Bootstrap */
+		bootstrap: 'library/bootstrap'
 	},
 
 	shim: {
@@ -31,6 +34,10 @@ require.config({
             exports: "$",
             deps: ['jquery']
         },
+
+		'bootstrap' : {
+			deps: ['jquery']
+		}
 	}
 });
 

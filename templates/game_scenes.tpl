@@ -1,9 +1,19 @@
 <div class="scene-background"></div>
-<button type="button" class="new-scene btn btn-default">
-	<span class="glyphicon glyphicon-plus-sign"></span>
-	Add Scene
-</button>
+
 <div class="scenes">
+	<div class="btn-group new-scene-dropdown">
+		<button type="button" class="new-scene btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+			Add Scene
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a>Action</a></li>
+			<li><a>Another action</a></li>
+			<li><a>Something else here</a></li>
+			<li class="divider"></li>
+			<li><a>Separated link</a></li>
+		</ul>
+	</div>
 	<div class="scene">
 		<h4>Exhibit Room</h4>
 		<ul class="list-inline scene-items">
