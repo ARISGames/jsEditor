@@ -1,3 +1,4 @@
+<div class="scene-background"></div>
 <button type="button" class="new-scene btn btn-default">
 	<span class="glyphicon glyphicon-plus-sign"></span>
 	Add Scene

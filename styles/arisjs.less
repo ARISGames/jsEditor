@@ -2,27 +2,30 @@
 	white-space: nowrap;
 }
 
-.scenes {
-	/*position: absolute;*/
-	z-index: 1;
-
+.absolute {
+	position: absolute;
 	top: 0;
 	left: 0;
-	background: rgb(51, 51, 51);
 	height: 500px;
 	width: 100%;
 }
 
+.scenes {
+	.absolute;
+	z-index: 2;
+}
+
 .scenes-overlay {
-	position: absolute;
+	.absolute;
 	z-index: 20;
 
-	top: 0;
-	left: 0;
-	height: 500px;
-	width: 100%;
 	pointer-events: none;
 	/*background: rgba(255,0,255,0.5);*/
+}
+
+.scene-background {
+	.absolute;
+	background: rgb(51, 51, 51);
 }
 
 .scene {
@@ -36,34 +39,35 @@
 	padding: 0.5em;
 	background: rgb(255, 255, 255);
 	width: 200px;
-}
 
-.scene h4 {
-	border-bottom: 1px solid grey;
-	overflow: hidden;
-	margin-top: 0;
+	h4 {
+		border-bottom: 1px solid grey;
+		overflow: hidden;
+		margin-top: 0;
+	}
 }
 
 .scene-items {
 	margin-bottom: 0;
-}
 
-.scene-items .item-icon {
-	text-align: center;
-}
-.scene-items .item-label {
-	margin: 0;
-}
+	.item-icon {
+		text-align: center;
+	}
 
-.scene-items .scene-item {
-	position: relative;
-	z-index: 40;
+	.item-label {
+		margin: 0;
+	}
 
-	height: 55px;
-	width: 75px;
-	overflow: hidden;
-	text-align: center;
-	white-space: nowrap;
+	.scene-item {
+		position: relative;
+		z-index: 40;
+
+		height: 55px;
+		width: 75px;
+		overflow: hidden;
+		text-align: center;
+		white-space: nowrap;
+	}
 }
 
 .game-item-info h4 {

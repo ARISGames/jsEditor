@@ -15,6 +15,13 @@ define([
 
 		itemView: GamePanelItemView,
 		itemViewContainer: ".itemViewContainer",
+
+		events: {
+			"click .new": "onClickNew"
+		},
+
+		onClickNew: function() {
+		}
 	});
 
 });

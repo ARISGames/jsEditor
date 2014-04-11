@@ -1,24 +1,38 @@
 .nowrap {
   white-space: nowrap;
 }
-.scenes {
-  /*position: absolute;*/
-  z-index: 1;
+.absolute {
+  position: absolute;
   top: 0;
   left: 0;
-  background: #333333;
   height: 500px;
   width: 100%;
 }
-.scenes-overlay {
+.scenes {
   position: absolute;
-  z-index: 20;
   top: 0;
   left: 0;
   height: 500px;
   width: 100%;
+  z-index: 2;
+}
+.scenes-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 500px;
+  width: 100%;
+  z-index: 20;
   pointer-events: none;
   /*background: rgba(255,0,255,0.5);*/
+}
+.scene-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 500px;
+  width: 100%;
+  background: #333333;
 }
 .scene {
   position: relative;
