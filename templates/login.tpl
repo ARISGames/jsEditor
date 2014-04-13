@@ -1,3 +1,4 @@
+<div class="col-xs-10 col-xs-offset-2">
 <div class="jumbotron">
 	<p><%= t.greeting %></p>
 </div>
@@ -17,5 +18,6 @@
 		<%= t.login_button %>
 	</button>
 </form>
+</div>
 
 

@@ -1,7 +1,7 @@
 <div class="scene-background"></div>
 
 <div class="scenes">
-	<div class="btn-group new-scene-dropdown">
+	<div class="btn-group new-scene-button">
 		<button type="button" class="new-scene btn btn-primary dropdown-toggle" data-toggle="dropdown">
 			<span class="glyphicon glyphicon-plus-sign"></span>
 			<br />
@@ -10,7 +10,7 @@
 	</div>
 	<div class="scene">
 		<h4 class="title">Exhibit Room</h4>
-		<div class="btn-group new-item-dropdown">
+		<div class="btn-group new-item-button">
 			<button type="button" class="new-item btn btn-link dropdown-toggle" data-toggle="dropdown">
 				<span class="glyphicon glyphicon-plus-sign"></span>
 			</button>
