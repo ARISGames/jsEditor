@@ -27,6 +27,7 @@ define([
 	'collections/requirements',
 	'collections/conversations',
 	'collections/media',
+	'collections/scenes',
 	'models/game',
 	'models/plaque',
 	'models/character',
@@ -40,7 +41,7 @@ define([
 ], function($, _, Backbone,
 	LoginView, GamesView, GameView, GameScenesView, GameNavMenu, GameItemPanel, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
 	EditAmfModelView,
-	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,
+	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
 	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
@@ -112,13 +113,11 @@ define([
 			game.fetch({
 				success: function() {
 
-					// get all the game items (or the folder?) for the sidebar
-					//
-					var characters = new CharacterCollection([], {parent: game});
-					characters.fetch({
+					var scenes = new SceneCollection([], {parent: game});
+					scenes.fetch({
 						success: function() {
-							vent.trigger("application.show",      new GameScenesView ({model: game}));
-							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game}));
+							vent.trigger("application.show",      new GameScenesView ({model: game, collection: scenes}));
+							vent.trigger("application:nav:show",  new GameNavMenu    ({model: game}));
 							//vent.trigger("application:list:show", new GameItemPanel ({collection: characters}));
 						}
 					});

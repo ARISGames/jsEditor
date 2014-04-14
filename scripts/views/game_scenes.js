@@ -6,13 +6,29 @@ define([
 	'jqueryui',
 	'bootstrap',
 	'text!../../templates/game_scenes.tpl',
-	//'collections/scenes',
-	//'views/game_scene',
-], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, GameCollection, GameItemView) {
+	'models/scene',
+	'views/game_scene',
+], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, Scene, GameSceneView) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: GameItemView,
+		itemView: GameSceneView,
+		itemViewContainer: ".scenes",
+
+		events: {
+			"click .new-scene": "onClickNewScene"
+		},
+
+		onClickNewScene: function() {
+			// push to collection.
+			this.collection.add( new Scene() );
+
+			// (on add render)
+			// event, show scene dialog
+		},
+
+
+		/* Line Drawing Code */
 
 		getPos: function(ele, targetParent){
 			var x=0;
