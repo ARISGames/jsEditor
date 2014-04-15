@@ -20,7 +20,12 @@ define([
 
 		onClickSave: function() {
 			this.model.set('title', this.ui.title.val());
-			// persist
+
+			this.model.save({}, {
+				success: function() {
+					console.log("save!");
+				}
+			});
 		}
 	});
 });

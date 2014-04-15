@@ -3,12 +3,13 @@ define([
 	'underscore',
 	'backbone',
 	'models/scene',
+	'scripts/config.js.php?dummy',
 	'vent'
-], function($, _, Backbone, Scene, vent) {
+], function($, _, Backbone, Scene, config, vent) {
 	return Backbone.Collection.extend({
 		model: Scene,
 
-		url: "http://localhost:2600/scenes"
+		url: config.mongo_url
 	});
 });
 
