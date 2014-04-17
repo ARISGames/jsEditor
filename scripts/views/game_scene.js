@@ -5,15 +5,17 @@ define([
 	'marionette',
 	'text!../../templates/game_scene.tpl',
 	'views/scene_info',
+	'collections/game_characters',
 	'vent'
-], function($, _, Backbone, Marionette, Template, SceneInfoView, vent) {
+], function($, _, Backbone, Marionette, Template, SceneInfoView, GameCharactersCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		className: "scene",
 
 		events: {
-			"click .title": "onClickTitle"
+			"click .title": "onClickTitle",
+			"click .add-character": "onClickAddCharacter"
 		},
 
 		/* TODO cleanest way to do this? */
@@ -31,6 +33,20 @@ define([
 
 		onClickTitle: function() {
 			vent.trigger("application:info:show", new SceneInfoView({model: this.model}));
+		},
+
+		onClickAddCharacter: function() {
+			var scene = this.model;
+
+			var characters = new GameCharactersCollection([], {parent: scene});
+
+			characters.fetch({
+				data: {"game_id": scene.get('game_id')},
+				success: function() {
+					//var character_chooser = new CharacterChooser({collection: characters, parent: this.model});
+					//vent.trigger("application:info:show", character_chooser);
+				}
+			});
 		}
 	});
 });

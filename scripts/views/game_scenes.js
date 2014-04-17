@@ -22,7 +22,7 @@ define([
 		},
 
 		onClickNewScene: function() {
-			var scene = new Scene();
+			var scene = new Scene({game_id: this.model.id});
 			this.collection.add(scene);
 			vent.trigger("application:info:show", new SceneInfoView({model: scene}));
 		},

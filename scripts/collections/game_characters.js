@@ -9,7 +9,7 @@ define([
 	return Backbone.Collection.extend({
 		model: Scene,
 
-		url: config.mongo_url + "/scenes"
+		url: config.mongo_url + "/characters"
 	});
 });
 
