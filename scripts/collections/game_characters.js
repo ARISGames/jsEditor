@@ -2,12 +2,12 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'models/scene',
+	'models/game_character',
 	'scripts/config.js.php?dummy',
 	'vent'
-], function($, _, Backbone, Scene, config, vent) {
+], function($, _, Backbone, GameCharacter, config, vent) {
 	return Backbone.Collection.extend({
-		model: Scene,
+		model: GameCharacter,
 
 		url: config.mongo_url + "/characters"
 	});

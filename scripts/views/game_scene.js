@@ -5,9 +5,10 @@ define([
 	'marionette',
 	'text!../../templates/game_scene.tpl',
 	'views/scene_info',
+	'views/character_chooser',
 	'collections/game_characters',
 	'vent'
-], function($, _, Backbone, Marionette, Template, SceneInfoView, GameCharactersCollection, vent) {
+], function($, _, Backbone, Marionette, Template, SceneInfoView, CharacterChooser, GameCharactersCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -43,8 +44,8 @@ define([
 			characters.fetch({
 				data: {"game_id": scene.get('game_id')},
 				success: function() {
-					//var character_chooser = new CharacterChooser({collection: characters, parent: this.model});
-					//vent.trigger("application:info:show", character_chooser);
+					var character_chooser = new CharacterChooser({collection: characters, parent: scene});
+					vent.trigger("application:info:show", character_chooser);
 				}
 			});
 		}
