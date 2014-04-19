@@ -6,11 +6,28 @@ define([
 	'text!../../templates/game_scene.tpl',
 	'views/scene_info',
 	'views/character_chooser',
+	'views/game_scene_character',
 	'collections/game_characters',
 	'vent'
-], function($, _, Backbone, Marionette, Template, SceneInfoView, CharacterChooser, GameCharactersCollection, vent) {
+], function($, _, Backbone, Marionette, Template, SceneInfoView, CharacterChooserView, GameSceneCharacterView, GameCharactersCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
+
+		itemView: GameSceneCharacterView,
+		itemViewContainer: ".scene-items",	
+
+		initialize: function() {
+			this.collection = new GameCharactersCollection([]);
+			var view = this;
+
+			// Must find cleaner way to interface this with the other view
+			vent.on("scene:add_instance", function(instance) {
+				if (view.model.id == instance.get("scene_id"))
+				{
+					view.collection.add(instance);
+				}
+			});
+		},
 
 		className: "scene",
 
@@ -44,7 +61,7 @@ define([
 			characters.fetch({
 				data: {"game_id": scene.get('game_id')},
 				success: function() {
-					var character_chooser = new CharacterChooser({collection: characters, parent: scene});
+					var character_chooser = new CharacterChooserView({collection: characters, parent: scene});
 					vent.trigger("application:info:show", character_chooser);
 				}
 			});
