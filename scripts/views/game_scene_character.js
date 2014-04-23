@@ -11,6 +11,12 @@ define([
 		// Bootstrap
 		tagName: 'li',
 
+		templateHelpers: function () {
+			return {
+				name: this.model.get("character").get("name")
+			}
+		},
+
 		events: {
 			"click .show": "onClickShowCharacter",
 		},

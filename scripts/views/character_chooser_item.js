@@ -20,10 +20,11 @@ define([
 		},
 
 
+		// TODO how to bubble up? or get scene passed to us
 		onClickNewInstance: function() {
 			var character_instance = new CharacterInstance({game_id: this.model.get("game_id")});
 
-			var character_creator  = new CharacterCreatorView({scene: this.model, character: this.model, character_instance: character_instance});
+			var character_creator  = new CharacterCreatorView({scene: this.options.parent, character: this.model, character_instance: character_instance});
 			vent.trigger("application:info:show", character_creator);
 		}
 	});

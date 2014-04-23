@@ -18,6 +18,12 @@ define([
 		itemView: CharacterChooserItem,
 		itemViewContainer: ".characters",
 
+		itemViewOptions: function(model, index) {
+			return {
+			  parent: this.options.parent
+			}
+		},
+
 		events: {
 			"click .new-character": "onClickNewCharacter"
 		},
