@@ -29,25 +29,31 @@ define([
 
 		/* Save character for game and instance for scene */
 		onClickSave: function() {
-			var character = this.options.character;
-			var instance = this.options.character_instance;
 			var view = this;
+			var character = this.options.character;
+			var instance  = this.options.character_instance;
+
 			// save character
 			character.set("name", view.ui.name.val());
-			character.save({}, {
-				success: function() {
-					console.log("char save");
+
+			character.save({},
+			{
+				success: function()
+				{
+					console.log("gonna save with", view.ui.description.val(), view.options.scene.id, character.id);
 					instance.set("description",  view.ui.description.val());
 					instance.set("scene_id",     view.options.scene.id);
 					instance.set("character_id", character.id);
+					instance.set("character_name", character.get("name"));
 					instance.set("character",    character);
 
-					vent.trigger("scene:add_instance", instance);
-					//instance.save({}, {
-					//	success: function() {
-					//		console.log("instance save");
-					//	}
-					//});
+					instance.save({},
+					{
+						success: function()
+						{
+							vent.trigger("scene:add_instance", instance);
+						}
+					});
 				}
 			});					
 			

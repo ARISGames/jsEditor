@@ -113,6 +113,7 @@ define([
 			game.fetch({
 				success: function() {
 
+					// FIXME parent is a bad naming, also not used
 					var scenes = new SceneCollection([], {parent: game});
 					scenes.fetch({
 						data: { "game_id": game.id },

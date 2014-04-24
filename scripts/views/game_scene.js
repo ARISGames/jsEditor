@@ -8,8 +8,9 @@ define([
 	'views/character_chooser',
 	'views/game_scene_character',
 	'collections/game_characters',
+	'collections/character_instances',
 	'vent'
-], function($, _, Backbone, Marionette, Template, SceneInfoView, CharacterChooserView, GameSceneCharacterView, GameCharactersCollection, vent) {
+], function($, _, Backbone, Marionette, Template, SceneInfoView, CharacterChooserView, GameSceneCharacterView, GameCharactersCollection, CharacterInstancesCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -17,8 +18,15 @@ define([
 		itemViewContainer: ".scene-items",	
 
 		initialize: function() {
-			this.collection = new GameCharactersCollection([]);
 			var view = this;
+			this.collection = new CharacterInstancesCollection([]);
+
+			this.collection.fetch({
+				data: { "scene_id": this.model.id },
+				success: function() {
+					//this.render();
+				}
+			});
 
 			// Must find cleaner way to interface this with the other view
 			vent.on("scene:add_instance", function(instance) {
