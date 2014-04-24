@@ -1,10 +1,13 @@
+/* FIXME This is an instance not a character */
 define([
 	'jquery',
 	'underscore',
 	'backbone',
 	'marionette',
 	'text!../../templates/game_scene_character.tpl',
-], function($, _, Backbone, Marionette, Template) {
+	'views/character_instance_info',
+	'vent'
+], function($, _, Backbone, Marionette, Template, CharacterInstanceInfo, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -23,6 +26,7 @@ define([
 		},
 
 		onClickShowCharacter: function() {
+			vent.trigger("application:info:show", new CharacterInstanceInfo({model: this.model}));
 		}
 	});
 });
