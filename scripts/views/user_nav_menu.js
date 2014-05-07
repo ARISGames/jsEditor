@@ -7,14 +7,13 @@ define([
 	'text!../../templates/user_nav_menu.tpl',
 	'models/session',
 	'vent'
-], function(module, $, _, Backbone, Marionette, Template, Session, vent) {
+], function(module, $, _, Backbone, Marionette, Template, session, vent) {
     console.log(module.id);
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),
 
 		templateHelpers: function() {
-			var session = new Session();
 			return {
 				username: session.username()
 			};
@@ -26,7 +25,6 @@ define([
 
 		onClickLogout: function() {
 			// just listen for event on session
-			var session = new Session();
 			session.logout();
 		}
 	});

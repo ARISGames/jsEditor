@@ -1,12 +1,15 @@
 define([
+	'module',
 	'jquery',
 	'underscore',
 	'backbone',
 	'cookie',
+	'scripts/config.js.php?dummy',
 	'vent'
-], function($, _, Backbone, Cookie, vent) {
+], function(module, $, _, Backbone, Cookie, config, vent) {
+	console.log(module.id);
 
-	return Backbone.Model.extend({
+	var Session = Backbone.Model.extend({
 		logged_in: function() {
 			if($.cookie('auth_token') != undefined) {
 				return true;
@@ -18,13 +21,16 @@ define([
 
 		login: function(options) {
 			$.ajax({
-				url:"https://arisgames.org/server/json.php/v1.editors.getToken/"+options.username+"/"+options.password+"/read_write",
+				url: config.aris_api_url + "users.logInJSON",
+				type: 'POST',
+				data: JSON.stringify({"user_name": options.username, "password": options.password, "permission": "read_write"}),
+				processData: false,
 				success: function(data) {
 					var json = JSON.parse(data);
 					if(json.returnCode == 0) {
-						$.cookie('username',   options.username);
-						$.cookie('editor_id',  json.data.editor_id);
-						$.cookie('auth_token', json.data.read_write_token);
+						$.cookie('username',   json.data.user_name);
+						$.cookie('editor_id',  json.data.user_id);
+						$.cookie('auth_token', json.data.read_write_key);
 
 						vent.trigger('session.login');
 					}
@@ -55,4 +61,6 @@ define([
 			return $.cookie('auth_token');
 		}
 	});
+
+	return new Session();
 });

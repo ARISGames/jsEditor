@@ -3,8 +3,7 @@ define([
 	'underscore',
 	'backbone',
 	'models/amf_base',
-	'models/session'
-], function($, _, Backbone, AmfBaseModel, Session) {
+], function($, _, Backbone, AmfBaseModel) {
 
 	return AmfBaseModel.extend({
 		idAttribute: 'object_content_id',

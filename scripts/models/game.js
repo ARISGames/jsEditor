@@ -2,18 +2,18 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'models/amf_base',
+	'models/json_base',
 	'models/session'
-], function($, _, Backbone, AmfBaseModel, Session) {
+], function($, _, Backbone, JsonBaseModel, session) {
 
-	return AmfBaseModel.extend({
+	return JsonBaseModel.extend({
 		idAttribute: 'game_id',
 
 
 		amfphp_url_templates: {
 			read:   "games.getGame",
 			update: "games.updateGame",
-			create: "games.createGame",
+			create: "games.createGameJSON",
 			delete: "games.deleteGame"
 		},
 
@@ -21,12 +21,23 @@ define([
 		amfphp_url_patterns: {
 			read:   "/<%= id %>",
 			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
-			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			create: "",
 			delete: "/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
-
 		amfphp_url_attributes: [
+          "name",
+          "description",
+          "icon_media_id",
+          "media_id",
+          "map_type",
+          "latitude",
+          "longitude",
+          "zoom_level",
+          "show_player_location"
+        ],
+        
+		aamfphp_url_attributes: [
 			"game_id",
 			"name",
 			"description",

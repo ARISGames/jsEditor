@@ -30,7 +30,6 @@ TODO
 - Event decoupling for click events (to avoid calling navigate everywhere)
   (And how to do best.. events on views, on models, through vent?)
   Probably with controllers that can listen to events, and the router or the rest of the app triggers them.
-- Session singleton?
 - Remove extra requires (is marionette needed if backbone is already there?)
 - Navigation prevention (warning) on changed forms
 - codeception tests and unit tests

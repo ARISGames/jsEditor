@@ -1,12 +1,17 @@
 define([
+	'module',
 	'jquery',
 	'underscore',
 	'backbone',
 	'models/scene',
+	'collections/json_collection_base',
 	'scripts/config.js.php?dummy',
 	'vent'
-], function($, _, Backbone, Scene, config, vent) {
-	return Backbone.Collection.extend({
+], function(module, $, _, Backbone, Scene, JsonCollection, config, vent) {
+	console.log(module.id);
+
+	return JsonCollection.extend({
+
 		model: Scene,
 
 		url: config.mongo_url + "/scenes"

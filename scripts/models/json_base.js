@@ -36,7 +36,7 @@ define([
 		amfphp_url_patterns: {
 			read:   "/<%= game_id %>/<%= id %>",
 			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
-			create: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			create: "",
 			delete: "/<%= game_id %>/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
@@ -116,6 +116,15 @@ define([
 			// Build url from model attributes for update
 			if(method === "update" || method === "create" || method === "delete") {
 				options.type = "POST";
+
+				var json_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
+
+				$.each(this.get_amfphp_url_attributes(), function(index, key) {
+					json_data[key] = model.attributes[key];
+				});
+
+				options.data = JSON.stringify(json_data);
+				console.log("COMPARE", '{"name":"gameName","description":"gameDescription","icon_media_id":1,"media_id":2,"map_type":"huh","latitude":1.234,"longitude":2.468,"zoom_level":2,"show_player_location":true,"auth":{"user_id":"1","key":"AZUTWqDm8t9yeELzPa5o4X8FL65a8MgyC0iphMBf6BEa5fALfvZaiYGUUCUSf0hH"}}', "TO", options.data);
 
 				var model_attributes_url = $.map(this.get_amfphp_url_attributes(), function(key) {
 

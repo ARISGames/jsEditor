@@ -1,4 +1,5 @@
 define([
+	'module',
 	'jquery',
 	'underscore',
 	'backbone',
@@ -6,12 +7,14 @@ define([
 	'models/session',
 	'text!../../templates/login.tpl',
 	'i18n!../locale/nls/login.js'
-], function($, _, Backbone, Marionette, Session, Template, t) {
+], function(module, $, _, Backbone, Marionette, session, Template, t) {
+	console.log(module.id);
+
 	return Backbone.Marionette.ItemView.extend({
 		template: function(data) {
 			return _.template(Template, _.extend(data, {t:t}));
 		},
-	
+
 		events: {
 			"click #login": "onClickLogin"
 		},
@@ -20,7 +23,6 @@ define([
 			// TODO add field validation
 			// and trigger event instead of relying on session.
 			//
-			var session = new Session;
 			session.login({
 				username: this.$el.find('#username').val(),
 				password: this.$el.find('#password').val()

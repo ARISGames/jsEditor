@@ -9,7 +9,7 @@ define([
 	'vent',
 	'router',
 	'views/user_nav_menu'
-], function($, _, Backbone, Marionette, Session, vent, Router, UserNavMenuView) {
+], function($, _, Backbone, Marionette, session, vent, Router, UserNavMenuView) {
 
 	var application = new Marionette.Application();
 
@@ -28,7 +28,7 @@ define([
 	// Application Constructor
 	//
 	application.addInitializer(function () {
-		this.session = new Session;
+		this.session = session;
 		this.router  = new Router;
 	});
 
