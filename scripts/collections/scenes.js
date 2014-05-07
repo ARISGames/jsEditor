@@ -5,16 +5,19 @@ define([
 	'backbone',
 	'models/scene',
 	'collections/json_collection_base',
-	'scripts/config.js.php?dummy',
+	'models/session',
 	'vent'
-], function(module, $, _, Backbone, Scene, JsonCollection, config, vent) {
+], function(module, $, _, Backbone, Scene, JsonCollection, session, vent) {
 	console.log(module.id);
 
 	return JsonCollection.extend({
 
 		model: Scene,
 
-		url: config.mongo_url + "/scenes"
+
+		url: function() {
+			return this.amfphp_url_root+"scenes.getScenesForGame/"+this.parent.get("game_id")+"/"+session.editor_id()+"/"+session.auth_token();
+		},
 	});
 });
 
