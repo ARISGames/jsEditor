@@ -16,14 +16,6 @@ define([
 			delete: "scenes.deleteScene"
 		},
 
-
-		amfphp_url_patterns: {
-			create: "",
-			read:   "/<%= id %>/<%= editor_id %>/<%= editor_token %>",
-			update: "",
-			delete: "/<%= id %>/<%= editor_id %>/<%= editor_token %>"
-		},
-
 		amfphp_url_attributes: [
 			"name",
 			"game_id",

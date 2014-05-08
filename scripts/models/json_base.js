@@ -34,10 +34,10 @@ define([
 
 
 		amfphp_url_patterns: {
-			read:   "/<%= game_id %>/<%= id %>",
-			update: "",
 			create: "",
-			delete: "/<%= game_id %>/<%= id %>/<%= editor_id %>/<%= editor_token %>"
+			read:   "/<%= id %>/<%= editor_id %>/<%= editor_token %>",
+			update: "",
+			delete: "/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
 
