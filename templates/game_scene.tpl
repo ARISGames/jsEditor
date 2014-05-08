@@ -1,4 +1,4 @@
-<h4 class="title"><%= title %></h4>
+<h4 class="name"><%= name %></h4>
 <div class="btn-group new-item-button">
 	<button type="button" class="new-item btn btn-link dropdown-toggle" data-toggle="dropdown">
 		<span class="glyphicon glyphicon-plus-sign"></span>

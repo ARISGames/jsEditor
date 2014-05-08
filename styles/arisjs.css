@@ -49,7 +49,7 @@
   background: #ffffff;
   width: 200px;
 }
-.scene .title {
+.scene h4.name {
   border-bottom: 1px solid grey;
   overflow: hidden;
   margin-top: 0;

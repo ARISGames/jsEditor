@@ -35,7 +35,7 @@ define([
 
 		amfphp_url_patterns: {
 			read:   "/<%= game_id %>/<%= id %>",
-			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
+			update: "",
 			create: "",
 			delete: "/<%= game_id %>/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
@@ -45,14 +45,7 @@ define([
 		// used for Quests.
 		get_amfphp_url_attributes: function()
 		{
-			if(_.isFunction(this.amfphp_url_attributes))
-			{
-				return this.amfphp_url_attributes.call(this);
-			}
-			else
-			{
-				return this.amfphp_url_attributes;
-			}
+			return _.result(this, 'amfphp_url_attributes');
 		},
 
 
@@ -110,23 +103,14 @@ define([
 			var template_values = {}
 			_.extend(template_values, model.attributes);
 			_.extend(template_values, {id: model.id});
-
 			_.extend(template_values, {editor_id: session.editor_id(), editor_token: session.auth_token()});
 
 			// Build url from model attributes for update
 			if(method === "update" || method === "create" || method === "delete") {
 				options.type = "POST";
 
-				var json_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
-
+				var model_attributes = {}
 				$.each(this.get_amfphp_url_attributes(), function(index, key) {
-					json_data[key] = model.attributes[key];
-				});
-
-				options.data = JSON.stringify(json_data);
-				console.log("COMPARE", '{"name":"gameName","description":"gameDescription","icon_media_id":1,"media_id":2,"map_type":"huh","latitude":1.234,"longitude":2.468,"zoom_level":2,"show_player_location":true,"auth":{"user_id":"1","key":"AZUTWqDm8t9yeELzPa5o4X8FL65a8MgyC0iphMBf6BEa5fALfvZaiYGUUCUSf0hH"}}', "TO", options.data);
-
-				var model_attributes_url = $.map(this.get_amfphp_url_attributes(), function(key) {
 
 					// On create don't include the id field
 					if(key === model.idAttribute && model.attributes[key] == null) {
@@ -136,23 +120,19 @@ define([
 					// Grab the values of each attribute listed for model
 					if(_.include(_.keys(model.attributes), key)) {
 						var value = model.attributes[key];
-
-						// Return empty string since map ignores nulls
-						if(value === null) {
-							return "";
-						}
-						else {
-							return value;
-						}
+						model_attributes[key] = value;
 					}
 					else {
-						throw "amf update URL Error: attribute '"+key+"' not found on model";
+						throw "syncError during "+method+": attribute '"+key+"' not found on model";
 					}
-				}).join("/");
+				});
 
-				_.extend(template_values, {model_attributes_url: model_attributes_url});
+				// Inject authorization json.
+				_.extend(model_attributes, {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}});
+
+				options.data = JSON.stringify(model_attributes);
 			}
-			
+
 			// Render url with values
 			var url      = this.amfphp_url_root + this.amfphp_url_templates[method] + this.amfphp_url_patterns[method];
 			var template = _.template(url);
@@ -164,8 +144,12 @@ define([
 
 			// TODO make sure this does not break expected callback argument order for error vs success.
 			options.success = function(data, success, success_options) {
+				// FIXME remove?
 				if(data.faultCode) {
 					throw "amf Fault: "+data.faultString;
+				}
+				else if(data.returnCode != 0) {
+					throw "returnCode "+data.returnCode+": "+data.returnCodeDescription;
 				}
 				else {
 					// Call original callback

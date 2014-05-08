@@ -15,7 +15,7 @@ define([
 		template: _.template(Template),
 
 		itemView: GameSceneCharacterView,
-		itemViewContainer: ".scene-items",	
+		itemViewContainer: ".scene-items",
 
 		initialize: function() {
 			var view = this;
@@ -40,7 +40,7 @@ define([
 		className: "scene",
 
 		events: {
-			"click .title": "onClickTitle",
+			"click .name": "onClickName",
 			"click .add-character": "onClickAddCharacter"
 		},
 
@@ -57,7 +57,7 @@ define([
 			$(this.$el).draggable({ containment: "parent" });
 		},
 
-		onClickTitle: function() {
+		onClickName: function() {
 			vent.trigger("application:info:show", new SceneInfoView({model: this.model}));
 		},
 
