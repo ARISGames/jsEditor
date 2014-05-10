@@ -14,7 +14,6 @@ define([
 
 		model: Scene,
 
-
 		url: function() {
 			return this.amfphp_url_root+"scenes.getScenesForGame/"+this.parent.get("game_id")+"/"+session.editor_id()+"/"+session.auth_token();
 		},

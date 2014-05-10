@@ -1,15 +1,21 @@
 define([
+	'module',
 	'jquery',
 	'underscore',
 	'backbone',
 	'models/game_character',
-	'scripts/config.js.php?dummy',
+	'collections/json_collection_base',
+	'models/session',
 	'vent'
-], function($, _, Backbone, GameCharacter, config, vent) {
-	return Backbone.Collection.extend({
-		model: GameCharacter,
+], function(module, $, _, Backbone, Character, JsonCollection, session, vent) {
+	console.log(module.id);
 
-		url: config.mongo_url + "/characters"
+	return JsonCollection.extend({
+
+		model: Character,
+
+		url: function() {
+			return this.amfphp_url_root+"npcs.getNpcsForGame/"+this.parent.get("game_id")+"/"+session.editor_id()+"/"+session.auth_token();
+		},
 	});
 });
-
