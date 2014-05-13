@@ -22,6 +22,7 @@ FLOW
 - Route triggers controller (TODO)
 - Controller loads views into different parts of layout
 - Views remove when needed
+- Events to decouple code
 
 
 TODO
@@ -38,10 +39,12 @@ TODO
 
 DOING
 -----
-- Scene Dragging/Adding (With mock objects)
-- Location view as 3-pane
+- Instances/Triggers creation with v2 api
+- Rename/delete old views/models
+- Media/Locations under v2 api
+- Add controllers/events to remove dependencies inside the views
 - Requirements editor for different objects
-- Media picker
+- Left side bar unhide
 
 JS THINGS
 ---------

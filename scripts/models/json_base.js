@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'models/session'
-], function($, _, Backbone, session) {
+	'models/session',
+	'config'
+], function($, _, Backbone, session, config) {
 
 	return Backbone.Model.extend({
 
@@ -30,14 +31,14 @@ define([
 		},
 
 
-		amfphp_url_root: "http://dev.arisgames.org/server/json.php/v2.",
+		amfphp_url_root: config.aris_api_url,
 
 
 		amfphp_url_patterns: {
 			create: "",
-			read:   "/<%= id %>/<%= editor_id %>/<%= editor_token %>",
+			read:   "",
 			update: "",
-			delete: "/<%= id %>/<%= editor_id %>/<%= editor_token %>"
+			delete: ""
 		},
 
 
@@ -97,29 +98,36 @@ define([
 			// Make Aris happy with request.
 			options.contentType = "application/x-www-form-urlencoded; charset=UTF-8";
 			options.data = null;
-			options.type = "GET";
+			options.type = "POST";
 
 			// Collect needed values for url
 			var template_values = {}
 			_.extend(template_values, model.attributes);
 			_.extend(template_values, {id: model.id});
-			_.extend(template_values, {editor_id: session.editor_id(), editor_token: session.auth_token()});
+
+			var auth_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
 
 			// Build url from model attributes for update
-			if(method === "update" || method === "create" || method === "delete") {
-				options.type = "POST";
+			if(method === "read") {
+				var request_attributes = {}
 
+				request_attributes[model.idAttribute] = model.get(model.idAttribute);
+				_.extend(request_attributes, auth_data);
+
+				options.data = JSON.stringify(request_attributes);
+			}
+			else if(method === "update" || method === "create" || method === "delete") {
 				var model_attributes = {}
 				$.each(this.get_amfphp_url_attributes(), function(index, key) {
 
 					// On create don't include the id field
-					if(key === model.idAttribute && model.attributes[key] == null) {
+					if(key === model.idAttribute && model.get(key) == null) {
 						return;
 					}
 
 					// Grab the values of each attribute listed for model
 					if(_.include(_.keys(model.attributes), key)) {
-						var value = model.attributes[key];
+						var value = model.get(key);
 						model_attributes[key] = value;
 					}
 					else {
@@ -128,7 +136,7 @@ define([
 				});
 
 				// Inject authorization json.
-				_.extend(model_attributes, {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}});
+				_.extend(model_attributes, auth_data);
 
 				options.data = JSON.stringify(model_attributes);
 			}

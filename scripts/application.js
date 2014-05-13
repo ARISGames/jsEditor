@@ -36,6 +36,7 @@ define([
 	// Authorization Redirect
 	//
 	application.on("initialize:after", function() {
+		// FIXME visiting #login directly
 		if(!this.session.logged_in()) {
 			this.intended_destination = window.location.hash;
 			Backbone.history.start({silent: true});
@@ -79,6 +80,7 @@ define([
 
 
 	vent.on("session.logout", function() {
+		// TODO each region listen to reset?
 		application.info_region.reset();
 		application.list_region.reset();
 		application.nav_region.reset();

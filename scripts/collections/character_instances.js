@@ -3,7 +3,7 @@ define([
 	'underscore',
 	'backbone',
 	'models/character_instance',
-	'scripts/config.js.php?dummy',
+	'config',
 	'vent'
 ], function($, _, Backbone, CharacterInstance, config, vent) {
 	return Backbone.Collection.extend({

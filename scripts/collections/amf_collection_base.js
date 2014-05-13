@@ -2,7 +2,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'scripts/config.js.php?dummy',
+	'config',
 	'vent'
 ], function($, _, Backbone, config, vent) {
 	return Backbone.Collection.extend({

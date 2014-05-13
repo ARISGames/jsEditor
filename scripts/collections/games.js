@@ -14,9 +14,6 @@ define([
 
 		model: Game,
 
-
-		url: function() {
-			return this.amfphp_url_root+"games.getGamesForUser/"+session.editor_id()+"/"+session.auth_token();
-		},
+		amfphp_url: "games.getGamesForUser"
 	});
 });

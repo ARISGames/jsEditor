@@ -4,7 +4,7 @@ define([
 	'underscore',
 	'backbone',
 	'cookie',
-	'scripts/config.js.php?dummy',
+	'config',
 	'vent'
 ], function(module, $, _, Backbone, Cookie, config, vent) {
 	console.log(module.id);
@@ -21,7 +21,7 @@ define([
 
 		login: function(options) {
 			$.ajax({
-				url: config.aris_api_url + "users.logInJSON",
+				url: config.aris_api_url + "users.logIn",
 				type: 'POST',
 				data: JSON.stringify({"user_name": options.username, "password": options.password, "permission": "read_write"}),
 				processData: false,

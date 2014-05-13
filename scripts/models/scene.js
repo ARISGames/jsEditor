@@ -11,8 +11,8 @@ define([
 
 		amfphp_url_templates: {
 			read:   "scenes.getScene",
-			update: "scenes.updateSceneJSON",
-			create: "scenes.createSceneJSON",
+			update: "scenes.updateScene",
+			create: "scenes.createScene",
 			delete: "scenes.deleteScene"
 		},
 

@@ -2,7 +2,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'scripts/config.js.php?dummy'
+	'config'
 ], function($, _, Backbone, config) {
 	return Backbone.Model.extend({
 		idAttribute: "_id",

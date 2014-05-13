@@ -9,20 +9,11 @@ define([
 	return JsonBaseModel.extend({
 		idAttribute: 'game_id',
 
-
 		amfphp_url_templates: {
 			read:   "games.getGame",
 			update: "games.updateGame",
 			create: "games.createGameJSON",
 			delete: "games.deleteGame"
-		},
-
-
-		amfphp_url_patterns: {
-			read:   "/<%= id %>",
-			update: "/<%= model_attributes_url %>/<%= editor_id %>/<%= editor_token %>",
-			create: "",
-			delete: "/<%= id %>/<%= editor_id %>/<%= editor_token %>"
 		},
 
 		amfphp_url_attributes: [
@@ -36,7 +27,7 @@ define([
           "zoom_level",
           "show_player_location"
         ],
-        
+
 		defaults: {
 			name: "",
 			description: "",

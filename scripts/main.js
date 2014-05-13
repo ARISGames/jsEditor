@@ -22,7 +22,10 @@ require.config({
 		marionette: 'library/backbone.marionette',
 
 		/* Bootstrap */
-		bootstrap: 'library/bootstrap'
+		bootstrap: 'library/bootstrap',
+
+		/* App Config */
+		config: 'config'
 	},
 
 	shim: {
