@@ -27,6 +27,7 @@ FLOW
 
 TODO
 ----
+- Field validation/cleaner user errors, like password
 - Subclass views so they all inject i18n and avoid redundant requires
 - Event decoupling for click events (to avoid calling navigate everywhere)
   (And how to do best.. events on views, on models, through vent?)

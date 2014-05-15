@@ -17,6 +17,10 @@ define([
 		itemView: GameSceneView,
 		itemViewContainer: ".scenes",
 
+		itemViewOptions: function() {
+			return { game: this.model }
+		},
+
 		events: {
 			"click .new-scene": "onClickNewScene"
 		},

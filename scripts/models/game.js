@@ -12,7 +12,7 @@ define([
 		amfphp_url_templates: {
 			read:   "games.getGame",
 			update: "games.updateGame",
-			create: "games.createGameJSON",
+			create: "games.createGame",
 			delete: "games.deleteGame"
 		},
 

@@ -64,7 +64,7 @@ define([
 		onClickAddCharacter: function() {
 			var scene = this.model;
 
-			var characters = new GameCharactersCollection([], {parent: scene});
+			var characters = new GameCharactersCollection([], {parent: this.options.game});
 
 			characters.fetch({
 				data: {"game_id": scene.get('game_id')},

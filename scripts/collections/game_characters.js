@@ -14,8 +14,6 @@ define([
 
 		model: Character,
 
-		url: function() {
-			return this.amfphp_url_root+"npcs.getNpcsForGame/"+this.parent.get("game_id")+"/"+session.editor_id()+"/"+session.auth_token();
-		},
+		amfphp_url: "npcs.getNpcsForGame"
 	});
 });

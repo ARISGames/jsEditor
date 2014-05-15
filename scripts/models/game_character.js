@@ -11,19 +11,29 @@ define([
 
 		amfphp_url_templates: {
 			read:   "npcs.getNpc",
-			update: "npcs.updateNpcJSON",
-			create: "npcs.createNpcJSON",
+			update: "npcs.updateNpc",
+			create: "npcs.createNpc",
 			delete: "npcs.deleteNpc"
 		},
 
 		amfphp_url_attributes: [
-			"name",
 			"game_id",
-			"npc_id"
+			"npc_id",
+			"name",
+			"description",
+			"icon_media_id",
+			"media_id",
+			"opening_script_id",
+			"closing_script_id"
         ],
 
 		defaults: {
-			name: "New Character"
+          name: "New Character",
+          description: "",
+          icon_media_id: 0,
+          media_id: 0,
+          opening_script_id: 0,
+          closing_script_id: 0
 		}
 
 	});
