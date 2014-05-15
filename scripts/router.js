@@ -4,12 +4,10 @@ define([
 	'backbone',
 	'views/login',
 	'views/games',
-	'views/game',
 	'views/game_scenes',
 	'views/game_nav_menu',
 	'views/game_item_panel',
 	'views/plaques',
-	'views/characters',
 	'views/items',
 	'views/quests',
 	'views/locations',
@@ -20,7 +18,6 @@ define([
 	'views/edit_amf_model',
 	'collections/games',
 	'collections/plaques',
-	'collections/characters',
 	'collections/items',
 	'collections/quests',
 	'collections/locations',
@@ -30,7 +27,6 @@ define([
 	'collections/scenes',
 	'models/game',
 	'models/plaque',
-	'models/character',
 	'models/item',
 	'models/quest',
 	'models/location',
@@ -39,10 +35,10 @@ define([
 	'models/media',
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameView, GameScenesView, GameNavMenu, GameItemPanel, PlaquesView, CharactersView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
+	LoginView, GamesView, GameScenesView, GameNavMenu, GameItemPanel, PlaquesView, ItemsView, QuestsView, LocationsView, RequirementsView, ConversationsView, MediaListView, UploadMediaView,
 	EditAmfModelView,
-	GameCollection, PlaqueCollection, CharacterCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
-	Game, Plaque, Character, Item, Quest, Location, Requirement, Conversation, Media,
+	GameCollection, PlaqueCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
+	Game, Plaque, Item, Quest, Location, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -58,7 +54,6 @@ define([
 			"games/:game_id/scenes":     "showSceneEditor",
 
 			"games/:game_id/plaques":    "listPlaques",
-			"games/:game_id/characters": "listCharacters",
 			"games/:game_id/items":      "listItems",
 			"games/:game_id/quests":     "listQuests",
 			"games/:game_id/locations":  "listLocations",
@@ -71,7 +66,6 @@ define([
 
 
 			"games/:game_id/plaques/new":       "newPlaque",
-			"games/:game_id/characters/new":    "newCharacter",
 			"games/:game_id/items/new":         "newItem",
 			"games/:game_id/quests/new":        "newQuest",
 			"games/:game_id/locations/new":     "newLocation",
@@ -79,7 +73,6 @@ define([
 			"games/:game_id/media/new":         "newMedia",
 
 			"games/:game_id/plaques/:plaque_id/edit":           "editPlaque",
-			"games/:game_id/characters/:character_id/edit":     "editCharacter",
 			"games/:game_id/items/:item_id/edit":               "editItem",
 			"games/:game_id/quests/:quest_id/edit":             "editQuest",
 			"games/:game_id/locations/:location_id/edit":       "editLocation",
@@ -126,24 +119,6 @@ define([
 			});
 		},
 
-		showGame: function(game_id) {
-			var game = new Game({game_id: game_id});
-			game.fetch({
-				success: function() {
-
-					// get all the game items (or the folder?) for the sidebar
-					//
-					var characters = new CharacterCollection([], {parent: game});
-					characters.fetch({
-						success: function() {
-							vent.trigger("application.show",      new GameView      ({model: game}));
-							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game}));
-						}
-					});
-				}
-			});
-		},
-
 		editGame: function(game_id) {
 			var game = new Game({game_id: game_id});
 			game.fetch({
@@ -162,16 +137,6 @@ define([
 			plaques.fetch({
 				success: function() {
 					vent.trigger("application.show", new PlaquesView({collection: plaques}));
-				}
-			});
-		},
-
-		listCharacters: function(game_id) {
-			var game       = new Game({game_id: game_id});
-			var characters = new CharacterCollection([], {parent: game});
-			characters.fetch({
-				success: function() {
-					vent.trigger("application.show", new CharactersView({collection: characters}));
 				}
 			});
 		},
@@ -241,14 +206,6 @@ define([
 			});
 		},
 
-		editCharacter: function(game_id, character_id) {
-			var character = new Character({game_id: game_id, npc_id: character_id});
-			character.fetch({
-				success: function() {
-					vent.trigger("application.show", new EditAmfModelView({model: character}));
-				}
-			});
-		},
 
 		editItem: function(game_id, item_id) {
 			var item = new Item({game_id: game_id, item_id: item_id})
@@ -289,10 +246,6 @@ define([
 			vent.trigger("application.show", new EditAmfModelView({model: plaque}));
 		},
 
-		newCharacter: function(game_id) {
-			var character = new Character({game_id: game_id});
-			vent.trigger("application.show", new EditAmfModelView({model: character}));
-		},
 
 		newItem: function(game_id) {
 			var item = new Item({game_id: game_id});

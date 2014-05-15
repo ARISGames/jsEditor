@@ -16,7 +16,6 @@ define([
 
 		templateHelpers: function () {
 			return {
-				//name: this.model.get("character").get("name")
 				name: this.model.get("character_name")
 			}
 		},
