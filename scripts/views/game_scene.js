@@ -1,25 +1,23 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/game_scene.tpl',
 	'views/scene_info',
 	'views/character_chooser',
-	'views/game_scene_character',
-	'collections/game_characters',
-	'collections/character_instances',
+	'views/scene_instance_trigger',
+	'collections/characters',
+	'collections/triggers',
 	'vent'
-], function($, _, Backbone, Marionette, Template, SceneInfoView, CharacterChooserView, GameSceneCharacterView, GameCharactersCollection, CharacterInstancesCollection, vent) {
+], function(_, Backbone, Template, SceneInfoView, CharacterChooserView, SceneInstanceTriggerView, CharactersCollection, TriggerCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: GameSceneCharacterView,
+		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-items",
 
 		initialize: function() {
 			var view = this;
-			this.collection = new CharacterInstancesCollection([]);
+			this.collection = new TriggerCollection([]);
 
 			this.collection.fetch({
 				data: { "scene_id": this.model.id },
@@ -64,7 +62,7 @@ define([
 		onClickAddCharacter: function() {
 			var scene = this.model;
 
-			var characters = new GameCharactersCollection([], {parent: this.options.game});
+			var characters = new CharactersCollection([], {parent: this.options.game});
 
 			characters.fetch({
 				data: {"game_id": scene.get('game_id')},
