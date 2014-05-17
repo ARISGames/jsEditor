@@ -17,6 +17,7 @@ define([
 		},
 
 		amfphp_url_attributes: [
+		  "game_id",
           "name",
           "description",
           "icon_media_id",

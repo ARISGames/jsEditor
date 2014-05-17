@@ -40,12 +40,11 @@ define([
 			{
 				success: function()
 				{
-					console.log("gonna save with", view.ui.description.val(), view.options.scene.id, character.id);
-					instance.set("description",  view.ui.description.val());
-					instance.set("scene_id",     view.options.scene.id);
-					instance.set("character_id", character.id);
+					instance.set("description",    view.ui.description.val());
+					instance.set("scene_id",       view.options.scene.id);
+					instance.set("character_id",   character.id);
 					instance.set("character_name", character.get("name"));
-					instance.set("character",    character);
+					instance.set("character",      character);
 
 					instance.save({},
 					{

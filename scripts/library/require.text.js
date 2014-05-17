@@ -146,6 +146,14 @@ define(['module'], function (module) {
 
         finishLoad: function (name, strip, content, onLoad) {
             content = strip ? text.strip(content) : content;
+
+            /* Inserted by Kevin for debugging complex views */
+            if (masterConfig.xrayTemplateDebugging) {
+                if (name.match(/\.tpl/)) {
+				    content = "<span class='x-ray-view-template-name'>" + name + "</span>\n" + content;
+                }
+            }
+
             if (masterConfig.isBuild) {
                 buildMap[name] = content;
             }

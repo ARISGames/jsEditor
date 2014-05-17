@@ -17,9 +17,9 @@ define([
 		},
 
 		amfphp_url_attributes: [
+			"scene_id",
 			"name",
-			"game_id",
-			"scene_id"
+			"game_id"
         ],
 
 		defaults: {

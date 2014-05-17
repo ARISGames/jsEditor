@@ -9,19 +9,9 @@ define([
 	return Backbone.Model.extend({
 
 		parse: function(json) {
-			// Remove the outer json attribute {data: ...}
-			if(this.collection == undefined) {
-				// Got an ID back on create
-				if(typeof json.data === "number") {
-					var data = {};
-					data[this.idAttribute] = json.data;
-					return data;
-				}
-
-				// Full json object on read
-				else {
-					return json.data;
-				}
+			// Remove the outer json attribute {data: ...} on CRUD operations
+			if(this.collection == undefined || json.data) {
+				return json.data;
 			}
 
 			// Being called from collection which has already parsed.
@@ -152,7 +142,6 @@ define([
 
 			// TODO make sure this does not break expected callback argument order for error vs success.
 			options.success = function(data, success, success_options) {
-				// FIXME remove?
 				if(data.faultCode) {
 					throw "amf Fault: "+data.faultString;
 				}

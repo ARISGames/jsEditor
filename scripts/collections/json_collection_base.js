@@ -42,7 +42,10 @@ define([
 
 
 		parse: function(json, response) {
-			if(json.returnCode != 0) {
+			if(json.faultCode) {
+				throw "amf Fault: "+json.faultString;
+			}
+			else if(json.returnCode != 0) {
 				throw "returnCode "+json.returnCode+": "+json.returnCodeDescription;
 			}
 			else {

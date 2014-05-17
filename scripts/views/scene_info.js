@@ -27,13 +27,24 @@ define([
 			"click .delete-scene": "onClickDelete"
 		},
 
+		// FIXME why do we need this vs other views?
+		modelEvents: {
+			"change": "render"
+		},
+
 		onClickSave: function() {
 			this.model.set('name', this.ui.name.val());
 			this.model.save();
 		},
 
 		onClickDelete: function() {
-			this.model.destroy();
+			var view = this;
+
+			this.model.destroy({
+				success: function() {
+					view.close();
+				}
+			});
 		}
 	});
 });

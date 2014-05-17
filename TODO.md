@@ -27,8 +27,13 @@ FLOW
 
 TODO
 ----
+- game create/edit/delete v2 check
+- scene new/save gets id?
 - Field validation/cleaner user errors, like password
+- Remove redundant defaults/amf fields?
 - Subclass views so they all inject i18n and avoid redundant requires
+- Controller to clean up view transition situations where sidebar is occupied
+- Clean up 'no save' situation, ie how scene drops into view while unsaved (or have it save)
 - Event decoupling for click events (to avoid calling navigate everywhere)
   (And how to do best.. events on views, on models, through vent?)
   Probably with controllers that can listen to events, and the router or the rest of the app triggers them.

@@ -1,3 +1,11 @@
+.x-ray-backbone-view {
+  border: 1px solid blue;
+  margin: 2px;
+  overflow: hidden;
+}
+.x-ray-backbone-view .x-ray-view-template-name {
+  color: red;
+}
 .nowrap {
   white-space: nowrap;
 }

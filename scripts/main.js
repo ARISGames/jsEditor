@@ -41,10 +41,19 @@ require.config({
 		'bootstrap' : {
 			deps: ['jquery']
 		}
+	},
+
+	/* Visual Debugging */
+	config: {
+		text: {
+			xrayTemplateDebugging: (typeof document !== 'undefined') ? document.URL.match(/xray-goggles=on/) : false
+		}
 	}
 });
 
-require(['application'], function(application) {
+require(['application', 'backbone'], function(application, Backbone) {
+	Backbone.xrayViewDebugging = (typeof document !== 'undefined') ? document.URL.match(/xray-goggles=on/) : false;
+
 	application.start();
 });
 
