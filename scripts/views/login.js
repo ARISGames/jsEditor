@@ -8,7 +8,6 @@ define([
 	'text!../../templates/login.tpl',
 	'i18n!../locale/nls/login.js'
 ], function(module, $, _, Backbone, Marionette, session, Template, t) {
-	console.log(module.id);
 
 	return Backbone.Marionette.ItemView.extend({
 		template: function(data) {

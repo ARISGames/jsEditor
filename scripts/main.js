@@ -46,13 +46,15 @@ require.config({
 	/* Visual Debugging */
 	config: {
 		text: {
-			xrayTemplateDebugging: (typeof document !== 'undefined') ? document.URL.match(/xray-goggles=on/) : false
-		}
+			xrayTemplateDebugging: (typeof document !== 'undefined') ? document.URL.match(/xray-goggles/) : false
+		},
+
+		moduleLog: (typeof document !== 'undefined') ? document.URL.match(/module-log/) : false
 	}
 });
 
 require(['application', 'backbone'], function(application, Backbone) {
-	Backbone.xrayViewDebugging = (typeof document !== 'undefined') ? document.URL.match(/xray-goggles=on/) : false;
+	Backbone.xrayViewDebugging = (typeof document !== 'undefined') ? document.URL.match(/xray-goggles/) : false;
 
 	application.start();
 });

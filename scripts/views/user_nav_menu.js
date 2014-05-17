@@ -8,7 +8,6 @@ define([
 	'models/session',
 	'vent'
 ], function(module, $, _, Backbone, Marionette, Template, session, vent) {
-    console.log(module.id);
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),

@@ -577,6 +577,9 @@ var requirejs, require, define;
                 if (mod.module) {
                     return mod.module;
                 } else {
+                    if(config.config.moduleLog) {
+                        console.log("module", mod.map.id);
+                    }
                     return (mod.module = {
                         id: mod.map.id,
                         uri: mod.map.url,

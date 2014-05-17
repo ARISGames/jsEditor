@@ -9,7 +9,6 @@ define([
 	'i18n!../locale/nls/form.js',
 	'vent'
 ], function(module, $, _, _s, Backbone, Marionette, Template, translation, vent) {
-    console.log(module.id);
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),
@@ -52,7 +51,6 @@ define([
 
 					media.save({
 						success: function() {
-							console.log("WAHOO");
 							Backbone.history.navigate('#games', {trigger: true});
 						}
 					});

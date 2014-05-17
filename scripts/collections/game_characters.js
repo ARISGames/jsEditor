@@ -8,7 +8,6 @@ define([
 	'models/session',
 	'vent'
 ], function(module, $, _, Backbone, Character, JsonCollection, session, vent) {
-	console.log(module.id);
 
 	return JsonCollection.extend({
 

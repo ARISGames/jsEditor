@@ -63,7 +63,7 @@ define([
 
 				google.maps.event.addListener(marker, 'mouseout', function() {
 					info_window.close();
-				});				
+				});
 
 
 				// Double Click
@@ -80,7 +80,6 @@ define([
 					location.save({}, {
 						success: function() {
 							// vent trigger location.update
-							console.log("updated");
 						}
 					});
 				});

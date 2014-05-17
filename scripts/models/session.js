@@ -7,7 +7,6 @@ define([
 	'config',
 	'vent'
 ], function(module, $, _, Backbone, Cookie, config, vent) {
-	console.log(module.id);
 
 	var Session = Backbone.Model.extend({
 		logged_in: function() {
