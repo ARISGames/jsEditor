@@ -96,3 +96,9 @@
   float: right;
   z-index: 2;
 }
+.scene-info .scene-id {
+  visibility: hidden;
+}
+.scene-info h4:hover .scene-id {
+  visibility: visible;
+}

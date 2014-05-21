@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/game_scene.tpl',
+	'text!../../templates/scene.tpl',
 	'views/scene_info',
 	'views/character_chooser',
 	'views/scene_instance_trigger',

@@ -5,9 +5,9 @@ define([
 	'marionette',
 	'jqueryui',
 	'bootstrap',
-	'text!../../templates/game_scenes.tpl',
+	'text!../../templates/scenes.tpl',
 	'models/scene',
-	'views/game_scene',
+	'views/scene',
 	'views/scene_info',
 	'vent'
 ], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, Scene, GameSceneView, SceneInfoView, vent) {

@@ -4,7 +4,7 @@ define([
 	'backbone',
 	'views/login',
 	'views/games',
-	'views/game_scenes',
+	'views/scenes',
 	'views/game_nav_menu',
 	'views/game_item_panel',
 	'views/plaques',
