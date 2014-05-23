@@ -1,20 +1,18 @@
 define([
-	'jquery',
-	'underscore',
 	'backbone',
-	'marionette',
-	'jqueryui',
-	'bootstrap',
 	'text!../../templates/character_chooser.tpl',
 	'models/character',
+	'models/trigger',
+	'models/instance',
 	'views/character_chooser_item',
-	'views/character_creator',
+	'views/character_trigger_editor',
 	'vent'
-], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, Character, CharacterChooserItem, CharacterCreatorView, vent) {
+], function(Backbone, Template, Character, Trigger, Instance, CharacterChooserItemView, CharacterTriggerEditorView, vent) {
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: CharacterChooserItem,
+		itemView: CharacterChooserItemView,
 		itemViewContainer: ".characters",
 
 		itemViewOptions: function(model, index) {
@@ -33,7 +31,7 @@ define([
 			var trigger   = new Trigger   ({game_id: this.options.parent.get("game_id")});
 			var instance  = new Instance  ({game_id: this.options.parent.get("game_id")});
 
-			var trigger_editor = new TriggerEditorView({scene: this.options.parent, character: character, instance: instance, model: trigger});
+			var trigger_editor = new CharacterTriggerEditorView({scene: this.options.parent, character: character, instance: instance, model: trigger});
 			vent.trigger("application:info:show", trigger_editor);
 		}
 	});

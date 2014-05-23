@@ -1,13 +1,8 @@
 define([
-	'module',
-	'jquery',
-	'underscore',
-	'backbone',
-	'models/character',
 	'collections/json_collection_base',
-	'models/session',
+	'models/character',
 	'vent'
-], function(module, $, _, Backbone, Character, JsonCollection, session, vent) {
+], function(JsonCollection, Character) {
 
 	return JsonCollection.extend({
 

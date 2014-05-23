@@ -1,10 +1,6 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'models/json_base',
-	'models/session'
-], function($, _, Backbone, JsonBaseModel, session) {
+	'models/json_base'
+], function(JsonBaseModel) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'game_id',

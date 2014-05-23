@@ -1,5 +1,5 @@
 define([
-	'models/json_base',
+	'models/json_base'
 ], function(JsonBaseModel) {
 
 	return JsonBaseModel.extend({

@@ -1,13 +1,9 @@
 define([
-	'jquery',
-	'underscore',
 	'backbone',
-	'marionette',
-	'jqueryui',
-	'bootstrap',
 	'text!../../templates/character_creator.tpl',
 	'vent'
-], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, vent) {
+], function(Backbone, Template, vent) {
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
