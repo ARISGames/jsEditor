@@ -3,7 +3,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'models/game_character',
+	'models/character',
 	'collections/json_collection_base',
 	'models/session',
 	'vent'

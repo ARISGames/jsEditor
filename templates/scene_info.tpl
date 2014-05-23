@@ -1,5 +1,5 @@
 <div class="scene-info">
-	<h4>Scene <span class="scene-id text-muted"><%= scene_id %></span></h4>
+	<h4>Scene <span class="scene-id text-muted"><% if(!model.isNew()) { %><%= scene_id %><% } %></span></h4>
 	<div class="form-group">
 		<label for="scene-name">Name</label>
 		<input type="text" class="form-control" id="scene-name" placeholder="Name" value="<%= name %>">

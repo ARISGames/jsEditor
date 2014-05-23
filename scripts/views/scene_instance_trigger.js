@@ -8,7 +8,11 @@ define([
 ], function($, _, Backbone, Marionette, Template, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
-		template: _.template(Template)
+		template: _.template(Template),
 
+		tagName: 'li',
+		className: 'scene-item'
+
+		// get instance and object here, remove name from display
 	});
 });

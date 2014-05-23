@@ -17,14 +17,9 @@ define([
 
 		initialize: function() {
 			var view = this;
-			this.collection = new TriggerCollection([]);
 
-			this.collection.fetch({
-				data: { "scene_id": this.model.id },
-				success: function() {
-					//this.render();
-				}
-			});
+			this.collection = new TriggerCollection([], {parent: this.model});
+			this.collection.fetch();
 
 			// Must find cleaner way to interface this with the other view
 			vent.on("scene:add_instance", function(instance) {
@@ -65,7 +60,6 @@ define([
 			var characters = new CharactersCollection([], {parent: this.options.game});
 
 			characters.fetch({
-				data: {"game_id": scene.get('game_id')},
 				success: function() {
 					var character_chooser = new CharacterChooserView({collection: characters, parent: scene});
 					vent.trigger("application:info:show", character_chooser);

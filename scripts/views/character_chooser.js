@@ -6,11 +6,11 @@ define([
 	'jqueryui',
 	'bootstrap',
 	'text!../../templates/character_chooser.tpl',
-	'models/game_character',
+	'models/character',
 	'views/character_chooser_item',
 	'views/character_creator',
 	'vent'
-], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, GameCharacter, CharacterChooserItem, CharacterCreatorView, vent) {
+], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, Character, CharacterChooserItem, CharacterCreatorView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -29,11 +29,12 @@ define([
 
 		/* TODO move complex sets like this into a controller */
 		onClickNewCharacter: function() {
-			//var character          = new GameCharacter    ({game_id: this.options.parent.get("game_id")});
-			//var character_instance = new CharacterInstance({game_id: this.options.parent.get("game_id")});
+			var character = new Character ({game_id: this.options.parent.get("game_id")});
+			var trigger   = new Trigger   ({game_id: this.options.parent.get("game_id")});
+			var instance  = new Instance  ({game_id: this.options.parent.get("game_id")});
 
-			//var character_creator  = new CharacterCreatorView({scene: this.options.parent, character: character, character_instance: character_instance});
-			vent.trigger("application:info:show", character_creator);
+			var trigger_editor = new TriggerEditorView({scene: this.options.parent, character: character, instance: instance, model: trigger});
+			vent.trigger("application:info:show", trigger_editor);
 		}
 	});
 });
