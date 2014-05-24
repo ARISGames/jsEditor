@@ -1,12 +1,12 @@
 define([
 	'collections/json_collection_base',
-	'models/character',
+	'models/dialog',
 	'vent'
-], function(JsonCollection, Character) {
+], function(JsonCollection, Dialog) {
 
 	return JsonCollection.extend({
 
-		model: Character,
+		model: Dialog,
 
 		amfphp_url: "dialogs.getDialogsForGame"
 	});

@@ -27,7 +27,7 @@ FLOW
 
 TODO
 ----
-- (new character, from existing, show from trigger)
+- (new dialog, from existing, show from trigger)
 - game create/edit/delete v2 check
 - scene new/save gets id?
 - Field validation/cleaner user errors, like password

@@ -1,8 +1,8 @@
-<h4>Character</h4>
+<h4>Dialog</h4>
 
 <div class="form-group">
-	<label for="character-name">Name</label>
-	<input type="text" class="form-control" id="character-name" placeholder="Name" value="<%= name %>">
+	<label for="dialog-name">Name</label>
+	<input type="text" class="form-control" id="dialog-name" placeholder="Name" value="<%= name %>">
 </div>
 
 <div class="form-group">

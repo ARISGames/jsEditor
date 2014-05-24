@@ -1,6 +1,6 @@
 define([
 	'backbone',
-	'text!../../templates/character_creator.tpl',
+	'text!../../templates/dialog_creator.tpl',
 	'vent'
 ], function(Backbone, Template, vent) {
 
@@ -9,13 +9,13 @@ define([
 
 		templateHelpers: function() {
 			return {
-				name: this.options.character.get('name'),
-				description: this.options.character_instance.get('description')
+				name: this.options.dialog.get('name'),
+				description: this.options.dialog_instance.get('description')
 			}
 		},
 
 		ui: {
-			"name": "#character-name",
+			"name": "#dialog-name",
 			"description": "#instance-description"
 		},
 
@@ -23,24 +23,24 @@ define([
 			"click .save": "onClickSave"
 		},
 
-		/* Save character for game and instance for scene */
+		/* Save dialog for game and instance for scene */
 		onClickSave: function() {
 			var view = this;
-			var character = this.options.character;
-			var instance  = this.options.character_instance;
+			var dialog = this.options.dialog;
+			var instance  = this.options.dialog_instance;
 
-			// save character
-			character.set("name", view.ui.name.val());
+			// save dialog
+			dialog.set("name", view.ui.name.val());
 
-			character.save({},
+			dialog.save({},
 			{
 				success: function()
 				{
 					instance.set("description",    view.ui.description.val());
 					instance.set("scene_id",       view.options.scene.id);
-					instance.set("character_id",   character.id);
-					instance.set("character_name", character.get("name"));
-					instance.set("character",      character);
+					instance.set("dialog_id",   dialog.id);
+					instance.set("dialog_name", dialog.get("name"));
+					instance.set("dialog",      dialog);
 
 					instance.save({},
 					{

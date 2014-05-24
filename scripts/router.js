@@ -62,7 +62,7 @@ define([
 			"games/:game_id/locations/:location_id/requirements":    "listLocationRequirements",
 			//"games/:game_id/quests/:quest_id/requirements/display":  "listQuestDisplayRequirements",
 			//"games/:game_id/quests/:quest_id/requirements/display":  "listQuestCompleteRequirements",
-			"games/:game_id/characters/:character_id/conversations": "listCharacterConversations",
+			"games/:game_id/dialogs/:dialog_id/conversations": "listDialogConversations",
 
 
 			"games/:game_id/plaques/new":       "newPlaque",
@@ -78,8 +78,8 @@ define([
 			"games/:game_id/locations/:location_id/edit":       "editLocation",
 			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
 
-			"games/:game_id/characters/:character_id/conversations/:conversation_id/edit": "editConversation",
-			"games/:game_id/characters/:character_id/conversations/new": "newConversation",
+			"games/:game_id/dialogs/:dialog_id/conversations/:conversation_id/edit": "editConversation",
+			"games/:game_id/dialogs/:dialog_id/conversations/new": "newConversation",
 
 
 			"*nomatch": function(url) { throw "Route not found: "+url; },
@@ -173,9 +173,9 @@ define([
 			});
 		},
 
-		listCharacterConversations: function(game_id, character_id) {
-			var	character = new Character({game_id: game_id, dialog_id: character_id});
-			var conversations = new ConversationCollection([], {parent: character});
+		listDialogConversations: function(game_id, dialog_id) {
+			var	dialog = new Dialog({game_id: game_id, dialog_id: dialog_id});
+			var conversations = new ConversationCollection([], {parent: dialog});
 
 			conversations.fetch({
 				success: function() {
@@ -234,7 +234,7 @@ define([
 			});
 		},
 
-		editLocation: function(game_id, character_id, conversation_id) {
+		editLocation: function(game_id, dialog_id, conversation_id) {
 			// Triggered from vent because there is no getConversation
 		},
 
@@ -267,8 +267,8 @@ define([
 			vent.trigger("application.show", new EditAmfModelView({model: requirement}));
 		},
 
-		newConversation: function(game_id, character_id) {
-			var conversation = new Conversation({game_id: game_id, dialog_id: character_id});
+		newConversation: function(game_id, dialog_id) {
+			var conversation = new Conversation({game_id: game_id, dialog_id: dialog_id});
 			vent.trigger("application.show", new EditAmfModelView({model: conversation}));
 		},
 

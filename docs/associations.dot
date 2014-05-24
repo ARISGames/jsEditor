@@ -6,16 +6,16 @@ digraph G {
 	];
 
 	Game->Plaque;
-	Game->Character;
+	Game->Dialog;
 	Game->Item;
 	Game->Quest;
 	Game->Location;
 
 	Plaque->Location;
-	Character->Location;
+	Dialog->Location;
 	Item->Location;
 
-	Character->Conversation;
+	Dialog->Conversation;
 
 	Location->Requirement;
 	Conversation->Requirement;

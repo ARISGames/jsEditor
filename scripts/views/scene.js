@@ -3,12 +3,12 @@ define([
 	'backbone',
 	'text!../../templates/scene.tpl',
 	'views/scene_info',
-	'views/character_chooser',
+	'views/dialog_chooser',
 	'views/scene_instance_trigger',
-	'collections/characters',
+	'collections/dialogs',
 	'collections/triggers',
 	'vent'
-], function(_, Backbone, Template, SceneInfoView, CharacterChooserView, SceneInstanceTriggerView, CharactersCollection, TriggerCollection, vent) {
+], function(_, Backbone, Template, SceneInfoView, DialogChooserView, SceneInstanceTriggerView, DialogsCollection, TriggerCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -34,7 +34,7 @@ define([
 
 		events: {
 			"click .name": "onClickName",
-			"click .add-character": "onClickAddCharacter"
+			"click .add-dialog": "onClickAddDialog"
 		},
 
 		/* TODO cleanest way to do this? */
@@ -54,15 +54,15 @@ define([
 			vent.trigger("application:info:show", new SceneInfoView({model: this.model}));
 		},
 
-		onClickAddCharacter: function() {
+		onClickAddDialog: function() {
 			var scene = this.model;
 
-			var characters = new CharactersCollection([], {parent: this.options.game});
+			var dialogs = new DialogsCollection([], {parent: this.options.game});
 
-			characters.fetch({
+			dialogs.fetch({
 				success: function() {
-					var character_chooser = new CharacterChooserView({collection: characters, parent: scene});
-					vent.trigger("application:info:show", character_chooser);
+					var dialog_chooser = new DialogChooserView({collection: dialogs, parent: scene});
+					vent.trigger("application:info:show", dialog_chooser);
 				}
 			});
 		}

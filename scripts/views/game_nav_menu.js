@@ -11,7 +11,7 @@ define([
 		events: {
 			"click .plaques":    "onClickPlaques",
 			"click .items":      "onClickItems",
-			"click .characters": "onClickCharacters",
+			"click .dialogs": "onClickDialogs",
 			"click .quests":     "onClickQuests",
 			"click .locations":  "onClickLocations",
 			"click .medialist":  "onClickMedia",
@@ -26,8 +26,8 @@ define([
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/items", {trigger: true});
 		},
 
-		onClickCharacters: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/characters", {trigger: true});
+		onClickDialogs: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/dialogs", {trigger: true});
 		},
 
 		onClickQuests: function() {
