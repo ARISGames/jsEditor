@@ -6,30 +6,38 @@ define([
 		idAttribute: 'trigger_id',
 
 		amfphp_url_templates: {
-			read:   "",
-			update: "",
-			create: "",
-			delete: ""
+			read:   "triggers.getTrigger",
+			update: "triggers.updateTrigger",
+			create: "triggers.createTrigger",
+			delete: "triggers.deleteTrigger"
 		},
 
 		amfphp_url_attributes: [
-			"trigger_id",
 			"game_id",
-			"name",
-			"scene_id",
+			"trigger_id",
 			"instance_id",
+			"scene_id",
+			"title",
+			"requirement_root_package_id",
 			"type",
-			"qr_code"
+			"latitude",
+			"longitude",
+			"distance",
+			"wiggle",
+			"show_title",
+			"code"
         ],
 
 		defaults: {
-          game_id: 2,
-          name: "my trigger",
-          instance_id: 1,
-          scene_id: 1,
-          requirement_root_package_id: 132,
-          type: "QR",
-          qr_code: "abc123"
+			title: "triggerTitle",
+			type: "LOCATION",
+			latitude: 1.234,
+			longitude: 2.468,
+			distance: 5,
+			wiggle: 1,
+			show_title: 1,
+			code: "abc123",
+			requirement_root_package_id: 0
 		}
 
 	});

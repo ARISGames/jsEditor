@@ -9,7 +9,13 @@ define([
 		template: _.template(Template),
 
 		tagName: 'li',
-		className: 'scene-item'
+		className: 'scene-item',
+
+		templateHelpers: function() {
+			return {
+				object_name: this.model.get("title")
+			}
+		}
 
 		// get instance and object here, remove name from display
 	});

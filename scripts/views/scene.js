@@ -22,10 +22,10 @@ define([
 			this.collection.fetch();
 
 			// Must find cleaner way to interface this with the other view
-			vent.on("scene:add_instance", function(instance) {
-				if (view.model.id == instance.get("scene_id"))
+			vent.on("scene:add_trigger", function(trigger) {
+				if (view.model.id == trigger.get("scene_id"))
 				{
-					view.collection.add(instance);
+					view.collection.add(trigger);
 				}
 			});
 		},

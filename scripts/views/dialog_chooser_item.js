@@ -1,9 +1,8 @@
 define([
 	'backbone',
 	'text!../../templates/dialog_chooser_item.tpl',
-	'views/dialog_creator',
 	'vent'
-], function(Backbone, Template, DialogCreatorView, vent) {
+], function(Backbone, Template, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),

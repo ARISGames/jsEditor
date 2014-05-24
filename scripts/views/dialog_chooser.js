@@ -27,9 +27,9 @@ define([
 
 		/* TODO move complex sets like this into a controller */
 		onClickNewDialog: function() {
-			var dialog = new Dialog ({game_id: this.options.parent.get("game_id")});
-			var trigger   = new Trigger   ({game_id: this.options.parent.get("game_id")});
-			var instance  = new Instance  ({game_id: this.options.parent.get("game_id")});
+			var dialog   = new Dialog   ({game_id: this.options.parent.get("game_id")});
+			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
+			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
 			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: dialog, instance: instance, model: trigger});
 			vent.trigger("application:info:show", trigger_editor);

@@ -24,12 +24,12 @@ define([
         ],
 
 		defaults: {
-          name: "New Dialog",
-          description: "",
-          icon_media_id: 0,
-          media_id: 0,
-          opening_script_id: 0,
-          closing_script_id: 0
+			name: "New Dialog",
+			description: "",
+			icon_media_id: 0,
+			media_id: 0,
+			opening_script_id: 0,
+			closing_script_id: 0
 		}
 
 	});
