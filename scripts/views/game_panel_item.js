@@ -1,12 +1,10 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/game_panel_item.tpl',
 	'vent',
 	'views/game_item_info',
-], function($, _, Backbone, Marionette, Template, vent, GameItemInfoView) {
+], function(_, Backbone, Template, vent, GameItemInfoView) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

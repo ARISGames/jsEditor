@@ -1,12 +1,9 @@
 define([
-	'module',
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/game_nav_menu.tpl',
 	'vent'
-], function(module, $, _, Backbone, Marionette, Template, vent) {
+], function(_, Backbone, Template, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),

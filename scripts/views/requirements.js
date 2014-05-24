@@ -1,12 +1,10 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/requirements.tpl',
 	'collections/requirements',
 	'views/requirement_item',
-], function($, _, Backbone, Marionette, Template, RequirementCollection, RequirementItemView) {
+], function(_, Backbone, Template, RequirementCollection, RequirementItemView) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 

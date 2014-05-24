@@ -1,14 +1,11 @@
 define([
-	'module',
-	'jquery',
 	'underscore',
 	'underscore.string',
 	'backbone',
-	'marionette',
 	'text!../../templates/edit_amf_model.tpl',
 	'i18n!../locale/nls/form.js',
 	'vent'
-], function(module, $, _, _s, Backbone, Marionette, Template, translation, vent) {
+], function(_, _s, Backbone, Template, translation, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),

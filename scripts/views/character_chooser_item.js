@@ -1,12 +1,10 @@
 define([
-	'jquery',
-	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/character_chooser_item.tpl',
 	'views/character_creator',
 	'vent'
-], function($, _, Backbone, Marionette, Template, CharacterCreatorView, vent) {
+], function(Backbone, Template, CharacterCreatorView, vent) {
+
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

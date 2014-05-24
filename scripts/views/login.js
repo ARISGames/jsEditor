@@ -1,13 +1,10 @@
 define([
-	'module',
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'models/session',
 	'text!../../templates/login.tpl',
 	'i18n!../locale/nls/login.js'
-], function(module, $, _, Backbone, Marionette, session, Template, t) {
+], function(_, Backbone, session, Template, t) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template: function(data) {

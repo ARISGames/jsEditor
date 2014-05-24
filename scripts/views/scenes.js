@@ -2,7 +2,6 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'jqueryui',
 	'bootstrap',
 	'text!../../templates/scenes.tpl',
@@ -10,7 +9,7 @@ define([
 	'views/scene',
 	'views/scene_info',
 	'vent'
-], function($, _, Backbone, Marionette, jQueryUi, Bootstrap, Template, Scene, GameSceneView, SceneInfoView, vent) {
+], function($, _, Backbone, jQueryUi, Bootstrap, Template, Scene, GameSceneView, SceneInfoView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 

@@ -1,12 +1,10 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/conversation_item.tpl',
 	'views/edit_amf_model',
 	'vent'
-], function($, _, Backbone, Marionette, Template, EditAmfModelView, vent) {
+], function(_, Backbone, Template, EditAmfModelView, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

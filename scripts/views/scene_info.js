@@ -1,11 +1,9 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/scene_info.tpl',
 	'i18n!../locale/nls/form.js',
-], function($, _, Backbone, Marionette, Template, translation) {
+], function(_, Backbone, Template, translation) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

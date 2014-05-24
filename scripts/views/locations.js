@@ -1,14 +1,12 @@
 define([
-	'jquery',
 	'underscore',
 	'backbone',
-	'marionette',
 	'text!../../templates/locations.tpl',
 	'collections/locations',
 	'views/location_item',
 	'views/edit_amf_model',
 	'vent'
-], function($, _, Backbone, Marionette, Template, LocationCollection, LocationItemView, EditAmfModelView, vent) {
+], function(_, Backbone, Template, LocationCollection, LocationItemView, EditAmfModelView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 

@@ -1,14 +1,13 @@
 define([
-	'module',
 	'jquery',
 	'underscore',
+	// FIXME translation with key/humanize can be removed after switching to Jed
 	'underscore.string',
 	'backbone',
-	'marionette',
 	'text!../../templates/upload_media.tpl',
 	'i18n!../locale/nls/form.js',
 	'vent'
-], function(module, $, _, _s, Backbone, Marionette, Template, translation, vent) {
+], function($, _, _s, Backbone, Template, translation, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),
@@ -38,6 +37,7 @@ define([
 			var name = this.$el.find('#file_name').val();
 			var media = this.model;
 
+			// FIXME put into model and use config base url
 			$.ajax({
 				url: "https://arisgames.org/server/services/v1/uploadHandler.php",
 				data: form_data,
