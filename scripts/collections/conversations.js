@@ -1,4 +1,4 @@
-// getConversationsWithNodeForNpc
+// getConversationsWithNodeForDialog
 //
 define([
 	'jquery',
@@ -14,7 +14,7 @@ define([
 
 
 		url: function() {
-			return this.amfphp_url_root+'conversations.GetConversationsWithNodeForNpc/'+this.parent.get('game_id')+'/'+this.parent.get('npc_id');
+			return this.amfphp_url_root+'conversations.GetConversationsWithNodeForDialog/'+this.parent.get('game_id')+'/'+this.parent.get('dialog_id');
 		},
 	});
 });

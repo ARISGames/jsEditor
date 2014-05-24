@@ -174,7 +174,7 @@ define([
 		},
 
 		listCharacterConversations: function(game_id, character_id) {
-			var	character = new Character({game_id: game_id, npc_id: character_id});
+			var	character = new Character({game_id: game_id, dialog_id: character_id});
 			var conversations = new ConversationCollection([], {parent: character});
 
 			conversations.fetch({
@@ -268,7 +268,7 @@ define([
 		},
 
 		newConversation: function(game_id, character_id) {
-			var conversation = new Conversation({game_id: game_id, npc_id: character_id});
+			var conversation = new Conversation({game_id: game_id, dialog_id: character_id});
 			vent.trigger("application.show", new EditAmfModelView({model: conversation}));
 		},
 

@@ -20,7 +20,7 @@ define([
         ],
 
 		defaults: {
-			object_type: "NPC",
+			object_type: "DIALOG",
 		}
 
 	});

@@ -22,7 +22,7 @@ define([
 			{
 				return [
 					"game_id",
-					"npc_id",
+					"dialog_id",
 					"conversation_text",
 					"text",
 					"index"

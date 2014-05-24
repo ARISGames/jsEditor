@@ -8,6 +8,6 @@ define([
 
 		model: Character,
 
-		amfphp_url: "npcs.getNpcsForGame"
+		amfphp_url: "dialogs.getDialogsForGame"
 	});
 });

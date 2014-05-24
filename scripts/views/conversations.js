@@ -18,7 +18,7 @@ define([
 
 		onClickNew: function() {
 			Backbone.history.navigate("#games/"+this.collection.parent.get('game_id')+
-			                     "/characters/"+this.collection.parent.get('npc_id')+
+			                     "/characters/"+this.collection.parent.get('dialog_id')+
 			               "/conversations/new", {trigger: true});
 		}
 	});

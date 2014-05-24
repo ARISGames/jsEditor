@@ -3,18 +3,18 @@ define([
 ], function(JsonBaseModel) {
 
 	return JsonBaseModel.extend({
-		idAttribute: 'npc_id',
+		idAttribute: 'dialog_id',
 
 		amfphp_url_templates: {
-			read:   "npcs.getNpc",
-			update: "npcs.updateNpc",
-			create: "npcs.createNpc",
-			delete: "npcs.deleteNpc"
+			read:   "dialogs.getDialog",
+			update: "dialogs.updateDialog",
+			create: "dialogs.createDialog",
+			delete: "dialogs.deleteDialog"
 		},
 
 		amfphp_url_attributes: [
 			"game_id",
-			"npc_id",
+			"dialog_id",
 			"name",
 			"description",
 			"icon_media_id",

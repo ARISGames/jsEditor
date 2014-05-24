@@ -21,7 +21,7 @@ define([
 			vent.trigger("application.show", new EditAmfModelView({model: this.model}));
 
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+
-			                     "/characters/"+this.model.get('npc_id')+
+			                     "/characters/"+this.model.get('dialog_id')+
 			                  "/conversations/"+this.model.get('conversation_id')+
 								        "/edit", {trigger: false});
 		}

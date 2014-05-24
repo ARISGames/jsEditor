@@ -12,7 +12,7 @@ define([
 
 		initialize: function() {
 			this.on("create", function(model) {
-				var folder = new Content({content_id: model.get(model.idAttribute), content_type: "Npc", game_id: model.get("game_id")});
+				var folder = new Content({content_id: model.get(model.idAttribute), content_type: "Dialog", game_id: model.get("game_id")});
 				folder.save();
 			});
 		},
