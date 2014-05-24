@@ -34,6 +34,7 @@ define([
 					//
 					view.dialog = new Dialog({dialog_id: view.instance.get("object_id")});
 
+					// FIXME refer to global instance of object so change happens everywhere
 					view.dialog.on("change", function() {
 						view.object_name = view.dialog.get("name");
 						view.render();
