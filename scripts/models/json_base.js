@@ -62,13 +62,21 @@ define([
 
 			var model = this;
 			var success_callback = options.success;
+			var create_callback = options.create;
+			var update_callback = options.update;
 
 			options.success = function() {
 				if(model.changedAttributes()[model.idAttribute])
 				{
+					if(create_callback) {
+						create_callback.apply(this, arguments);
+					}
 					model.trigger("create", model);
 				}
 				else {
+					if(update_callback) {
+						update_callback.apply(this, arguments);
+					}
 					model.trigger("update", model);
 				}
 

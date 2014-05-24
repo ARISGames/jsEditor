@@ -80,8 +80,9 @@ define([
 
 							trigger.save({},
 							{
-								success: function()
+								create: function()
 								{
+									// FIXME better way to handle this?
 									vent.trigger("scene:add_trigger", trigger);
 								}
 							});

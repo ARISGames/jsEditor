@@ -4,8 +4,9 @@ define([
 	'text!../../templates/scene_instance_trigger.tpl',
 	'models/instance',
 	'models/dialog',
+	'views/dialog_trigger_editor',
 	'vent'
-], function(_, Backbone, Template, Instance, Dialog, vent) {
+], function(_, Backbone, Template, Instance, Dialog, DialogTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -19,7 +20,9 @@ define([
 			}
 		},
 
-		initialize: function() {
+		initialize: function(options) {
+			this.scene = options.scene;
+
 			var view = this;
 
 			view.object_name = "";
@@ -30,16 +33,30 @@ define([
 					// specific object type here
 					//
 					view.dialog = new Dialog({dialog_id: view.instance.get("object_id")});
-					view.dialog.fetch({
-						success: function() {
-							view.object_name = view.dialog.get("name");
-							view.render();
-						}
+
+					view.dialog.on("change", function() {
+						view.object_name = view.dialog.get("name");
+						view.render();
 					});
+
+					view.dialog.fetch();
 				}
 			});
+		},
+
+		onRender: function() {
+			$(this.$el).draggable({ containment: "parent" });
+		},
+
+		events: {
+			"click .show": "onClickShow"
+		},
+
+		onClickShow: function() {
+			// launch based on type
+			var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.dialog, instance: this.instance, model: this.model});
+			vent.trigger("application:info:show", trigger_editor);
 		}
 
-		// get instance and object here, remove name from display
 	});
 });

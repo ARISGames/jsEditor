@@ -50,8 +50,8 @@ define([
 		onRender: function() {
 			var view = this;
 			// make draggable
-			$(this.$el.find(".scene")).draggable({ containment: "parent" });
-			$(this.$el.find(".scene-item")).draggable({ containment: "parent", delay: 100 });
+			//$(this.$el.find(".scene")).draggable({ containment: "parent" });
+			//$(this.$el.find(".scene-item")).draggable({ containment: "parent", delay: 100 });
 
 			var scene_container = this.$el.find('.scenes').get(0);
 			var link_ends   = this.$el.find('.link-end'  );
