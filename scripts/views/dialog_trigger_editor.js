@@ -24,6 +24,10 @@ define([
 				// Dialog Attributes
 				name: this.dialog.get('name'),
 				description: this.dialog.get('description'),
+				icon_media_id: this.dialog.get('icon_media_id'),
+				media_id: this.dialog.get('media_id'),
+				opening_script_id: this.dialog.get('opening_script_id'),
+				closing_script_id: this.dialog.get('closing_script_id')
 			}
 		},
 

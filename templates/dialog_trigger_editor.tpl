@@ -12,6 +12,26 @@
 	<input type="text" class="form-control" id="dialog-description" placeholder="Description" value="<%= description %>">
 </div>
 
+<div class="form-group">
+	<label for="dialog-description">Icon</label>
+	<input type="text" class="form-control" id="dialog-icon" placeholder="Icon ID" value="<%= icon_media_id %>">
+</div>
+
+<div class="form-group">
+	<label for="dialog-description">Media</label>
+	<input type="text" class="form-control" id="dialog-media" placeholder="Media ID" value="<%= media_id %>">
+</div>
+
+<div class="form-group">
+	<label for="dialog-description">Opening Script</label>
+	<input type="text" class="form-control" id="dialog-opening-script" placeholder="Opening Script ID" value="<%= opening_script_id %>">
+</div>
+
+<div class="form-group">
+	<label for="dialog-description">Closing Script</label>
+	<input type="text" class="form-control" id="dialog-closing-script" placeholder="Closing Script ID" value="<%= closing_script_id %>">
+</div>
+
 
 <!-- Trigger Attributes -->
 
@@ -36,47 +56,61 @@
 
 <!-- Trigger by Location Attributes -->
 
-<div class="form-group">
-	<label for="trigger-title">Map Title</label>
-	<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
-</div>
+<div id="location-fields">
+	<div class="form-group">
+		<label for="trigger-title">Map Title</label>
+		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
+	</div>
 
-<div class="form-group">
-	<label for="trigger-latitude">Latitude</label>
-	<input type="text" class="form-control" id="trigger-latitude" placeholder="Latitude" value="<%= latitude %>">
-</div>
+	<div class="form-group">
+		<label for="trigger-latitude">Latitude</label>
+		<input type="text" class="form-control" id="trigger-latitude" placeholder="Latitude" value="<%= latitude %>">
+	</div>
 
-<div class="form-group">
-	<label for="trigger-longitude">Longitude</label>
-	<input type="text" class="form-control" id="trigger-longitude" placeholder="Longitude" value="<%= longitude %>">
-</div>
+	<div class="form-group">
+		<label for="trigger-longitude">Longitude</label>
+		<input type="text" class="form-control" id="trigger-longitude" placeholder="Longitude" value="<%= longitude %>">
+	</div>
 
-<div class="form-group">
-	<label for="trigger-distance">Distance</label>
-	<input type="text" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
-</div>
+	<div class="form-group">
+		<label for="trigger-distance">Distance</label>
+		<input type="text" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
+	</div>
 
-<div class="form-group">
-	<label for="trigger-wiggle">Wiggle</label>
-	<input type="text" class="form-control" id="trigger-wiggle" placeholder="Wiggle" value="<%= wiggle %>">
-</div>
+	<div class="form-group">
+		<label for="trigger-wiggle">Wiggle</label>
+		<input type="text" class="form-control" id="trigger-wiggle" placeholder="Wiggle" value="<%= wiggle %>">
+	</div>
 
-<div class="form-group">
-	<label for="trigger-show_title">Show Title</label>
-	<input type="text" class="form-control" id="trigger-show_title" placeholder="Show Title" value="<%= show_title %>">
+	<div class="form-group">
+		<label for="trigger-show_title">Show Title</label>
+		<input type="text" class="form-control" id="trigger-show_title" placeholder="Show Title" value="<%= show_title %>">
+	</div>
 </div>
 
 
 <!-- Trigger by Code Attributes -->
 
-<div class="form-group">
-	<label for="trigger-code">QR Code</label>
-	<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= code %>">
+<div id="code-fields">
+	<div class="form-group">
+		<label for="trigger-code">QR Code</label>
+		<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= code %>">
+	</div>
 </div>
 
 
+<!-- Trigger Immediate Attributes -->
+
+<div id="immediate-fields">
+	<p class="bg-info">Will be triggered immediately when requirements are satisfied.</p>
+</div>
+
 
 <!-- requirements here -->
+<div class="form-group">
+	<button type="button" class="btn btn-info requirements">Edit Requirements</button>
+</div>
+
 
 <!-- create vs update -->
 <div class="form-group">
