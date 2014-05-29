@@ -81,4 +81,5 @@
 <!-- create vs update -->
 <div class="form-group">
 	<button type="button" class="btn btn-primary save">Add to Scene</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 </div>

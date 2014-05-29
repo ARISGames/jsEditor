@@ -2,7 +2,7 @@
 
 <button type="button" class="btn btn-primary new-dialog">New Dialog</button>
 
-<table class="table table-hover">
+<table class="table table-hover table-condensed">
 	<thead>
 		<tr>
 			<th>Use Existing</th>
@@ -11,3 +11,5 @@
 	<tbody class="dialogs">
 	</tbody>
 </table>
+
+<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
