@@ -3,8 +3,9 @@ define([
 	'jquery',
 	'backbone',
 	'text!../../templates/dialog_trigger_editor.tpl',
+	'views/dialog_editor',
 	'vent'
-], function(_, $, Backbone, Template, vent) {
+], function(_, $, Backbone, Template, DialogEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -54,9 +55,14 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
-			"change input[name='type']": "onChangeType"
+			"change input[name='type']": "onChangeType",
+			"click .edit-dialog": "onClickEditDialog"
 		},
 
+		onClickEditDialog: function() {
+			var dialog_editor = new DialogEditorView({model: this.dialog});
+			vent.trigger("application:dialog:show", dialog_editor);
+		},
 
 		onClickSave: function() {
 			var view = this;
