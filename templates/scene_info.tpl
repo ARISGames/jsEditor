@@ -1,5 +1,5 @@
 <div class="scene-info">
-	<h4>Scene <span class="scene-id text-muted"><% if(!model.isNew()) { %><%= scene_id %><% } %></span></h4>
+	<h4>Scene <span class="object-id text-muted"><% if(!model.isNew()) { %><%= scene_id %><% } %></span></h4>
 	<form class="form-horizontal" role="form">
 		<div class="form-group">
 			<label for="scene-name" class="col-sm-2 control-label">Name</label>

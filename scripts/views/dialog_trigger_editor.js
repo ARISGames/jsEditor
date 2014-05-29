@@ -1,9 +1,10 @@
 define([
 	'underscore',
+	'jquery',
 	'backbone',
 	'text!../../templates/dialog_trigger_editor.tpl',
 	'vent'
-], function(_, Backbone, Template, vent) {
+], function(_, $, Backbone, Template, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -13,6 +14,7 @@ define([
 			this.scene    = options.scene;
 			this.dialog   = options.dialog;
 			this.instance = options.instance;
+			this.show_dialog_fields = options.show_dialog_fields;
 		},
 
 
@@ -21,7 +23,11 @@ define([
 		// or form generators
 		templateHelpers: function() {
 			return {
+				is_new: this.model.isNew(),
+				show_dialog_fields: this.show_dialog_fields,
+
 				// Dialog Attributes
+				dialog_id: this.dialog.get('dialog_id'),
 				name: this.dialog.get('name'),
 				description: this.dialog.get('description'),
 				icon_media_id: this.dialog.get('icon_media_id'),
@@ -47,7 +53,8 @@ define([
 
 
 		events: {
-			"click .save": "onClickSave"
+			"click .save": "onClickSave",
+			"change input[name='type']": "onChangeType"
 		},
 
 
@@ -96,8 +103,16 @@ define([
 
 				}
 			});
+		},
 
+		onChangeType: function() {
+			this.$el.find('.trigger-tab').hide();
+			var display_tab = "#" + this.$el.find('input:radio[name=type]:checked').val() + "-fields";
+			$(display_tab).show();
+		},
 
+		onShow: function() {
+			this.onChangeType();
 		}
 	});
 });

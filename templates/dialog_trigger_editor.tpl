@@ -1,5 +1,6 @@
-<h4>Dialog</h4>
+<h4>Dialog <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
 
+<% if(show_dialog_fields) { %>
 <!-- Dialog attributes -->
 
 <div class="form-group">
@@ -32,6 +33,17 @@
 	<input type="text" class="form-control" id="dialog-closing-script" placeholder="Closing Script ID" value="<%= closing_script_id %>">
 </div>
 
+<% } else { %>
+
+<div class="form-group">
+	<button type="button" class="btn btn-primary btn-block edit-dialog">
+		<span class="glyphicon glyphicon-user"></span>
+		Edit Dialog
+	</button>
+</div>
+
+<% } %>
+
 
 <!-- Trigger Attributes -->
 
@@ -53,10 +65,11 @@
 	</label>
 </div>
 
+<br/>
 
 <!-- Trigger by Location Attributes -->
 
-<div id="location-fields">
+<div id="LOCATION-fields" class="trigger-tab">
 	<div class="form-group">
 		<label for="trigger-title">Map Title</label>
 		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
@@ -91,7 +104,7 @@
 
 <!-- Trigger by Code Attributes -->
 
-<div id="code-fields">
+<div id="QR-fields" class="trigger-tab">
 	<div class="form-group">
 		<label for="trigger-code">QR Code</label>
 		<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= code %>">
@@ -101,19 +114,28 @@
 
 <!-- Trigger Immediate Attributes -->
 
-<div id="immediate-fields">
-	<p class="bg-info">Will be triggered immediately when requirements are satisfied.</p>
+<div id="IMMEDIATE-fields" class="trigger-tab">
+	<div class="alert alert-info">
+		<span class="glyphicon glyphicon-info-sign"></span>
+		Will be triggered immediately when requirements are satisfied.
+	</div>
 </div>
 
 
 <!-- requirements here -->
 <div class="form-group">
-	<button type="button" class="btn btn-info requirements">Edit Requirements</button>
+	<button type="button" class="btn btn-info btn-block requirements">
+		<span class="glyphicon glyphicon-ok"></span>
+		Edit Requirements
+	</button>
 </div>
 
 
 <!-- create vs update -->
+
 <div class="form-group">
-	<button type="button" class="btn btn-primary save">Add to Scene</button>
+	<button type="button" class="btn btn-primary save">
+		<%= is_new ? "Add to Scene" : "Update Trigger" %>
+	</button>
 	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 </div>

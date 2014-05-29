@@ -99,9 +99,9 @@
   float: right;
   z-index: 2;
 }
-.scene-info .scene-id {
+.object-id {
   visibility: hidden;
 }
-.scene-info h4:hover .scene-id {
+h4:hover .object-id {
   visibility: visible;
 }
