@@ -81,9 +81,6 @@ define([
 		application.user_region.show(new UserNavMenuView());
 	});
 
-vent.on("all", function(eventName) {
-  console.log("EVENT", eventName);
-});
 
 	// Redirect back to intended destination after authorization
 	//
