@@ -17,11 +17,12 @@ define([
 	// Application Layout
 	//
 	application.addRegions({
-		main_region: "#main",
-		 nav_region: "#navigation",
-		user_region: "#user",
-		list_region: "#list",
-		info_region: "#info"
+		  main_region: "#main",
+		   nav_region: "#navigation",
+		  user_region: "#user",
+		  list_region: "#list",
+		  info_region: "#info",
+		dialog_region: "#modal-body"
 	});
 
 
@@ -67,9 +68,22 @@ define([
 		application.info_region.show(view);
 	});
 
+	vent.on("application:dialog:show", function(view) {
+		application.dialog_region.show(view);
+		$('.modal').modal('show');
+	});
+
+	vent.on("application:dialog:hide", function() {
+		$('.modal').modal('hide');
+	});
+
 	vent.on("application:user:show", function() {
 		application.user_region.show(new UserNavMenuView());
 	});
+
+vent.on("all", function(eventName) {
+  console.log("EVENT", eventName);
+});
 
 	// Redirect back to intended destination after authorization
 	//

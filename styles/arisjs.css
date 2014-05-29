@@ -6,6 +6,9 @@
 .x-ray-backbone-view .x-ray-view-template-name {
   color: red;
 }
+.clear {
+  clear: both;
+}
 .nowrap {
   white-space: nowrap;
 }

@@ -24,10 +24,22 @@ define([
 			"click .new-scene": "onClickNewScene"
 		},
 
+		initialize: function() {
+			var view = this;
+
+			vent.on("scenes:add_scene", function(scene) {
+				view.collection.add(scene);
+			});
+		},
+
+		//this.collection.add(scene);
+
 		onClickNewScene: function() {
 			var scene = new Scene({game_id: this.model.id});
-			this.collection.add(scene);
-			vent.trigger("application:info:show", new SceneInfoView({model: scene}));
+			scene.on("all", function(eventName) {
+  console.log("SCENEMODEL", eventName);
+});
+			vent.trigger("application:dialog:show", new SceneInfoView({model: scene}));
 		},
 
 

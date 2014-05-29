@@ -3,7 +3,8 @@ define([
 	'backbone',
 	'text!../../templates/scene_info.tpl',
 	'i18n!../locale/nls/form.js',
-], function(_, Backbone, Template, translation) {
+	'vent'
+], function(_, Backbone, Template, translation, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -30,8 +31,14 @@ define([
 		},
 
 		onClickSave: function() {
+			var view = this;
 			this.model.set('name', this.ui.name.val());
-			this.model.save();
+			this.model.save({}, {
+					success: function() {
+						vent.trigger("scenes:add_scene", view.model);
+						vent.trigger("application:dialog:hide");
+					}
+			});
 		},
 
 		onClickDelete: function() {
