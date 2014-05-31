@@ -14,6 +14,18 @@ Requirements
 | backbone   | 1.1.0   |
 | underscore | 1.5.2   |
 
+Getting Started
+---------------
+
+The flow control of the application goes:
+
+* `index.html` Load require.js and load main.
+* `scripts/main.js` Defines short cuts to frameworks, sets up dependencies, triggers application.
+* `scripts/application.js` Sets up regions and event handlers for them, checks for authentication and fires up the router.
+* `scripts/models/session.js` Manages session cookie and authentication.
+* `scripts/router.js` Maps starting point urls (the application does not map 1 to 1 for urls and views) to functions, loads models and renders their views.
+
+
 Notes
 -----
 
