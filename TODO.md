@@ -27,9 +27,8 @@ FLOW
 
 TODO
 ----
-- (new dialog, from existing, show from trigger)
-- game create/edit/delete v2 check
-- scene new/save gets id?
+- remove media from dialog
+- only create dialog with name at first
 - Field validation/cleaner user errors, like password
 - Remove redundant defaults/amf fields?
 - Subclass views so they all inject i18n and avoid redundant requires

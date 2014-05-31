@@ -32,7 +32,7 @@ define([
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
 			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: dialog, instance: instance, model: trigger, show_dialog_fields: true});
-			vent.trigger("application:info:show", trigger_editor);
+			vent.trigger("application:dialog:show", trigger_editor);
 		}
 	});
 });
