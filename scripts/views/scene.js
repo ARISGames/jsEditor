@@ -3,20 +3,21 @@ define([
 	'backbone',
 	'text!../../templates/scene.tpl',
 	'views/scene_editor',
-	'views/dialog_chooser',
 	'views/scene_instance_trigger',
-	'collections/dialogs',
+	'views/scene_trigger_type_chooser',
 	'collections/triggers',
 	'vent'
-], function(_, Backbone, Template, SceneEditorView, DialogChooserView, SceneInstanceTriggerView, DialogsCollection, TriggerCollection, vent) {
+], function(_, Backbone, Template, SceneEditorView, SceneInstanceTriggerView, SceneTriggerTypeChooserView,TriggerCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-triggers",
 
-		initialize: function() {
+		initialize: function(options) {
 			var view = this;
+
+			this.game = options.game;
 
 			this.collection = new TriggerCollection([], {parent: this.model});
 			this.collection.fetch();
@@ -54,17 +55,9 @@ define([
 			vent.trigger("application:info:show", new SceneEditorView({model: this.model}));
 		},
 
-		onClickAddDialog: function() {
-			var scene = this.model;
+		onClickNewTrigger: function() {
+			vent.trigger("application:dialog:show", new SceneTriggerTypeChooserView({model: this.model, game: this.game}));
+		},
 
-			var dialogs = new DialogsCollection([], {parent: this.options.game});
-
-			dialogs.fetch({
-				success: function() {
-					var dialog_chooser = new DialogChooserView({collection: dialogs, parent: scene});
-					vent.trigger("application:dialog:show", dialog_chooser);
-				}
-			});
-		}
 	});
 });

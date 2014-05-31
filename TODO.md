@@ -29,6 +29,8 @@ TODO
 ----
 - remove media from dialog
 - only create dialog with name at first
+- separate views that operate on two models into multiple.
+- object unique reference lookup (so events always trigger everywhere)
 - Field validation/cleaner user errors, like password
 - Remove redundant defaults/amf fields?
 - Subclass views so they all inject i18n and avoid redundant requires
