@@ -7,9 +7,9 @@ define([
 	'text!../../templates/scenes.tpl',
 	'models/scene',
 	'views/scene',
-	'views/scene_info',
+	'views/scene_editor',
 	'vent'
-], function($, _, Backbone, jQueryUi, Bootstrap, Template, Scene, GameSceneView, SceneInfoView, vent) {
+], function($, _, Backbone, jQueryUi, Bootstrap, Template, Scene, GameSceneView, SceneEditorView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -37,7 +37,7 @@ define([
 		onClickNewScene: function() {
 			var scene = new Scene({game_id: this.model.id});
 			// track created event to close?
-			vent.trigger("application:dialog:show", new SceneInfoView({model: scene}));
+			vent.trigger("application:dialog:show", new SceneEditorView({model: scene}));
 		},
 
 

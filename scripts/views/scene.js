@@ -2,13 +2,13 @@ define([
 	'underscore',
 	'backbone',
 	'text!../../templates/scene.tpl',
-	'views/scene_info',
+	'views/scene_editor',
 	'views/dialog_chooser',
 	'views/scene_instance_trigger',
 	'collections/dialogs',
 	'collections/triggers',
 	'vent'
-], function(_, Backbone, Template, SceneInfoView, DialogChooserView, SceneInstanceTriggerView, DialogsCollection, TriggerCollection, vent) {
+], function(_, Backbone, Template, SceneEditorView, DialogChooserView, SceneInstanceTriggerView, DialogsCollection, TriggerCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -51,7 +51,7 @@ define([
 		},
 
 		onClickName: function() {
-			vent.trigger("application:info:show", new SceneInfoView({model: this.model}));
+			vent.trigger("application:info:show", new SceneEditorView({model: this.model}));
 		},
 
 		onClickAddDialog: function() {

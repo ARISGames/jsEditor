@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/scene_info.tpl',
+	'text!../../templates/scene_editor.tpl',
 	'i18n!../locale/nls/form.js',
 	'vent'
 ], function(_, Backbone, Template, translation, vent) {
