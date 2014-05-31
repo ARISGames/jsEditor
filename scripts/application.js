@@ -37,11 +37,18 @@ define([
 	// Authorization Redirect
 	//
 	application.on("initialize:after", function() {
-		// FIXME visiting #login directly
 		if(!this.session.logged_in()) {
-			this.intended_destination = window.location.hash;
-			Backbone.history.start({silent: true});
-			Backbone.history.navigate("#login", {trigger: true});
+			if(window.location.hash === "#login")
+			{
+				this.intended_destination = "#";
+				Backbone.history.start();
+			}
+			else
+			{
+				this.intended_destination = window.location.hash;
+				Backbone.history.start({silent: true});
+				Backbone.history.navigate("#login", {trigger: true});
+			}
 		}
 		else {
 			Backbone.history.start();

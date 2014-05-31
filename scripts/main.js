@@ -3,29 +3,28 @@
 require.config({
 	paths: {
 		/* Using AMD forks for non AMD compliant libraries */
+		'text':     'library/require.text',
+		'i18n':     'library/require.i18n',
 
-		text: 'library/require.text',
-		i18n: 'library/require.i18n',
-
-		jquery: 'library/jquery',
-		cookie: 'library/jquery.cookie',
-		jqueryui: 'library/jquery.ui',
+		'jquery':   'library/jquery',
+		'cookie':   'library/jquery.cookie',
+		'jqueryui': 'library/jquery.ui',
 
 		/* Backbone */
-		underscore: 'library/underscore',
-		backbone: 'library/backbone',
-		'underscore.string': 'library/underscore.string',
+		'underscore':          'library/underscore',
+		'backbone':            'library/backbone',
+		'underscore.string':   'library/underscore.string',
 
 		/* Marionette */
 		'backbone.babysitter': 'library/backbone.babysitter',
-		'backbone.wreqr': 'library/backbone.wreqr',
-		marionette: 'library/backbone.marionette',
+		'backbone.wreqr':      'library/backbone.wreqr',
+		'marionette':          'library/backbone.marionette',
 
 		/* Bootstrap */
-		bootstrap: 'library/bootstrap',
+		'bootstrap': 'library/bootstrap',
 
 		/* App Config */
-		config: 'config'
+		'config': 'config'
 	},
 
 	shim: {
