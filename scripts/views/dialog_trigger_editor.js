@@ -4,8 +4,10 @@ define([
 	'backbone',
 	'text!../../templates/dialog_trigger_editor.tpl',
 	'views/dialog_editor',
+	'views/requirements_editor',
+	'models/requirements_package',
 	'vent'
-], function(_, $, Backbone, Template, DialogEditorView, vent) {
+], function(_, $, Backbone, Template, DialogEditorView, RequirementsEditorView, RequirementsPackage, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -56,7 +58,8 @@ define([
 		events: {
 			"click .save": "onClickSave",
 			"change input[name='type']": "onChangeType",
-			"click .edit-dialog": "onClickEditDialog"
+			"click .edit-dialog": "onClickEditDialog",
+			"click .edit-requirements": "onClickEditRequirements"
 		},
 
 		onClickEditDialog: function() {
@@ -119,6 +122,11 @@ define([
 
 		onShow: function() {
 			this.onChangeType();
+		},
+
+		onClickEditRequirements: function() {
+			var requirements_package = new RequirementsPackage({});
+			vent.trigger("application:dialog:show", new RequirementsEditorView({model: requirements_package}));
 		}
 	});
 });

@@ -124,7 +124,7 @@
 
 <!-- requirements here -->
 <div class="form-group">
-	<button type="button" class="btn btn-info btn-block requirements">
+	<button type="button" class="btn btn-info btn-block edit-requirements">
 		<span class="glyphicon glyphicon-ok"></span>
 		Edit Requirements
 	</button>
