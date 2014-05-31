@@ -13,7 +13,7 @@ define([
 		template: _.template(Template),
 
 		itemView: SceneInstanceTriggerView,
-		itemViewContainer: ".scene-items",
+		itemViewContainer: ".scene-triggers",
 
 		initialize: function() {
 			var view = this;
@@ -34,7 +34,7 @@ define([
 
 		events: {
 			"click .name": "onClickName",
-			"click .add-dialog": "onClickAddDialog"
+			"click .new-trigger": "onClickNewTrigger"
 		},
 
 		/* TODO cleanest way to do this? */

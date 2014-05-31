@@ -1,4 +1,4 @@
-<div class="item-icon show">
+<div class="trigger-icon show">
 	<span class="glyphicon glyphicon-user"></span>
 </div>
-<p class="item-label"><%= object_name %></p>
+<p class="trigger-label"><%= object_name %></p>

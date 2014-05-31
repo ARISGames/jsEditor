@@ -66,23 +66,19 @@
   margin-top: 0;
   float: left;
 }
-.scene .new-item-button {
+.scene .new-trigger-button {
   float: right;
 }
-.new-scene,
-.new-item {
-  font-size: 125%;
-}
-.scene-items {
+.scene-triggers {
   margin-bottom: 0;
 }
-.scene-items .item-icon {
+.scene-triggers .item-icon {
   text-align: center;
 }
-.scene-items .item-label {
+.scene-triggers .item-label {
   margin: 0;
 }
-.scene-items .scene-item {
+.scene-triggers .scene-trigger {
   position: relative;
   z-index: 40;
   height: 55px;

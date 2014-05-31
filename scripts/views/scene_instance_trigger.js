@@ -12,7 +12,7 @@ define([
 		template: _.template(Template),
 
 		tagName: 'li',
-		className: 'scene-item',
+		className: 'scene-trigger',
 
 		templateHelpers: function() {
 			return {
