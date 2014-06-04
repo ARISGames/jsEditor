@@ -3,17 +3,19 @@ define([
 	'backbone',
 	'text!../../templates/games.tpl',
 	'collections/games',
-	'views/game_item',
-], function(_, Backbone, Template, GameCollection, GameItemView) {
+	'views/game_row',
+	'views/game_rows_empty',
+	'views/game_editor',
+	'models/game',
+	'vent'
+], function(_, Backbone, Template, GameCollection, GameRowView, GameRowsEmptyView, GameEditorView, Game, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: GameItemView,
+		itemView: GameRowView,
+		itemViewContainer: '.games',
 
-	    // Bootstrap wrapper
-		tagName: "table",
-		className: "table",
-
+		emptyView: GameRowsEmptyView,
 
 		events: {
 			"click .new": "onClickNew"
@@ -21,7 +23,8 @@ define([
 
 
 		onClickNew: function() {
-			Backbone.history.navigate("#games/new", {trigger: true});
+			var game = new Game();
+			vent.trigger("application.show", new GameEditorView({model: game}));
 		}
 	});
 });

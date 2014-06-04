@@ -87,6 +87,13 @@ define([
 
 					instance.save({}, {
 						success: function() {
+							// If new, create empty requirement
+							/* {
+								  "game_id":1,
+								  "name":"requirementPackageName",
+								  "and_packages": [
+								  ]
+								}*/
 
 							// Save Trigger
 							trigger.set("instance_id", instance.id);

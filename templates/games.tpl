@@ -1,14 +1,18 @@
-<thead>
-	<tr>
-		<th colspan="3">
-			<button class="new btn btn-primary">New Game</button>
-		</th>
-	</tr>
-</thead>
-<thead>
-	<tr>
-		<th>Game</th>
-		<th>Description</th>
-		<th>Actions</th>
-	</tr>
-</thead>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Game</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody class="games">
+	</tbody>
+	<tfoot>
+		<tr>
+			<th colspan="3">
+				<button class="new btn btn-primary">New Game</button>
+			</th>
+		</tr>
+	</tfoot>
+</table>
