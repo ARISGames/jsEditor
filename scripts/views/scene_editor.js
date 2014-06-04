@@ -22,6 +22,7 @@ define([
 
 		events: {
 			"click .save-scene":   "onClickSave",
+			"click .cancel":       "onClickCancel",
 			"click .delete-scene": "onClickDelete"
 		},
 
@@ -39,6 +40,12 @@ define([
 						vent.trigger("application:dialog:hide");
 					}
 			});
+		},
+
+
+		onClickCancel: function() {
+			this.close();
+			vent.trigger("application:dialog:hide");
 		},
 
 		onClickDelete: function() {

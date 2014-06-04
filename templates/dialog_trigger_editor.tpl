@@ -48,11 +48,6 @@
 
 <div id="LOCATION-fields" class="trigger-tab">
 	<div class="form-group">
-		<label for="trigger-title">Map Title</label>
-		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
-	</div>
-
-	<div class="form-group">
 		<label for="trigger-latitude">Latitude</label>
 		<input type="text" class="form-control" id="trigger-latitude" placeholder="Latitude" value="<%= latitude %>">
 	</div>
@@ -67,14 +62,25 @@
 		<input type="text" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
 	</div>
 
+
 	<div class="form-group">
-		<label for="trigger-wiggle">Wiggle</label>
-		<input type="text" class="form-control" id="trigger-wiggle" placeholder="Wiggle" value="<%= wiggle %>">
+		<label for="trigger-title">Map Title</label>
+		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
+	</div>
+
+
+	<div class="form-group">
+		<label>
+			<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
+			Show Title
+		</label>
 	</div>
 
 	<div class="form-group">
-		<label for="trigger-show_title">Show Title</label>
-		<input type="text" class="form-control" id="trigger-show_title" placeholder="Show Title" value="<%= show_title %>">
+		<label>
+			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
+			Wiggle
+		</label>
 	</div>
 </div>
 
@@ -116,5 +122,5 @@
 	<button type="button" class="btn btn-primary save">
 		<%= is_new ? "Add to Scene" : "Update Trigger" %>
 	</button>
-	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
 </div>

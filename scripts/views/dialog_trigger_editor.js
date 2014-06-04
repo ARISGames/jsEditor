@@ -28,6 +28,9 @@ define([
 			return {
 				is_new: this.model.isNew(),
 				visible_fields: this.visible_fields,
+				is_checked: function(value) {
+					return value === "1" ? "checked" : "";
+				},
 
 				// Dialog Attributes
 				dialog_id: this.dialog.get('dialog_id'),
@@ -56,6 +59,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+			"click .cancel": "onClickCancel",
 			"change input[name='trigger-type']": "onChangeType",
 			"click .edit-dialog": "onClickEditDialog",
 			"click .edit-requirements": "onClickEditRequirements"
@@ -66,15 +70,21 @@ define([
 			vent.trigger("application:dialog:show", dialog_editor);
 		},
 
+		onClickCancel: function() {
+			this.close();
+			vent.trigger("application:dialog:hide");
+		},
+
 		onClickSave: function() {
 			var view = this;
 			var instance = this.instance;
 			var dialog   = this.dialog;
 			var trigger  = this.model;
 
-			// Save Object
-			dialog.set("name",        view.ui.name.val());
-			dialog.set("description", view.ui.description.val());
+			// FIXME temporary fix to grab fields only when visible
+			if(view.options.visible_fields === "create_dialog_with_trigger" ) {
+				dialog.set("name",        view.ui.name.val());
+			}
 
 			dialog.save({}, {
 				success: function() {
@@ -96,14 +106,18 @@ define([
 
 							// Save Trigger
 							trigger.set("instance_id", instance.id);
-							trigger.set("title",       view.ui.title.val());
-							trigger.set("latitude",    view.ui.latitude.val());
-							trigger.set("longitude",   view.ui.longitude.val());
-							trigger.set("distance",    view.ui.distance.val());
-							trigger.set("wiggle",      view.ui.wiggle.val());
-							trigger.set("show_title",  view.ui.show_title.val());
-							trigger.set("code",        view.ui.code.val());
-							trigger.set("type",        view.$el.find("input[name=trigger-type]:checked").val());
+
+							// FIXME temporary fix to grab fields only when visible
+							if(view.options.visible_fields === "trigger") {
+								trigger.set("title",       view.ui.title.val());
+								trigger.set("latitude",    view.ui.latitude.val());
+								trigger.set("longitude",   view.ui.longitude.val());
+								trigger.set("distance",    view.ui.distance.val());
+								trigger.set("wiggle",      view.ui.wiggle.is(":checked") ? "1" : "0");
+								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
+								trigger.set("code",        view.ui.code.val());
+								trigger.set("type",        view.$el.find("input[name=trigger-type]:checked").val());
+							}
 
 							trigger.save({},
 							{

@@ -14,7 +14,7 @@
 				<% if(!model.isNew()) { %>
 					<button class="btn btn-danger delete-scene">Delete</button>
 				<% } %>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>
 	</form>

@@ -31,11 +31,11 @@ define([
 		defaults: {
 			title: "triggerTitle",
 			type: "LOCATION",
-			latitude: 1.234,
-			longitude: 2.468,
-			distance: 5,
-			wiggle: 1,
-			show_title: 1,
+			latitude: "1.234",
+			longitude: "2.468",
+			distance: "5",
+			wiggle: "1",
+			show_title: "1",
 			code: "abc123",
 			requirement_root_package_id: 0
 		}
