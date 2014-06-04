@@ -31,8 +31,8 @@ define([
 		defaults: {
 			title: "triggerTitle",
 			type: "LOCATION",
-			latitude: "1.234",
-			longitude: "2.468",
+			latitude: "-34.397",
+			longitude: "150.644",
 			distance: "5",
 			wiggle: "1",
 			show_title: "1",

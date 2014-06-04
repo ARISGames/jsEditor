@@ -47,21 +47,8 @@
 <!-- Trigger by Location Attributes -->
 
 <div id="LOCATION-fields" class="trigger-tab">
-	<div class="form-group">
-		<label for="trigger-latitude">Latitude</label>
-		<input type="text" class="form-control" id="trigger-latitude" placeholder="Latitude" value="<%= latitude %>">
-	</div>
 
-	<div class="form-group">
-		<label for="trigger-longitude">Longitude</label>
-		<input type="text" class="form-control" id="trigger-longitude" placeholder="Longitude" value="<%= longitude %>">
-	</div>
-
-	<div class="form-group">
-		<label for="trigger-distance">Distance</label>
-		<input type="text" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
-	</div>
-
+	<div class="map-canvas" style="height: 150px; width: 100%"></div>
 
 	<div class="form-group">
 		<label for="trigger-title">Map Title</label>

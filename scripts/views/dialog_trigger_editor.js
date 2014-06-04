@@ -110,9 +110,6 @@ define([
 							// FIXME temporary fix to grab fields only when visible
 							if(view.options.visible_fields === "trigger") {
 								trigger.set("title",       view.ui.title.val());
-								trigger.set("latitude",    view.ui.latitude.val());
-								trigger.set("longitude",   view.ui.longitude.val());
-								trigger.set("distance",    view.ui.distance.val());
 								trigger.set("wiggle",      view.ui.wiggle.is(":checked") ? "1" : "0");
 								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
 								trigger.set("code",        view.ui.code.val());
@@ -155,6 +152,60 @@ define([
 		onClickEditRequirements: function() {
 			var requirements_package = new RequirementsPackage({});
 			vent.trigger("application:dialog:show", new RequirementsEditorView({model: requirements_package}));
+		},
+
+		onRender: function() {
+			if(this.options.visible_fields === "trigger") {
+				this.renderMap();
+			}
+		},
+
+		renderMap: function() {
+			var view = this;
+
+			// Render Map
+			var element = this.$el.find('.map-canvas').get(0);
+
+			var default_location = new google.maps.LatLng(-34.397, 150.644);
+			var map_options = {
+				zoom: 8,
+				center: default_location
+			};
+			var map = new google.maps.Map(element, map_options);
+			var boundary = new google.maps.LatLngBounds();
+
+			boundary.extend(default_location);
+
+			// Add Trigger Location to map
+			var location_position = new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude"));
+
+
+			var marker = new google.maps.Circle({
+				center: location_position,
+				draggable: true,
+				editable: true,
+				radius: parseFloat(this.model.get("distance")),
+				map: map
+			});
+
+			google.maps.event.addListener(marker, 'radius_changed', function(event) {
+				console.log("rad", marker.getRadius());
+				view.model.set("distance", marker.getRadius());
+			});
+
+			google.maps.event.addListener(marker, 'center_changed', function(event) {
+				var center = marker.getCenter();
+
+				view.model.set("latitude",  center.lat());
+				view.model.set("longitude", center.lng());
+			});
+
+			// Add circle radius to map boundary
+			boundary.union(marker.getBounds());
+
+			// Fit map to all locations
+			map.setCenter(boundary.getCenter());
+			map.fitBounds(boundary);
 		}
 	});
 });
