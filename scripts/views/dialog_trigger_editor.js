@@ -17,7 +17,7 @@ define([
 			this.scene    = options.scene;
 			this.dialog   = options.dialog;
 			this.instance = options.instance;
-			this.show_dialog_fields = options.show_dialog_fields;
+			this.visible_fields  = options.visible_fields;
 		},
 
 
@@ -27,7 +27,7 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				show_dialog_fields: this.show_dialog_fields,
+				visible_fields: this.visible_fields,
 
 				// Dialog Attributes
 				dialog_id: this.dialog.get('dialog_id'),

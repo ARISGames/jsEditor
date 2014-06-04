@@ -55,7 +55,7 @@ define([
 
 		onClickShow: function() {
 			// launch based on type
-			var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.dialog, instance: this.instance, model: this.model});
+			var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.dialog, instance: this.instance, model: this.model, visible_fields: "trigger"});
 			vent.trigger("application:info:show", trigger_editor);
 		}
 

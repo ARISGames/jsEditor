@@ -34,7 +34,7 @@ define([
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: dialog, instance: instance, model: trigger, show_dialog_fields: true});
+			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: dialog, instance: instance, model: trigger, visible_fields: "create_dialog_with_trigger"});
 			vent.trigger("application:dialog:show", trigger_editor);
 		}
 	});

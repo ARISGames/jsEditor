@@ -23,9 +23,29 @@ define([
 		onClickNewInstance: function() {
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
+			var dialog   = this.model;
 
-			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: this.model, instance: instance, model: trigger, show_dialog_fields: true});
-			vent.trigger("application:dialog:show", trigger_editor);
+			// Save directly and insert into scene/show sidebar
+			instance.set("object_id",   dialog.id);
+			instance.set("object_type", instance.type_for(dialog));
+
+			instance.save({}, {
+				success: function() {
+
+					// Save Trigger
+					trigger.set("instance_id", instance.id);
+
+					trigger.save({},
+					{
+						create: function()
+						{
+							// FIXME better way to handle this?
+							vent.trigger("scene:add_trigger", trigger);
+							vent.trigger("application:dialog:hide");
+						}
+					});
+				}
+			});
 		}
 	});
 });
