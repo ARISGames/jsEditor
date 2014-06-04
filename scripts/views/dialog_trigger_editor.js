@@ -123,7 +123,14 @@ define([
 
 		onChangeType: function() {
 			this.$el.find('.trigger-tab').hide();
-			var display_tab = "#" + this.$el.find("input[name=trigger-type]:checked").val() + "-fields";
+
+			var selected_radio = this.$el.find("input[name=trigger-type]:checked");
+
+			this.$el.find("input[name=trigger-type]").parent().removeClass("active");
+			selected_radio.parent().addClass("active");
+
+
+			var display_tab = "#" + selected_radio.val() + "-fields";
 			$(display_tab).show();
 		},
 
