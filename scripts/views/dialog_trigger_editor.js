@@ -44,7 +44,6 @@ define([
 		ui: {
 			"name": "#dialog-name",
 			"description": "#dialog-description",
-			"type": "input[name=type]:checked",
 			"title": "#trigger-title",
 			"latitude": "#trigger-latitude",
 			"longitude": "#trigger-longitude",
@@ -57,7 +56,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
-			"change input[name='type']": "onChangeType",
+			"change input[name='trigger-type']": "onChangeType",
 			"click .edit-dialog": "onClickEditDialog",
 			"click .edit-requirements": "onClickEditRequirements"
 		},
@@ -104,6 +103,7 @@ define([
 							trigger.set("wiggle",      view.ui.wiggle.val());
 							trigger.set("show_title",  view.ui.show_title.val());
 							trigger.set("code",        view.ui.code.val());
+							trigger.set("type",        view.$el.find("input[name=trigger-type]:checked").val());
 
 							trigger.save({},
 							{
@@ -123,7 +123,7 @@ define([
 
 		onChangeType: function() {
 			this.$el.find('.trigger-tab').hide();
-			var display_tab = "#" + this.$el.find('input:radio[name=type]:checked').val() + "-fields";
+			var display_tab = "#" + this.$el.find("input[name=trigger-type]:checked").val() + "-fields";
 			$(display_tab).show();
 		},
 
