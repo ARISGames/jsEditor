@@ -34,7 +34,7 @@ define([
 						vent.trigger('session.login');
 					}
 					else {
-						alert(json.returnCodeDescription);
+						vent.trigger("application:alert", {text: json.returnCodeDescription})
 					}
 				}
 			});

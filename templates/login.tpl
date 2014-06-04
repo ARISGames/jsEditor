@@ -3,6 +3,11 @@
 	<p><%= t.greeting %></p>
 </div>
 
+<div class="alert alert-warning alert-dismissable" style="display:none">
+	<button type="button" class="close" aria-hidden="true">&times;</button>
+	<div class="alert-text"></div>
+</div>
+
 <form class="form-inline" role="form">
 	<div class="form-group">
 		<label class="sr-only" for="username">Username</label>
