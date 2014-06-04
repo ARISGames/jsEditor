@@ -15,7 +15,8 @@ define([
 		},
 
 		events: {
-			"click .save": "onClickSave"
+			"click .save": "onClickSave",
+			"click .cancel": "onClickCancel"
 		},
 
 		onClickSave: function() {
@@ -33,6 +34,10 @@ define([
 					Backbone.history.navigate("#games", {trigger: true});
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			Backbone.history.navigate("#games", {trigger: true});
 		}
 
 	});
