@@ -93,7 +93,7 @@ define([
 						data: { "game_id": game.id },
 						success: function() {
 							vent.trigger("application.show",      new GameScenesView ({model: game, collection: scenes}));
-							vent.trigger("application:nav:show",  new GameNavMenu    ({model: game}));
+							vent.trigger("application:nav:show",  new GameNavMenu    ({model: game, active: ".scenes"}));
 						}
 					});
 				}

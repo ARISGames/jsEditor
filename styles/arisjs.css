@@ -24,11 +24,12 @@ a {
 }
 .aris-logo img {
   height: 40px;
+  margin: 5px 10px;
 }
 #info {
   padding-left: 1em;
 }
-.scenes {
+#main .scenes {
   position: absolute;
   margin-top: 0;
   margin-left: 0;

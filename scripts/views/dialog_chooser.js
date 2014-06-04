@@ -4,16 +4,19 @@ define([
 	'models/dialog',
 	'models/trigger',
 	'models/instance',
-	'views/dialog_chooser_item',
+	'views/dialog_chooser_row',
+	'views/dialog_chooser_rows_empty',
 	'views/dialog_trigger_editor',
 	'vent'
-], function(Backbone, Template, Dialog, Trigger, Instance, DialogChooserItemView, DialogTriggerEditorView, vent) {
+], function(Backbone, Template, Dialog, Trigger, Instance, DialogChooserRowView, DialogChooserRowsEmptyView, DialogTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: DialogChooserItemView,
+		itemView: DialogChooserRowView,
 		itemViewContainer: ".dialogs",
+
+		emptyView: DialogChooserRowsEmptyView,
 
 		itemViewOptions: function(model, index) {
 			return {

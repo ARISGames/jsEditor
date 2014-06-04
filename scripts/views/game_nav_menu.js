@@ -9,29 +9,13 @@ define([
 		template:  _.template(Template),
 
 		events: {
-			"click .plaques":    "onClickPlaques",
-			"click .items":      "onClickItems",
-			"click .dialogs": "onClickDialogs",
-			"click .quests":     "onClickQuests",
-			"click .locations":  "onClickLocations",
-			"click .medialist":  "onClickMedia",
-			"click .scenelist":     "onClickScenes"
+			"click .locations": "onClickLocations",
+			"click .media": "onClickMedia",
+			"click .scenes": "onClickScenes"
 		},
 
-		onClickPlaques: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/plaques", {trigger: true});
-		},
-
-		onClickItems: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/items", {trigger: true});
-		},
-
-		onClickDialogs: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/dialogs", {trigger: true});
-		},
-
-		onClickQuests: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/quests", {trigger: true});
+		onRender: function() {
+			this.$el.find(this.options.active).parent().addClass("active");
 		},
 
 		onClickLocations: function() {
