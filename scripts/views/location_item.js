@@ -3,8 +3,8 @@ define([
 	'backbone',
 	'text!../../templates/location_item.tpl',
 	'vent',
-	'views/edit_amf_model',
-], function(_, Backbone, Template, vent, EditAmfModelView) {
+	'views/edit_json_model',
+], function(_, Backbone, Template, vent, EditJsonModelView) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -19,7 +19,7 @@ define([
 
 
 		onClickEdit: function() {
-			vent.trigger("application.show", new EditAmfModelView({model: this.model}));
+			vent.trigger("application.show", new EditJsonModelView({model: this.model}));
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations/"+this.model.get('location_id')+"/edit", {trigger: false});
 		},
 

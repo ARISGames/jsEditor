@@ -10,7 +10,7 @@ define([
 	'views/locations',
 	'views/media_list',
 	'views/upload_media',
-	'views/edit_amf_model',
+	'views/edit_json_model',
 	'views/game_editor',
 
 	'collections/games',
@@ -34,7 +34,7 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditAmfModelView, GameEditorView,
+	LoginView, GamesView, GameScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView,
 	GameCollection, PlaqueCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
 	Game, Plaque, Item, Quest, Location, Requirement, Conversation, Media,
 	vent) {
@@ -151,7 +151,7 @@ define([
 			var location = new Location({game_id: game_id, location_id: location_id})
 			location.fetch({
 				success: function() {
-					vent.trigger("application.show", new EditAmfModelView({model: location}));
+					vent.trigger("application.show", new EditJsonModelView({model: location}));
 				}
 			});
 		},
