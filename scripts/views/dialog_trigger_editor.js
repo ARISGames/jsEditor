@@ -59,6 +59,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
 			"change input[name='trigger-type']": "onChangeType",
 			"click .edit-dialog": "onClickEditDialog",
@@ -68,6 +69,16 @@ define([
 		onClickEditDialog: function() {
 			var dialog_editor = new DialogEditorView({model: this.dialog});
 			vent.trigger("application:dialog:show", dialog_editor);
+		},
+
+		onClickDelete: function() {
+			var view = this;
+
+			this.model.destroy({
+				success: function() {
+					view.close();
+				}
+			});
 		},
 
 		onClickCancel: function() {

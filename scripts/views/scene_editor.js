@@ -11,8 +11,8 @@ define([
 		// TODO move into a base view
 		templateHelpers: function() {
 			return {
-				model: this.model,
-				    t: translation
+				is_new: this.model.isNew(),
+				     t: translation
 			};
 		},
 

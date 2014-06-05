@@ -23,13 +23,10 @@
 </div>
 
 <div class="form-group">
-	<label for="dialog-description">Opening Script</label>
-	<input type="text" class="form-control" id="dialog-opening-script" placeholder="Opening Script ID" value="<%= opening_script_id %>">
-</div>
-
-<div class="form-group">
-	<label for="dialog-description">Closing Script</label>
-	<input type="text" class="form-control" id="dialog-closing-script" placeholder="Closing Script ID" value="<%= closing_script_id %>">
+	<button type="button" class="btn btn-info btn-block edit-script" disabled>
+		<span class="glyphicon glyphicon-file"></span>
+		Script Editor
+	</button>
 </div>
 
 <!-- create vs update -->

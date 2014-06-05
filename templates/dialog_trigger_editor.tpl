@@ -15,7 +15,7 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-dialog">
-		<span class="glyphicon glyphicon-user"></span>
+		<span class="glyphicon glyphicon-comment"></span>
 		Edit Dialog
 	</button>
 </div>
@@ -49,6 +49,8 @@
 <div id="LOCATION-fields" class="trigger-tab">
 
 	<div class="map-canvas" style="height: 150px; width: 100%"></div>
+
+	<br>
 
 	<div class="form-group">
 		<label for="trigger-title">Map Title</label>
@@ -94,7 +96,7 @@
 
 <!-- requirements here -->
 <div class="form-group">
-	<button type="button" class="btn btn-info btn-block edit-requirements">
+	<button type="button" class="btn btn-info btn-block edit-requirements" disabled>
 		<span class="glyphicon glyphicon-ok"></span>
 		Edit Requirements
 	</button>
@@ -107,7 +109,11 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary save">
-		<%= is_new ? "Add to Scene" : "Update Trigger" %>
+		Save
+		<!-- <%= is_new ? "Add to Scene" : "Update Trigger" %> -->
 	</button>
+	<% if(!is_new) { %>
+		<button type="button" class="btn btn-danger delete">Delete</button>
+	<% } %>
 	<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
 </div>
