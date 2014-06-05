@@ -9,6 +9,7 @@ define([
 		template:  _.template(Template),
 
 		events: {
+			"click .settings": "onClickSettings",
 			"click .locations": "onClickLocations",
 			"click .media": "onClickMedia",
 			"click .scenes": "onClickScenes"
@@ -16,6 +17,10 @@ define([
 
 		onRender: function() {
 			this.$el.find(this.options.active).parent().addClass("active");
+		},
+
+		onClickSettings: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/edit", {trigger: true});
 		},
 
 		onClickLocations: function() {

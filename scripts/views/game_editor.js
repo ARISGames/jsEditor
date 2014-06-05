@@ -31,13 +31,18 @@ define([
 				},
 
 				update: function() {
-					Backbone.history.navigate("#games", {trigger: true});
+					Backbone.history.navigate("#games/"+view.model.get('game_id')+"/scenes", {trigger: true});
 				}
 			});
 		},
 
 		onClickCancel: function() {
-			Backbone.history.navigate("#games", {trigger: true});
+			if(this.model.isNew()) {
+				Backbone.history.navigate("#games", {trigger: true});
+			}
+			else {
+				Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
+			}
 		}
 
 	});

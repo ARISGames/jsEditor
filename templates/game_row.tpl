@@ -1,11 +1,2 @@
-<td>
-	<a class="view"><%= name %></a>
-</td>
-<td>
-	<%= description %>
-</td>
-<td>
-	<button class="edit btn btn-xs btn-default">
-		<span class="glyphicon glyphicon-pencil"></span> Edit
-	</button>
-</td>
+<h4 class="list-group-item-heading view"><%= name %></h4>
+<p class="list-group-item-text view"><%= description %></p>

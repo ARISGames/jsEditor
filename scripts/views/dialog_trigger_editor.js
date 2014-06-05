@@ -180,32 +180,47 @@ define([
 			var location_position = new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude"));
 
 
-			var marker = new google.maps.Circle({
+			var circle_marker = new google.maps.Circle({
 				center: location_position,
 				draggable: true,
 				editable: true,
 				radius: parseFloat(this.model.get("distance")),
-				map: map
+				map: map,
+				fillColor: '#428bca',
+				strokeColor: '#428bca'
 			});
 
-			google.maps.event.addListener(marker, 'radius_changed', function(event) {
-				console.log("rad", marker.getRadius());
-				view.model.set("distance", marker.getRadius());
+
+			var center_on = function(circle) {
+				// Add circle radius to map boundary
+				boundary = circle.getBounds();
+
+				// Fit map to all locations
+				map.setCenter(boundary.getCenter());
+				map.fitBounds(boundary);
+			}
+
+			// Initial view
+			center_on(circle_marker);
+
+			// Track drag and resize
+			google.maps.event.addListener(circle_marker, 'radius_changed', function(event) {
+				view.model.set("distance", circle_marker.getRadius());
+
+				center_on(circle_marker);
 			});
 
-			google.maps.event.addListener(marker, 'center_changed', function(event) {
-				var center = marker.getCenter();
+			google.maps.event.addListener(circle_marker, 'dragend', function(event) {
+				var center = circle_marker.getCenter();
 
 				view.model.set("latitude",  center.lat());
 				view.model.set("longitude", center.lng());
+
+				center_on(circle_marker);
 			});
 
-			// Add circle radius to map boundary
-			boundary.union(marker.getBounds());
 
-			// Fit map to all locations
-			map.setCenter(boundary.getCenter());
-			map.fitBounds(boundary);
+
 		}
 	});
 });

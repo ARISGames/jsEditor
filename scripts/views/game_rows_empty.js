@@ -6,6 +6,7 @@ define([
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
-		tagName: 'tr'
+		tagName: 'a',
+		className: 'list-group-item list-group-item-info'
 	});
 });

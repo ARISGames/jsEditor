@@ -105,7 +105,8 @@ define([
 			var game = new Game({game_id: game_id});
 			game.fetch({
 				success: function() {
-					vent.trigger("application.show", new GameEditorView({model: game}));
+					vent.trigger("application.show",     new GameEditorView ({model: game}));
+					vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".settings"}));
 				}
 			});
 		},
