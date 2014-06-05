@@ -133,6 +133,8 @@ define([
 		},
 
 		onChangeType: function() {
+			var view = this;
+
 			this.$el.find('.trigger-tab').hide();
 
 			var selected_radio = this.$el.find("input[name=trigger-type]:checked");
@@ -143,6 +145,8 @@ define([
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
 			$(display_tab).show();
+
+			setTimeout(function() {view.renderMap()}, 300);
 		},
 
 		onShow: function() {
@@ -155,8 +159,9 @@ define([
 		},
 
 		onRender: function() {
+			var view = this;
 			if(this.options.visible_fields === "trigger") {
-				this.renderMap();
+				setTimeout(function() {view.renderMap()}, 300);
 			}
 		},
 
@@ -201,6 +206,7 @@ define([
 			}
 
 			// Initial view
+			//setTimeout(function() {console.log("centering"); center_on(circle_marker);}, 300);
 			center_on(circle_marker);
 
 			// Track drag and resize
