@@ -12,7 +12,7 @@ define([
 	'views/alert'
 ], function($, _, Backbone, Marionette, session, vent, Router, UserNavMenuView, AlertView) {
 
-	var application = new Marionette.Application();
+	var application = new Backbone.Marionette.Application();
 
 
 	// Application Layout
