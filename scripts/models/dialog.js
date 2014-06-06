@@ -24,7 +24,7 @@ define([
         ],
 
 		defaults: {
-			name: "New Dialog",
+			name: "",
 			description: "",
 			icon_media_id: 0,
 			media_id: 0,

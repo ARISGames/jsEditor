@@ -4,8 +4,8 @@
 <!-- Dialog attributes -->
 
 <div class="form-group">
-	<label for="dialog-name">Dialog Name</label>
-	<input type="text" class="form-control" id="dialog-name" placeholder="Name" value="<%= name %>">
+	<label class="sr-only" for="dialog-name">Dialog Name</label>
+	<input type="text" class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
 <% } %>

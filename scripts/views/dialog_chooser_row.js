@@ -11,7 +11,8 @@ define([
 		template: _.template(Template),
 
 		// Bootstrap
-		tagName: 'tr',
+		tagName: 'a',
+		className: "list-group-item",
 
 
 		events: {

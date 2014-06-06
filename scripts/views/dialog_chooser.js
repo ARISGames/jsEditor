@@ -5,18 +5,15 @@ define([
 	'models/trigger',
 	'models/instance',
 	'views/dialog_chooser_row',
-	'views/dialog_chooser_rows_empty',
 	'views/dialog_trigger_editor',
 	'vent'
-], function(Backbone, Template, Dialog, Trigger, Instance, DialogChooserRowView, DialogChooserRowsEmptyView, DialogTriggerEditorView, vent) {
+], function(Backbone, Template, Dialog, Trigger, Instance, DialogChooserRowView, DialogTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: DialogChooserRowView,
 		itemViewContainer: ".dialogs",
-
-		emptyView: DialogChooserRowsEmptyView,
 
 		itemViewOptions: function(model, index) {
 			return {
@@ -36,6 +33,25 @@ define([
 
 			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: dialog, instance: instance, model: trigger, visible_fields: "create_dialog_with_trigger"});
 			vent.trigger("application:dialog:show", trigger_editor);
+		},
+
+		// Marionette override
+		appendBuffer: function(compositeView, buffer) {
+			var $container = this.getItemViewContainer(compositeView);
+			$container.find(".foot").before(buffer);
+		},
+
+		appendHtml: function(compositeView, itemView, index){
+			if (compositeView.isBuffering) {
+			  compositeView.elBuffer.appendChild(itemView.el);
+			}
+			else {
+			  // If we've already rendered the main collection, just
+			  // append the new items directly into the element.
+			  var $container = this.getItemViewContainer(compositeView);
+			  $container.find(".foot").before(itemView.el);
+			}
 		}
+
 	});
 });

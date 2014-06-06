@@ -19,7 +19,7 @@ define([
         ],
 
 		defaults: {
-			name: "New Scene"
+			name: ""
 		}
 
 	});

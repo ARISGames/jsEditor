@@ -1,4 +1,5 @@
-<div class="list-group games">
+<div class="list-group games shrink-center">
+	<a class="list-group-item active foot new">
+		New Game
+	</a>
 </div>
-
-<button class="new btn btn-primary">New Game</button>
