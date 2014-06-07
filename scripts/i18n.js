@@ -6,8 +6,8 @@ define([
 	'text!../locale/en.json',
 	'text!../locale/es.json',
 	'text!../locale/fr.json',
-	'text!../locale/zh-Hant.json',
-	'text!../locale/zh-Hans.json'
+	'text!../locale/zh_Hant.json',
+	'text!../locale/zh_Hans.json'
 ], function(Jed, _, $, Cookie, en, es, fr, zh_Hant, zh_Hans) {
 
 	var user_language = ($.cookie('language') || navigator.userLanguage || navigator.language).toLowerCase();
@@ -38,7 +38,7 @@ define([
 	};
 
 	var detected_language = get_closest_language(user_language).locale_strings;
-	var locale_strings = JSON.parse(detected_language);
+	var locale_strings = {"locale_data": {"messages": JSON.parse(detected_language)}};
 
 	var jed = new Jed(locale_strings);
 

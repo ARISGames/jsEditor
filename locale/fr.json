@@ -1,28 +1,32 @@
 {
-  "domain": "messages",
-  "locale_data": {
-    "messages": {
-      "": {
-        "domain": "messages",
-        "plural_forms": "nplurals=2; plural=(n > 1);",
-        "lang": "fr"
-      },
-      "Login": [
-        null,
-        "Connexion"
-      ],
-      "Password": [
-        null,
-        "Mot de passe"
-      ],
-      "Username": [
-        null,
-        "Nom d'utilisateur"
-      ],
-      "Welcome to Aris": [
-        null,
-        "Bienvenue sur Aris"
-      ]
-    }
-  }
+  "": {
+    "project-id-version": "arisJS",
+    "pot-creation-date": "YEAR-MO-DA HO:MI+ZONE",
+    "po-revision-date": "2014-06-06 20:01-0600",
+    "last-translator": "Kevin Alford (zeroeth) <kevin.alford@pixelflow.org>",
+    "language-team": "",
+    "mime-version": "1.0",
+    "content-type": "text/plain; charset=UTF-8",
+    "content-transfer-encoding": "8bit",
+    "plural-forms": "nplurals=2; plural=(n > 1);",
+    "x-generator": "Poedit 1.6.5",
+    "x-poedit-sourcecharset": "UTF-8",
+    "language": "fr"
+  },
+  "Login": [
+    null,
+    "Connexion"
+  ],
+  "Password": [
+    null,
+    "Mot de passe"
+  ],
+  "Username": [
+    null,
+    "Nom d'utilisateur"
+  ],
+  "Welcome to Aris": [
+    null,
+    "Bienvenue sur Aris"
+  ]
 }

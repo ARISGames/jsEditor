@@ -2,31 +2,31 @@
   "": {
     "project-id-version": "arisJS",
     "pot-creation-date": "YEAR-MO-DA HO:MI+ZONE",
-    "po-revision-date": "2014-06-06 19:47-0600",
+    "po-revision-date": "2014-06-07 00:29-0600",
     "last-translator": "Kevin Alford (zeroeth) <kevin.alford@pixelflow.org>",
     "language-team": "",
     "mime-version": "1.0",
     "content-type": "text/plain; charset=UTF-8",
     "content-transfer-encoding": "8bit",
-    "plural-forms": "nplurals=2; plural=(n != 1);",
-    "language": "es",
+    "plural-forms": "nplurals=1; plural=0;",
     "x-generator": "Poedit 1.6.5",
-    "x-poedit-sourcecharset": "UTF-8"
+    "x-poedit-sourcecharset": "UTF-8",
+    "language": "zh_Hant"
   },
   "Login": [
     null,
-    "Iniciar sesión"
+    "登入"
   ],
   "Password": [
     null,
-    "Contraseña"
+    "密碼"
   ],
   "Username": [
     null,
-    "Nombre de usuario"
+    "使用者名稱"
   ],
   "Welcome to Aris": [
     null,
-    "Bienvenido a Aris"
+    "歡迎來到 Aris"
   ]
 }
