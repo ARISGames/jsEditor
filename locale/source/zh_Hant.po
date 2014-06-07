@@ -1,0 +1,35 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: arisJS\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2014-06-07 00:29-0600\n"
+"Last-Translator: Kevin Alford (zeroeth) <kevin.alford@pixelflow.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Language: zh_Hant\n"
+
+#: templates/login.tpl:23
+msgid "Login"
+msgstr "登入"
+
+#: templates/login.tpl:18 templates/login.tpl:19
+msgid "Password"
+msgstr "密碼"
+
+#: templates/login.tpl:13 templates/login.tpl:14
+msgid "Username"
+msgstr "使用者名稱"
+
+#: templates/login.tpl:3
+msgid "Welcome to Aris"
+msgstr "歡迎來到 Aris"

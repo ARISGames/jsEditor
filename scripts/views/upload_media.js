@@ -5,17 +5,15 @@ define([
 	'underscore.string',
 	'backbone',
 	'text!../../templates/upload_media.tpl',
-	'i18n!../locale/nls/form.js',
 	'vent'
-], function($, _, _s, Backbone, Template, translation, vent) {
+], function($, _, _s, Backbone, Template, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),
 
 		templateHelpers: function() {
 			return {
-				model: this.model,
-				    t: translation
+				model: this.model
 			};
 		},
 

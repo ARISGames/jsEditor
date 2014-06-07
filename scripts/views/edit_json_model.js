@@ -3,9 +3,9 @@ define([
 	'underscore.string',
 	'backbone',
 	'text!../../templates/edit_json_model.tpl',
-	'i18n!../locale/nls/form.js',
+	'i18n',
 	'vent'
-], function(_, _s, Backbone, Template, translation, vent) {
+], function(_, _s, Backbone, Template, i18n, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template:  _.template(Template),
@@ -13,7 +13,7 @@ define([
 		templateHelpers: function() {
 			return {
 				model: this.model,
-				    t: translation
+				gettext: i18n.gettext
 			};
 		},
 

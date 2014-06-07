@@ -2,17 +2,15 @@ define([
 	'underscore',
 	'backbone',
 	'text!../../templates/scene_editor.tpl',
-	'i18n!../locale/nls/form.js',
 	'vent'
-], function(_, Backbone, Template, translation, vent) {
+], function(_, Backbone, Template, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
 		// TODO move into a base view
 		templateHelpers: function() {
 			return {
-				is_new: this.model.isNew(),
-				     t: translation
+				is_new: this.model.isNew()
 			};
 		},
 

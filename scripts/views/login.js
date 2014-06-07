@@ -1,14 +1,19 @@
 define([
 	'underscore',
 	'backbone',
+	'marionette',
 	'models/session',
 	'text!../../templates/login.tpl',
-	'i18n!../locale/nls/login.js'
-], function(_, Backbone, session, Template, t) {
+	'i18n'
+], function(_, Backbone, Marionette, session, Template, i18n) {
 
 	return Backbone.Marionette.ItemView.extend({
-		template: function(data) {
-			return _.template(Template, _.extend(data, {t:t}));
+		template: _.template(Template),
+
+		templateHelpers: function() {
+			return {
+				gettext: function(text) { return i18n.gettext(text); },
+			}
 		},
 
 		events: {

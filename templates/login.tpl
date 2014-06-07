@@ -1,6 +1,6 @@
 <div class="shrink-center">
 	<div class="jumbotron text-center">
-		<p><%= t.greeting %></p>
+		<p style="font-size: 200%"><%= gettext("Welcome to Aris") %></p>
 	</div>
 
 	<div class="alert alert-warning alert-dismissable" style="display:none">
@@ -10,17 +10,17 @@
 
 	<form class="form-inline" role="form">
 		<div class="form-group">
-			<label class="sr-only" for="username">Username</label>
-			<input id="username" type="text" class="form-control" placeholder="Username"></input>
+			<label class="sr-only" for="username"><%= gettext("Username") %></label>
+			<input id="username" type="text" class="form-control" placeholder="<%= gettext("Username") %>"></input>
 		</div>
 
 		<div class="form-group">
-			<label class="sr-only" for="password">Password</label>
-			<input id="password" type="password" class="form-control" placeholder="Password"></input>
+			<label class="sr-only" for="password"><%= gettext("Password") %></label>
+			<input id="password" type="password" class="form-control" placeholder="<%= gettext("Password") %>"></input>
 		</div>
 
 		<button id="login" class="btn btn-primary">
-			<%= t.login_button %>
+			<%= gettext("Login") %>
 		</button>
 	</form>
 </div>
