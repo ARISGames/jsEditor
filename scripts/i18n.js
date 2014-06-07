@@ -18,8 +18,8 @@ define([
 		{locale_strings: en,      code: "en",    name: "English"},
 		{locale_strings: fr,      code: "fr",    name: "Français"},
 		{locale_strings: es,      code: "es",    name: "Español"},
-		{locale_strings: zh_Hant, code: "zh-tw", name: "中文(台灣)"},
-		{locale_strings: zh_Hans, code: "zh-cn", name: "中文(简体)"}
+		{locale_strings: zh_Hant, code: "zh-tw", name: "繁體中文"},
+		{locale_strings: zh_Hans, code: "zh-cn", name: "简体中文"}
 	];
 
 
