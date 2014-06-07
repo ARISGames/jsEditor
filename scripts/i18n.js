@@ -37,15 +37,16 @@ define([
 		return exact_match || loose_match || available_languages[0];
 	};
 
-	var detected_language = get_closest_language(user_language).locale_strings;
-	var locale_strings = {"locale_data": {"messages": JSON.parse(detected_language)}};
+	var detected_language = get_closest_language(user_language);
+	var locale_strings = {"locale_data": {"messages": JSON.parse(detected_language.locale_strings)}};
 
 	var jed = new Jed(locale_strings);
 
 	var i18n = {
 		gettext: function(text) { return jed.gettext(text); },
 		available_languages: available_languages,
-		get_closest_language: get_closest_language
+		current_language: detected_language,
+		get_closest_language: get_closest_language /* exported for testing */
 	};
 
 	return i18n;

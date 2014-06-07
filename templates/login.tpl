@@ -8,7 +8,7 @@
 		<div class="alert-text"></div>
 	</div>
 
-	<form class="form-inline" role="form">
+	<form class="form" role="form">
 		<div class="form-group">
 			<label class="sr-only" for="username"><%= gettext("Username") %></label>
 			<input id="username" type="text" class="form-control" placeholder="<%= gettext("Username") %>"></input>
@@ -19,9 +19,20 @@
 			<input id="password" type="password" class="form-control" placeholder="<%= gettext("Password") %>"></input>
 		</div>
 
-		<button id="login" class="btn btn-primary">
+		<button id="login" class="btn btn-primary" style="width: 33%;">
 			<%= gettext("Login") %>
 		</button>
+
+		<div class="btn-group pull-right">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<span class="current_language"><%= current_language.name %></span> <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+		  	<% _.each(available_languages, function(language) { %>
+				<li><a class="change-language" data-language="<%= language.code %>"><%= language.name %></a></li>
+			<% }); %>
+		  </ul>
+		</div>
 	</form>
 </div>
 
