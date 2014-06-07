@@ -34,7 +34,7 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, GameScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView,
 	GameCollection, PlaqueCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
 	Game, Plaque, Item, Quest, Location, Requirement, Conversation, Media,
 	vent) {
@@ -90,10 +90,9 @@ define([
 					// FIXME parent is a bad naming, also not used
 					var scenes = new SceneCollection([], {parent: game});
 					scenes.fetch({
-						data: { "game_id": game.id },
 						success: function() {
-							vent.trigger("application.show",      new GameScenesView ({model: game, collection: scenes}));
-							vent.trigger("application:nav:show",  new GameNavMenu    ({model: game, active: ".scenes"}));
+							vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
+							vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
 						}
 					});
 				}

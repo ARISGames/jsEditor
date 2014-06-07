@@ -9,11 +9,11 @@ define([
 	'views/scene',
 	'views/scene_editor',
 	'vent'
-], function($, _, Backbone, jQueryUi, Bootstrap, Template, Scene, GameSceneView, SceneEditorView, vent) {
+], function($, _, Backbone, jQueryUi, Bootstrap, Template, Scene, SceneView, SceneEditorView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		itemView: GameSceneView,
+		itemView: SceneView,
 		itemViewContainer: ".scenes",
 
 		itemViewOptions: function() {
