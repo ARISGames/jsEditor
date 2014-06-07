@@ -1,0 +1,28 @@
+{
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural_forms": "nplurals=2; plural=(n > 1);",
+        "lang": "fr"
+      },
+      "Login": [
+        null,
+        "Connexion"
+      ],
+      "Password": [
+        null,
+        "Mot de passe"
+      ],
+      "Username": [
+        null,
+        "Nom d'utilisateur"
+      ],
+      "Welcome to Aris": [
+        null,
+        "Bienvenue sur Aris"
+      ]
+    }
+  }
+}

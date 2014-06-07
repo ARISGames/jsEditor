@@ -1,0 +1,28 @@
+{
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural_forms": "nplurals=1; plural=0;",
+        "lang": "zh_Hant"
+      },
+      "Login": [
+        null,
+        "登入"
+      ],
+      "Password": [
+        null,
+        "密碼"
+      ],
+      "Username": [
+        null,
+        "使用者名稱"
+      ],
+      "Welcome to Aris": [
+        null,
+        "歡迎來到 Aris"
+      ]
+    }
+  }
+}

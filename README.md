@@ -32,3 +32,8 @@ Notes
 All Aris database objects are backed by Backbone models located in the `scripts/models/` directory.
 
 > A custom Backbone.sync method replaces the normal REST style of communication with one friendly to the Aris Amfphp backend.
+
+Translations
+------------
+
+Text sourced by running `xgettext.pl` (BSD version on OSX) to get .po files of templates. Edited with `poedit` or similar. Then `po2json` from https://github.com/mikeedwards/po2json converts them to json with `jed` mode enabled.
