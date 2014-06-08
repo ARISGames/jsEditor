@@ -7,7 +7,7 @@
 		</div>
 
 		<div class="form-group">
-				<button type="button" class="btn btn-primary save-scene">Save</button>
+				<button type="submit" class="btn btn-primary save-scene">Save</button>
 				<% if(!is_new) { %>
 					<button class="btn btn-danger delete-scene">Delete</button>
 				<% } %>

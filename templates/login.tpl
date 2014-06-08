@@ -1,6 +1,6 @@
-<div class="shrink-center">
-	<div class="jumbotron text-center">
-		<p style="font-size: 200%"><%= gettext("Welcome to Aris") %></p>
+<div class="well well-lg shrink-center">
+	<div class="jumbotron text-center" style="background: none">
+		<p style="font-size: 250%"><%= gettext("Welcome to Aris") %></p>
 	</div>
 
 	<div class="alert alert-warning alert-dismissable" style="display:none">

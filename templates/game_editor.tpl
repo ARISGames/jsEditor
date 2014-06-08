@@ -1,4 +1,5 @@
-<div class="shrink-center">
+<div class="shrink-center well well-lg">
+	<form class="form">
 	<h4>
 		<% if(is_new) { %>
 			Create Game
@@ -19,9 +20,10 @@
 
 
 	<div class="form-group">
-		<button type="button" class="btn btn-primary save">
+		<button type="submit" class="btn btn-primary save">
 			Save
 		</button>
 		<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
 	</div>
+	</form>
 </div>
