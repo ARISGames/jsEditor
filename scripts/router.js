@@ -77,6 +77,9 @@ define([
 			games.fetch({
 				success: function() {
 					vent.trigger("application.show", new GamesView({collection: games}));
+					vent.trigger("application:nav:hide");
+					vent.trigger("application:info:hide");
+					vent.trigger("application:list:hide");
 				}
 			});
 		},
@@ -106,6 +109,8 @@ define([
 				success: function() {
 					vent.trigger("application.show",     new GameEditorView ({model: game}));
 					vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".settings"}));
+					vent.trigger("application:info:hide");
+					vent.trigger("application:list:hide");
 				}
 			});
 		},

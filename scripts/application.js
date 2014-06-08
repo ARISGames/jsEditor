@@ -68,12 +68,24 @@ define([
 		application.nav_region.show(view);
 	});
 
+	vent.on("application:nav:hide", function() {
+		application.nav_region.reset();
+	});
+
 	vent.on("application:list:show", function(view) {
 		application.list_region.show(view);
 	});
 
+	vent.on("application:list:hide", function() {
+		application.list_region.reset();
+	});
+
 	vent.on("application:info:show", function(view) {
 		application.info_region.show(view);
+	});
+
+	vent.on("application:info:hide", function() {
+		application.info_region.reset();
 	});
 
 	vent.on("application:dialog:show", function(view, title) {
