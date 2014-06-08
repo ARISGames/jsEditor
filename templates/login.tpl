@@ -11,7 +11,7 @@
 	<form class="form" role="form">
 		<div class="form-group">
 			<label class="sr-only" for="username"><%= gettext("Username") %></label>
-			<input id="username" type="text" class="form-control" placeholder="<%= gettext("Username") %>"></input>
+			<input id="username" type="text" autofocus class="form-control" placeholder="<%= gettext("Username") %>"></input>
 		</div>
 
 		<div class="form-group">

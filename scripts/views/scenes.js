@@ -37,7 +37,7 @@ define([
 		onClickNewScene: function() {
 			var scene = new Scene({game_id: this.model.id});
 			// track created event to close?
-			vent.trigger("application:dialog:show", new SceneEditorView({model: scene}));
+			vent.trigger("application:dialog:show", new SceneEditorView({model: scene}), "Add Scene");
 		},
 
 

@@ -1,9 +1,11 @@
 <div class="scene-info">
-	<h4>Scene <span class="object-id text-muted"><%= is_new ? "" : scene_id %></span></h4>
+	<% if(!in_modal) { %>
+		<h4>Scene <span class="object-id text-muted"><%= is_new ? "" : scene_id %></span></h4>
+	<% } %>
 	<form class="form" role="form">
 		<div class="form-group">
 			<label for="scene-name" class="sr-only">Name</label>
-			<input type="text" class="form-control" id="scene-name" placeholder="Name" value="<%= name %>">
+			<input type="text" class="form-control" autofocus id="scene-name" placeholder="Name" value="<%= name %>">
 		</div>
 
 		<div class="form-group">

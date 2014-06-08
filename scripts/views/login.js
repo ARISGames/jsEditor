@@ -20,6 +20,10 @@ define([
 			}
 		},
 
+		onShow: function() {
+			this.$el.find('input[autofocus]').focus();
+		},
+
 		events: {
 			"click #login": "onClickLogin",
 			"click .change-language": "onClickChangeLanguage"

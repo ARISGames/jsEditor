@@ -76,9 +76,27 @@ define([
 		application.info_region.show(view);
 	});
 
-	vent.on("application:dialog:show", function(view) {
+	vent.on("application:dialog:show", function(view, title) {
+		// TODO add a title property to views which is smart based on where its rendered
+
+		// Reset
+		$('#modal-title').text("");
+		$('.modal-header').hide();
+
+		// Notify View
+		view.options.in_modal = true;
+
 		application.dialog_region.show(view);
 		$('.modal').modal('show');
+
+		$('.modal').on("hidden.bs.modal", function() {
+			application.dialog_region.reset();
+		});
+
+		if(title) {
+			$('#modal-title').text(title);
+			$('.modal-header').show();
+		}
 	});
 
 	vent.on("application:dialog:hide", function() {

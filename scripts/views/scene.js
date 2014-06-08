@@ -56,7 +56,7 @@ define([
 		},
 
 		onClickNewTrigger: function() {
-			vent.trigger("application:dialog:show", new SceneTriggerTypeChooserView({model: this.model, game: this.game}));
+			vent.trigger("application:dialog:show", new SceneTriggerTypeChooserView({model: this.model, game: this.game}), "Add to Scene");
 		},
 
 	});

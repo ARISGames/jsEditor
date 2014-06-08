@@ -26,7 +26,7 @@ define([
 			dialogs.fetch({
 				success: function() {
 					var dialog_chooser = new DialogChooserView({collection: dialogs, parent: scene});
-					vent.trigger("application:dialog:show", dialog_chooser);
+					vent.trigger("application:dialog:show", dialog_chooser, "Add Dialog to Scene");
 				}
 			});
 		}

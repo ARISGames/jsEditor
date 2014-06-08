@@ -14,6 +14,10 @@ define([
 			}
 		},
 
+		onShow: function() {
+			this.$el.find('input[autofocus]').focus();
+		},
+
 		events: {
 			"click .save": "onClickSave",
 			"click .cancel": "onClickCancel"

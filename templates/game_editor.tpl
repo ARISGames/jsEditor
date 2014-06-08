@@ -10,7 +10,7 @@
 
 	<div class="form-group">
 		<label for="game-name">Name</label>
-		<input type="text" class="form-control" id="game-name" placeholder="Name" value="<%= name %>">
+		<input type="text" autofocus class="form-control" id="game-name" placeholder="Name" value="<%= name %>">
 	</div>
 
 	<div class="form-group">

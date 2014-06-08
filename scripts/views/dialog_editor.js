@@ -21,6 +21,10 @@ define([
 			"description": "#dialog-description",
 		},
 
+		onShow: function() {
+			this.$el.find('input[autofocus]').focus();
+		},
+
 
 		events: {
 			"click .save": "onClickSave",

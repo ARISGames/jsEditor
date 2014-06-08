@@ -1,11 +1,14 @@
-<h4>Dialog <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+<% if(!in_modal) { %>
+	<h4>Dialog <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+<% } %>
 
+<form class="form">
 <% if(visible_fields === "create_dialog_with_trigger" ) { %>
 <!-- Dialog attributes -->
 
 <div class="form-group">
 	<label class="sr-only" for="dialog-name">Dialog Name</label>
-	<input type="text" class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
+	<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
 <% } %>
@@ -108,12 +111,12 @@
 <!-- create vs update -->
 
 <div class="form-group">
-	<button type="button" class="btn btn-primary save">
+	<button type="submit" class="btn btn-primary save">
 		Save
-		<!-- <%= is_new ? "Add to Scene" : "Update Trigger" %> -->
 	</button>
 	<% if(!is_new) { %>
 		<button type="button" class="btn btn-danger delete">Delete</button>
 	<% } %>
 	<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
 </div>
+</form>

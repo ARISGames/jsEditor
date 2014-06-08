@@ -27,6 +27,7 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
+				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
@@ -68,7 +69,7 @@ define([
 
 		onClickEditDialog: function() {
 			var dialog_editor = new DialogEditorView({model: this.dialog});
-			vent.trigger("application:dialog:show", dialog_editor);
+			vent.trigger("application:dialog:show", dialog_editor, "Edit Dialog");
 		},
 
 		onClickDelete: function() {
@@ -162,6 +163,8 @@ define([
 
 		onShow: function() {
 			this.onChangeType();
+
+			this.$el.find('input[autofocus]').focus();
 		},
 
 		onClickEditRequirements: function() {

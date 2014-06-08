@@ -10,12 +10,17 @@ define([
 		// TODO move into a base view
 		templateHelpers: function() {
 			return {
-				is_new: this.model.isNew()
+				is_new: this.model.isNew(),
+				in_modal: this.options.in_modal
 			};
 		},
 
 		ui: {
 			name: '#scene-name'
+		},
+
+		onShow: function() {
+			this.$el.find('input[autofocus]').focus();
 		},
 
 		events: {

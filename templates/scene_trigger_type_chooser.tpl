@@ -1,5 +1,3 @@
-<h4>Add to Scene</h4>
-
 <div class="list-group">
 	<a class="list-group-item add-dialog">
 		<span class="glyphicon glyphicon-comment"></span>&nbsp; Dialog
