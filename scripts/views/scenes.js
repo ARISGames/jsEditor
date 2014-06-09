@@ -4,7 +4,7 @@ define([
 	'backbone',
 	'jqueryui',
 	'bootstrap',
-	'text!../../templates/scenes.tpl',
+	'text!templates/scenes.tpl',
 	'models/scene',
 	'views/scene',
 	'views/scene_editor',

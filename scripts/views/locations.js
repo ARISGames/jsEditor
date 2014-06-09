@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/locations.tpl',
+	'text!templates/locations.tpl',
 	'collections/locations',
 	'views/location_item',
 	'views/edit_json_model',

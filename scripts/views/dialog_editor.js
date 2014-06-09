@@ -2,7 +2,7 @@ define([
 	'underscore',
 	'jquery',
 	'backbone',
-	'text!../../templates/dialog_editor.tpl',
+	'text!templates/dialog_editor.tpl',
 	'vent'
 ], function(_, $, Backbone, Template, vent) {
 

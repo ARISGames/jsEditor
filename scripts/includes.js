@@ -26,7 +26,10 @@ require.config({
 		'bootstrap': 'library/bootstrap',
 
 		/* App Config */
-		'config': 'config'
+		'config': 'config',
+
+		/* Templages */
+		'templates': '../templates'
 	},
 
 	shim: {

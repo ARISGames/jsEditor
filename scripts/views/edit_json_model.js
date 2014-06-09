@@ -2,7 +2,7 @@ define([
 	'underscore',
 	'underscore.string',
 	'backbone',
-	'text!../../templates/edit_json_model.tpl',
+	'text!templates/edit_json_model.tpl',
 	'i18n',
 	'vent'
 ], function(_, _s, Backbone, Template, i18n, vent) {

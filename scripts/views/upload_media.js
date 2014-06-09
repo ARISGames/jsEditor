@@ -4,7 +4,7 @@ define([
 	// FIXME translation with key/humanize can be removed after switching to Jed
 	'underscore.string',
 	'backbone',
-	'text!../../templates/upload_media.tpl',
+	'text!templates/upload_media.tpl',
 	'vent'
 ], function($, _, _s, Backbone, Template, vent) {
 

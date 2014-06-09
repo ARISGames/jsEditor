@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/media_list.tpl',
+	'text!templates/media_list.tpl',
 	'collections/media',
 	'views/media_item',
 ], function(_, Backbone, Template, MediaCollection, MediaItemView) {

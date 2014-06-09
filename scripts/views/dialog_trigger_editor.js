@@ -2,7 +2,7 @@ define([
 	'underscore',
 	'jquery',
 	'backbone',
-	'text!../../templates/dialog_trigger_editor.tpl',
+	'text!templates/dialog_trigger_editor.tpl',
 	'views/dialog_editor',
 	'views/requirements_editor',
 	'models/requirements_package',

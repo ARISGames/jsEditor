@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/game_nav_menu.tpl',
+	'text!templates/game_nav_menu.tpl',
 	'vent'
 ], function(_, Backbone, Template, vent) {
 

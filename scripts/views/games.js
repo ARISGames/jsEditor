@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/games.tpl',
+	'text!templates/games.tpl',
 	'collections/games',
 	'views/game_row',
 	'views/game_editor',

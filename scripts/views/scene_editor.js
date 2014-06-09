@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/scene_editor.tpl',
+	'text!templates/scene_editor.tpl',
 	'vent'
 ], function(_, Backbone, Template, vent) {
 	return Backbone.Marionette.ItemView.extend({

@@ -5,7 +5,7 @@ define([
 	'backbone',
 	'marionette',
 	'models/session',
-	'text!../../templates/login.tpl',
+	'text!templates/login.tpl',
 	'i18n'
 ], function(_, $, Cookie, Backbone, Marionette, session, Template, i18n) {
 

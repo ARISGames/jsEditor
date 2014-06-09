@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/user_nav_menu.tpl',
+	'text!templates/user_nav_menu.tpl',
 	'models/session',
 	'vent'
 ], function(_, Backbone, Template, session, vent) {

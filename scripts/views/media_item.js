@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/media_item.tpl',
+	'text!templates/media_item.tpl',
 ], function(_, Backbone, Template) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),

@@ -1,6 +1,6 @@
 define([
 	'backbone',
-	'text!../../templates/dialog_chooser.tpl',
+	'text!templates/dialog_chooser.tpl',
 	'models/dialog',
 	'models/trigger',
 	'models/instance',

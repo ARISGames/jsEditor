@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/location_item.tpl',
+	'text!templates/location_item.tpl',
 	'vent',
 	'views/edit_json_model',
 ], function(_, Backbone, Template, vent, EditJsonModelView) {

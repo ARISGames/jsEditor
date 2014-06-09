@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!../../templates/scene.tpl',
+	'text!templates/scene.tpl',
 	'views/scene_editor',
 	'views/scene_instance_trigger',
 	'views/scene_trigger_type_chooser',

@@ -1,6 +1,6 @@
 define([
 	'backbone',
-	'text!../../templates/alert.tpl',
+	'text!templates/alert.tpl',
 	'vent'
 ], function(Backbone, Template, vent) {
 
