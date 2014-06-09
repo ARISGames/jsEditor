@@ -10,7 +10,7 @@
 
 <table class="table table-hover">
 	<thead>
-		<th>Dialogs</th>
+		<th><span class="glyphicon glyphicon-comment"></span> Dialogs</th>
 	</thead>
 	<tbody class="game_objects">
 	</tbody>

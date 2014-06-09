@@ -3,10 +3,6 @@
 		<span class="glyphicon glyphicon-user"></span>
 		<span class="nav-name"> Player</span>
 	</a></li>
-	<li><a class="">
-		<span class="glyphicon glyphicon-book"></span>
-		<span class="nav-name"> Notebook</span>
-	</a></li>
 	<li><a class="scenes">
 		<span class="glyphicon glyphicon-film"></span>
 		<span class="nav-name"> Scenes</span>
@@ -18,6 +14,10 @@
 	<li><a class="codes">
 		<span class="glyphicon glyphicon-qrcode"></span>
 		<span class="nav-name"> QR Codes</span>
+	</a></li>
+	<li><a class="">
+		<span class="glyphicon glyphicon-comment"></span>
+		<span class="nav-name"> Conversations</span>
 	</a></li>
 	<li><a class="media">
 		<span class="glyphicon glyphicon-picture"></span>
