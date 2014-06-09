@@ -1,5 +1,5 @@
 <div class="shrink-center well well-lg">
-	<form class="form">
+	<form class="form" role="form" onsubmit="return false;">
 	<h4>
 		<% if(is_new) { %>
 			Create Game

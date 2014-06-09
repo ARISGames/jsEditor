@@ -2,7 +2,7 @@
 	<h4>Dialog <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
 <% } %>
 
-<form class="form">
+<form class="form" role="form" onsubmit="return false;">
 <% if(visible_fields === "create_dialog_with_trigger" ) { %>
 <!-- Dialog attributes -->
 

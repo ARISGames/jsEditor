@@ -2,7 +2,7 @@
 	<% if(!in_modal) { %>
 		<h4>Scene <span class="object-id text-muted"><%= is_new ? "" : scene_id %></span></h4>
 	<% } %>
-	<form class="form" role="form">
+	<form class="form" role="form" onsubmit="return false;">
 		<div class="form-group">
 			<label for="scene-name" class="sr-only">Name</label>
 			<input type="text" class="form-control" autofocus id="scene-name" placeholder="Name" value="<%= name %>">

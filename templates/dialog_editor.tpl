@@ -1,4 +1,4 @@
-<form class="form">
+<form class="form" role="form" onsubmit="return false;">
 	<!-- Dialog attributes -->
 
 	<div class="form-group">

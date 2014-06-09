@@ -8,7 +8,7 @@
 		<div class="alert-text"></div>
 	</div>
 
-	<form class="form" role="form">
+	<form class="form" role="form" onsubmit="return false;">
 		<div class="form-group">
 			<label class="sr-only" for="username"><%= gettext("Username") %></label>
 			<input id="username" type="text" autofocus class="form-control" placeholder="<%= gettext("Username") %>"></input>
