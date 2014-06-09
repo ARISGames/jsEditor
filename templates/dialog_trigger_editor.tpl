@@ -27,7 +27,7 @@
 
 <!-- Trigger Attributes -->
 
-<div class="btn-group btn-group-justified trigger-types">
+<div class="btn-group btn-group-sm btn-group-justified trigger-types">
 	<label class="btn btn-info">
 		<input type="radio" name="trigger-type" value="LOCATION" <%= type == "LOCATION" ? "checked" : "" %>>
 		<span class="glyphicon glyphicon-map-marker"></span>

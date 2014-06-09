@@ -21,7 +21,7 @@ a.list-group-item.active:hover {
 	position: absolute;
 	margin-top: 0;
 	margin-left: 0;
-	height: 500px;
+	height: 100%;
 	width: 100%;
 }
 
@@ -32,10 +32,12 @@ a.list-group-item.active:hover {
 	}
 }
 
-#info {
-	padding-left: 1em;
+html, body, .full-height {
+	height: 100%;
+	overflow: scroll;
 }
 
+body { padding-top: 50px; }
 
 /* Scene editor */
 
@@ -120,4 +122,5 @@ h4:hover .object-id {
 	width: 430px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 2em;
 }

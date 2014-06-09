@@ -20,6 +20,8 @@ define([
 			return { game: this.model }
 		},
 
+		className: 'full-height',
+
 		events: {
 			"click .new-scene": "onClickNewScene"
 		},

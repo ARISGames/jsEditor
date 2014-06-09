@@ -22,22 +22,28 @@ a.list-group-item.active:hover {
   position: absolute;
   margin-top: 0;
   margin-left: 0;
-  height: 500px;
+  height: 100%;
   width: 100%;
 }
 .aris-logo img {
   height: 40px;
   margin: 5px 10px;
 }
-#info {
-  padding-left: 1em;
+html,
+body,
+.full-height {
+  height: 100%;
+  overflow: scroll;
+}
+body {
+  padding-top: 50px;
 }
 /* Scene editor */
 #main .scenes {
   position: absolute;
   margin-top: 0;
   margin-left: 0;
-  height: 500px;
+  height: 100%;
   width: 100%;
   z-index: 2;
   padding: 2em;
@@ -47,7 +53,7 @@ a.list-group-item.active:hover {
   position: absolute;
   margin-top: 0;
   margin-left: 0;
-  height: 500px;
+  height: 100%;
   width: 100%;
   z-index: 20;
   pointer-events: none;
@@ -103,4 +109,5 @@ h4:hover .object-id {
   width: 430px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 2em;
 }
