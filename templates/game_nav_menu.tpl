@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav game-nav">
+<ul class="nav navbar-nav aris-nav">
 	<li><a class="">
 		<span class="glyphicon glyphicon-user"></span>
 		<span class="nav-name"> Player</span>
