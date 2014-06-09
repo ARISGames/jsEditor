@@ -12,8 +12,10 @@ define([
 	'views/upload_media',
 	'views/edit_json_model',
 	'views/game_editor',
+	'views/game_objects_organizer',
 
 	'collections/games',
+	'collections/dialogs',
 	'collections/plaques',
 	'collections/items',
 	'collections/quests',
@@ -34,8 +36,8 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView,
-	GameCollection, PlaqueCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView,
+	GameCollection, DialogsCollection, PlaqueCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
 	Game, Plaque, Item, Quest, Location, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
@@ -90,12 +92,21 @@ define([
 			game.fetch({
 				success: function() {
 
-					// FIXME parent is a bad naming, also not used
+					// FIXME place parent type on the collection itself? So it would expect 'game' to be set.
 					var scenes = new SceneCollection([], {parent: game});
 					scenes.fetch({
+
 						success: function() {
-							vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
-							vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
+
+							var game_objects = new DialogsCollection([], {parent: game});
+							game_objects.fetch({
+								success: function() {
+
+									vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
+									vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
+									vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, collection: game_objects}));
+								}
+							});
 						}
 					});
 				}

@@ -10,16 +10,14 @@
 a {
   cursor: pointer;
 }
+.table-hover td {
+  padding-left: 1em !important;
+}
 /* Navbar */
 .aris-nav li {
   text-align: center;
 }
-@media (max-width: 767px) {
-	.aris-nav li {
-	  text-align: left;
-	}
-}
-@media (min-width: 768px) and (max-width: 880px) {
+@media (max-width: 880px) {
   .nav-name {
     display: none !important;
   }

@@ -40,9 +40,20 @@ define([
 						view.render();
 					});
 
-					view.dialog.fetch();
+					view.dialog.fetch({
+						success: function() {
+							vent.on("dialog:update", function(dialog) {
+								if(dialog.id === view.dialog.id) {
+									view.dialog = dialog;
+									view.object_name = dialog.get("name");
+									view.render();
+								}
+							});
+						}
+					});
 				}
 			});
+
 		},
 
 		onRender: function() {
