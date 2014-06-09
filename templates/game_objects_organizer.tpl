@@ -1,16 +1,21 @@
 <!-- nav here -->
-<h4>Game Objects</h4>
+<br>
 
-<ul class="nav nav-pills nav-justified">
-  <li class="active"><a>By&nbsp;Type</a></li>
-  <li><a>Unused</a></li>
-</ul>
+<table class="table table-hover table-condensed">
+	<thead>
+		<th class="organizer-section-header"><span class="glyphicon glyphicon-filter"></span> Game Objects</th>
+	</thead>
+	<tbody>
+		<tr class="active"><td>By Type</td></tr>
+		<tr><td>Unused</td></tr>
+	</tbody>
+</table>
 
 <br>
 
 <table class="table table-hover">
 	<thead>
-		<th><span class="glyphicon glyphicon-comment"></span> Dialogs</th>
+		<th class="organizer-section-header"><span class="glyphicon glyphicon-comment"></span> Dialogs</th>
 	</thead>
 	<tbody class="game_objects">
 	</tbody>

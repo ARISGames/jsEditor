@@ -10,8 +10,14 @@
 a {
   cursor: pointer;
 }
+.organizer-section-header {
+  color: #777;
+}
 .table-hover td {
   padding-left: 1em !important;
+}
+.table-hover .active td {
+  background: #d8d8d8 !important;
 }
 /* Navbar */
 .aris-nav li {
