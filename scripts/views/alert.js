@@ -11,7 +11,9 @@ define([
 			return {
 				text: this.options.text
 			}
-		}
+		},
+
+		className: "clearfix"
 	});
 });
 

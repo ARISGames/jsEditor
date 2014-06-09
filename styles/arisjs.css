@@ -6,10 +6,7 @@
 .x-ray-backbone-view .x-ray-view-template-name {
   color: red;
 }
-.clear {
-  clear: both;
-}
-/* Anchors with no hrefs */
+/* Cursor for anchors with no hrefs */
 a {
   cursor: pointer;
 }
@@ -35,6 +32,7 @@ a.list-group-item.active:hover {
 #info {
   padding-left: 1em;
 }
+/* Scene editor */
 #main .scenes {
   position: absolute;
   margin-top: 0;
@@ -43,6 +41,7 @@ a.list-group-item.active:hover {
   width: 100%;
   z-index: 2;
   padding: 2em;
+  background: #afafaf;
 }
 .scenes-overlay {
   position: absolute;
@@ -52,35 +51,20 @@ a.list-group-item.active:hover {
   width: 100%;
   z-index: 20;
   pointer-events: none;
-  /*background: rgba(255,0,255,0.5);*/
 }
-.scene-background {
-  position: absolute;
-  margin-top: 0;
-  margin-left: 0;
-  height: 500px;
-  width: 100%;
-  background: #333333;
-}
-.scene {
-  position: relative;
-  z-index: 10;
+.scene-panel {
+  max-width: 300px;
   float: left;
-  border: 1px solid #323232;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  padding: 0.5em;
-  background: #ffffff;
-  width: 200px;
 }
-.scene h4.name {
-  border-bottom: 1px solid grey;
+.scene-panel .scene-title {
+  max-width: 240px;
+  white-space: nowrap;
   overflow: hidden;
-  margin-top: 0;
-  float: left;
+  font-size: 125%;
+  margin-right: 0.5em;
 }
-.scene .new-trigger-button {
-  float: right;
+.scene-panel .new-trigger {
+  padding-top: 0.25em;
 }
 .scene-triggers {
   margin-bottom: 0;
@@ -93,30 +77,28 @@ a.list-group-item.active:hover {
 }
 .scene-triggers .scene-trigger {
   position: relative;
-  z-index: 40;
   height: 55px;
   width: 75px;
   overflow: hidden;
   text-align: center;
   white-space: nowrap;
 }
-.game-item-info h4 {
-  padding-bottom: 0.25em;
-  border-bottom: 1px solid grey;
-}
 .new-scene-button {
   float: right;
   z-index: 2;
 }
+/* Hidden ID on editor heading */
 .object-id {
   visibility: hidden;
 }
 h4:hover .object-id {
   visibility: visible;
 }
+/* Hide radio inputs */
 .trigger-types input {
   display: none;
 }
+/* Narrow editor panels */
 .shrink-center {
   width: 430px;
   margin-left: auto;

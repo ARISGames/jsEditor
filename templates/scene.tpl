@@ -1,11 +1,12 @@
-<h4 class="name"><%= name %></h4>
-<div class="btn-group new-trigger-button">
-	<button type="button" class="btn btn-link new-trigger">
-		<span class="glyphicon glyphicon-plus-sign"></span>
-	</button>
-</div>
-<div class="clear"></div>
+<div class="panel-heading clearfix">
+	<div class="scene-title name pull-left"><%= name %></div>
 
-<ul class="list-inline scene-triggers">
-</ul>
-<div class="clear"></div>
+	<a class="new-trigger pull-right">
+		<span class="glyphicon glyphicon-plus-sign"></span>
+	</a>
+</div>
+
+<div class="panel-body clearfix">
+	<ul class="list-inline scene-triggers clearfix">
+	</ul>
+</div>

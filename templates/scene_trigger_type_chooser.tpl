@@ -3,10 +3,10 @@
 		<span class="glyphicon glyphicon-comment"></span>&nbsp; Dialog
 	</a>
 	<a class="list-group-item">
-		<span class="glyphicon glyphicon-inbox"></span>&nbsp; Item
+		<span class="glyphicon glyphicon-list-alt"></span>&nbsp; Plaque
 	</a>
 	<a class="list-group-item">
-		<span class="glyphicon glyphicon-list-alt"></span>&nbsp; Plaque
+		<span class="glyphicon glyphicon-inbox"></span>&nbsp; Item
 	</a>
 	<a class="list-group-item">
 		<span class="glyphicon glyphicon-globe"></span>&nbsp; Web Page
