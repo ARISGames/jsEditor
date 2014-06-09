@@ -5,9 +5,12 @@
 	 */
 	baseUrl: "scripts",
 	mainConfigFile: 'scripts/includes.js',
-	out: "js/main.built.js",
-	optimize: 'uglify',
-	include : ['main'],
+	out: "dist/aris.js",
+	optimize: 'uglify2',
+	paths: {
+		"inlineRequireJS": 'library/require',
+	},
+	include : ['inlineRequireJS', 'main'],
 	findNestedDependencies: true,
 	preserveLicenseComments: false
 
