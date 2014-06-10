@@ -101,6 +101,7 @@ define([
 									vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
 									vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
 									vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, collection: game_objects}));
+									vent.trigger("application:info:hide");
 								}
 							});
 						}
