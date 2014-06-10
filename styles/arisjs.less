@@ -17,6 +17,10 @@ a {
 	background: #d8d8d8 !important;
 }
 
+.scene-trigger, .scene-title, .game_objects .edit {
+	cursor: pointer;
+}
+
 /* Navbar */
 .aris-nav li {
 	text-align: center;
@@ -105,6 +109,12 @@ nav, .scene-panel {
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
+.scene-panel:hover .panel-heading {
+	color: #428bca;
+	background: #f0f0f0;
+}
+
+
 .scenes-overlay {
 	.absolute;
 	z-index: 20;
@@ -148,6 +158,9 @@ nav, .scene-panel {
 		overflow: hidden;
 		text-align: center;
 		white-space: nowrap;
+	}
+	.scene-trigger:hover {
+		color: #428bca;
 	}
 }
 

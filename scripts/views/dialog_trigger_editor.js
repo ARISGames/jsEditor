@@ -99,6 +99,9 @@ define([
 			}
 
 			dialog.save({}, {
+				create: function() {
+					vent.trigger("dialog:add", dialog);
+				},
 				success: function() {
 
 					// Save Instance
@@ -185,7 +188,7 @@ define([
 			// Render Map
 			var element = this.$el.find('.map-canvas').get(0);
 
-			var default_location = new google.maps.LatLng(-34.397, 150.644);
+			var default_location = new google.maps.LatLng(43.073, -89.4012);
 			var map_options = {
 				zoom: 8,
 				center: default_location
@@ -204,6 +207,7 @@ define([
 				draggable: true,
 				editable: true,
 				radius: parseFloat(this.model.get("distance")),
+				suppressUndo: true,
 				map: map,
 				fillColor: '#428bca',
 				strokeColor: '#428bca'

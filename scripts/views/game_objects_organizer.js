@@ -9,6 +9,13 @@ define([
 		template: _.template(Template),
 
 		itemView: GameObjectsOrganizerView,
-		itemViewContainer: ".game_objects"
+		itemViewContainer: ".game_objects",
+
+		initialize: function() {
+			var view = this;
+			vent.on("dialog:add", function(dialog) {
+				view.collection.add(dialog);
+			});
+		}
 	});
 });

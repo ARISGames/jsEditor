@@ -15,21 +15,16 @@ define([
 	'views/game_objects_organizer',
 
 	'collections/games',
+	'collections/game_triggers',
 	'collections/dialogs',
-	'collections/plaques',
 	'collections/items',
-	'collections/quests',
-	'collections/locations',
 	'collections/requirements',
 	'collections/conversations',
 	'collections/media',
 	'collections/scenes',
 
 	'models/game',
-	'models/plaque',
 	'models/item',
-	'models/quest',
-	'models/location',
 	'models/requirement',
 	'models/conversation',
 	'models/media',
@@ -37,8 +32,8 @@ define([
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView,
-	GameCollection, DialogsCollection, PlaqueCollection, ItemCollection, QuestCollection, LocationCollection, RequirementCollection, ConversationCollection, MediaCollection,SceneCollection,
-	Game, Plaque, Item, Quest, Location, Requirement, Conversation, Media,
+	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
+	Game, Item, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -137,13 +132,23 @@ define([
 		/* List Routes ************************/
 
 		listLocations: function(game_id) {
-			var game      = new Game({game_id: game_id});
-			var locations = new LocationCollection([], {parent: game});
-			locations.fetch({
+			var game = new Game({game_id: game_id});
+
+			game.fetch({
 				success: function() {
-					vent.trigger("application.show", new LocationsView({collection: locations}));
-					// TODO draw 3 pane layout here too. with model updates reflecting.
-					// name change, location drag, or field edit in right pane
+					var triggers  = new GameTriggersCollection([], {parent: game});
+
+					triggers.fetch({
+						success: function() {
+							var location_triggers = triggers.where({type: "LOCATION"});
+							var locations = new GameTriggersCollection(location_triggers, {parent: game});
+
+							vent.trigger("application.show",     new LocationsView({collection: locations}));
+							vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".locations"}));
+							vent.trigger("application:info:hide");
+							vent.trigger("application:list:hide");
+						}
+					});
 				}
 			});
 		},
@@ -158,20 +163,6 @@ define([
 				}
 			});
 		},
-
-
-
-		/* Edit Routes ************************/
-
-		editLocation: function(game_id, location_id) {
-			var location = new Location({game_id: game_id, location_id: location_id})
-			location.fetch({
-				success: function() {
-					vent.trigger("application.show", new EditJsonModelView({model: location}));
-				}
-			});
-		},
-
 
 
 		/* New Routes *************************/
