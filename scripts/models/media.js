@@ -2,25 +2,16 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'models/amf_base',
-	'models/content'
-], function($, _, Backbone, AmfBaseModel, Content) {
+	'models/json_base'
+], function($, _, Backbone, JsonBaseModel) {
 
-	return AmfBaseModel.extend({
+	return JsonBaseModel.extend({
 		idAttribute: 'media_id',
 
 
-		initialize: function() {
-			this.on("create", function(model) {
-				var folder = new Content({content_id: model.get(model.idAttribute), content_type: "Dialog", game_id: model.get("game_id")});
-				folder.save();
-			});
-		},
-
-
 		amfphp_url_templates: {
-			read:   "media.getMediaObject",
-			update: null,
+			read:   "media.getMedia",
+			update: "media.updateMedia",
 			create: "media.createMedia",
 			delete: "media.deleteMiedia"
 		},
@@ -29,16 +20,14 @@ define([
 		amfphp_url_attributes: [
 			"game_id",
 			"media_id",
-			"name",
+			"display_name",
 			"file_name",
-			"is_icon"
+			"data"
 		],
 
 
 		defaults: {
-			name: "",
-			file_name: "",
-			is_icon: 0
+			name: ""
 		}
 	});
 });

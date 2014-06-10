@@ -1,14 +1,13 @@
 @import "xray-debug";
 
 /* Cursor for anchors with no hrefs */
+
 a {
   cursor:pointer;
 }
 
-.qr_image img {
-	padding-top: 1em;
-	width: 100%;
-}
+
+/* Left Organizer */
 
 .organizer-section-header {
 	color: #777;
@@ -24,6 +23,7 @@ a {
 .scene-trigger, .scene-title, .game_objects .edit {
 	cursor: pointer;
 }
+
 
 /* Navbar */
 .aris-nav li {
@@ -86,7 +86,8 @@ a.list-group-item.active:hover {
 	}
 }
 
-/* Full height editor */
+
+/* Full height editing */
 
 html, body, .full-height {
 	height: 100%;
@@ -98,6 +99,7 @@ body {
 	background: #f6f6f6;
 }
 
+
 /* Scene editor */
 
 #main .scenes {
@@ -108,7 +110,8 @@ body {
 	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
 }
 
-/* Removed bootstraps gutter */
+/* Remove bootstraps gutter */
+
 #info, #list {
   padding-right: 15px;
   padding-left: 15px;
@@ -180,6 +183,8 @@ nav, .scene-panel {
 }
 
 
+/* Side editor */
+
 /* Hidden ID on editor heading */
 .object-id {
 	visibility: hidden;
@@ -195,6 +200,13 @@ h4:hover .object-id {
 	display: none;
 }
 
+/* QR code fit to side editor */
+
+.qr_image img {
+	padding-top: 1em;
+	width: 100%;
+}
+
 
 /* Narrow editor panels */
 
@@ -203,4 +215,16 @@ h4:hover .object-id {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 2em;
+}
+
+
+/* Media Editor */
+
+.aris-media-thumbnail {
+	float: left;
+	width: 23%;
+	margin: 1%;
+	p {
+		overflow: hidden;
+	}
 }

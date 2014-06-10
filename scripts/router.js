@@ -8,7 +8,7 @@ define([
 	'views/scenes',
 	'views/game_nav_menu',
 	'views/locations',
-	'views/media_list',
+	'views/media_editor',
 	'views/upload_media',
 	'views/edit_json_model',
 	'views/game_editor',
@@ -32,7 +32,7 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView,
 	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
@@ -161,7 +161,7 @@ define([
 			var media = new MediaCollection([], {parent: game});
 			media.fetch({
 				success: function() {
-					vent.trigger("application.show", new MediaListView({collection: media}));
+					vent.trigger("application.show", new MediaEditorView({collection: media}));
 				}
 			});
 		},

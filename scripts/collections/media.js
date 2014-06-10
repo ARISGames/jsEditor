@@ -3,15 +3,13 @@ define([
 	'underscore',
 	'backbone',
 	'models/media',
-	'collections/amf_collection_base',
+	'collections/json_collection_base',
 	'vent'
-], function($, _, Backbone, Media, AmfCollectionBase, vent) {
-	return AmfCollectionBase.extend({
+], function($, _, Backbone, Media, JsonCollectionBase, vent) {
+	return JsonCollectionBase.extend({
 
 		model: Media,
 
-		url: function() {
-			return this.amfphp_url_root+'media.getMedia/'+this.parent.get('game_id');
-		},
+		amfphp_url: "media.getMediaForGame"
 	});
 });
