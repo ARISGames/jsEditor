@@ -187,9 +187,9 @@ define([
 
 			if(this.options.visible_fields === "trigger") {
 				setTimeout(function() {view.renderMap()}, 300);
+				this.qr_code = new QRCode(this.$el.find('.qr_image').get(0), this.model.get("code"));
 			}
 
-			this.qr_code = new QRCode(this.$el.find('.qr_image').get(0), this.model.get("code"));
 		},
 
 		renderMap: function() {
