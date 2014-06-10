@@ -13,6 +13,7 @@ define([
 	'views/edit_json_model',
 	'views/game_editor',
 	'views/game_objects_organizer',
+	'views/locations_organizer',
 
 	'collections/games',
 	'collections/game_triggers',
@@ -31,7 +32,7 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaListView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView,
 	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
@@ -143,10 +144,10 @@ define([
 							var location_triggers = triggers.where({type: "LOCATION"});
 							var locations = new GameTriggersCollection(location_triggers, {parent: game});
 
-							vent.trigger("application.show",     new LocationsView({collection: locations}));
-							vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".locations"}));
+							vent.trigger("application.show",      new LocationsView({collection: locations}));
+							vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".locations"}));
+							vent.trigger("application:list:show", new LocationsOrganizerView({collection: locations}));
 							vent.trigger("application:info:hide");
-							vent.trigger("application:list:hide");
 						}
 					});
 				}

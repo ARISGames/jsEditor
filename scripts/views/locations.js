@@ -54,6 +54,12 @@ define([
 					circle_marker.setRadius(parseFloat(trigger.get("distance")));
 				});
 
+				trigger.on("center_map", function() {
+					// Focus on Circle
+					map.setCenter(circle_marker.getBounds().getCenter());
+					map.fitBounds(circle_marker.getBounds());
+				});
+
 				trigger.on("delete_map", function() {
 					circle_marker.setMap(null);
 				});
