@@ -2,12 +2,13 @@ define([
 	'underscore',
 	'jquery',
 	'backbone',
+	'qrcode',
 	'text!templates/dialog_trigger_editor.tpl',
 	'views/dialog_editor',
 	'views/requirements_editor',
 	'models/requirements_package',
 	'vent'
-], function(_, $, Backbone, Template, DialogEditorView, RequirementsEditorView, RequirementsPackage, vent) {
+], function(_, $, Backbone, QRCode, Template, DialogEditorView, RequirementsEditorView, RequirementsPackage, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -64,7 +65,13 @@ define([
 			"click .cancel": "onClickCancel",
 			"change input[name='trigger-type']": "onChangeType",
 			"click .edit-dialog": "onClickEditDialog",
-			"click .edit-requirements": "onClickEditRequirements"
+			"click .edit-requirements": "onClickEditRequirements",
+			"change #trigger-code": "onChangeCode",
+			"keyup #trigger-code": "onChangeCode"
+		},
+
+		onChangeCode: function() {
+			this.qr_code.makeCode(this.ui.code.val());
 		},
 
 		onClickEditDialog: function() {
@@ -177,9 +184,12 @@ define([
 
 		onRender: function() {
 			var view = this;
+
 			if(this.options.visible_fields === "trigger") {
 				setTimeout(function() {view.renderMap()}, 300);
 			}
+
+			this.qr_code = new QRCode(this.$el.find('.qr_image').get(0), this.model.get("code"));
 		},
 
 		renderMap: function() {

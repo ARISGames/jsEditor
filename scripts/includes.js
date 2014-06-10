@@ -7,6 +7,7 @@ require.config({
 		/* Using AMD forks for non AMD compliant libraries */
 		'text':     'library/require.text',
 		'jed':      'library/jed',
+		'qrcode':   'library/qrcode',
 
 		'jquery':   'library/jquery',
 		'cookie':   'library/jquery.cookie',
@@ -44,6 +45,10 @@ require.config({
 
 		'bootstrap' : {
 			deps: ['jquery']
+		},
+
+		'qrcode': {
+			exports: "QRCode"
 		}
 	},
 

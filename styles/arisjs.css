@@ -10,6 +10,10 @@
 a {
   cursor: pointer;
 }
+.qr_image img {
+  padding-top: 1em;
+  width: 100%;
+}
 .organizer-section-header {
   color: #777;
 }
