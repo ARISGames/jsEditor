@@ -39,7 +39,7 @@ define([
 
 				var circle_marker = new google.maps.Circle({
 					center: location_position,
-					draggable: true,
+					draggable: false,
 					editable: true,
 					radius: parseFloat(trigger.get("distance")),
 					map: map,
@@ -48,22 +48,17 @@ define([
 					strokeColor: '#428bca'
 				});
 
-				// Update circle when model changes from edit view
-				trigger.on("update_map", function() {
-					circle_marker.setCenter(new google.maps.LatLng(trigger.get("latitude"), trigger.get("longitude")));
-					circle_marker.setRadius(parseFloat(trigger.get("distance")));
-				});
+				var drag_marker = new google.maps.Marker({
+					position: location_position,
+					title: trigger.get("title"),
+					map: map,
+					//icon: "images/glyphicons_309_comments.png",
+					draggable: true
+				})
 
-				trigger.on("center_map", function() {
-					// Focus on Circle
-					map.setCenter(circle_marker.getBounds().getCenter());
-					map.fitBounds(circle_marker.getBounds());
-				});
+				circle_marker.bindTo('center', drag_marker, 'position');
 
-				trigger.on("delete_map", function() {
-					circle_marker.setMap(null);
-				});
-
+				// Map Boundaries
 
 				var extend_map = function(circle) {
 					// Add circle radius to map boundary
@@ -74,37 +69,39 @@ define([
 					map.fitBounds(boundary);
 				}
 
-				// Initial view
+				// Zoom to fit all markers
+
 				extend_map(circle_marker);
 
+
 				// Track drag and resize
+
 				google.maps.event.addListener(circle_marker, 'radius_changed', function() {
 					trigger.set("distance", circle_marker.getRadius());
 					trigger.save();
 				});
 
-				google.maps.event.addListener(circle_marker, 'center_changed', function() {
-					/* Work around for weird map events */
+				google.maps.event.addListener(drag_marker, 'dragend', function() {
+					var center = circle_marker.getCenter();
 
-					if(!view.mousedown) {
-						var center = circle_marker.getCenter();
-
-						trigger.set("latitude",  center.lat());
-						trigger.set("longitude", center.lng());
-						trigger.save();
-					}
+					trigger.set("latitude",  center.lat());
+					trigger.set("longitude", center.lng());
+					trigger.save();
 				});
+
+
+				// Edit side bar
 
 				google.maps.event.addListener(circle_marker, 'mousedown', function() {
 					vent.trigger("application:info:show", new DialogTriggerLocationEditorView({model: trigger}));
 				});
 
-				google.maps.event.addListener(circle_marker, 'mousedown', function() {
-					view.mousedown = true;
+				google.maps.event.addListener(drag_marker, 'mousedown', function() {
+					vent.trigger("application:info:show", new DialogTriggerLocationEditorView({model: trigger}));
 				});
-				google.maps.event.addListener(circle_marker, 'mouseup', function() {
-					view.mousedown = false;
-				});
+
+
+				// Hover
 
 				google.maps.event.addListener(circle_marker, 'mouseover', function() {
 					circle_marker.setOptions({fillColor: '#5bc0de'});
@@ -114,6 +111,27 @@ define([
 				google.maps.event.addListener(circle_marker, 'mouseout', function() {
 					circle_marker.setOptions({fillColor: '#428bca'});
 					circle_marker.setOptions({strokeColor: '#428bca'});;
+				});
+
+
+				// Events triggered by other views
+
+				trigger.on("update_map", function() {
+					circle_marker.setCenter(new google.maps.LatLng(trigger.get("latitude"), trigger.get("longitude")));
+					circle_marker.setRadius(parseFloat(trigger.get("distance")));
+				});
+
+				trigger.on("center_map", function() {
+					map.setCenter(circle_marker.getBounds().getCenter());
+					map.fitBounds(circle_marker.getBounds());
+				});
+
+				trigger.on("delete_map", function() {
+					circle_marker.setMap (null);
+					drag_marker.setMap   (null);
+
+					circle_marker = null;
+					drag_marker   = null;
 				});
 
 			}); /* _.each model */
