@@ -14,7 +14,7 @@ define([
 
 
 		onClickShow: function() {
-			// manually fetch model and show full url
+			// side bar view
 		},
 	});
 });

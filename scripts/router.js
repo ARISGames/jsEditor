@@ -145,8 +145,8 @@ define([
 							var location_triggers = triggers.where({type: "LOCATION"});
 							var locations = new GameTriggersCollection(location_triggers, {parent: game});
 
-							vent.trigger("application.show",      new LocationsView({collection: locations}));
-							vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".locations"}));
+							vent.trigger("application.show",      new LocationsView ({model: game, collection: locations}));
+							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game, active: ".locations"}));
 							vent.trigger("application:list:show", new LocationsOrganizerView({collection: locations}));
 							vent.trigger("application:info:hide");
 						}
@@ -158,10 +158,17 @@ define([
 
 		listMedia: function(game_id) {
 			var game  = new Game({game_id: game_id});
-			var media = new MediaCollection([], {parent: game});
-			media.fetch({
+			game.fetch({
 				success: function() {
-					vent.trigger("application.show", new MediaEditorView({collection: media}));
+					var media = new MediaCollection([], {parent: game});
+					media.fetch({
+						success: function() {
+							vent.trigger("application.show",     new MediaEditorView ({model: game, collection: media}));
+							vent.trigger("application:nav:show", new GameNavMenu     ({model: game, active: ".media"}));
+							vent.trigger("application:info:hide");
+							vent.trigger("application:list:hide"); // add organizer
+						}
+					});
 				}
 			});
 		},
