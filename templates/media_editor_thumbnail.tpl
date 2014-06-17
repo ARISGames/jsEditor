@@ -1,5 +1,5 @@
 <div class="thumbnail">
-	<img src="<%= url %>" alt="<%= file_name %>">
+	<img src="<%= thumb_url %>" alt="<%= file_name %>">
 	<div class="caption">
 		<h5>
 			<%= display_name %>

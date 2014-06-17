@@ -1,4 +1,10 @@
 <form role="form">
+
+	<div class="form-group">
+		<label for="dialog-name">Name</label>
+		<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Name" value="<%= name %>">
+	</div>
+
 	<div class="form-group">
 		<label for="uploader">File</label>
 		<input type="file" id="uploader" name="uploader">
@@ -6,11 +12,9 @@
 	</div>
 
 	<div class="form-group">
-		<label for="dialog-name">Name</label>
-		<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Name" value="<%= name %>">
+		<img class="upload-preview" src="">
 	</div>
 
-	<canvas name="renderer"></canvas>
 
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary save">Save</button>
