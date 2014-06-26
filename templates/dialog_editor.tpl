@@ -13,12 +13,13 @@
 
 	<div class="form-group">
 		<label for="dialog-description">Icon</label>
-		<input type="text" class="form-control" id="dialog-icon" placeholder="Icon ID" value="<%= icon_media_id %>">
+		<img src=<%= thumbnail_url %>>
+		<button type="button" class="btn btn-info change-icon">
+			Select Icon
+		</button>
 	</div>
 
-	<div class="form-group">
-		<label for="dialog-description">Media</label>
-		<input type="text" class="form-control" id="dialog-media" placeholder="Media ID" value="<%= media_id %>">
+	<div class="form-group" id="icon-chooser-container">
 	</div>
 
 	<div class="form-group">

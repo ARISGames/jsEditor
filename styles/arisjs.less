@@ -225,7 +225,7 @@ h4:hover .object-id {
 	overflow-x: auto;
 }
 
-.aris-media-thumbnail {
+.media-editor .aris-media-thumbnail {
 	display: inline-block;
 	position: relative;
 	width: 25%;
@@ -265,4 +265,28 @@ h4:hover .object-id {
 
 .media-drop-target.media-hover {
 	background: #999;
+}
+
+
+/* Media Selector */
+
+.icon-chooser {
+	.chooser-thumbnail {
+		display: inline-block;
+	}
+	.choose {
+		border: 2px solid rgba(0,0,0,0);
+		border-radius: 5px;
+		margin: 5px;
+		img {
+			border-radius: 5px;
+		}
+	}
+	.choose:hover {
+		border: 2px solid #999;
+		img {
+			opacity: 0.5;
+			cursor: pointer;
+		}
+	}
 }

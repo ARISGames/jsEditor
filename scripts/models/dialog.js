@@ -18,7 +18,6 @@ define([
 			"name",
 			"description",
 			"icon_media_id",
-			"media_id",
 			"opening_script_id",
 			"closing_script_id"
         ],
@@ -27,7 +26,6 @@ define([
 			name: "",
 			description: "",
 			icon_media_id: 0,
-			media_id: 0,
 			opening_script_id: 0,
 			closing_script_id: 0
 		}
