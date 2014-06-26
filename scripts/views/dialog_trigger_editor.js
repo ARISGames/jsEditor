@@ -7,8 +7,9 @@ define([
 	'views/dialog_editor',
 	'views/requirements_editor',
 	'models/requirements_package',
+	'models/media',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, DialogEditorView, RequirementsEditorView, RequirementsPackage, vent) {
+], function(_, $, Backbone, QRCode, Template, DialogEditorView, RequirementsEditorView, RequirementsPackage, Media, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -75,8 +76,15 @@ define([
 		},
 
 		onClickEditDialog: function() {
-			var dialog_editor = new DialogEditorView({model: this.dialog});
-			vent.trigger("application:dialog:show", dialog_editor, "Edit Dialog");
+			var view = this;
+			var media = new Media({media_id: this.dialog.get("icon_media_id")});
+
+			media.fetch({
+				success: function() {
+					var dialog_editor = new DialogEditorView({model: view.dialog, media: media});
+					vent.trigger("application:dialog:show", dialog_editor, "Edit Dialog");
+				}
+			});
 		},
 
 		onClickDelete: function() {
