@@ -226,16 +226,41 @@ h4:hover .object-id {
 }
 
 .aris-media-thumbnail {
-	float: left;
-	width: 23%;
-	margin: 1%;
+	display: inline-block;
+	position: relative;
+	width: 25%;
+	padding: 1em;
+	padding-bottom: 30%;
+	margin-bottom: 1em;
+	height: 0;
+	.media-thumbnail {
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding-bottom: 100%;
+	}
+	.caption {
+		display: inline-block;
+		position: relative;
+	}
 	p {
 		overflow: hidden;
+	}
+
+	div.image {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background-size: contain !important;
+		background-repeat: no-repeat !important;
+		background-position: center center !important;
 	}
 }
 
 .upload-preview {
-	width: 100%;
+	max-width: 100%;
+	max-height: 45%;
 }
 
 .media-drop-target.media-hover {

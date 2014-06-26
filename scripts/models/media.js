@@ -17,17 +17,27 @@ define([
 		},
 
 
-		amfphp_url_attributes: [
-			"game_id",
-			"media_id",
-			"display_name",
-			"file_name",
-			"data"
-		],
+		amfphp_url_attributes: function() {
+			var attribute_list = [
+				"game_id",
+				"media_id",
+				"display_name",
+				"file_name",
+				"data"
+			];
+
+			// FIXME temporary fix for optional attribute, might need to remove the fixed attribute logic and make it a white list (with non nulls) that gets sent? (make sure nothing ever needs to be nulled out)
+			if(this.get("data")) {
+				return attribute_list;
+			}
+			else {
+				return _.without(attribute_list, "data");
+			}
+		},
 
 
 		defaults: {
-			name: ""
+			"display_name": ""
 		}
 	});
 });

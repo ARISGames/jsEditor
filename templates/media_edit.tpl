@@ -12,7 +12,7 @@
 	</div>
 
 	<div class="form-group">
-		<img class="upload-preview" src="">
+		<img class="upload-preview" src="<%= url %>">
 	</div>
 
 

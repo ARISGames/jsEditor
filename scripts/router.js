@@ -9,11 +9,11 @@ define([
 	'views/game_nav_menu',
 	'views/locations',
 	'views/media_editor',
-	'views/upload_media',
 	'views/edit_json_model',
 	'views/game_editor',
 	'views/game_objects_organizer',
 	'views/locations_organizer',
+	'views/media_organizer',
 
 	'collections/games',
 	'collections/game_triggers',
@@ -32,7 +32,7 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, UploadMediaView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
 	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
@@ -49,9 +49,6 @@ define([
 			"games/:game_id/scenes":     "showSceneEditor",
 			"games/:game_id/locations":  "listLocations",
 			"games/:game_id/media":      "listMedia",
-
-
-			"games/:game_id/media/new":         "newMedia",
 
 			"games/:game_id/locations/:location_id/edit":       "editLocation",
 			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
@@ -163,22 +160,14 @@ define([
 					var media = new MediaCollection([], {parent: game});
 					media.fetch({
 						success: function() {
-							vent.trigger("application.show",     new MediaEditorView ({model: game, collection: media}));
-							vent.trigger("application:nav:show", new GameNavMenu     ({model: game, active: ".media"}));
+							vent.trigger("application.show",      new MediaEditorView ({model: game, collection: media}));
+							vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
+							vent.trigger("application:list:show", new MediaOrganizerView({collection: media}));
 							vent.trigger("application:info:hide");
-							vent.trigger("application:list:hide"); // add organizer
 						}
 					});
 				}
 			});
-		},
-
-
-		/* New Routes *************************/
-
-		newMedia: function(game_id) {
-			var media = new Media({game_id: game_id});
-			vent.trigger("application.show", new UploadMediaView({model: media}));
 		}
 	});
 });

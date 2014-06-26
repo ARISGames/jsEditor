@@ -1,5 +1,7 @@
-<div class="thumbnail">
-	<img src="<%= thumb_url %>" alt="<%= file_name %>">
+<div class="show media-thumbnail">
+	<div class="image" style="background: url(<%= url %>);" alt="<%= file_name %>">
+	</div>
+
 	<div class="caption">
 		<h5>
 			<%= display_name %>
