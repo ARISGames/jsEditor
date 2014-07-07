@@ -21,7 +21,7 @@ define([
 			var attribute_list = [
 				"game_id",
 				"media_id",
-				"display_name",
+				"name",
 				"file_name",
 				"data"
 			];

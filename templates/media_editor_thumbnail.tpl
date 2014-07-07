@@ -4,7 +4,7 @@
 
 	<div class="caption">
 		<h5>
-			<%= display_name %>
+			<%= media_id %> <%= name %>
 		</h5>
 		<p>
 			<%= file_name %>

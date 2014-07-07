@@ -1,8 +1,8 @@
 <form role="form">
 
 	<div class="form-group">
-		<label for="dialog-name">Name</label>
-		<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Name" value="<%= display_name %>">
+		<label for="media-name">Name</label>
+		<input type="text" autofocus class="form-control" id="media-name" placeholder="Name" value="<%= name %>">
 	</div>
 
 	<div class="form-group">

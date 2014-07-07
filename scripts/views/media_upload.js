@@ -14,7 +14,7 @@ define([
 
 
 		ui: {
-			name: "#dialog-name",
+			name: "#media-name",
 			preview: ".upload-preview"
 		},
 
@@ -53,7 +53,7 @@ define([
 		onClickSave: function() {
 			var view = this;
 
-			this.model.set("display_name", this.ui.name.val());
+			this.model.set("name", this.ui.name.val());
 
 			this.model.save({}, {
 				success: function() {
