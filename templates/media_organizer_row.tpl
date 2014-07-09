@@ -1,3 +1,3 @@
 <td>
-	<span class="edit"><%= display_name %></span>
+	<span class="edit"><%= name %></span>
 </td>
