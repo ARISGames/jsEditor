@@ -1,24 +1,62 @@
 digraph G {
 
+	rankdir="TB";
+
 	node [
 		style = "rounded"
 		shape = "box"
 	];
 
-	Game->Plaque;
-	Game->Dialog;
-	Game->Item;
-	Game->Quest;
-	Game->Location;
+	Game;
 
-	Plaque->Location;
-	Dialog->Location;
-	Item->Location;
+	subgraph game_objects {
+		rank="same";
 
-	Dialog->Conversation;
+		Game->Scene;
+		Game->Quest;
 
-	Location->Requirement;
-	Conversation->Requirement;
-	Quest->RequirementToComplete->Requirement;
-	Quest->RequirementToDisplay->Requirement;
+		Game->Plaque;
+		Game->Dialog;
+		Game->Item;
+	}
+
+	Scene->Trigger;
+
+	Trigger->Instance;
+
+	Instance->Plaque;
+	Instance->Dialog;
+	Instance->Item;
+
+	Trigger->Requirements;
+	Requirements->AndPackage;
+	AndPackage->Atom;
+
+	Quest->Requirements [color=green style=dashed];
+	Quest->Requirements [color=cyan  style=dashed];
+
+	Plaque->EventPackage;
+	EventPackage->Event;
+
+	Dialog->Character;
+	Dialog->Script;
+
+	edge [style=dotted];
+	Media->Dialog [color=blue];
+	Media->Trigger [color=blue];
+
+	Media->Plaque [color=purple];
+	Media->Plaque [color=blue];
+
+	Media->Item [color=purple];
+	Media->Item [color=blue];
+
+	Media->Character [color=purple];
+
+	Media->Quest [color=purple];
+	Media->Quest [color=blue];
+
+	Media->Quest [color=purple];
+	Media->Quest [color=blue];
+
 }
