@@ -52,6 +52,7 @@ TODO
 DOING
 -----
 - scene organizer regions for by scene and by object type
+- fix events for tracking changes on models between the 3 main areas
 
 JS THINGS
 ---------
