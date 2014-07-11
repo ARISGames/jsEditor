@@ -1,7 +1,8 @@
 define([
 	'models/json_base',
-	'models/dialog'
-], function(JsonBaseModel, Dialog) {
+	'models/dialog',
+	'models/plaque'
+], function(JsonBaseModel, Dialog, Plaque) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'instance_id',
@@ -23,6 +24,14 @@ define([
 		type_for: function(object) {
 			if(object instanceof Dialog) { return "DIALOG" }
 			else { throw "cant determine type of: " + object }
+		},
+
+		object_class: function() {
+			var type = this.get("object_type");
+
+			if(type === "DIALOG") { return Dialog }
+			if(type === "PLAQUE") { return Plaque }
+			else { throw "cant determine class of: " + type }
 		}
 	});
 });

@@ -11,7 +11,7 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		className: "panel panel-default scene-panel sxcene",
+		className: "panel panel-default scene-panel",
 
 		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-triggers",

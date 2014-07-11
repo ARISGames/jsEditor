@@ -16,7 +16,8 @@ define([
 
 		templateHelpers: function() {
 			return {
-				object_name: this.object_name
+				object_name: this.object_name,
+				object_icon: this.object_icon
 			}
 		},
 
@@ -25,32 +26,47 @@ define([
 
 			var view = this;
 
-			view.object_name = "";
+			// FIXME delegate to different views for each
+			view.object_name = "...";
+			view.object_icon = "refresh";
 
 			view.instance = new Instance({instance_id: view.model.get("instance_id")});
 			view.instance.fetch({
 				success: function() {
-					// specific object type here
-					//
-					view.dialog = new Dialog({dialog_id: view.instance.get("object_id")});
 
-					// FIXME refer to global instance of object so change happens everywhere
-					view.dialog.on("change", function() {
-						view.object_name = view.dialog.get("name");
-						view.render();
-					});
+					try {
+						var object_class = view.instance.object_class();
+						view.game_object = new object_class();
+						view.game_object.set(view.game_object.idAttribute, view.instance.get("object_id"));
 
-					view.dialog.fetch({
-						success: function() {
-							vent.on("dialog:update", function(dialog) {
-								if(dialog.id === view.dialog.id) {
-									view.dialog = dialog;
-									view.object_name = dialog.get("name");
-									view.render();
-								}
-							});
-						}
-					});
+						// FIXME refer to global instance of object so change happens everywhere
+						view.game_object.on("change", function() {
+							view.object_name = view.game_object.get("name");
+
+							var type = view.instance.get("object_type");
+							if(type === "DIALOG") { view.object_icon = "comment"; }
+							if(type === "PLAQUE") { view.object_icon = "list-alt"; }
+
+							view.render();
+						});
+
+						view.game_object.fetch({
+							success: function() {
+
+								// FIXME need global instance
+								vent.on("game_object:update", function(game_object) {
+									if(game_object.id === view.game_object.id && game_object.idAttribute === view.game_object.idAttribute) {
+										view.game_object = game_object;
+										view.object_name = game_object.get("name");
+										view.render();
+									}
+								});
+							}
+						});
+					} // try load game object
+					catch(error) {
+						console.error(error.message);
+					}
 				}
 			});
 
@@ -66,7 +82,7 @@ define([
 
 		onClickShow: function() {
 			// launch based on type
-			var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.dialog, instance: this.instance, model: this.model, visible_fields: "trigger"});
+			var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.game_object, instance: this.instance, model: this.model, visible_fields: "trigger"});
 			vent.trigger("application:info:show", trigger_editor);
 		}
 

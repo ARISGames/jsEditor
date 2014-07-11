@@ -126,7 +126,7 @@ nav,
   pointer-events: none;
 }
 .scene-panel {
-  max-width: 275px;
+  max-width: 475px;
   float: left;
 }
 .scene-panel .scene-title {
