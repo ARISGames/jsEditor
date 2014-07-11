@@ -17,7 +17,8 @@ define([
 		templateHelpers: function() {
 			return {
 				object_name: this.object_name,
-				object_icon: this.object_icon
+				object_icon: this.object_icon,
+				type_icon:   this.type_icon
 			}
 		},
 
@@ -29,6 +30,12 @@ define([
 			// FIXME delegate to different views for each
 			view.object_name = "...";
 			view.object_icon = "refresh";
+			view.type_icon   = "question-sign";
+
+			var type = view.model.get("type");
+			if(type === "QR")        { view.type_icon = "qrcode";     }
+			if(type === "LOCATION")  { view.type_icon = "map-marker"; }
+			if(type === "IMMEDIATE") { view.type_icon = "flash"; }
 
 			view.instance = new Instance({instance_id: view.model.get("instance_id")});
 			view.instance.fetch({
@@ -82,8 +89,10 @@ define([
 
 		onClickShow: function() {
 			// launch based on type
-			var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.game_object, instance: this.instance, model: this.model, visible_fields: "trigger"});
-			vent.trigger("application:info:show", trigger_editor);
+			if(this.game_object instanceof Dialog) {
+				var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.game_object, instance: this.instance, model: this.model, visible_fields: "trigger"});
+				vent.trigger("application:info:show", trigger_editor);
+			}
 		}
 
 	});

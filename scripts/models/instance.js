@@ -21,11 +21,14 @@ define([
 			"object_type"
         ],
 
+		// For creating new instances.
 		type_for: function(object) {
 			if(object instanceof Dialog) { return "DIALOG" }
+
 			else { throw "cant determine type of: " + object }
 		},
 
+		// For loading the right class from the instance
 		object_class: function() {
 			var type = this.get("object_type");
 
