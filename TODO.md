@@ -27,14 +27,15 @@ FLOW
 
 TODO
 ----
-- remove media from dialog
-- only create dialog with name at first
-- separate views that operate on two models into multiple.
+- remove media from dialog and into own view
+- plaque give item events
+- quest editor
+- separate views that operate on two models into multiple (scene instance trigger, dialog trigger)
 - object unique reference lookup (so events always trigger everywhere)
 - Field validation/cleaner user errors, like password
 - Remove redundant defaults/amf fields?
 - Subclass views so they all inject i18n and avoid redundant requires
-- addChildViewEventForwarding to avoid passing extra info to table rows?
+- Add child view event forwarding to avoid passing extra info to table rows?
 - Controller to clean up view transition situations where sidebar is occupied
 - Clean up 'no save' situation, ie how scene drops into view while unsaved (or have it save)
 - Event decoupling for click events (to avoid calling navigate everywhere)
@@ -45,15 +46,12 @@ TODO
 - codeception tests and unit tests
 - Form builder for rendering out all fields with i18n and bootstrap classes and validation
 - _.result to clean up where hash or function returning a hash is passed to base
+- Add controllers/events to remove dependencies inside the views
+- Requirements editor for different objects
 
 DOING
 -----
-- Instances/Triggers creation with v2 api
-- Rename/delete old views/models
-- Media/Locations under v2 api
-- Add controllers/events to remove dependencies inside the views
-- Requirements editor for different objects
-- Left side bar unhide
+- scene organizer regions for by scene and by object type
 
 JS THINGS
 ---------

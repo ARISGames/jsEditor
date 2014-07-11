@@ -14,6 +14,10 @@
 
 <br>
 
+<div id="dialog-region"></div>
+<div id="plaque-region"></div>
+<div id="item-region"></div>
+
 <table class="table table-hover">
 	<thead>
 		<th class="organizer-section-header"><span class="glyphicon glyphicon-comment"></span> Dialogs</th>
