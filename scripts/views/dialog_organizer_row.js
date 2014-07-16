@@ -1,6 +1,6 @@
 define([
 	'backbone',
-	'text!templates/game_objects_organizer_row.tpl',
+	'text!templates/dialog_organizer_row.tpl',
 	'views/dialog_editor',
 	'models/media',
 	'vent'

@@ -91,13 +91,13 @@ define([
 
 						success: function() {
 
-							var game_objects = new DialogsCollection([], {parent: game});
-							game_objects.fetch({
+							var dialogs = new DialogsCollection([], {parent: game});
+							dialogs.fetch({
 								success: function() {
 
 									vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
 									vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-									vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, collection: game_objects}));
+									vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs}));
 									vent.trigger("application:info:hide");
 								}
 							});

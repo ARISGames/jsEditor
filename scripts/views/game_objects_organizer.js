@@ -1,21 +1,25 @@
 define([
 	'backbone',
 	'text!templates/game_objects_organizer.tpl',
-	'views/game_objects_organizer_row',
+	'views/dialog_organizer',
 	'vent'
-], function(Backbone, Template, GameObjectsOrganizerView, vent) {
+], function(Backbone, Template, DialogOrganizerView, vent) {
 
-	return Backbone.Marionette.CompositeView.extend({
+	return Backbone.Marionette.Layout.extend({
 		template: _.template(Template),
 
-		itemView: GameObjectsOrganizerView,
-		itemViewContainer: ".game_objects",
+		regions: {
+			dialogs_region: "#dialog-region",
+			plaques_region: "#plaque-region",
+			items_region:   "#item-region"
+		},
 
-		initialize: function() {
-			var view = this;
-			vent.on("dialog:add", function(dialog) {
-				view.collection.add(dialog);
-			});
+		initialize: function(options) {
+			this.dialog_collection = options.dialogs;
+		},
+
+		onShow: function() {
+			this.dialogs_region.show(new DialogOrganizerView({collection: this.dialog_collection}));
 		}
 	});
 });
