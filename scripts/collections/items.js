@@ -1,18 +1,13 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
+	'collections/json_collection_base',
 	'models/item',
-	'collections/row_collection_base',
 	'vent'
-], function($, _, Backbone, Item, RowCollectionBase, vent) {
-	return RowCollectionBase.extend({
+], function(JsonCollection, Item) {
+
+	return JsonCollection.extend({
 
 		model: Item,
 
-
-		url: function() {
-			return this.amfphp_url_root+"items.getItems/"+this.parent.get('game_id');
-		},
+		amfphp_url: "items.getItemsForGame"
 	});
 });

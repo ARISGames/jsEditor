@@ -19,6 +19,7 @@ define([
 	'collections/game_triggers',
 	'collections/dialogs',
 	'collections/items',
+	'collections/plaques',
 	'collections/requirements',
 	'collections/conversations',
 	'collections/media',
@@ -33,7 +34,7 @@ define([
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
-	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
+	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, PlaqueCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
@@ -85,23 +86,18 @@ define([
 			game.fetch({
 				success: function() {
 
-					// FIXME place parent type on the collection itself? So it would expect 'game' to be set.
-					var scenes = new SceneCollection([], {parent: game});
-					scenes.fetch({
+					var scenes  = new SceneCollection  ([], {parent: game});
+					var plaques = new PlaqueCollection ([], {parent: game});
+					var items   = new ItemCollection   ([], {parent: game});
+					var dialogs = new DialogsCollection([], {parent: game});
 
-						success: function() {
-
-							var dialogs = new DialogsCollection([], {parent: game});
-							dialogs.fetch({
-								success: function() {
-
-									vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
-									vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-									vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs}));
-									vent.trigger("application:info:hide");
-								}
-							});
-						}
+					// TODO catch errors if any fail (since its a non-standard failure)
+					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch()).done(function()
+					{
+						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
+						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
+						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items}));
+						vent.trigger("application:info:hide");
 					});
 				}
 			});
