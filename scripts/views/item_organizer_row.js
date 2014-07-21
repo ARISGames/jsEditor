@@ -19,6 +19,15 @@ define([
 		tagName: 'tr',
 
 		onClickEdit: function() {
+			var view  = this;
+			var icon  = new Media({media_id: this.model.get("icon_media_id")});
+			var media = new Media({media_id: this.model.get("media_id"     )});
+
+			$.when(icon.fetch(), media.fetch()).done(function() {
+				var item_editor = new ItemEditorView({model: view.model, media: media, icon: icon});
+				vent.trigger("application:dialog:show", item_editor, "Edit Item");
+			});
+
 		}
 	});
 });

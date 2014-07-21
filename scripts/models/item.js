@@ -15,7 +15,16 @@ define([
 		amfphp_url_attributes: [
 			"game_id",
 			"item_id",
-			"name"
+			"name",
+			"description",
+			"icon_media_id",
+			"media_id"
+//          "droppable":1,
+//          "destroyable":1,
+//          "max_qty_in_inventory":500,
+//          "weight":0,
+//          "url":"http://www.arisgames.org",
+//          "type":"NORMAL"
         ],
 
 		defaults: {
