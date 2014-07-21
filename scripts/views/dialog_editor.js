@@ -15,7 +15,7 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				thumbnail_url: this.media.get("thumb_url")
+				thumbnail_url: this.icon.get("thumb_url")
 			}
 		},
 
@@ -37,11 +37,11 @@ define([
 		},
 
 		initialize: function(options) {
-			this.media = options.media;
+			this.icon = options.icon;
 
 			var view = this;
 			vent.on("media:choose", function(media) {
-				view.media = media;
+				view.icon = media;
 				view.render();
 			});
 		},
@@ -51,7 +51,7 @@ define([
 			var dialog = this.model;
 
 			// Save Object
-			dialog.set("icon_media_id", view.media.get("media_id"));
+			dialog.set("icon_media_id", view.icon.get("media_id"));
 			dialog.set("name",          view.ui.name.val());
 			dialog.set("description",   view.ui.description.val());
 

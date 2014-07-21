@@ -12,5 +12,9 @@ define([
 
 		itemView: MediaChooserThumbnailView,
 		itemViewContainer: '.itemViewContainer',
+
+		onItemviewMediaChoose: function(item_view, media) {
+			this.trigger("media:choose", media);
+		}
 	});
 });

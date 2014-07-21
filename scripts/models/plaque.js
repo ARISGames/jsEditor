@@ -15,7 +15,10 @@ define([
 		amfphp_url_attributes: [
 			"game_id",
 			"plaque_id",
-			"name"
+			"name",
+			"description",
+			"media_id",
+			"icon_media_id"
         ],
 
 		defaults: {

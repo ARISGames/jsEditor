@@ -14,7 +14,7 @@ define([
 		},
 
 		onClickChoose: function() {
-			vent.trigger("media:choose", this.model);
+			this.trigger("media:choose", this.model);
 		},
 	});
 });

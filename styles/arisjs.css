@@ -231,21 +231,26 @@ h4:hover .object-id {
   background: #999;
 }
 /* Media Selector */
-.icon-chooser .chooser-thumbnail {
+.media-chooser {
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.media-chooser .chooser-thumbnail {
   display: inline-block;
 }
-.icon-chooser .choose {
+.media-chooser .choose {
   border: 2px solid rgba(0, 0, 0, 0);
   border-radius: 5px;
   margin: 5px;
 }
-.icon-chooser .choose img {
+.media-chooser .choose img {
   border-radius: 5px;
 }
-.icon-chooser .choose:hover {
+.media-chooser .choose:hover {
   border: 2px solid #999;
 }
-.icon-chooser .choose:hover img {
+.media-chooser .choose:hover img {
   opacity: 0.5;
   cursor: pointer;
 }

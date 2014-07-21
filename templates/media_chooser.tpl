@@ -1,4 +1,4 @@
-<div class="icon-chooser">
+<div class="media-chooser">
 	<div class="itemViewContainer">
 	</div>
 </div>
