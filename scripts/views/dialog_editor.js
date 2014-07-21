@@ -38,12 +38,6 @@ define([
 
 		initialize: function(options) {
 			this.icon = options.icon;
-
-			var view = this;
-			vent.on("media:choose", function(media) {
-				view.icon = media;
-				view.render();
-			});
 		},
 
 		onClickSave: function() {
@@ -73,6 +67,11 @@ define([
 				success: function() {
 					var icon_chooser = new MediaChooserView({collection: media, el: view.ui.iconchooser});
 					icon_chooser.render();
+
+					icon_chooser.on("media:choose", function(media) {
+						view.icon = media;
+						view.render();
+					});
 				}
 			});
 		}

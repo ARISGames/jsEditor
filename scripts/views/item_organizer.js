@@ -6,13 +6,9 @@ define([
 ], function(Backbone, Template, ItemOrganizerRowView, vent) {
 
        return Backbone.Marionette.CompositeView.extend({
-               template: _.template(Template),
+		   template: _.template(Template),
 
-               itemView: ItemOrganizerRowView,
-               itemViewContainer: ".items",
-
-	   		initialize: function() {
-				console.log("items");
-			}
+		   itemView: ItemOrganizerRowView,
+		   itemViewContainer: ".items"
        });
 });

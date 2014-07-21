@@ -41,9 +41,6 @@ define([
 		initialize: function(options) {
 			this.icon  = options.icon;
 			this.media = options.media;
-
-			var view = this;
-
 		},
 
 		onClickSave: function() {
@@ -80,7 +77,6 @@ define([
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
-						console.log("icon mediaaaaa", arguments);
 						view.render();
 					});
 
@@ -90,7 +86,6 @@ define([
 
 					media_chooser.on("media:choose", function(media) {
 						view.media = media;
-						console.log("media mediaaaaa", arguments);
 						view.render();
 					});
 				}
