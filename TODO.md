@@ -30,6 +30,7 @@ TODO
 - remove media from dialog and into own view
 - plaque give item events
 - quest editor
+- Move trigger between scenes
 - separate views that operate on two models into multiple (scene instance trigger, dialog trigger)
 - object unique reference lookup (so events always trigger everywhere)
 - Field validation/cleaner user errors, like password
@@ -41,7 +42,6 @@ TODO
 - Event decoupling for click events (to avoid calling navigate everywhere)
   (And how to do best.. events on views, on models, through vent?)
   Probably with controllers that can listen to events, and the router or the rest of the app triggers them.
-- Remove extra requires (is marionette needed if backbone is already there?)
 - Navigation prevention (warning) on changed forms
 - codeception tests and unit tests
 - Form builder for rendering out all fields with i18n and bootstrap classes and validation
@@ -51,7 +51,8 @@ TODO
 
 DOING
 -----
-- scene organizer regions for by scene and by object type
+- all basic object types (plaques, items, pages)
+- trigger editor for all types
 - fix events for tracking changes on models between the 3 main areas affected by adding plaques/items
 
 JS THINGS
