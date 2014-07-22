@@ -172,7 +172,8 @@ h4:hover .object-id {
   visibility: visible;
 }
 /* Hide radio inputs */
-.trigger-types input {
+.trigger-types input,
+.item-types input {
   display: none;
 }
 /* QR code fit to side editor */

@@ -18,17 +18,23 @@ define([
 			"name",
 			"description",
 			"icon_media_id",
-			"media_id"
-//          "droppable":1,
-//          "destroyable":1,
-//          "max_qty_in_inventory":500,
-//          "weight":0,
-//          "url":"http://www.arisgames.org",
-//          "type":"NORMAL"
+			"media_id",
+			"droppable",
+			"destroyable",
+			"max_qty_in_inventory",
+			"weight",
+			"url",
+			"type"
         ],
 
 		defaults: {
-			name: ""
+			name: "",
+			description: "",
+			droppable: "1",
+			destroyable: "1",
+			max_qty_in_inventory:500,
+			weight:0,
+			type: "NORMAL"
 		}
 
 	});

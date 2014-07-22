@@ -113,6 +113,7 @@ define([
 				dialog.set("name",        view.ui.name.val());
 			}
 
+			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
 			dialog.save({}, {
 				create: function() {
 					vent.trigger("dialog:add", dialog);
@@ -165,13 +166,17 @@ define([
 		onChangeType: function() {
 			var view = this;
 
-			this.$el.find('.trigger-tab').hide();
-
+			// Hide radio buttons and add bootstrap classes
+			//
 			var selected_radio = this.$el.find("input[name=trigger-type]:checked");
 
 			this.$el.find("input[name=trigger-type]").parent().removeClass("active");
 			selected_radio.parent().addClass("active");
 
+
+			// Hide all and open selected tab
+			//
+			this.$el.find('.trigger-tab').hide();
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
 			$(display_tab).show();

@@ -12,6 +12,30 @@
 	</div>
 
 	<div class="form-group">
+		<label for="item-weight">Weight</label>
+		<input type="number" class="form-control" id="item-weight" placeholder="Weight" value="<%= weight %>">
+	</div>
+
+	<div class="form-group">
+		<label for="item-max_qty_in_inventory">Max Quantity in Inventory</label>
+		<input type="number" class="form-control" id="item-max_qty_in_inventory" placeholder="Max Quantity" value="<%= max_qty_in_inventory %>">
+	</div>
+
+	<div class="form-group">
+		<label>
+			<input type="checkbox" id="item-droppable" <%= is_checked(droppable) %>>
+			Droppable
+		</label>
+	</div>
+
+	<div class="form-group">
+		<label>
+			<input type="checkbox" id="item-destroyable" <%= is_checked(destroyable) %>>
+			Destroyable
+		</label>
+	</div>
+
+	<div class="form-group">
 		<label for="item-description">Icon</label>
 		<img src=<%= icon_thumbnail_url %>>
 		<button type="button" class="btn btn-info change-icon">
@@ -23,11 +47,40 @@
 	</div>
 
 	<div class="form-group">
-		<label for="item-description">Media</label>
-		<img src=<%= media_thumbnail_url %>>
-		<button type="button" class="btn btn-info change-icon">
-			Select Media
-		</button>
+		<label for="item-description">Type</label>
+
+		<div class="btn-group btn-group-sm btn-group-justified item-types">
+			<label class="btn btn-info">
+				<input type="radio" name="item-type" value="NORMAL" <%= type == "NORMAL" ? "checked" : "" %>>
+				Normal
+			</label>
+			<label class="btn btn-info">
+				<input type="radio" name="item-type" value="URL" <%= type == "URL" ? "checked" : "" %>>
+				Web URL
+			</label>
+			<label class="btn btn-info">
+				<input type="radio" name="item-type" value="ATTRIB" <%= type == "ATTRIB" ? "checked" : "" %>>
+				Attribute
+			</label>
+		</div>
+	</div>
+
+	<div class="trigger-tab URL-fields">
+		<div class="form-group">
+			<label for="item-url">URL</label>
+			<input type="text" class="form-control" id="item-url" placeholder="URL" value="<%= url %>">
+		</div>
+	</div>
+
+
+	<div class="trigger-tab URL-fields ATTRIB-fields">
+		<div class="form-group">
+			<label for="item-description">Media</label>
+			<img src=<%= media_thumbnail_url %>>
+			<button type="button" class="btn btn-info change-media">
+				Select Media
+			</button>
+		</div>
 	</div>
 
 	<div class="form-group" id="media-chooser-container">
