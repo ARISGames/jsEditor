@@ -20,6 +20,7 @@ define([
 	'collections/dialogs',
 	'collections/items',
 	'collections/plaques',
+	'collections/web_pages',
 	'collections/requirements',
 	'collections/conversations',
 	'collections/media',
@@ -34,7 +35,7 @@ define([
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
-	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, PlaqueCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
+	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
@@ -90,7 +91,7 @@ define([
 					var plaques = new PlaqueCollection ([], {parent: game});
 					var items   = new ItemCollection   ([], {parent: game});
 					var dialogs = new DialogsCollection([], {parent: game});
-					var pages   = new PagesCollection  ([], {parent: game});
+					var pages   = new PageCollection   ([], {parent: game});
 
 					// TODO catch errors if any fail (since its a non-standard failure)
 					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch()).done(function()

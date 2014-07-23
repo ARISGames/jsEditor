@@ -4,8 +4,9 @@ define([
 	'views/dialog_organizer',
 	'views/plaque_organizer',
 	'views/item_organizer',
+	'views/web_page_organizer',
 	'vent'
-], function(Backbone, Template, DialogOrganizerView, PlaqueOrganizerView, ItemOrganizerView, vent) {
+], function(Backbone, Template, DialogOrganizerView, PlaqueOrganizerView, ItemOrganizerView, WebPageOrganizerView, vent) {
 
 	return Backbone.Marionette.Layout.extend({
 		template: _.template(Template),
@@ -14,7 +15,7 @@ define([
 			dialogs_region: "#dialog-region",
 			plaques_region: "#plaque-region",
 			items_region:   "#item-region",
-			pages_region:   "#pages-region"
+			pages_region:   "#page-region"
 		},
 
 		initialize: function(options) {
@@ -25,10 +26,10 @@ define([
 		},
 
 		onShow: function() {
-			this.dialogs_region.show(new DialogOrganizerView({collection: this.dialog_collection}));
-			this.plaques_region.show(new PlaqueOrganizerView({collection: this.plaque_collection}));
-			this.items_region.show  (new ItemOrganizerView  ({collection: this.item_collection  }));
-			this.page_region.show   (new PageOrganizerView  ({collection: this.page_collection  }));
+			this.dialogs_region.show(new DialogOrganizerView ({collection: this.dialog_collection}));
+			this.plaques_region.show(new PlaqueOrganizerView ({collection: this.plaque_collection}));
+			this.items_region.show  (new ItemOrganizerView   ({collection: this.item_collection  }));
+			this.pages_region.show  (new WebPageOrganizerView({collection: this.page_collection  }));
 		}
 	});
 });

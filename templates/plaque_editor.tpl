@@ -12,7 +12,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="plaque-description">Icon</label>
+		<label for="plaque-icon">Icon</label>
 		<img src=<%= icon_thumbnail_url %>>
 		<button type="button" class="btn btn-info change-icon">
 			Select Icon
@@ -23,7 +23,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="plaque-description">Media</label>
+		<label for="plaque-media">Media</label>
 		<img src=<%= media_thumbnail_url %>>
 		<button type="button" class="btn btn-info change-icon">
 			Select Media
