@@ -2,8 +2,9 @@ define([
 	'models/json_base',
 	'models/dialog',
 	'models/plaque',
-	'models/item'
-], function(JsonBaseModel, Dialog, Plaque, Item) {
+	'models/item',
+	'models/web_page'
+], function(JsonBaseModel, Dialog, Plaque, Item, WebPage) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'instance_id',
@@ -33,9 +34,10 @@ define([
 		object_class: function() {
 			var type = this.get("object_type");
 
-			if(type === "DIALOG") { return Dialog }
-			if(type === "PLAQUE") { return Plaque }
-			if(type === "ITEM")   { return Item   }
+			if(type === "DIALOG")   { return Dialog  }
+			if(type === "PLAQUE")   { return Plaque  }
+			if(type === "ITEM")     { return Item    }
+			if(type === "WEB_PAGE") { return WebPage }
 			else { throw "cant determine class of: " + type }
 		}
 	});

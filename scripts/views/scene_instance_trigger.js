@@ -51,9 +51,10 @@ define([
 							view.object_name = view.game_object.get("name");
 
 							var type = view.instance.get("object_type");
-							if(type === "DIALOG") { view.object_icon = "comment";  }
-							if(type === "PLAQUE") { view.object_icon = "list-alt"; }
-							if(type === "ITEM")   { view.object_icon = "inbox";    }
+							if(type === "DIALOG")   { view.object_icon = "comment";  }
+							if(type === "PLAQUE")   { view.object_icon = "list-alt"; }
+							if(type === "ITEM")     { view.object_icon = "inbox";    }
+							if(type === "WEB_PAGE") { view.object_icon = "globe";    }
 
 							view.render();
 						});
