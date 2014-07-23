@@ -90,13 +90,14 @@ define([
 					var plaques = new PlaqueCollection ([], {parent: game});
 					var items   = new ItemCollection   ([], {parent: game});
 					var dialogs = new DialogsCollection([], {parent: game});
+					var pages   = new PagesCollection  ([], {parent: game});
 
 					// TODO catch errors if any fail (since its a non-standard failure)
-					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch()).done(function()
+					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch()).done(function()
 					{
 						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
 						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items}));
+						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages}));
 						vent.trigger("application:info:hide");
 					});
 				}
