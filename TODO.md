@@ -31,6 +31,7 @@ TODO
 - plaque give item events
 - quest editor
 - Move trigger between scenes
+- Visual helper to see active edited object/instance
 - separate views that operate on two models into multiple (scene instance trigger, dialog trigger)
 - object unique reference lookup (so events always trigger everywhere)
 - Field validation/cleaner user errors, like password
@@ -51,9 +52,11 @@ TODO
 
 DOING
 -----
-- all basic object types (plaques, items, pages)
 - trigger editor for all types
+- add media to trigger
 - fix events for tracking changes on models between the 3 main areas affected by adding plaques/items
+- media shows references (and can remove them/add more)
+- media style fix
 
 JS THINGS
 ---------

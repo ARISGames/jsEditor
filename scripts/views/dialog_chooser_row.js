@@ -3,9 +3,8 @@ define([
 	'text!templates/dialog_chooser_row.tpl',
 	'models/trigger',
 	'models/instance',
-	'views/dialog_trigger_editor',
 	'vent'
-], function(Backbone, Template, Trigger, Instance, DialogTriggerEditorView, vent) {
+], function(Backbone, Template, Trigger, Instance, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),

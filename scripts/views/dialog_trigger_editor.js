@@ -77,11 +77,11 @@ define([
 
 		onClickEditDialog: function() {
 			var view = this;
-			var media = new Media({media_id: this.dialog.get("icon_media_id")});
+			var icon = new Media({media_id: this.dialog.get("icon_media_id")});
 
-			media.fetch({
+			icon.fetch({
 				success: function() {
-					var dialog_editor = new DialogEditorView({model: view.dialog, media: media});
+					var dialog_editor = new DialogEditorView({model: view.dialog, icon: icon});
 					vent.trigger("application:dialog:show", dialog_editor, "Edit Dialog");
 				}
 			});
