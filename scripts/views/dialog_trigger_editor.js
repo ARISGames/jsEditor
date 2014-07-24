@@ -35,6 +35,10 @@ define([
 					return value === "1" ? "checked" : "";
 				},
 
+				radio_selected: function(boolean_statement) {
+					return boolean_statement ? "checked" : "";
+				},
+
 				// Dialog Attributes
 				dialog_id: this.dialog.get('dialog_id'),
 				name: this.dialog.get('name'),
@@ -56,6 +60,7 @@ define([
 			"distance": "#trigger-distance",
 			"wiggle": "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
+			"hidden": "#trigger-hidden",
 			"code": "#trigger-code"
 		},
 
@@ -65,6 +70,7 @@ define([
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
 			"change input[name='trigger-type']": "onChangeType",
+			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
 			"click .edit-dialog": "onClickEditDialog",
 			"click .edit-requirements": "onClickEditRequirements",
 			"change #trigger-code": "onChangeCode",
@@ -141,10 +147,14 @@ define([
 							// FIXME temporary fix to grab fields only when visible
 							if(view.options.visible_fields === "trigger") {
 								trigger.set("title",       view.ui.title.val());
-								trigger.set("wiggle",      view.ui.wiggle.is(":checked") ? "1" : "0");
-								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
 								trigger.set("code",        view.ui.code.val());
-								trigger.set("type",        view.$el.find("input[name=trigger-type]:checked").val());
+
+								trigger.set("wiggle",      view.ui.wiggle.is    (":checked") ? "1" : "0");
+								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
+								trigger.set("hidden",      view.ui.hidden.is    (":checked") ? "1" : "0");
+
+								trigger.set("type",             view.$el.find("input[name=trigger-type]:checked").val());
+								trigger.set("trigger_on_enter", view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
 							}
 
 							trigger.save({},
@@ -176,7 +186,28 @@ define([
 
 			// Hide all and open selected tab
 			//
-			this.$el.find('.trigger-tab').hide();
+			this.$el.find('.type-trigger-tab').hide();
+
+			var display_tab = "#" + selected_radio.val() + "-fields";
+			$(display_tab).show();
+
+			setTimeout(function() {view.renderMap()}, 300);
+		},
+
+		onChangeTriggerEnter: function() {
+			var view = this;
+
+			// Hide radio buttons and add bootstrap classes
+			//
+			var selected_radio = this.$el.find("input[name=trigger-trigger_on_enter]:checked");
+
+			this.$el.find("input[name=trigger-trigger_on_enter]").parent().removeClass("active");
+			selected_radio.parent().addClass("active");
+
+
+			// Hide all and open selected tab
+			//
+			this.$el.find('.enter-trigger-tab').hide();
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
 			$(display_tab).show();
@@ -186,6 +217,7 @@ define([
 
 		onShow: function() {
 			this.onChangeType();
+			this.onChangeTriggerEnter();
 
 			this.$el.find('input[autofocus]').focus();
 		},

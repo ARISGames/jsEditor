@@ -25,6 +25,8 @@ define([
 			"distance",
 			"wiggle",
 			"show_title",
+			"hidden",
+			"trigger_on_enter",
 			"code"
         ],
 
@@ -36,6 +38,8 @@ define([
 			distance: "5",
 			wiggle: "1",
 			show_title: "1",
+			hidden: "0",
+			trigger_on_enter: "0",
 			code: "abc123",
 			requirement_root_package_id: 0
 		}

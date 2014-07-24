@@ -1,9 +1,11 @@
 <% if(!in_modal) { %>
-	<h4>Dialog <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+	<h4>Dialog Trigger <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+	<h5><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
 <% if(visible_fields === "create_dialog_with_trigger" ) { %>
+
 <!-- Dialog attributes -->
 
 <div class="form-group">
@@ -16,6 +18,8 @@
 
 <% if(visible_fields === "trigger") { %>
 
+<!-- Edit Object -->
+
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-dialog">
 		<span class="glyphicon glyphicon-comment"></span>
@@ -23,7 +27,14 @@
 	</button>
 </div>
 
+<!-- Edit Requirements -->
 
+<div class="form-group">
+	<button type="button" class="btn btn-info btn-block edit-requirements" disabled>
+		<span class="glyphicon glyphicon-ok"></span>
+		Edit Requirements
+	</button>
+</div>
 
 <!-- Trigger Attributes -->
 
@@ -49,7 +60,7 @@
 
 <!-- Trigger by Location Attributes -->
 
-<div id="LOCATION-fields" class="trigger-tab">
+<div id="LOCATION-fields" class="type-trigger-tab">
 
 	<div class="map-canvas" style="height: 150px; width: 100%"></div>
 
@@ -59,7 +70,6 @@
 		<label for="trigger-title">Map Title</label>
 		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
 	</div>
-
 
 	<div class="form-group">
 		<label>
@@ -71,15 +81,45 @@
 	<div class="form-group">
 		<label>
 			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
-			Wiggle
+			Animate Icon on Map
 		</label>
+	</div>
+
+	<!-- Icon Selector -->
+
+
+	<div class="form-group">
+		<label>
+			When in range, trigger:
+		</label>
+		<div class="btn-group btn-group-sm btn-group-justified trigger-trigger_on_enter">
+			<label class="btn btn-info">
+				<input type="radio" name="trigger-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
+				<span class="glyphicon glyphicon-flash"></span>
+				Immediately
+			</label>
+			<label class="btn btn-info">
+				<input type="radio" name="trigger-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
+				<span class="glyphicon glyphicon-hand-up"></span>
+				By Touch
+			</label>
+		</div>
+	</div>
+
+	<div id="1-fields" class="enter-trigger-tab">
+		<div class="form-group">
+			<label>
+				<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
+				Hidden from Map on Client
+			</label>
+		</div>
 	</div>
 </div>
 
 
 <!-- Trigger by Code Attributes -->
 
-<div id="QR-fields" class="trigger-tab">
+<div id="QR-fields" class="type-trigger-tab">
 	<div class="form-group">
 		<label for="trigger-code">QR Code</label>
 		<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= code %>">
@@ -90,24 +130,14 @@
 
 <!-- Trigger Immediate Attributes -->
 
-<div id="IMMEDIATE-fields" class="trigger-tab">
+<div id="IMMEDIATE-fields" class="type-trigger-tab">
 	<div class="alert alert-info">
 		<span class="glyphicon glyphicon-info-sign"></span>
 		Will be triggered immediately when requirements are satisfied.
 	</div>
 </div>
 
-
-<!-- requirements here -->
-<div class="form-group">
-	<button type="button" class="btn btn-info btn-block edit-requirements" disabled>
-		<span class="glyphicon glyphicon-ok"></span>
-		Edit Requirements
-	</button>
-</div>
-
-
-<% } %>
+<% } %> <!-- if visible fields == trigger -->
 
 <!-- create vs update -->
 
