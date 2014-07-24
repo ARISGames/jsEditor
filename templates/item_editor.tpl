@@ -21,14 +21,14 @@
 		<input type="number" class="form-control" id="item-max_qty_in_inventory" placeholder="Max Quantity" value="<%= max_qty_in_inventory %>">
 	</div>
 
-	<div class="form-group">
+	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="item-droppable" <%= is_checked(droppable) %>>
 			Droppable
 		</label>
 	</div>
 
-	<div class="form-group">
+	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="item-destroyable" <%= is_checked(destroyable) %>>
 			Destroyable

@@ -71,14 +71,14 @@
 		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
 	</div>
 
-	<div class="form-group">
+	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
 			Show Title
 		</label>
 	</div>
 
-	<div class="form-group">
+	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
 			Animate Icon on Map
@@ -86,6 +86,13 @@
 	</div>
 
 	<!-- Icon Selector -->
+	<div class="form-group">
+		<label for="item-description">Icon</label>
+		<img src=<%= icon_thumbnail_url %>>
+		<button type="button" class="btn btn-info change-icon">
+			Select Icon
+		</button>
+	</div>
 
 
 	<div class="form-group">
@@ -107,7 +114,7 @@
 	</div>
 
 	<div id="1-fields" class="enter-trigger-tab">
-		<div class="form-group">
+		<div class="checkbox">
 			<label>
 				<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
 				Hidden from Map on Client

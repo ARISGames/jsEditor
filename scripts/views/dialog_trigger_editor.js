@@ -6,10 +6,13 @@ define([
 	'text!templates/dialog_trigger_editor.tpl',
 	'views/dialog_editor',
 	'views/requirements_editor',
+	'views/media_chooser',
 	'models/requirements_package',
 	'models/media',
+	'models/game',
+	'collections/media',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, DialogEditorView, RequirementsEditorView, RequirementsPackage, Media, vent) {
+], function(_, $, Backbone, QRCode, Template, DialogEditorView, RequirementsEditorView, MediaChooserView, RequirementsPackage, Media, Game, MediaCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -17,6 +20,7 @@ define([
 
 		initialize: function(options) {
 			this.scene    = options.scene;
+			this.icon     = options.icon;
 			this.dialog   = options.dialog;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
@@ -31,6 +35,9 @@ define([
 				is_new: this.model.isNew(),
 				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
+
+				icon_thumbnail_url:  this.icon.get("thumb_url"),
+
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
 				},
@@ -41,12 +48,7 @@ define([
 
 				// Dialog Attributes
 				dialog_id: this.dialog.get('dialog_id'),
-				name: this.dialog.get('name'),
-				description: this.dialog.get('description'),
-				icon_media_id: this.dialog.get('icon_media_id'),
-				media_id: this.dialog.get('media_id'),
-				opening_script_id: this.dialog.get('opening_script_id'),
-				closing_script_id: this.dialog.get('closing_script_id')
+				name: this.dialog.get('name')
 			}
 		},
 
@@ -69,6 +71,7 @@ define([
 			"click .save": "onClickSave",
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
+			"click .change-icon":  "onClickChangeIcon",
 			"change input[name='trigger-type']": "onChangeType",
 			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
 			"click .edit-dialog": "onClickEditDialog",
@@ -155,6 +158,8 @@ define([
 
 								trigger.set("type",             view.$el.find("input[name=trigger-type]:checked").val());
 								trigger.set("trigger_on_enter", view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
+
+								trigger.set("icon_media_id", view.icon.get("media_id"));
 							}
 
 							trigger.save({},
@@ -169,6 +174,30 @@ define([
 						}
 					});
 
+				}
+			});
+		},
+
+		onClickChangeIcon: function()
+		{
+			var view = this;
+
+			var game  = new Game({game_id: this.model.get("game_id")});
+			var media = new MediaCollection([], {parent: game});
+
+			media.fetch({
+				success: function()
+				{
+					var icon_chooser = new MediaChooserView({collection: media});
+					vent.trigger("application:dialog:show", icon_chooser, "Choose Icon");
+
+					icon_chooser.on("media:choose", function(media) {
+						view.icon = media;
+						view.render();
+						view.onChangeType();
+						view.onChangeTriggerEnter();
+						vent.trigger("application:dialog:hide");
+					});
 				}
 			});
 		},

@@ -4,9 +4,10 @@ define([
 	'text!templates/scene_instance_trigger.tpl',
 	'models/instance',
 	'models/dialog',
+	'models/media',
 	'views/dialog_trigger_editor',
 	'vent'
-], function(_, Backbone, Template, Instance, Dialog, DialogTriggerEditorView, vent) {
+], function(_, Backbone, Template, Instance, Dialog, Media, DialogTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -90,10 +91,18 @@ define([
 		},
 
 		onClickShow: function() {
+			var view = this;
+
 			// launch based on type
 			if(this.game_object instanceof Dialog) {
-				var trigger_editor = new DialogTriggerEditorView({scene: this.scene, dialog: this.game_object, instance: this.instance, model: this.model, visible_fields: "trigger"});
-				vent.trigger("application:info:show", trigger_editor);
+				var icon = new Media({media_id: this.model.get("icon_media_id")});
+
+				icon.fetch({
+					success: function() {
+						var trigger_editor = new DialogTriggerEditorView({scene: view.scene, icon: icon, dialog: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+						vent.trigger("application:info:show", trigger_editor);
+					}
+				});
 			}
 		}
 

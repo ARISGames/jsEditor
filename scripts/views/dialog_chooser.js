@@ -4,10 +4,11 @@ define([
 	'models/dialog',
 	'models/trigger',
 	'models/instance',
+	'models/media',
 	'views/dialog_chooser_row',
 	'views/dialog_trigger_editor',
 	'vent'
-], function(Backbone, Template, Dialog, Trigger, Instance, DialogChooserRowView, DialogTriggerEditorView, vent) {
+], function(Backbone, Template, Dialog, Trigger, Instance, Media, DialogChooserRowView, DialogTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -30,8 +31,9 @@ define([
 			var dialog   = new Dialog   ({game_id: this.options.parent.get("game_id")});
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
+			var icon     = new Media    ({media_id: this.model.get("icon_media_id")});
 
-			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, dialog: dialog, instance: instance, model: trigger, visible_fields: "create_dialog_with_trigger"});
+			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, icon: icon, dialog: dialog, instance: instance, model: trigger, visible_fields: "create_dialog_with_trigger"});
 			vent.trigger("application:dialog:show", trigger_editor, "Add Dialog to Scene");
 		},
 

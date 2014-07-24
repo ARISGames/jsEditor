@@ -27,7 +27,8 @@ define([
 			"show_title",
 			"hidden",
 			"trigger_on_enter",
-			"code"
+			"code",
+			"icon_media_id"
         ],
 
 		defaults: {
@@ -41,7 +42,8 @@ define([
 			hidden: "0",
 			trigger_on_enter: "0",
 			code: "abc123",
-			requirement_root_package_id: 0
+			requirement_root_package_id: 0,
+			icon_media_id: 0
 		}
 
 	});
