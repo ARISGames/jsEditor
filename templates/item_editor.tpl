@@ -47,19 +47,19 @@
 	</div>
 
 	<div class="form-group">
-		<label for="item-description">Type</label>
+		<label for="item-type">Type</label>
 
 		<div class="btn-group btn-group-sm btn-group-justified item-types">
 			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="NORMAL" <%= type == "NORMAL" ? "checked" : "" %>>
+				<input type="radio" name="item-type" value="NORMAL" <%= radio_selected(type === "NORMAL") %>>
 				Normal
 			</label>
 			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="URL" <%= type == "URL" ? "checked" : "" %>>
+				<input type="radio" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
 				Web URL
 			</label>
 			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="ATTRIB" <%= type == "ATTRIB" ? "checked" : "" %>>
+				<input type="radio" name="item-type" value="ATTRIB" <%= radio_selected(type === "ATTRIB") %>>
 				Attribute
 			</label>
 		</div>

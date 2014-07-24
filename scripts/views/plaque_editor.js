@@ -35,7 +35,8 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
-			"click .change-icon": "onClickChangeIcon"
+			"click .change-icon":  "onClickChangeIcon",
+			"click .change-media": "onClickChangeMedia"
 		},
 
 		initialize: function(options) {
@@ -79,7 +80,18 @@ define([
 						view.icon = media;
 						view.render();
 					});
+				}
+			});
+		},
 
+		onClickChangeMedia: function() {
+			var view = this;
+
+			var game  = new Game({game_id: this.model.get("game_id")});
+			var media = new MediaCollection([], {parent: game});
+
+			media.fetch({
+				success: function() {
 					/* Media */
 					var media_chooser = new MediaChooserView({collection: media, el: view.ui.mediachooser});
 					media_chooser.render();

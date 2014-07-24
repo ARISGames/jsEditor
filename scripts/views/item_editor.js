@@ -18,10 +18,15 @@ define([
 				is_new: this.model.isNew(),
 				icon_thumbnail_url:  this.icon.get("thumb_url"),
 				media_thumbnail_url: this.media.get("thumb_url"),
+
 				is_checked: function(value)
 				{
 					return value === "1" ? "checked" : "";
-				}
+				},
+
+				radio_selected: function(boolean_statement) {
+					return boolean_statement ? "checked" : "";
+				},
 			}
 		},
 
@@ -34,7 +39,6 @@ define([
 			"droppable":    "#item-droppable",
 			"destroyable":  "#item-destroyable",
 			"weight":       "#item-weight",
-			"type":         "#item-type",
 
 			"iconchooser":  "#icon-chooser-container",
 			"mediachooser": "#media-chooser-container",
@@ -113,6 +117,9 @@ define([
 
 			var display_tab = "." + selected_radio.val() + "-fields";
 			$(display_tab).show();
+
+			// Assign value in-case view is re-rendered
+			this.model.set("type", selected_radio.val());
 		},
 
 
@@ -134,6 +141,7 @@ define([
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.render();
+						view.onChangeType();
 					});
 				}
 			});
@@ -156,6 +164,7 @@ define([
 					{
 						view.media = media;
 						view.render();
+						view.onChangeType();
 					});
 				}
 			});

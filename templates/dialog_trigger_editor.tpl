@@ -40,17 +40,17 @@
 
 <div class="btn-group btn-group-sm btn-group-justified trigger-types">
 	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="LOCATION" <%= type == "LOCATION" ? "checked" : "" %>>
+		<input type="radio" name="trigger-type" value="LOCATION"  <%= radio_selected(type === "LOCATION") %>>
 		<span class="glyphicon glyphicon-map-marker"></span>
 		Location
 	</label>
 	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="QR" <%= type == "QR" ? "checked" : "" %>>
+		<input type="radio" name="trigger-type" value="QR"        <%= radio_selected(type === "QR") %>>
 		<span class="glyphicon glyphicon-qrcode"></span>
 		QR Code
 	</label>
 	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="IMMEDIATE" <%= type == "IMMEDIATE" ? "checked" : "" %>>
+		<input type="radio" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
 		<span class="glyphicon glyphicon-flash"></span>
 		Immediate
 	</label>

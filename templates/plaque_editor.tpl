@@ -25,7 +25,7 @@
 	<div class="form-group">
 		<label for="plaque-media">Media</label>
 		<img src=<%= media_thumbnail_url %>>
-		<button type="button" class="btn btn-info change-icon">
+		<button type="button" class="btn btn-info change-media">
 			Select Media
 		</button>
 	</div>

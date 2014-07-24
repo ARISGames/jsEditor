@@ -27,6 +27,7 @@ FLOW
 
 TODO
 ----
+- fix media resetting values in view due to re-render without setting the values on model
 - remove media from dialog and into own view
 - plaque give item events
 - quest editor
