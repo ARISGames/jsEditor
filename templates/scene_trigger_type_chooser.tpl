@@ -8,7 +8,7 @@
 	<a class="list-group-item add-item">
 		<span class="glyphicon glyphicon-inbox"></span>&nbsp; Item
 	</a>
-	<a class="list-group-item">
+	<a class="list-group-item add-web-page">
 		<span class="glyphicon glyphicon-globe"></span>&nbsp; Web Page
 	</a>
 </div>

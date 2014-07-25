@@ -21,7 +21,9 @@ define([
         ],
 
 		defaults: {
-			name: ""
+			name: "",
+			url: "",
+			icon_media_id: 0
 		}
 
 	});
