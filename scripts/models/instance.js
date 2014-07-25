@@ -26,8 +26,9 @@ define([
 		// For creating new instances.
 		type_for: function(object) {
 			if(object instanceof Dialog) { return "DIALOG" }
+			if(object instanceof Item)   { return "ITEM"   }
 
-			else { throw "cant determine type of: " + object }
+			else { throw "cant determine type of " + object.idAttribute + ": " + object.id; }
 		},
 
 		// For loading the right class from the instance

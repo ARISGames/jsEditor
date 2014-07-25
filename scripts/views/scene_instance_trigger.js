@@ -4,10 +4,16 @@ define([
 	'text!templates/scene_instance_trigger.tpl',
 	'models/instance',
 	'models/dialog',
+	'models/plaque',
+	'models/item',
+	'models/web_page',
 	'models/media',
 	'views/dialog_trigger_editor',
+	'views/plaque_trigger_editor',
+	'views/item_trigger_editor',
+	'views/web_page_trigger_editor',
 	'vent'
-], function(_, Backbone, Template, Instance, Dialog, Media, DialogTriggerEditorView, vent) {
+], function(_, Backbone, Template, Instance, Dialog, Plaque, Item, WebPage, Media, DialogTriggerEditorView, PlaqueTriggerEditorView, ItemTriggerEditorView, WebPageTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -93,17 +99,38 @@ define([
 		onClickShow: function() {
 			var view = this;
 
-			// launch based on type
-			if(this.game_object instanceof Dialog) {
-				var icon = new Media({media_id: this.model.get("icon_media_id")});
+			var icon = new Media({media_id: this.model.get("icon_media_id")});
+			icon.fetch({
+				success: function() {
+					var trigger_editor = null;
 
-				icon.fetch({
-					success: function() {
-						var trigger_editor = new DialogTriggerEditorView({scene: view.scene, icon: icon, dialog: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					// launch based on type
+					if(view.game_object instanceof Dialog) {
+						trigger_editor = new DialogTriggerEditorView({scene: view.scene, icon: icon, dialog: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					}
+
+					if(view.game_object instanceof Item) {
+						trigger_editor = new ItemTriggerEditorView({scene: view.scene, icon: icon, item: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					}
+/*
+					if(view.game_object instanceof Plaque) {
+						trigger_editor = new PlaqueTriggerEditorView({scene: view.scene, icon: icon, plaque: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					}
+
+					if(view.game_object instanceof WebPage) {
+
+						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, web_page: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					}
+
+				*/
+					if(trigger_editor === null) {
+						throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;
+					}
+					else {
 						vent.trigger("application:info:show", trigger_editor);
 					}
-				});
-			}
+				}
+			});
 		}
 
 	});
