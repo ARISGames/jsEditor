@@ -1,16 +1,16 @@
 <% if(!in_modal) { %>
-	<h4>Dialog Trigger <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+	<h4>Plaque Trigger <span class="object-id text-muted"><%= is_new ? "" : plaque_id %></span></h4>
 	<h5><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
-<% if(visible_fields === "create_dialog_with_trigger" ) { %>
+<% if(visible_fields === "create_plaque_with_trigger" ) { %>
 
-<!-- Dialog attributes -->
+<!-- Plaque attributes -->
 
 <div class="form-group">
-	<label class="sr-only" for="dialog-name">Dialog Name</label>
-	<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
+	<label class="sr-only" for="plaque-name">Plaque Name</label>
+	<input type="text" autofocus class="form-control" id="plaque-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
 <% } %>
@@ -21,9 +21,9 @@
 <!-- Edit Object -->
 
 <div class="form-group">
-	<button type="button" class="btn btn-primary btn-block edit-dialog">
-		<span class="glyphicon glyphicon-comment"></span>
-		Edit Dialog
+	<button type="button" class="btn btn-primary btn-block edit-plaque">
+		<span class="glyphicon glyphicon-inbox"></span>
+		Edit Plaque
 	</button>
 </div>
 
@@ -87,7 +87,7 @@
 
 	<!-- Icon Selector -->
 	<div class="form-group">
-		<label for="item-description">Icon</label>
+		<label for="plaque-description">Icon</label>
 		<img src=<%= icon_thumbnail_url %>>
 		<button type="button" class="btn btn-info change-icon">
 			Select Icon

@@ -3,8 +3,8 @@ define([
 	'jquery',
 	'backbone',
 	'qrcode',
-	'text!templates/dialog_trigger_editor.tpl',
-	'views/dialog_editor',
+	'text!templates/plaque_trigger_editor.tpl',
+	'views/plaque_editor',
 	'views/requirements_editor',
 	'views/media_chooser',
 	'models/requirements_package',
@@ -12,7 +12,7 @@ define([
 	'models/game',
 	'collections/media',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, DialogEditorView, RequirementsEditorView, MediaChooserView, RequirementsPackage, Media, Game, MediaCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, RequirementsEditorView, MediaChooserView, RequirementsPackage, Media, Game, MediaCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -21,7 +21,7 @@ define([
 		initialize: function(options) {
 			this.scene    = options.scene;
 			this.icon     = options.icon;
-			this.dialog   = options.dialog;
+			this.plaque   = options.plaque;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
 		},
@@ -46,16 +46,16 @@ define([
 					return boolean_statement ? "checked" : "";
 				},
 
-				// Dialog Attributes
-				dialog_id: this.dialog.get('dialog_id'),
-				name: this.dialog.get('name')
+				// Plaque Attributes
+				plaque_id: this.plaque.get('plaque_id'),
+				name: this.plaque.get('name')
 			}
 		},
 
 
 		ui: {
-			"name": "#dialog-name",
-			"description": "#dialog-description",
+			"name": "#plaque-name",
+			"description": "#plaque-description",
 			"title": "#trigger-title",
 			"latitude": "#trigger-latitude",
 			"longitude": "#trigger-longitude",
@@ -74,7 +74,7 @@ define([
 			"click .change-icon":  "onClickChangeIcon",
 			"change input[name='trigger-type']": "onChangeType",
 			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
-			"click .edit-dialog": "onClickEditDialog",
+			"click .edit-plaque": "onClickEditPlaque",
 			"click .edit-requirements": "onClickEditRequirements",
 			"change #trigger-code": "onChangeCode",
 			"keyup #trigger-code": "onChangeCode"
@@ -84,15 +84,14 @@ define([
 			this.qr_code.makeCode(this.ui.code.val());
 		},
 
-		onClickEditDialog: function() {
+		onClickEditPlaque: function() {
 			var view = this;
-			var icon = new Media({media_id: this.dialog.get("icon_media_id")});
+			var icon  = new Media({media_id: this.plaque.get("icon_media_id")});
+			var media = new Media({media_id: this.plaque.get("media_id")});
 
-			icon.fetch({
-				success: function() {
-					var dialog_editor = new DialogEditorView({model: view.dialog, icon: icon});
-					vent.trigger("application:popup:show", dialog_editor, "Edit Dialog");
-				}
+			$.when(icon.fetch(), media.fetch()).done(function () {
+				var plaque_editor = new PlaqueEditorView({model: view.plaque, icon: icon, media: media});
+				vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
 			});
 		},
 
@@ -114,25 +113,25 @@ define([
 		onClickSave: function() {
 			var view = this;
 			var instance = this.instance;
-			var dialog   = this.dialog;
+			var plaque     = this.plaque;
 			var trigger  = this.model;
 
 			// FIXME temporary fix to grab fields only when visible
-			if(view.options.visible_fields === "create_dialog_with_trigger" ) {
-				dialog.set("name",        view.ui.name.val());
+			if(view.options.visible_fields === "create_plaque_with_trigger" ) {
+				plaque.set("name",        view.ui.name.val());
 			}
 
 			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
-			dialog.save({}, {
+			plaque.save({}, {
 				create: function() {
-					vent.trigger("dialog:add", dialog);
+					vent.trigger("plaque:add", plaque);
 				},
 				success: function() {
 
 					// Save Instance
 
-					instance.set("object_id",   dialog.id);
-					instance.set("object_type", instance.type_for(dialog));
+					instance.set("object_id",   plaque.id);
+					instance.set("object_type", instance.type_for(plaque));
 
 					instance.save({}, {
 						success: function() {

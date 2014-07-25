@@ -112,11 +112,11 @@ define([
 					if(view.game_object instanceof Item) {
 						trigger_editor = new ItemTriggerEditorView({scene: view.scene, icon: icon, item: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
-/*
 					if(view.game_object instanceof Plaque) {
 						trigger_editor = new PlaqueTriggerEditorView({scene: view.scene, icon: icon, plaque: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
+/*
 					if(view.game_object instanceof WebPage) {
 
 						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, web_page: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
