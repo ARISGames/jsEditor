@@ -116,13 +116,11 @@ define([
 						trigger_editor = new PlaqueTriggerEditorView({scene: view.scene, icon: icon, plaque: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
-/*
 					if(view.game_object instanceof WebPage) {
 
 						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, web_page: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
-				*/
 					if(trigger_editor === null) {
 						throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;
 					}

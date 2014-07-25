@@ -1,16 +1,16 @@
 <% if(!in_modal) { %>
-	<h4>Dialog Trigger <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+	<h4>WebPage Trigger <span class="object-id text-muted"><%= is_new ? "" : web_page_id %></span></h4>
 	<h5><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
-<% if(visible_fields === "create_dialog_with_trigger" ) { %>
+<% if(visible_fields === "create_web_page_with_trigger" ) { %>
 
-<!-- Dialog attributes -->
+<!-- WebPage attributes -->
 
 <div class="form-group">
-	<label class="sr-only" for="dialog-name">Dialog Name</label>
-	<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
+	<label class="sr-only" for="web_page-name">WebPage Name</label>
+	<input type="text" autofocus class="form-control" id="web_page-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
 <% } %>
@@ -21,9 +21,9 @@
 <!-- Edit Object -->
 
 <div class="form-group">
-	<button type="button" class="btn btn-primary btn-block edit-dialog">
+	<button type="button" class="btn btn-primary btn-block edit-web_page">
 		<span class="glyphicon glyphicon-comment"></span>
-		Edit Dialog
+		Edit WebPage
 	</button>
 </div>
 
