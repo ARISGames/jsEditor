@@ -25,9 +25,9 @@ define([
 
 		// For creating new instances.
 		type_for: function(object) {
-			if(object instanceof Dialog) { return "DIALOG"  }
-			if(object instanceof Item)   { return "ITEM"    }
-			if(object instanceof Plaque) { return "PLAQUE:" }
+			if(object instanceof Dialog) { return "DIALOG" }
+			if(object instanceof Item)   { return "ITEM"   }
+			if(object instanceof Plaque) { return "PLAQUE" }
 
 			else { throw "cant determine type of " + object.idAttribute + ": " + object.id; }
 		},

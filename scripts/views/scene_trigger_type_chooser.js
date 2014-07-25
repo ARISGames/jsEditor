@@ -2,18 +2,25 @@ define([
 	'underscore',
 	'backbone',
 	'text!templates/scene_trigger_type_chooser.tpl',
+	'views/scene_instance_trigger',
 	'views/dialog_chooser',
 	'views/item_chooser',
-	'views/scene_instance_trigger',
+	'views/plaque_chooser',
 	'collections/dialogs',
 	'collections/items',
+	'collections/plaques',
 	'vent'
-], function(_, Backbone, Template, DialogChooserView, ItemChooserView, SceneInstanceTriggerView, DialogsCollection, ItemsCollection, vent) {
+], function(_, Backbone, Template,
+	SceneInstanceTriggerView,
+	DialogChooserView, ItemChooserView, PlaqueChooserView,
+	DialogsCollection, ItemsCollection, PlaquesCollection,
+	vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		events: {
 			"click .add-dialog": "onClickAddDialog",
+			"click .add-plaque": "onClickAddPlaque",
 			"click .add-item":   "onClickAddItem"
 		},
 
@@ -43,6 +50,19 @@ define([
 				success: function() {
 					var item_chooser = new ItemChooserView({collection: items, parent: scene});
 					vent.trigger("application:popup:show", item_chooser, "Add Item to Scene");
+				}
+			});
+		},
+
+		onClickAddPlaque: function() {
+			var scene = this.model;
+
+			var plaques = new PlaquesCollection([], {parent: this.game});
+
+			plaques.fetch({
+				success: function() {
+					var plaque_chooser = new PlaqueChooserView({collection: plaques, parent: scene});
+					vent.trigger("application:popup:show", plaque_chooser, "Add Plaque to Scene");
 				}
 			});
 		}
