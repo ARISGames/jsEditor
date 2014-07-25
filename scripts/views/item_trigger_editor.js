@@ -188,14 +188,14 @@ define([
 				success: function()
 				{
 					var icon_chooser = new MediaChooserView({collection: media});
-					vent.trigger("application:item:show", icon_chooser, "Choose Icon");
+					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.render();
 						view.onChangeType();
 						view.onChangeTriggerEnter();
-						vent.trigger("application:item:hide");
+						vent.trigger("application:popup:hide");
 					});
 				}
 			});
@@ -252,7 +252,7 @@ define([
 
 		onClickEditRequirements: function() {
 			var requirements_package = new RequirementsPackage({});
-			vent.trigger("application:item:show", new RequirementsEditorView({model: requirements_package}));
+			vent.trigger("application:popup:show", new RequirementsEditorView({model: requirements_package}));
 		},
 
 		onRender: function() {

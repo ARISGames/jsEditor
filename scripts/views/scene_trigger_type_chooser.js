@@ -3,10 +3,12 @@ define([
 	'backbone',
 	'text!templates/scene_trigger_type_chooser.tpl',
 	'views/dialog_chooser',
+	'views/item_chooser',
 	'views/scene_instance_trigger',
 	'collections/dialogs',
+	'collections/items',
 	'vent'
-], function(_, Backbone, Template, DialogChooserView, SceneInstanceTriggerView, DialogsCollection, vent) {
+], function(_, Backbone, Template, DialogChooserView, ItemChooserView, SceneInstanceTriggerView, DialogsCollection, ItemsCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 

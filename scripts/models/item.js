@@ -34,7 +34,10 @@ define([
 			destroyable: "1",
 			max_qty_in_inventory:500,
 			weight:0,
-			type: "NORMAL"
+			url: "",
+			type: "NORMAL",
+			icon_media_id: 0,
+			media_id: 0
 		}
 
 	});
