@@ -91,7 +91,7 @@ define([
 				{
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("item:update", item);
-					vent.trigger("application:dialog:hide");
+					vent.trigger("application:popup:hide");
 				}
 			});
 		},

@@ -91,7 +91,7 @@ define([
 
 			$.when(icon.fetch(), media.fetch()).done(function () {
 				var item_editor = new ItemEditorView({model: view.item, icon: icon, media: media});
-				vent.trigger("application:dialog:show", item_editor, "Edit Item");
+				vent.trigger("application:popup:show", item_editor, "Edit Item");
 			});
 		},
 
@@ -107,7 +107,7 @@ define([
 
 		onClickCancel: function() {
 			this.close();
-			vent.trigger("application:dialog:hide");
+			vent.trigger("application:popup:hide");
 		},
 
 		onClickSave: function() {
@@ -167,7 +167,7 @@ define([
 								{
 									// FIXME better way to handle this?
 									vent.trigger("scene:add_trigger", trigger);
-									vent.trigger("application:dialog:hide");
+									vent.trigger("application:popup:hide");
 								}
 							});
 						}

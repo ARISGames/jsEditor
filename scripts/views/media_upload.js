@@ -58,7 +58,7 @@ define([
 			this.model.save({}, {
 				success: function() {
 					vent.trigger("media:upload", view.model);
-					vent.trigger("application:dialog:hide");
+					vent.trigger("application:popup:hide");
 				}
 			});
 

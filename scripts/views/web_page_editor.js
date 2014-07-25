@@ -54,7 +54,7 @@ define([
 				success: function() {
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("web_page:update", web_page);
-					vent.trigger("application:dialog:hide");
+					vent.trigger("application:popup:hide");
 				}
 			});
 		},

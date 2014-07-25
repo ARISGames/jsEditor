@@ -88,7 +88,7 @@ define([
 		application.info_region.reset();
 	});
 
-	vent.on("application:dialog:show", function(view, title) {
+	vent.on("application:popup:show", function(view, title) {
 		// TODO add a title property to views which is smart based on where its rendered
 
 		// Reset
@@ -111,7 +111,7 @@ define([
 		}
 	});
 
-	vent.on("application:dialog:hide", function() {
+	vent.on("application:popup:hide", function() {
 		$('.modal').modal('hide');
 	});
 
@@ -125,7 +125,7 @@ define([
 		$('.alert button').on('click', function() {
 			$('.alert').hide();
 		});
-		//vent.trigger("application:dialog:show", new AlertView({text: options.text}));
+		//vent.trigger("application:popup:show", new AlertView({text: options.text}));
 	});
 
 

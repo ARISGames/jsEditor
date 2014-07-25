@@ -5,7 +5,7 @@
 	<a class="list-group-item">
 		<span class="glyphicon glyphicon-list-alt"></span>&nbsp; Plaque
 	</a>
-	<a class="list-group-item">
+	<a class="list-group-item add-item">
 		<span class="glyphicon glyphicon-inbox"></span>&nbsp; Item
 	</a>
 	<a class="list-group-item">

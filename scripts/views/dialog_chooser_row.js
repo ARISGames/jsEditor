@@ -41,7 +41,7 @@ define([
 						{
 							// FIXME better way to handle this?
 							vent.trigger("scene:add_trigger", trigger);
-							vent.trigger("application:dialog:hide");
+							vent.trigger("application:popup:hide");
 						}
 					});
 				}

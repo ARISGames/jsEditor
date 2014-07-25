@@ -40,7 +40,7 @@ define([
 			this.model.save({}, {
 					success: function() {
 						vent.trigger("scenes:add_scene", view.model);
-						vent.trigger("application:dialog:hide");
+						vent.trigger("application:popup:hide");
 					}
 			});
 		},
@@ -48,7 +48,7 @@ define([
 
 		onClickCancel: function() {
 			this.close();
-			vent.trigger("application:dialog:hide");
+			vent.trigger("application:popup:hide");
 		},
 
 		onClickDelete: function() {

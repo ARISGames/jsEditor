@@ -21,7 +21,7 @@ define([
 
 		onClickShow: function() {
 			// side bar view
-			vent.trigger("application:dialog:show", new MediaEditView({model: this.model}));
+			vent.trigger("application:popup:show", new MediaEditView({model: this.model}));
 		},
 	});
 });

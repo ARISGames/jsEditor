@@ -26,7 +26,7 @@ define([
 
 			$.when(icon.fetch(), media.fetch()).done(function() {
 				var plaque_editor = new PlaqueEditorView({model: view.model, media: media, icon: icon});
-				vent.trigger("application:dialog:show", plaque_editor, "Edit Plaque");
+				vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
 			});
 
 		}

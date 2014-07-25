@@ -25,7 +25,7 @@ define([
 
 			$.when(icon.fetch()).done(function() {
 				var web_page_editor = new WebPageEditorView({model: view.model, icon: icon});
-				vent.trigger("application:dialog:show", web_page_editor, "Edit Web Page");
+				vent.trigger("application:popup:show", web_page_editor, "Edit Web Page");
 			});
 
 		}

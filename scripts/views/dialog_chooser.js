@@ -34,7 +34,7 @@ define([
 			var icon     = new Media    ({media_id: this.model.get("icon_media_id")});
 
 			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, icon: icon, dialog: dialog, instance: instance, model: trigger, visible_fields: "create_dialog_with_trigger"});
-			vent.trigger("application:dialog:show", trigger_editor, "Add Dialog to Scene");
+			vent.trigger("application:popup:show", trigger_editor, "Add Dialog to Scene");
 		},
 
 		// Marionette override

@@ -25,7 +25,7 @@ define([
 
 			$.when(icon.fetch(), media.fetch()).done(function() {
 				var item_editor = new ItemEditorView({model: view.model, media: media, icon: icon});
-				vent.trigger("application:dialog:show", item_editor, "Edit Item");
+				vent.trigger("application:popup:show", item_editor, "Edit Item");
 			});
 
 		}

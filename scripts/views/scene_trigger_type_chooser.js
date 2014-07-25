@@ -11,7 +11,8 @@ define([
 		template: _.template(Template),
 
 		events: {
-			"click .add-dialog": "onClickAddDialog"
+			"click .add-dialog": "onClickAddDialog",
+			"click .add-item":   "onClickAddItem"
 		},
 
 		initialize: function(options) {
@@ -26,7 +27,20 @@ define([
 			dialogs.fetch({
 				success: function() {
 					var dialog_chooser = new DialogChooserView({collection: dialogs, parent: scene});
-					vent.trigger("application:dialog:show", dialog_chooser, "Add Dialog to Scene");
+					vent.trigger("application:popup:show", dialog_chooser, "Add Dialog to Scene");
+				}
+			});
+		},
+
+		onClickAddItem: function() {
+			var scene = this.model;
+
+			var items = new ItemsCollection([], {parent: this.game});
+
+			items.fetch({
+				success: function() {
+					var item_chooser = new ItemChooserView({collection: items, parent: scene});
+					vent.trigger("application:popup:show", item_chooser, "Add Item to Scene");
 				}
 			});
 		}
