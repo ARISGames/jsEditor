@@ -18,11 +18,16 @@ define([
 			"name",
 			"description",
 			"media_id",
-			"icon_media_id"
+			"icon_media_id",
+		    "event_package_id"
         ],
 
 		defaults: {
-			name: ""
+			name: "",
+			description: "",
+			media_id: "0",
+			icon_media_id: "0",
+			event_package_id: "0"
 		}
 
 	});
