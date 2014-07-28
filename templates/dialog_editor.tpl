@@ -1,6 +1,10 @@
 <form class="form" role="form" onsubmit="return false;">
 	<!-- Dialog attributes -->
 
+	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+		<span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span>
+	</h4>
+
 	<div class="form-group">
 		<label for="dialog-name">Name</label>
 		<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Name" value="<%= name %>">

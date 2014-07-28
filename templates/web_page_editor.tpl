@@ -1,6 +1,10 @@
 <form class="form" role="form" onsubmit="return false;">
 	<!-- WebPage attributes -->
 
+	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+		<span class="object-id text-muted"><%= is_new ? "" : web_page_id %></span>
+	</h4>
+
 	<div class="form-group">
 		<label for="web_page-name">Name</label>
 		<input type="text" autofocus class="form-control" id="web_page-name" placeholder="Name" value="<%= name %>">

@@ -1,6 +1,10 @@
 <form class="form" role="form" onsubmit="return false;">
 	<!-- Item attributes -->
 
+	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+		<span class="object-id text-muted"><%= is_new ? "" : item_id %></span>
+	</h4>
+
 	<div class="form-group">
 		<label for="item-name">Name</label>
 		<input type="text" autofocus class="form-control" id="item-name" placeholder="Name" value="<%= name %>">

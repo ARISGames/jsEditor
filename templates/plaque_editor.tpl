@@ -1,6 +1,10 @@
 <form class="form" role="form" onsubmit="return false;">
 	<!-- Plaque attributes -->
 
+	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+		<span class="object-id text-muted"><%= is_new ? "" : plaque_id %></span>
+	</h4>
+
 	<div class="form-group">
 		<label for="plaque-name">Name</label>
 		<input type="text" autofocus class="form-control" id="plaque-name" placeholder="Name" value="<%= name %>">
