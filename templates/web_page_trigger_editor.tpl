@@ -22,7 +22,7 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-web_page">
-		<span class="glyphicon glyphicon-comment"></span>
+		<span class="glyphicon glyphicon-globe"></span>
 		Edit WebPage
 	</button>
 </div>
