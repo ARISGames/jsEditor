@@ -4,10 +4,15 @@ define([
 	'backbone',
 	'text!templates/plaque_editor.tpl',
 	'collections/media',
+	'collections/events',
+	'collections/items',
 	'models/game',
+	'models/event_package',
+	'models/event',
 	'views/media_chooser',
+	'views/events',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, Game, MediaChooserView, vent) {
+], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -36,7 +41,8 @@ define([
 		events: {
 			"click .save": "onClickSave",
 			"click .change-icon":  "onClickChangeIcon",
-			"click .change-media": "onClickChangeMedia"
+			"click .change-media": "onClickChangeMedia",
+			"click .edit-events": "onClickEditEvents"
 		},
 
 		initialize: function(options) {
@@ -102,6 +108,48 @@ define([
 					});
 				}
 			});
+		},
+
+
+		onClickEditEvents: function() {
+			var view = this;
+
+			// Create event package when id === 0
+			if(this.model.get("event_package_id") === "0")
+			{
+				// create it
+				var event_package = new EventPackage({game_id: view.model.get("game_id")});
+
+				var game  = new Game({game_id: view.model.get("game_id")});
+				var items = new ItemsCollection([], {parent: game});
+
+				$.when(items.fetch(), event_package.save()).done(function()
+				{
+						view.model.set("event_package_id", event_package.get("event_package_id"));
+						view.model.save();
+
+						// launch editor
+						var events = new EventsCollection([], {parent: event_package});
+						var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+						vent.trigger("application:popup:show", events_editor, "Player Inventory Events Editor");
+				});
+			}
+			// grab collection and launch
+			else
+			{
+				var event_package = new EventPackage({event_package_id: view.model.get("event_package_id"), game_id: view.model.get("game_id")});
+				var events = new EventsCollection([], {parent: event_package});
+
+				var game   = new Game({game_id: view.model.get("game_id")});
+				var items  = new ItemsCollection([], {parent: game});
+
+				$.when(items.fetch(), events.fetch()).done(function ()
+				{
+					var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+					vent.trigger("application:popup:show", events_editor, "Player Inventory Events Editor");
+				});
+
+			}
 		}
 	});
 });

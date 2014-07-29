@@ -38,6 +38,12 @@
 	</div>
 
 	<div class="form-group">
+		<button type="submit" class="btn btn-info edit-events">
+			Change Player Inventory When Viewed
+		</button>
+	</div>
+
+	<div class="form-group">
 		<button type="submit" class="btn btn-primary save">
 			Save
 		</button>

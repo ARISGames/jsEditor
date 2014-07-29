@@ -16,7 +16,7 @@ define([
 		itemView: SceneView,
 		itemViewContainer: ".scenes",
 
-		itemViewOptions: function() {
+		itemViewOptions: function(model, index) {
 			return { game: this.model }
 		},
 
