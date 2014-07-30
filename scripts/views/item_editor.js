@@ -90,7 +90,7 @@ define([
 				success: function()
 				{
 					// FIXME get rid of global update broadcasts for models
-					vent.trigger("item:update", item);
+					vent.trigger("game_object:update", item);
 					vent.trigger("application:popup:hide");
 				}
 			});

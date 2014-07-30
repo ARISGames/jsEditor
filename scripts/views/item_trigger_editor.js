@@ -127,6 +127,7 @@ define([
 					vent.trigger("item:add", item);
 				},
 				success: function() {
+					vent.trigger("game_object:update", item);
 
 					// Save Instance
 
