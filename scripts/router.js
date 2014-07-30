@@ -17,6 +17,7 @@ define([
 
 	'collections/games',
 	'collections/game_triggers',
+	'collections/instances',
 	'collections/dialogs',
 	'collections/items',
 	'collections/plaques',
@@ -35,7 +36,7 @@ define([
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
-	GameCollection, GameTriggersCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
+	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
@@ -131,39 +132,33 @@ define([
 		listLocations: function(game_id) {
 			var game = new Game({game_id: game_id});
 
-			game.fetch({
-				success: function() {
-					var triggers  = new GameTriggersCollection([], {parent: game});
+			var triggers  = new GameTriggersCollection([], {parent: game});
+			var instances = new InstancesCollection   ([], {parent: game});
 
-					triggers.fetch({
-						success: function() {
-							var location_triggers = triggers.where({type: "LOCATION"});
-							var locations = new GameTriggersCollection(location_triggers, {parent: game});
+			$.when(triggers.fetch(), instances.fetch()).done(function()
+			{
+				// Just give location triggers to view
+				var location_selection = triggers.where({type: "LOCATION"});
+				var locations = new GameTriggersCollection(location_selection, {parent: game});
 
-							vent.trigger("application.show",      new LocationsView ({model: game, collection: locations}));
-							vent.trigger("application:nav:show",  new GameNavMenu   ({model: game, active: ".locations"}));
-							vent.trigger("application:list:show", new LocationsOrganizerView({collection: locations}));
-							vent.trigger("application:info:hide");
-						}
-					});
-				}
+				vent.trigger("application.show",      new LocationsView ({model: game, collection: locations}));
+				vent.trigger("application:nav:show",  new GameNavMenu   ({model: game, active: ".locations"}));
+				vent.trigger("application:list:show", new LocationsOrganizerView({locations: locations, instances: instances}));
+				vent.trigger("application:info:hide");
 			});
 		},
 
 
 		listMedia: function(game_id) {
 			var game  = new Game({game_id: game_id});
-			game.fetch({
+
+			var media = new MediaCollection([], {parent: game});
+			media.fetch({
 				success: function() {
-					var media = new MediaCollection([], {parent: game});
-					media.fetch({
-						success: function() {
-							vent.trigger("application.show",      new MediaEditorView ({model: game, collection: media}));
-							vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
-							vent.trigger("application:list:show", new MediaOrganizerView({collection: media}));
-							vent.trigger("application:info:hide");
-						}
-					});
+					vent.trigger("application.show",      new MediaEditorView ({model: game, collection: media}));
+					vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
+					vent.trigger("application:list:show", new MediaOrganizerView({collection: media}));
+					vent.trigger("application:info:hide");
 				}
 			});
 		}

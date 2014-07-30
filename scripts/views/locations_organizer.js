@@ -1,14 +1,57 @@
 define([
+	'underscore',
 	'backbone',
 	'text!templates/locations_organizer.tpl',
-	'views/locations_organizer_row',
+	'views/locations_group_organizer',
+	'collections/triggers',
 	'vent'
-], function(Backbone, Template, LocationsOrganizerRowView, vent) {
+], function(_, Backbone, Template, LocationsGroupOrganizerView, TriggersCollection, vent) {
 
-	return Backbone.Marionette.CompositeView.extend({
+	return Backbone.Marionette.Layout.extend({
 		template: _.template(Template),
 
-		itemView: LocationsOrganizerRowView,
-		itemViewContainer: ".locations"
+		regions: {
+			dialogs_region: "#dialog-region",
+			plaques_region: "#plaque-region",
+			items_region:   "#item-region",
+			pages_region:   "#page-region",
+			scenes_region:  "#scene-region"
+		},
+
+		initialize: function(options) {
+			var instances = options.instances;
+			var locations = options.locations;
+
+			// TODO load game objects to have the name of object being referenced
+			//
+			_.each(locations.models, function(location) {
+				location.set("instance", instances.findWhere({"instance_id": location.get("instance_id")}));
+			});
+
+			var dialog_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "DIALOG"; });
+			this.dialog_locations = new TriggersCollection(dialog_selection);
+
+			var plaque_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "PLAQUE"; });
+			this.plaque_locations = new TriggersCollection(plaque_selection);
+
+			var item_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "ITEM"; });
+			this.item_locations = new TriggersCollection(item_selection);
+
+			var page_selection  = locations.filter(function(location) { return location.get("instance").get("object_type") === "WEB_PAGE"; });
+			this.page_locations = new TriggersCollection(page_selection);
+
+			var scene_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "SCENE"; });
+			this.scene_locations = new TriggersCollection(scene_selection);
+
+			console.log("items", this.item_locations);
+		},
+
+		onShow: function() {
+			this.dialogs_region.show(new LocationsGroupOrganizerView({title: "Dialogs",   object_icon: "comment",  collection: this.dialog_locations}));
+			this.plaques_region.show(new LocationsGroupOrganizerView({title: "Plaques",   object_icon: "list-alt", collection: this.plaque_locations}));
+			this.items_region.show  (new LocationsGroupOrganizerView({title: "Items",     object_icon: "inbox",    collection: this.item_locations  }));
+			this.pages_region.show  (new LocationsGroupOrganizerView({title: "Web Pages", object_icon: "globe",    collection: this.page_locations  }));
+			this.scenes_region.show (new LocationsGroupOrganizerView({title: "Scenes",    object_icon: "film",     collection: this.scene_locations }));
+		}
 	});
 });

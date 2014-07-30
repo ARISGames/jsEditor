@@ -6,8 +6,11 @@
 		<th class="organizer-section-header"><span class="glyphicon glyphicon-filter"></span> Media</th>
 	</thead>
 	<tbody>
-		<tr class="active"><td>By Object</td></tr>
+		<tr class="active"><td>By Type</td></tr>
+<!--
+		<tr><td>By Object</td></tr>
 		<tr><td>Unused</td></tr>
+-->
 	</tbody>
 </table>
 
@@ -21,6 +24,7 @@
 	</tbody>
 </table>
 
+<!--
 <table class="table table-hover">
 	<thead>
 		<th class="organizer-section-header"><span class="glyphicon glyphicon-comment"></span> Dialogs</th>
@@ -28,3 +32,4 @@
 	<tbody class="game_objects">
 	</tbody>
 </table>
+-->

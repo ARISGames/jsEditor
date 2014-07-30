@@ -43,7 +43,6 @@ define([
 			this.model.save({}, {
 				success: function() {
 					vent.trigger("application:popup:show", view.back_view);
-					//vent.trigger("application:popup:hide");
 				}
 			});
 		},
