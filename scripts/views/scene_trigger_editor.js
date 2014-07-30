@@ -124,7 +124,7 @@ define([
 			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
 			scene.save({}, {
 				create: function() {
-					vent.trigger("scene:add", scene);
+					vent.trigger("scenes:add_scene", scene);
 				},
 				success: function() {
 
