@@ -38,7 +38,6 @@ define([
 
 			vent.on("trigger:update", function(trigger) {
 				if(trigger.id === view.model.id) {
-					console.log("woot", trigger.attributes, view.model.attributes);
 					view.model = trigger;
 
 					// FIXME refactor double logic

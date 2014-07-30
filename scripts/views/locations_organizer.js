@@ -42,8 +42,6 @@ define([
 
 			var scene_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "SCENE"; });
 			this.scene_locations = new TriggersCollection(scene_selection);
-
-			console.log("items", this.item_locations);
 		},
 
 		onShow: function() {
