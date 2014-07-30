@@ -98,6 +98,9 @@ define([
 		// Notify View
 		view.options.in_modal = true;
 
+		// Re-show old view hack
+		view.delegateEvents();
+
 		application.dialog_region.show(view);
 		$('.modal').modal('show');
 

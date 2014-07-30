@@ -130,7 +130,7 @@ define([
 
 						// launch editor
 						var events = new EventsCollection([], {parent: event_package});
-						var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+						var events_editor = new EventsEditorView({model: event_package, collection: events, items: items, back_view: view});
 						vent.trigger("application:popup:show", events_editor, "Player Inventory Events Editor");
 				});
 			}
@@ -145,7 +145,7 @@ define([
 
 				$.when(items.fetch(), events.fetch()).done(function ()
 				{
-					var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+					var events_editor = new EventsEditorView({model: event_package, collection: events, items: items, back_view: view});
 					vent.trigger("application:popup:show", events_editor, "Player Inventory Events Editor");
 				});
 

@@ -19,11 +19,13 @@ define([
 
 		initialize: function(options) {
 			this.items = options.items;
+			this.back_view = options.back_view;
 		},
 
 		events: {
 			"click .new-event": "onClickNewEvent",
-			"click .save-all":  "onClickSaveAll"
+			"click .save-all":  "onClickSaveAll",
+			"click .cancel":    "onClickCancel"
 		},
 
 		onClickNewEvent: function() {
@@ -32,17 +34,22 @@ define([
 		},
 
 		onClickSaveAll: function() {
+			var view = this;
 			event.preventDefault();
 
 			// Save Event Package with children json
-			
+
 			this.model.set("events", this.collection);
 			this.model.save({}, {
 				success: function() {
-					console.log("SAVED");
-					vent.trigger("application:popup:hide");
+					vent.trigger("application:popup:show", view.back_view);
+					//vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			vent.trigger("application:popup:show", this.back_view);
 		},
 
 

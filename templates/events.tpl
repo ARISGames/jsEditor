@@ -23,7 +23,7 @@
 		<button type="submit" class="btn btn-primary save-all">
 			Save
 		</button>
-		<button type="button" class="btn btn-default cancel" data-dismiss="modal">
+		<button type="button" class="btn btn-default cancel">
 			Cancel
 		</button>
 	</div>

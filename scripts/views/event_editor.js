@@ -23,7 +23,6 @@ define([
 
 		initialize: function(options) {
 			this.items = options.items;
-			console.log("event model", this.model.attributes);
 		},
 
 		ui: {
@@ -41,13 +40,11 @@ define([
 
 		onChangeEvent: function() {
 			var value = this.ui.event.find("option:selected").val();
-			console.log("event", value);
 			this.model.set("event", value);
 		},
 
 		onChangeContent: function() {
 			var value = this.ui.content.find("option:selected").val();
-			console.log("content", value);
 			this.model.set("content_id", value);
 		},
 
