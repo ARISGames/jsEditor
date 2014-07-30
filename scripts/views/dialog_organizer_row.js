@@ -15,9 +15,10 @@ define([
 
 		initialize: function() {
 			var view = this;
-			vent.on("dialog:update", function(dialog) {
-				if(dialog.id === view.model.id) {
-					view.model = dialog;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+					view.model = game_object;
 					view.render();
 				}
 			});
