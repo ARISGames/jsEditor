@@ -138,8 +138,6 @@ define([
 					vent.trigger("item:add", item);
 				},
 				success: function() {
-					vent.trigger("game_object:update", item);
-
 					// Save Instance
 
 					instance.set("object_id",   item.id);

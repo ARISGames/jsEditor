@@ -139,8 +139,6 @@ define([
 					vent.trigger("dialog:add", dialog);
 				},
 				success: function() {
-					vent.trigger("game_object:update", dialog);
-
 					// Save Instance
 
 					instance.set("object_id",   dialog.id);

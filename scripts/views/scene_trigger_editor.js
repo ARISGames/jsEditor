@@ -138,8 +138,6 @@ define([
 					vent.trigger("scenes:add", scene);
 				},
 				success: function() {
-					vent.trigger("game_object:update", scene);
-
 					// Save Instance
 
 					instance.set("object_id",   scene.id);
@@ -184,6 +182,10 @@ define([
 									// FIXME better way to handle this?
 									vent.trigger("scene:add_trigger", trigger);
 									vent.trigger("application:popup:hide");
+								},
+								success: function()
+								{
+									vent.trigger("trigger:update", trigger);
 								}
 							});
 						}
