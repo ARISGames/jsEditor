@@ -53,7 +53,7 @@ define([
 			web_page.save({}, {
 				success: function() {
 					// FIXME get rid of global update broadcasts for models
-					vent.trigger("web_page:update", web_page);
+					vent.trigger("game_object:update", web_page);
 					vent.trigger("application:popup:hide");
 				}
 			});

@@ -128,6 +128,7 @@ define([
 					vent.trigger("web_page:add", web_page);
 				},
 				success: function() {
+					vent.trigger("game_object:update", web_page);
 
 					// Save Instance
 
