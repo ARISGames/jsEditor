@@ -24,6 +24,17 @@ define([
 			this.web_page = options.web_page;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
+
+			var view = this;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.web_page.id && game_object.idAttribute === view.web_page.idAttribute) {
+					view.web_page = game_object;
+					view.render();
+					view.onChangeType();
+					view.onChangeTriggerEnter();
+				}
+			});
 		},
 
 

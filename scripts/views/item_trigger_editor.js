@@ -24,6 +24,17 @@ define([
 			this.item     = options.item;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
+
+			var view = this;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.item.id && game_object.idAttribute === view.item.idAttribute) {
+					view.item = game_object;
+					view.render();
+					view.onChangeType();
+					view.onChangeTriggerEnter();
+				}
+			});
 		},
 
 

@@ -24,6 +24,17 @@ define([
 			this.plaque   = options.plaque;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
+
+			var view = this;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.plaque.id && game_object.idAttribute === view.plaque.idAttribute) {
+					view.plaque = game_object;
+					view.render();
+					view.onChangeType();
+					view.onChangeTriggerEnter();
+				}
+			});
 		},
 
 
@@ -127,6 +138,7 @@ define([
 					vent.trigger("plaque:add", plaque);
 				},
 				success: function() {
+					vent.trigger("game_object:update", plaque);
 
 					// Save Instance
 

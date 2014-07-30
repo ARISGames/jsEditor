@@ -24,6 +24,17 @@ define([
 			this.scene    = options.scene;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
+
+			var view = this;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.scene.id && game_object.idAttribute === view.scene.idAttribute) {
+					view.scene = game_object;
+					view.render();
+					view.onChangeType();
+					view.onChangeTriggerEnter();
+				}
+			});
 		},
 
 
@@ -127,6 +138,7 @@ define([
 					vent.trigger("scenes:add_scene", scene);
 				},
 				success: function() {
+					vent.trigger("game_object:update", scene);
 
 					// Save Instance
 

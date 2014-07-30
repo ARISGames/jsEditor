@@ -24,6 +24,17 @@ define([
 			this.dialog   = options.dialog;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
+
+			var view = this;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.dialog.id && game_object.idAttribute === view.dialog.idAttribute) {
+					view.dialog = game_object;
+					view.render();
+					view.onChangeType();
+					view.onChangeTriggerEnter();
+				}
+			});
 		},
 
 
@@ -128,6 +139,7 @@ define([
 					vent.trigger("dialog:add", dialog);
 				},
 				success: function() {
+					vent.trigger("game_object:update", dialog);
 
 					// Save Instance
 
