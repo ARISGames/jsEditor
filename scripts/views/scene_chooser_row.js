@@ -35,6 +35,9 @@ define([
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
 
+					// TODO give nicer unique names (sequential)
+					trigger.set("title", scene.get("name") + " #" + instance.id);
+
 					trigger.save({},
 					{
 						create: function()

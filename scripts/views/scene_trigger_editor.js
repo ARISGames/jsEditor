@@ -160,6 +160,10 @@ define([
 
 								trigger.set("icon_media_id", view.icon.get("media_id"));
 							}
+							// Initial Title
+							else {
+								trigger.set("title", scene.get("name") +" #"+ instance.id);
+							}
 
 							trigger.save({},
 							{
