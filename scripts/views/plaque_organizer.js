@@ -5,10 +5,18 @@ define([
        'vent'
 ], function(Backbone, Template, PlaqueOrganizerRowView, vent) {
 
-       return Backbone.Marionette.CompositeView.extend({
-               template: _.template(Template),
+	return Backbone.Marionette.CompositeView.extend({
+		template: _.template(Template),
 
-               itemView: PlaqueOrganizerRowView,
-               itemViewContainer: ".plaques"
-       });
+		itemView: PlaqueOrganizerRowView,
+		itemViewContainer: ".plaques",
+
+		initialize: function(options) {
+			var view = this;
+
+			vent.on("plaque:add", function(plaque) {
+				view.collection.add(plaque);
+			});
+		}
+	});
 });
