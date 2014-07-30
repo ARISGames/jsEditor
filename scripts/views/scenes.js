@@ -29,7 +29,7 @@ define([
 		initialize: function() {
 			var view = this;
 
-			vent.on("scenes:add_scene", function(scene) {
+			vent.on("scenes:add", function(scene) {
 				view.collection.add(scene);
 			});
 		},

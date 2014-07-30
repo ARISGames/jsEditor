@@ -38,8 +38,11 @@ define([
 			var view = this;
 			this.model.set('name', this.ui.name.val());
 			this.model.save({}, {
+					create: function() {
+						vent.trigger("scenes:add", view.model);
+					},
 					success: function() {
-						vent.trigger("scenes:add_scene", view.model);
+						vent.trigger("game_object:update", view.model);
 						vent.trigger("application:popup:hide");
 					}
 			});

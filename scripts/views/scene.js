@@ -31,6 +31,14 @@ define([
 					view.collection.add(trigger);
 				}
 			});
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+					view.model = game_object;
+					view.render();
+				}
+			});
+
 		},
 
 
