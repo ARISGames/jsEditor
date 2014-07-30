@@ -7,15 +7,17 @@ define([
 	'views/item_chooser',
 	'views/plaque_chooser',
 	'views/web_page_chooser',
+	'views/scene_chooser',
 	'collections/dialogs',
 	'collections/items',
 	'collections/plaques',
 	'collections/web_pages',
+	'collections/scenes',
 	'vent'
 ], function(_, Backbone, Template,
 	SceneInstanceTriggerView,
-	DialogChooserView, ItemChooserView, PlaqueChooserView, WebPageChooserView,
-	DialogsCollection, ItemsCollection, PlaquesCollection, WebPagesCollection,
+	DialogChooserView, ItemChooserView, PlaqueChooserView, WebPageChooserView, SceneChooserView,
+	DialogsCollection, ItemsCollection, PlaquesCollection, WebPagesCollection, ScenesCollection,
 	vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -24,7 +26,8 @@ define([
 			"click .add-dialog":   "onClickAddDialog",
 			"click .add-plaque":   "onClickAddPlaque",
 			"click .add-web-page": "onClickAddWebPage",
-			"click .add-item":     "onClickAddItem"
+			"click .add-item":     "onClickAddItem",
+			"click .add-scene":    "onClickAddScene"
 		},
 
 		initialize: function(options) {
@@ -79,6 +82,19 @@ define([
 				success: function() {
 					var web_page_chooser = new WebPageChooserView({collection: web_pages, parent: scene});
 					vent.trigger("application:popup:show", web_page_chooser, "Add WebPage to Scene");
+				}
+			});
+		},
+
+		onClickAddScene: function() {
+			var scene = this.model;
+
+			var scenes = new ScenesCollection([], {parent: this.game});
+
+			scenes.fetch({
+				success: function() {
+					var scene_chooser = new SceneChooserView({collection: scenes, parent: scene});
+					vent.trigger("application:popup:show", scene_chooser, "Add Scene Switch to Scene");
 				}
 			});
 		}

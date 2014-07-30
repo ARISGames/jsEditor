@@ -8,12 +8,14 @@ define([
 	'models/item',
 	'models/web_page',
 	'models/media',
+	'models/scene',
 	'views/dialog_trigger_editor',
 	'views/plaque_trigger_editor',
 	'views/item_trigger_editor',
 	'views/web_page_trigger_editor',
+	'views/scene_trigger_editor',
 	'vent'
-], function(_, Backbone, Template, Instance, Dialog, Plaque, Item, WebPage, Media, DialogTriggerEditorView, PlaqueTriggerEditorView, ItemTriggerEditorView, WebPageTriggerEditorView, vent) {
+], function(_, Backbone, Template, Instance, Dialog, Plaque, Item, WebPage, Media, Scene, DialogTriggerEditorView, PlaqueTriggerEditorView, ItemTriggerEditorView, WebPageTriggerEditorView, SceneTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -62,6 +64,7 @@ define([
 							if(type === "PLAQUE")   { view.object_icon = "list-alt"; }
 							if(type === "ITEM")     { view.object_icon = "inbox";    }
 							if(type === "WEB_PAGE") { view.object_icon = "globe";    }
+							if(type === "SCENE")    { view.object_icon = "film";     }
 
 							view.render();
 						});
@@ -119,6 +122,11 @@ define([
 					if(view.game_object instanceof WebPage) {
 
 						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, web_page: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					}
+
+					if(view.game_object instanceof Scene) {
+
+						trigger_editor = new SceneTriggerEditorView({parent_scene: view.scene, icon: icon, scene: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
 					if(trigger_editor === null) {
