@@ -36,6 +36,21 @@ define([
 
 			var view = this;
 
+			vent.on("trigger:update", function(trigger) {
+				if(trigger.id === view.model.id) {
+					console.log("woot", trigger.attributes, view.model.attributes);
+					view.model = trigger;
+
+					// FIXME refactor double logic
+					var type = view.model.get("type");
+					if(type === "QR")        { view.type_icon = "qrcode";     }
+					if(type === "LOCATION")  { view.type_icon = "map-marker"; }
+					if(type === "IMMEDIATE") { view.type_icon = "flash"; }
+
+					view.render();
+				}
+			});
+
 			// FIXME delegate to different views for each
 			view.object_name = "...";
 			view.object_icon = "refresh";

@@ -180,7 +180,12 @@ define([
 									// FIXME better way to handle this?
 									vent.trigger("scene:add_trigger", trigger);
 									vent.trigger("application:popup:hide");
+								},
+								success: function()
+								{
+									vent.trigger("trigger:update", trigger);
 								}
+
 							});
 						}
 					});
