@@ -51,7 +51,7 @@ define([
 
 			dialog.save({}, {
 				success: function() {
-					vent.trigger("dialog:update", dialog);
+					vent.trigger("game_object:update", dialog);
 					vent.trigger("application:popup:hide");
 				}
 			});

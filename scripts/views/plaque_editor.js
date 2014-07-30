@@ -64,7 +64,7 @@ define([
 			plaque.save({}, {
 				success: function() {
 					// FIXME get rid of global update broadcasts for models
-					vent.trigger("plaque:update", plaque);
+					vent.trigger("game_object:update", plaque);
 					vent.trigger("application:popup:hide");
 				}
 			});
