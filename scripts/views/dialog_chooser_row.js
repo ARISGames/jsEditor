@@ -35,6 +35,8 @@ define([
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
 
+					trigger.set("title", dialog.get("name") + " #" + instance.id);
+
 					trigger.save({},
 					{
 						create: function()

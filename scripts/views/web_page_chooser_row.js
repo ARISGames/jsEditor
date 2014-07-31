@@ -23,7 +23,7 @@ define([
 		onClickNewInstance: function() {
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
-			var web_page   = this.model;
+			var web_page = this.model;
 
 			// Save directly and insert into scene/show sidebar
 			instance.set("object_id",   web_page.id);
@@ -34,6 +34,7 @@ define([
 
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
+					trigger.set("title", web_page.get("name") + " #" + instance.id);
 
 					trigger.save({},
 					{
