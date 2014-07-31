@@ -59,6 +59,7 @@ define([
 
 			this.model.destroy({
 				success: function() {
+					vent.trigger("scenes:remove", view.model);
 					view.close();
 				}
 			});

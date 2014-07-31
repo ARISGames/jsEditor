@@ -41,6 +41,9 @@ define([
 
 		},
 
+		onItemviewTriggerRemove: function(item_view, trigger) {
+			this.collection.remove(trigger);
+		},
 
 		events: {
 			"click .name": "onClickName",

@@ -50,6 +50,13 @@ define([
 				}
 			});
 
+			vent.on("scenes:remove", function(scene) {
+				if(view.instance.get("object_type") === "SCENE" && scene.id === view.game_object.id)
+				{
+					view.trigger("trigger:remove", view.model);
+				}
+			});
+
 			// FIXME delegate to different views for each
 			view.object_name = "...";
 			view.object_icon = "refresh";
