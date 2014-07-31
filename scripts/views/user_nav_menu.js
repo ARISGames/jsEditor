@@ -16,12 +16,17 @@ define([
 		},
 
 		events: {
-			"click .logout":    "onClickLogout"
+			"click .logout": "onClickLogout",
+			"click .games":  "onClickGames"
 		},
 
 		onClickLogout: function() {
 			// just listen for event on session
 			session.logout();
+		},
+
+		onClickGames: function() {
+			Backbone.history.navigate("#games", {trigger: true});
 		}
 	});
 });

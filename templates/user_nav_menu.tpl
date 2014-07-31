@@ -1,8 +1,8 @@
 <ul class="nav navbar-nav aris-nav">
 	<!-- class="active" -->
-	<li><a>
-		<span class="glyphicon glyphicon-user"></span>
-		<span class="nav-name"> <%= username %></span>
+	<li><a class="games">
+		<span class="glyphicon glyphicon-th-list"></span>
+		<span class="nav-name"> My Games</span>
 	</a></li>
 	<li><a class="logout">
 		<span class="glyphicon glyphicon-log-out"></span>
