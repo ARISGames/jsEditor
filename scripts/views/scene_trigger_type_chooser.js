@@ -42,7 +42,7 @@ define([
 			dialogs.fetch({
 				success: function() {
 					var dialog_chooser = new DialogChooserView({collection: dialogs, parent: scene});
-					vent.trigger("application:popup:show", dialog_chooser, "Add Dialog to Scene");
+					vent.trigger("application:popup:show", dialog_chooser, "Add Conversation to Scene");
 				}
 			});
 		},

@@ -1,6 +1,6 @@
 <div class="list-group">
 	<a class="list-group-item add-dialog">
-		<span class="glyphicon glyphicon-comment"></span>&nbsp; Dialog
+		<span class="glyphicon glyphicon-comment"></span>&nbsp; Conversation
 	</a>
 	<a class="list-group-item add-plaque">
 		<span class="glyphicon glyphicon-list-alt"></span>&nbsp; Plaque

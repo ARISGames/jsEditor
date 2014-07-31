@@ -1,15 +1,15 @@
 <% if(!in_modal) { %>
-	<h4>Dialog Trigger <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
+	<h4>Conversation Trigger <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
 	<h5><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
 <% if(visible_fields === "create_dialog_with_trigger" ) { %>
 
-<!-- Dialog attributes -->
+<!-- Conversation attributes -->
 
 <div class="form-group">
-	<label class="sr-only" for="dialog-name">Dialog Name</label>
+	<label class="sr-only" for="dialog-name">Conversation Name</label>
 	<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
@@ -23,7 +23,7 @@
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-dialog">
 		<span class="glyphicon glyphicon-comment"></span>
-		Edit Dialog
+		Edit Conversation
 	</button>
 </div>
 

@@ -1,6 +1,6 @@
 <div class="list-group dialogs">
 	<a class="list-group-item active foot new-dialog">
-		New Dialog
+		New Conversation
 	</a>
 </div>
 

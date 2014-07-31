@@ -1,5 +1,5 @@
 <form class="form" role="form" onsubmit="return false;">
-	<!-- Dialog attributes -->
+	<!-- Conversation attributes -->
 
 	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
 		<span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span>

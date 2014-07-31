@@ -27,7 +27,7 @@
 <!--
 <table class="table table-hover">
 	<thead>
-		<th class="organizer-section-header"><span class="glyphicon glyphicon-comment"></span> Dialogs</th>
+		<th class="organizer-section-header"><span class="glyphicon glyphicon-comment"></span> Conversations</th>
 	</thead>
 	<tbody class="game_objects">
 	</tbody>

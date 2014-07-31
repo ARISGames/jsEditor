@@ -102,7 +102,7 @@ define([
 			icon.fetch({
 				success: function() {
 					var dialog_editor = new DialogEditorView({model: view.dialog, icon: icon});
-					vent.trigger("application:popup:show", dialog_editor, "Edit Dialog");
+					vent.trigger("application:popup:show", dialog_editor, "Edit Conversation");
 				}
 			});
 		},
