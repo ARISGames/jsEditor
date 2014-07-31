@@ -1,15 +1,15 @@
 define([
 	'backbone',
 	'text!templates/locations_organizer_row.tpl',
-	'views/dialog_trigger_location_editor',
+	'views/trigger_location_editor',
 	'vent'
-], function(Backbone, Template, DialogTriggerLocationEditorView, vent) {
+], function(Backbone, Template, TriggerLocationEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		events: {
-			"click .edit": "onClickEditDialog"
+			"click .edit": "onClickEdit"
 		},
 
 		tagName: 'tr',
@@ -22,10 +22,10 @@ define([
 			this.render();
 		},
 
-		onClickEditDialog: function() {
+		onClickEdit: function() {
 			this.model.trigger("center_map");
-			var dialog_location_editor = new DialogTriggerLocationEditorView({model: this.model});
-			vent.trigger("application:info:show", dialog_location_editor);
+			var location_editor = new TriggerLocationEditorView({model: this.model});
+			vent.trigger("application:info:show", location_editor);
 		}
 	});
 });

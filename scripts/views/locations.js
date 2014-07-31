@@ -2,9 +2,9 @@ define([
 	'underscore',
 	'backbone',
 	'text!templates/locations.tpl',
-	'views/dialog_trigger_location_editor',
+	'views/trigger_location_editor',
 	'vent'
-], function(_, Backbone, Template, DialogTriggerLocationEditorView, vent) {
+], function(_, Backbone, Template, TriggerLocationEditorView, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 		className: 'full-height',
@@ -93,11 +93,11 @@ define([
 				// Edit side bar
 
 				google.maps.event.addListener(circle_marker, 'mousedown', function() {
-					vent.trigger("application:info:show", new DialogTriggerLocationEditorView({model: trigger}));
+					vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger}));
 				});
 
 				google.maps.event.addListener(drag_marker, 'mousedown', function() {
-					vent.trigger("application:info:show", new DialogTriggerLocationEditorView({model: trigger}));
+					vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger}));
 				});
 
 

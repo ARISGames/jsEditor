@@ -2,9 +2,9 @@ define([
 	'underscore',
 	'jquery',
 	'backbone',
-	'text!templates/dialog_trigger_location_editor.tpl',
+	'text!templates/trigger_location_editor.tpl',
 	'vent'
-], function(_, $, Backbone, Template, DialogEditorView, vent) {
+], function(_, $, Backbone, Template, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
