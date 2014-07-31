@@ -8,6 +8,7 @@ define([
 	'views/scenes',
 	'views/game_nav_menu',
 	'views/locations',
+	'views/quests',
 	'views/media_editor',
 	'views/edit_json_model',
 	'views/game_editor',
@@ -26,6 +27,7 @@ define([
 	'collections/conversations',
 	'collections/media',
 	'collections/scenes',
+	'collections/quests',
 
 	'models/game',
 	'models/item',
@@ -35,8 +37,8 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
-	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
+	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection, QuestsCollection,
 	Game, Item, Requirement, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
@@ -49,9 +51,10 @@ define([
 			"games/new":           "newGame",
 			"games/:game_id/edit": "editGame",
 
-			"games/:game_id/scenes":     "showSceneEditor",
-			"games/:game_id/locations":  "listLocations",
-			"games/:game_id/media":      "listMedia",
+			"games/:game_id/scenes":    "showSceneEditor",
+			"games/:game_id/locations": "listLocations",
+			"games/:game_id/quests":    "listQuests",
+			"games/:game_id/media":     "listMedia",
 
 			"games/:game_id/locations/:location_id/edit":       "editLocation",
 			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
@@ -148,6 +151,19 @@ define([
 			});
 		},
 
+		listQuests: function(game_id) {
+			var game  = new Game({game_id: game_id});
+
+			var quests = new QuestsCollection([], {parent: game});
+			quests.fetch({
+				success: function() {
+					vent.trigger("application.show",     new QuestsView  ({model: game, collection: quests}));
+					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".quests"}));
+					vent.trigger("application:list:hide");
+					vent.trigger("application:info:hide");
+				}
+			});
+		},
 
 		listMedia: function(game_id) {
 			var game  = new Game({game_id: game_id});

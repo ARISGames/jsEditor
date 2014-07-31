@@ -9,10 +9,11 @@ define([
 		template:  _.template(Template),
 
 		events: {
-			"click .settings": "onClickSettings",
+			"click .settings":  "onClickSettings",
 			"click .locations": "onClickLocations",
-			"click .media": "onClickMedia",
-			"click .scenes": "onClickScenes"
+			"click .quests":    "onClickQuests",
+			"click .media":     "onClickMedia",
+			"click .scenes":    "onClickScenes"
 		},
 
 		onRender: function() {
@@ -25,6 +26,10 @@ define([
 
 		onClickLocations: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations", {trigger: true});
+		},
+
+		onClickQuests: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/quests", {trigger: true});
 		},
 
 		onClickMedia: function() {
