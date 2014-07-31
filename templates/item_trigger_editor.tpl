@@ -22,7 +22,7 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-item">
-		<span class="glyphicon glyphicon-inbox"></span>
+		<span class="glyphicon glyphicon-stop"></span>
 		Edit Item
 	</button>
 </div>

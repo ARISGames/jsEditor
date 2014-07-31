@@ -22,7 +22,7 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-scene">
-		<span class="glyphicon glyphicon-list-alt"></span>
+		<span class="glyphicon glyphicon-film"></span>
 		Edit Scene
 	</button>
 </div>

@@ -22,7 +22,7 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-plaque">
-		<span class="glyphicon glyphicon-list-alt"></span>
+		<span class="glyphicon glyphicon-align-justify"></span>
 		Edit Plaque
 	</button>
 </div>

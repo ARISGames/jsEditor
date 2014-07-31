@@ -46,8 +46,8 @@ define([
 
 		onShow: function() {
 			this.dialogs_region.show(new LocationsGroupOrganizerView({title: "Dialogs",   object_icon: "comment",  collection: this.dialog_locations}));
-			this.plaques_region.show(new LocationsGroupOrganizerView({title: "Plaques",   object_icon: "list-alt", collection: this.plaque_locations}));
-			this.items_region.show  (new LocationsGroupOrganizerView({title: "Items",     object_icon: "inbox",    collection: this.item_locations  }));
+			this.plaques_region.show(new LocationsGroupOrganizerView({title: "Plaques",   object_icon: "align-justify", collection: this.plaque_locations}));
+			this.items_region.show  (new LocationsGroupOrganizerView({title: "Items",     object_icon: "stop",    collection: this.item_locations  }));
 			this.pages_region.show  (new LocationsGroupOrganizerView({title: "Web Pages", object_icon: "globe",    collection: this.page_locations  }));
 			this.scenes_region.show (new LocationsGroupOrganizerView({title: "Scenes",    object_icon: "film",     collection: this.scene_locations }));
 		}
