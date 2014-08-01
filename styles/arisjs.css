@@ -258,8 +258,11 @@ h4:hover .object-id {
 }
 /* Event Editor */
 .events-editor .padded,
+.quest-editor .padded,
 .events-editor .event-table-header div,
-.events-editor .event-table-header label {
+.quest-editor .event-table-header div,
+.events-editor .event-table-header label,
+.quest-editor .event-table-header label {
   padding-right: 15px;
   padding-left: 15px;
 }

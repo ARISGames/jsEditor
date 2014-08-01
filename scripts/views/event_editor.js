@@ -32,10 +32,10 @@ define([
 		},
 
 		events: {
-			"change .event-select":   "onChangeEvent",
-			"change .content-select": "onChangeContent",
-			"change .quantity":       "onChangeQuantity",
-			"click .delete":          "onClickDeleteEvent"
+			"change @ui.event":    "onChangeEvent",
+			"change @ui.content":  "onChangeContent",
+			"change @ui.quantity": "onChangeQuantity",
+			"click .delete":       "onClickDeleteEvent"
 		},
 
 		onChangeEvent: function() {
