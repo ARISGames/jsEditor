@@ -1,3 +1,3 @@
 <td>
-	<span class="edit"><%= name %></span>
+	<div class="edit"><%= name %></div>
 </td>

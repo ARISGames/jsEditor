@@ -1,3 +1,3 @@
 <td>
-	<span class="edit"><%= title || trigger_id %></span>
+	<div class="edit"><%= title || trigger_id %></div>
 </td>
