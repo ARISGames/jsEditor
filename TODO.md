@@ -53,8 +53,15 @@ TODO
 
 DOING
 -----
-- trigger editor for all types
-- add media to trigger
+- reword requirements -> locks
+- reword instant sequence
+- media thumbnails everywhere
+- non image media thumbs/players
+- default media 0 thumb
+- events item split group
+- events on quests
+- media list of users
+-
 - fix events for tracking changes on models between the 3 main areas affected by adding plaques/items
 - media shows references (and can remove them/add more)
 - media style fix

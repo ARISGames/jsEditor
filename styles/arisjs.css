@@ -265,12 +265,15 @@ h4:hover .object-id {
 .events-editor .padded,
 .quest-editor .padded,
 .media-editor .padded,
+.object-editor .padded,
 .events-editor .event-table-header div,
 .quest-editor .event-table-header div,
 .media-editor .event-table-header div,
+.object-editor .event-table-header div,
 .events-editor .event-table-header label,
 .quest-editor .event-table-header label,
-.media-editor .event-table-header label {
+.media-editor .event-table-header label,
+.object-editor .event-table-header label {
   padding-right: 15px;
   padding-left: 15px;
 }

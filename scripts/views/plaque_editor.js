@@ -42,7 +42,9 @@ define([
 			"click .save": "onClickSave",
 			"click .change-icon":  "onClickChangeIcon",
 			"click .change-media": "onClickChangeMedia",
-			"click .edit-events": "onClickEditEvents"
+			"click .edit-events": "onClickEditEvents",
+			"change @ui.name": "onChangeName",
+			"change @ui.description": "onChangeDescription",
 		},
 
 		initialize: function(options) {
@@ -51,24 +53,20 @@ define([
 		},
 
 		onClickSave: function() {
-			var view   = this;
-			var plaque = this.model;
+			var view = this;
 
-			// Save Object
-			plaque.set("icon_media_id", view.icon.get( "media_id"));
-			plaque.set("media_id",      view.media.get("media_id"));
-
-			plaque.set("name",          view.ui.name.val());
-			plaque.set("description",   view.ui.description.val());
-
-			plaque.save({}, {
+			this.model.save({}, {
 				success: function() {
 					// FIXME get rid of global update broadcasts for models
-					vent.trigger("game_object:update", plaque);
+					vent.trigger("game_object:update", view.model);
 					vent.trigger("application:popup:hide");
 				}
 			});
 		},
+
+		onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
+		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
+
 
 		onClickChangeIcon: function() {
 			var view = this;
@@ -79,13 +77,15 @@ define([
 			media.fetch({
 				success: function() {
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, el: view.ui.iconchooser});
-					icon_chooser.render();
+					var icon_chooser = new MediaChooserView({collection: media});
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
-						view.render();
+						view.model.set("icon_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Plaque");
 					});
+
+					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});
 		},
@@ -99,12 +99,13 @@ define([
 			media.fetch({
 				success: function() {
 					/* Media */
-					var media_chooser = new MediaChooserView({collection: media, el: view.ui.mediachooser});
-					media_chooser.render();
+					var media_chooser = new MediaChooserView({collection: media});
+					vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
 					media_chooser.on("media:choose", function(media) {
 						view.media = media;
-						view.render();
+						view.model.set("media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Plaque");
 					});
 				}
 			});
@@ -114,42 +115,30 @@ define([
 		onClickEditEvents: function() {
 			var view = this;
 
-			// Create event package when id === 0
-			if(this.model.get("event_package_id") === "0")
-			{
-				// create it
-				var event_package = new EventPackage({game_id: view.model.get("game_id")});
+			var event_package = new EventPackage({event_package_id: view.model.get("event_package_id"), game_id: view.model.get("game_id")});
+			var events = new EventsCollection([], {parent: event_package});
 
-				var game  = new Game({game_id: view.model.get("game_id")});
-				var items = new ItemsCollection([], {parent: game});
+			var game   = new Game({game_id: view.model.get("game_id")});
+			var items  = new ItemsCollection([], {parent: game});
 
-				$.when(items.fetch(), event_package.save()).done(function()
+			$.when(items.fetch(), events.fetch()).done(function() {
+
+				// launch editor
+				var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+
+				events_editor.on("cancel", function()
 				{
-						view.model.set("event_package_id", event_package.get("event_package_id"));
-						view.model.save();
-
-						// launch editor
-						var events = new EventsCollection([], {parent: event_package});
-						var events_editor = new EventsEditorView({model: event_package, collection: events, items: items, back_view: view});
-						vent.trigger("application:popup:show", events_editor, "Player Inventory Events Editor");
-				});
-			}
-			// grab collection and launch
-			else
-			{
-				var event_package = new EventPackage({event_package_id: view.model.get("event_package_id"), game_id: view.model.get("game_id")});
-				var events = new EventsCollection([], {parent: event_package});
-
-				var game   = new Game({game_id: view.model.get("game_id")});
-				var items  = new ItemsCollection([], {parent: game});
-
-				$.when(items.fetch(), events.fetch()).done(function ()
-				{
-					var events_editor = new EventsEditorView({model: event_package, collection: events, items: items, back_view: view});
-					vent.trigger("application:popup:show", events_editor, "Player Inventory Events Editor");
+					vent.trigger("application:popup:show", view, "Edit Plaque");
 				});
 
-			}
+				events_editor.on("event_package:save", function(event_package)
+				{
+					view.model.set("event_package_id", event_package.id);
+					vent.trigger("application:popup:show", view, "Edit Plaque");
+				});
+
+				vent.trigger("application:popup:show", events_editor, "Player Modifier");
+			});
 		}
 	});
 });

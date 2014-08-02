@@ -38,17 +38,17 @@ define([
 			event.preventDefault();
 
 			// Save Event Package with children json
+			view.model.set("events", view.collection);
 
-			this.model.set("events", this.collection);
-			this.model.save({}, {
+			view.model.save({}, {
 				success: function() {
-					vent.trigger("application:popup:show", view.back_view);
+					view.trigger("event_package:save", view.model);
 				}
 			});
 		},
 
 		onClickCancel: function() {
-			vent.trigger("application:popup:show", this.back_view);
+			this.trigger("cancel");
 		},
 
 

@@ -1,4 +1,4 @@
-<form class="form" role="form" onsubmit="return false;">
+<form class="object-editor form" role="form" onsubmit="return false;">
 	<!-- Plaque attributes -->
 
 	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
@@ -12,34 +12,35 @@
 
 	<div class="form-group">
 		<label for="plaque-description">Description</label>
-		<input type="text" class="form-control" id="plaque-description" placeholder="Description" value="<%= description %>">
+		<textarea class="form-control" id="plaque-description" rows=2 placeholder="Description"><%= description %></textarea>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-xs-6 padded">
+			<div class="thumbnail change-icon">
+				<img src=<%= icon_thumbnail_url %>>
+			</div>
+			<button type="button" class="btn btn-info btn-block change-icon">
+				<span class="glyphicon glyphicon-picture"></span>
+				Select Icon
+			</button>
+		</div>
+
+		<div class="col-xs-6 padded">
+			<div class="thumbnail change-media">
+				<img src=<%= media_thumbnail_url %>>
+			</div>
+			<button type="button" class="btn btn-info btn-block change-media">
+				<span class="glyphicon glyphicon-facetime-video"></span>
+				Select Media
+			</button>
+		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="plaque-icon">Icon</label>
-		<img src=<%= icon_thumbnail_url %>>
-		<button type="button" class="btn btn-info change-icon">
-			Select Icon
-		</button>
-	</div>
-
-	<div class="form-group" id="icon-chooser-container">
-	</div>
-
-	<div class="form-group">
-		<label for="plaque-media">Media</label>
-		<img src=<%= media_thumbnail_url %>>
-		<button type="button" class="btn btn-info change-media">
-			Select Media
-		</button>
-	</div>
-
-	<div class="form-group" id="media-chooser-container">
-	</div>
-
-	<div class="form-group">
-		<button type="button" class="btn btn-info edit-events">
-			Change Player Inventory When Viewed
+		<button type="button" class="btn btn-info btn-block edit-events">
+			<span class="glyphicon glyphicon-user"></span>
+			Modify Player
 		</button>
 	</div>
 
