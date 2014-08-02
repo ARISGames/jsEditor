@@ -5,6 +5,8 @@
 		<button class="upload btn btn-primary">Upload Media</button>
 	</div>
 
+	<br/>
+
 	<div class="clearfix itemViewContainer">
 	</div>
 </div>

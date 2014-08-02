@@ -194,6 +194,11 @@ h4:hover .object-id {
   height: 100%;
   overflow-x: auto;
 }
+.media-editor .thumbnail .caption p,
+.media-editor .thumbnail .caption h4 {
+  overflow: hidden;
+}
+/* TODO temporarily unused, bootstrap used instead */
 .media-editor .aris-media-thumbnail {
   display: inline-block;
   position: relative;
@@ -259,10 +264,13 @@ h4:hover .object-id {
 /* Event Editor */
 .events-editor .padded,
 .quest-editor .padded,
+.media-editor .padded,
 .events-editor .event-table-header div,
 .quest-editor .event-table-header div,
+.media-editor .event-table-header div,
 .events-editor .event-table-header label,
-.quest-editor .event-table-header label {
+.quest-editor .event-table-header label,
+.media-editor .event-table-header label {
   padding-right: 15px;
   padding-left: 15px;
 }

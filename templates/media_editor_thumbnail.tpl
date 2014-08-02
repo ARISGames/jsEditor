@@ -1,11 +1,10 @@
-<div class="show media-thumbnail">
-	<div class="image" style="background: url(<%= url %>);" alt="<%= file_name %>">
-	</div>
+<div class="show thumbnail">
+	<img src="<%= thumb_url %>">
 
 	<div class="caption">
-		<h5>
-			<%= media_id %> <%= name %>
-		</h5>
+		<h4>
+			<%= name %>
+		</h4>
 		<p>
 			<%= file_name %>
 		</p>
