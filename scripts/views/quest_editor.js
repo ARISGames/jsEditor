@@ -21,9 +21,9 @@ define([
 			return {
 				is_new: this.model.isNew(),
 
-				active_icon_thumbnail_url: this.active_icon.get("thumb_url"),
-				active_media_thumbnail_url: this.active_media.get("thumb_url"),
-				complete_icon_thumbnail_url: this.complete_icon.get("thumb_url"),
+				active_icon_thumbnail_url:    this.active_icon.get("thumb_url"),
+				active_media_thumbnail_url:   this.active_media.get("thumb_url"),
+				complete_icon_thumbnail_url:  this.complete_icon.get("thumb_url"),
 				complete_media_thumbnail_url: this.complete_media.get("thumb_url"),
 
 				option_selected: function(boolean_statement) {
@@ -68,11 +68,11 @@ define([
 			"change @ui.description": "onChangeDescription",
 
 			"change @ui.active_description":       "onChangeActiveDescription",
-			"change @ui.active_notification_type": "onChangeActiveNotification_type",
+			"change @ui.active_notification_type": "onChangeActiveNotificationType",
 			"change @ui.active_function":          "onChangeActiveFunction",
 
 			"change @ui.complete_description":       "onChangeCompleteDescription",
-			"change @ui.complete_notification_type": "onChangeCompleteNotification_type",
+			"change @ui.complete_notification_type": "onChangeCompleteNotificationType",
 			"change @ui.complete_function":          "onChangeCompleteFunction"
 		},
 
@@ -96,6 +96,23 @@ define([
 				}
 			});
 		},
+
+
+		/* Field Changes */
+
+		onChangeName:        function() { this.model.set("name",        this.ui.name.val()); },
+		onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
+
+		onChangeActiveDescription:   function() { this.model.set("active_description",   this.ui.active_description.val()); },
+		onChangeCompleteDescription: function() { this.model.set("complete_description", this.ui.complete_description.val()); },
+
+		onChangeActiveNotificationType:   function() { this.model.set("active_notification_type", this.ui.active_notification_type.find("option:selected").val()) },
+		onChangeCompleteNotificationType: function() { this.model.set("complete_notification_type", this.ui.complete_notification_type.find("option:selected").val()) },
+
+		onChangeActiveFunction:   function() { this.model.set("active_function",   this.ui.active_function.find("option:selected").val()) },
+		onChangeCompleteFunction: function() { this.model.set("complete_function", this.ui.complete_function.find("option:selected").val()) },
+
+		/* Media Selection */
 
 		onClickActiveIcon: function() {
 			var view = this;
@@ -141,6 +158,53 @@ define([
 			});
 		},
 
+
+		onClickCompleteIcon: function() {
+			var view = this;
+			event.preventDefault();
+
+			var game  = new Game({game_id: this.model.get("game_id")});
+			var media = new MediaCollection([], {parent: game});
+
+			media.fetch({
+				success: function() {
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media, back_view: view});
+					vent.trigger("application:popup:show", icon_chooser, "Complete Quest Icon");
+
+					icon_chooser.on("media:choose", function(media) {
+						view.complete_icon = media;
+						view.model.set("complete_icon_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Quest");
+					});
+				}
+			});
+		},
+
+		onClickCompleteMedia: function() {
+			var view = this;
+			event.preventDefault();
+
+			var game  = new Game({game_id: this.model.get("game_id")});
+			var media = new MediaCollection([], {parent: game});
+
+			media.fetch({
+				success: function() {
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media});
+					vent.trigger("application:popup:show", icon_chooser, "Complete Quest Icon");
+
+					icon_chooser.on("media:choose", function(media) {
+						view.complete_media = media;
+						view.model.set("complete_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Quest");
+					});
+				}
+			});
+		},
+
+		/* Event Editors */
+
 		onClickActiveEvents: function() {
 			var view = this;
 
@@ -181,5 +245,8 @@ define([
 
 			}
 		}
+
+
+		/* Requirements Editors */
 	});
 });

@@ -24,7 +24,9 @@
 
 			<div class="form-group row">
 				<div class="col-xs-6 padded">
-					<img src=<%= active_icon_thumbnail_url %>>
+					<div class="thumbnail change-active-icon">
+						<img src=<%= active_icon_thumbnail_url %>>
+					</div>
 					<button type="button" class="btn btn-info btn-block change-active-icon">
 						<span class="glyphicon glyphicon-picture"></span>
 						Icon
@@ -32,7 +34,9 @@
 				</div>
 
 				<div class="col-xs-6 padded">
-					<img src=<%= active_media_thumbnail_url %>>
+					<div class="thumbnail change-active-media">
+						<img src=<%= active_media_thumbnail_url %>>
+					</div>
 					<button type="button" class="btn btn-info btn-block change-active-media">
 						<span class="glyphicon glyphicon-facetime-video"></span>
 						Media
@@ -66,7 +70,7 @@
 				<div class="col-xs-6 padded">
 					<label for="active-notification-type">Notification Type</label>
 
-					<select class="form-control active-function-select">
+					<select class="form-control" id="active-notification-type">
 						<option value="NONE"        <%= option_selected(active_notification_type === "NONE")        %>>None</option>
 						<option value="FULL_SCREEN" <%= option_selected(active_notification_type === "FULL_SCREEN") %>>Alert Box</option>
 						<option value="DROP_DOWN"   <%= option_selected(active_notification_type === "DROP_DOWN")   %>>Top Banner</option>
@@ -76,7 +80,7 @@
 				<div class="col-xs-6 padded active-function-box">
 					<label for="active-function">Notification Button Action</label>
 
-					<select class="form-control active-function-select">
+					<select class="form-control" id="active-function">
 						<option value="NONE"       <%= option_selected(active_function === "NONE")       %>>None</option>
 						<option value="GPS"        <%= option_selected(active_function === "GPS")        %>>Gps</option>
 						<option value="QUESTS"     <%= option_selected(active_function === "QUESTS")     %>>Quests</option>
@@ -102,7 +106,9 @@
 
 			<div class="form-group row">
 				<div class="col-xs-6 padded">
-					<img src=<%= complete_icon_thumbnail_url %>>
+					<div class="thumbnail change-complete-icon">
+						<img src=<%= complete_icon_thumbnail_url %>>
+					</div>
 					<button type="button" class="btn btn-info btn-block change-complete-icon">
 						<span class="glyphicon glyphicon-picture"></span>
 						Icon
@@ -110,7 +116,9 @@
 				</div>
 
 				<div class="col-xs-6 padded">
-					<img src=<%= complete_media_thumbnail_url %>>
+					<div class="thumbnail change-complete-media">
+						<img src=<%= complete_media_thumbnail_url %>>
+					</div>
 					<button type="button" class="btn btn-info btn-block change-complete-media">
 						<span class="glyphicon glyphicon-facetime-video"></span>
 						Media
@@ -143,7 +151,7 @@
 				<div class="col-xs-6 padded">
 					<label for="complete-notification-type">Notification Type</label>
 
-					<select class="form-control complete-function-select">
+					<select class="form-control" id="complete-notification-type">
 						<option value="NONE"        <%= option_selected(complete_notification_type === "NONE")        %>>None</option>
 						<option value="FULL_SCREEN" <%= option_selected(complete_notification_type === "FULL_SCREEN") %>>Alert Box</option>
 						<option value="DROP_DOWN"   <%= option_selected(complete_notification_type === "DROP_DOWN")   %>>Top Banner</option>
@@ -153,7 +161,7 @@
 				<div class="col-xs-6 padded complete-function-box">
 					<label for="complete-function">Notification Button Action</label>
 
-					<select class="form-control complete-function-select">
+					<select class="form-control" id="complete-function">
 						<option value="NONE"       <%= option_selected(complete_function === "NONE")       %>>None</option>
 						<option value="GPS"        <%= option_selected(complete_function === "GPS")        %>>Gps</option>
 						<option value="QUESTS"     <%= option_selected(complete_function === "QUESTS")     %>>Quests</option>
