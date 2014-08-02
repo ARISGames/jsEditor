@@ -40,6 +40,12 @@ define([
 			// Save Event Package with children json
 			view.model.set("events", view.collection);
 
+			// Don't save package 0
+			if(view.model.get("event_package_id") === "0") {
+				view.model.unset("event_package_id");
+			}
+
+
 			view.model.save({}, {
 				success: function() {
 					view.trigger("event_package:save", view.model);

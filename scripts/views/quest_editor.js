@@ -21,10 +21,10 @@ define([
 			return {
 				is_new: this.model.isNew(),
 
-				active_icon_thumbnail_url:    this.active_icon.get("thumb_url"),
-				active_media_thumbnail_url:   this.active_media.get("thumb_url"),
-				complete_icon_thumbnail_url:  this.complete_icon.get("thumb_url"),
-				complete_media_thumbnail_url: this.complete_media.get("thumb_url"),
+				active_icon_thumbnail_url:    this.active_icon.thumbnail(),
+				active_media_thumbnail_url:   this.active_media.thumbnail(),
+				complete_icon_thumbnail_url:  this.complete_icon.thumbnail(),
+				complete_media_thumbnail_url: this.complete_media.thumbnail(),
 
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
@@ -208,42 +208,59 @@ define([
 		onClickActiveEvents: function() {
 			var view = this;
 
-			// Create event package when id === 0
-			if(this.model.get("active_event_package_id") === "0")
-			{
-				// create it
-				var event_package = new EventPackage({game_id: view.model.get("game_id")});
+			var event_package = new EventPackage({event_package_id: view.model.get("active_event_package_id"), game_id: view.model.get("game_id")});
+			var events = new EventsCollection([], {parent: event_package});
 
-				var game  = new Game({game_id: view.model.get("game_id")});
-				var items = new ItemsCollection([], {parent: game});
+			var game   = new Game({game_id: view.model.get("game_id")});
+			var items  = new ItemsCollection([], {parent: game});
 
-				$.when(items.fetch(), event_package.save()).done(function()
+			$.when(items.fetch(), events.fetch()).done(function() {
+
+				// launch editor
+				var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+
+				events_editor.on("cancel", function()
 				{
-						view.model.set("active_event_package_id", event_package.get("event_package_id"));
-						view.model.save();
-
-						// launch editor
-						var events = new EventsCollection([], {parent: event_package});
-						var events_editor = new EventsEditorView({model: event_package, collection: events, items: items, back_view: view});
-						vent.trigger("application:popup:show", events_editor, "Modify Player on Start Quest");
-				});
-			}
-			// grab collection and launch
-			else
-			{
-				var event_package = new EventPackage({event_package_id: view.model.get("active_event_package_id"), game_id: view.model.get("game_id")});
-				var events = new EventsCollection([], {parent: event_package});
-
-				var game   = new Game({game_id: view.model.get("game_id")});
-				var items  = new ItemsCollection([], {parent: game});
-
-				$.when(items.fetch(), events.fetch()).done(function ()
-				{
-					var events_editor = new EventsEditorView({model: event_package, collection: events, items: items, back_view: view});
-					vent.trigger("application:popup:show", events_editor, "Modify Player on Complete Quest");
+					vent.trigger("application:popup:show", view, "Edit Quest");
 				});
 
-			}
+				events_editor.on("event_package:save", function(event_package)
+				{
+					view.model.set("active_event_package_id", event_package.id);
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				vent.trigger("application:popup:show", events_editor, "Player Modifier");
+			});
+		},
+
+		onClickCompleteEvents: function() {
+			var view = this;
+
+			var event_package = new EventPackage({event_package_id: view.model.get("complete_event_package_id"), game_id: view.model.get("game_id")});
+			var events = new EventsCollection([], {parent: event_package});
+
+			var game   = new Game({game_id: view.model.get("game_id")});
+			var items  = new ItemsCollection([], {parent: game});
+
+			$.when(items.fetch(), events.fetch()).done(function() {
+
+				// launch editor
+				var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+
+				events_editor.on("cancel", function()
+				{
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				events_editor.on("event_package:save", function(event_package)
+				{
+					view.model.set("complete_event_package_id", event_package.id);
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				vent.trigger("application:popup:show", events_editor, "Player Modifier");
+			});
 		}
 
 
