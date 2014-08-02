@@ -20,8 +20,8 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.get("thumb_url"),
-				media_thumbnail_url: this.media.get("thumb_url")
+				icon_thumbnail_url:  this.icon.thumbnail(),
+				media_thumbnail_url: this.media.thumbnail()
 			}
 		},
 

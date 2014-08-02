@@ -38,6 +38,16 @@ define([
 
 		defaults: {
 			"display_name": ""
+		},
+
+
+		thumbnail: function() {
+			if(this.id === "0") {
+				return "images/default128.png";
+			}
+			else {
+				return this.get("thumb_url");
+			}
 		}
 	});
 });
