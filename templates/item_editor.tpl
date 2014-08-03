@@ -67,7 +67,7 @@
 			</div>
 			<button type="button" class="btn btn-info btn-block change-icon">
 				<span class="glyphicon glyphicon-picture"></span>
-				Select Icon
+				Icon
 			</button>
 		</div>
 
@@ -78,7 +78,7 @@
 				</div>
 				<button type="button" class="btn btn-info btn-block change-media">
 					<span class="glyphicon glyphicon-facetime-video"></span>
-					Select Media
+					Media
 				</button>
 			</div>
 		</div>

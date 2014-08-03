@@ -26,7 +26,7 @@
 				</div>
 				<button type="button" class="btn btn-info btn-block change-icon">
 					<span class="glyphicon glyphicon-picture"></span>
-					Select Icon
+					Icon
 				</button>
 			</div>
 		</div>
