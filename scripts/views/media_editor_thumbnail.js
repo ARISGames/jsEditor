@@ -8,6 +8,12 @@ define([
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
+		templateHelpers: function() {
+			return {
+				thumb_url: this.model.thumbnail()
+			}
+		},
+
 		className: "col-xs-6 col-sm-4 col-md-3 col-lg-3 padded",
 
 		events: {

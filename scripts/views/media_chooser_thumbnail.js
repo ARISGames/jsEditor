@@ -7,6 +7,12 @@ define([
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
+		templateHelpers: function() {
+			return {
+				thumb_url: this.model.thumbnail()
+			}
+		},
+
 		className: "chooser-thumbnail",
 
 		events: {

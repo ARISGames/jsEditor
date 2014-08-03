@@ -45,6 +45,12 @@ define([
 			if(this.id === "0") {
 				return "images/default128.png";
 			}
+			else if(this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov)/)) {
+				return "images/video128.png";
+			}
+			else if(this.get("file_name").match(/\.(wav|mp3|alac|flac)/)) {
+				return "images/audio128.png";
+			}
 			else {
 				return this.get("thumb_url");
 			}
