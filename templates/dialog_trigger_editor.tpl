@@ -52,7 +52,7 @@
 	<label class="btn btn-info">
 		<input type="radio" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
 		<span class="glyphicon glyphicon-flash"></span>
-		Immediate
+		Sequence
 	</label>
 </div>
 
@@ -87,9 +87,11 @@
 
 	<!-- Icon Selector -->
 	<div class="form-group">
-		<label for="item-description">Icon</label>
-		<img src=<%= icon_thumbnail_url %>>
-		<button type="button" class="btn btn-info change-icon">
+		<div class="thumbnail change-icon">
+			<img src=<%= icon_thumbnail_url %>>
+		</div>
+		<button type="button" class="btn btn-info btn-block change-icon">
+			<span class="glyphicon glyphicon-picture"></span>
 			Select Icon
 		</button>
 	</div>
@@ -140,7 +142,7 @@
 <div id="IMMEDIATE-fields" class="type-trigger-tab">
 	<div class="alert alert-info">
 		<span class="glyphicon glyphicon-info-sign"></span>
-		Will be triggered immediately when requirements are satisfied.
+		Will be triggered as soon as all locks are satisfied.
 	</div>
 </div>
 
