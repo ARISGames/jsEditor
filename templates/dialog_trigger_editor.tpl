@@ -27,12 +27,12 @@
 	</button>
 </div>
 
-<!-- Edit Requirements -->
+<!-- Locks -->
 
 <div class="form-group">
 	<button type="button" class="btn btn-info btn-block edit-requirements" disabled>
-		<span class="glyphicon glyphicon-ok"></span>
-		Edit Requirements
+		<span class="glyphicon glyphicon-lock"></span>
+		Locks
 	</button>
 </div>
 
