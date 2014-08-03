@@ -50,12 +50,12 @@
 				Normal
 			</label>
 			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
-				Web URL
-			</label>
-			<label class="btn btn-info">
 				<input type="radio" name="item-type" value="ATTRIB" <%= radio_selected(type === "ATTRIB") %>>
 				Attribute
+			</label>
+			<label class="btn btn-info">
+				<input type="radio" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
+				Web URL
 			</label>
 		</div>
 	</div>
@@ -71,8 +71,8 @@
 			</button>
 		</div>
 
-		<div class="col-xs-6 padded trigger-tab NORMAL-fields ATTRIB-fields">
-			<div class="form-group">
+		<div class="col-xs-6 padded">
+			<div class="trigger-tab NORMAL-fields ATTRIB-fields">
 				<div class="thumbnail change-media">
 					<img src=<%= media_thumbnail_url %>>
 				</div>
@@ -81,15 +81,14 @@
 					Media
 				</button>
 			</div>
+			<div class="trigger-tab URL-fields">
+				<label for="item-url">URL</label>
+				<input type="text" class="form-control" id="item-url" placeholder="URL" value="<%= url %>">
+			</div>
 		</div>
+
 	</div>
 
-	<div class="trigger-tab URL-fields">
-		<div class="form-group">
-			<label for="item-url">URL</label>
-			<input type="text" class="form-control" id="item-url" placeholder="URL" value="<%= url %>">
-		</div>
-	</div>
 
 	<button type="submit" class="btn btn-primary save">
 		Save
