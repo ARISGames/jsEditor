@@ -15,7 +15,7 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				thumbnail_url: this.icon.get("thumb_url")
+				icon_thumbnail_url: this.icon.thumbnail()
 			}
 		},
 
@@ -65,13 +65,16 @@ define([
 
 			media.fetch({
 				success: function() {
-					var icon_chooser = new MediaChooserView({collection: media, el: view.ui.iconchooser});
-					icon_chooser.render();
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media});
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
-						view.render();
+						view.model.set("icon_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Conversation");
 					});
+
+					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});
 		}
