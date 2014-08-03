@@ -51,7 +51,7 @@
 	</label>
 	<label class="btn btn-info">
 		<input type="radio" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
-		<span class="glyphicon glyphicon-flash"></span>
+		<span class="glyphicon glyphicon-link"></span>
 		Sequence
 	</label>
 </div>
