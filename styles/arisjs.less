@@ -225,7 +225,7 @@ h4:hover .object-id {
 	overflow-x: auto;
 
 	.thumbnail .caption {
-		p, h4 {
+		p, div, h4 {
 			overflow: hidden;
 		}
 	}
@@ -302,10 +302,22 @@ h4:hover .object-id {
 	}
 }
 
+.thumbnail img {
+	border-radius: 3px;
+}
+
+.thumbnail:hover {
+	background: #eee;
+}
+
 /* Event Editor */
 .events-editor, .quest-editor, .media-editor, .object-editor {
 	.padded, .event-table-header div, .event-table-header label {
 		padding-right: 15px;
 		padding-left: 15px;
+	}
+	.padded-small {
+		padding-right: 5px;
+		padding-left: 5px;
 	}
 }

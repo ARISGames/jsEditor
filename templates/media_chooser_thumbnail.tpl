@@ -1,3 +1,7 @@
-<div class="choose">
-	<img src="<%= thumb_url %>" alt="<%= file_name %>">
+<div class="thumbnail chooser">
+	<img src="<%= thumb_url %>">
+
+	<div class="caption">
+		<%= name %>
+	</div>
 </div>

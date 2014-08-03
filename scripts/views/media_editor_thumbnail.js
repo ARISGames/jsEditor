@@ -14,7 +14,7 @@ define([
 			}
 		},
 
-		className: "col-xs-6 col-sm-4 col-md-3 col-lg-3 padded",
+		className: "col-xs-6 col-sm-4 col-md-3 col-lg-3 padded-small",
 
 		events: {
 			"click .show": "onClickShow",

@@ -195,6 +195,7 @@ h4:hover .object-id {
   overflow-x: auto;
 }
 .media-editor .thumbnail .caption p,
+.media-editor .thumbnail .caption div,
 .media-editor .thumbnail .caption h4 {
   overflow: hidden;
 }
@@ -261,6 +262,12 @@ h4:hover .object-id {
   opacity: 0.5;
   cursor: pointer;
 }
+.thumbnail img {
+  border-radius: 3px;
+}
+.thumbnail:hover {
+  background: #eee;
+}
 /* Event Editor */
 .events-editor .padded,
 .quest-editor .padded,
@@ -276,4 +283,11 @@ h4:hover .object-id {
 .object-editor .event-table-header label {
   padding-right: 15px;
   padding-left: 15px;
+}
+.events-editor .padded-small,
+.quest-editor .padded-small,
+.media-editor .padded-small,
+.object-editor .padded-small {
+  padding-right: 5px;
+  padding-left: 5px;
 }

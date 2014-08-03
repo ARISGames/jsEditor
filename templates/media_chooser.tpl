@@ -1,4 +1,4 @@
-<div class="media-chooser">
-	<div class="itemViewContainer">
+<div class="object-editor">
+	<div class="itemViewContainer row">
 	</div>
 </div>

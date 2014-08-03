@@ -5,8 +5,6 @@
 		<h4>
 			<%= name %>
 		</h4>
-		<p>
-			<%= file_name %>
-		</p>
+		<div><%= file_name %></div>
 	</div>
 </div>
