@@ -91,12 +91,10 @@
 		</div>
 	</div>
 
-	<div class="form-group">
-		<button type="submit" class="btn btn-primary save">
-			Save
-		</button>
-		<button type="button" class="btn btn-default" data-dismiss="modal">
-			Cancel
-		</button>
-	</div>
+	<button type="submit" class="btn btn-primary save">
+		Save
+	</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal">
+		Cancel
+	</button>
 </form>
