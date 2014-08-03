@@ -47,7 +47,7 @@ define([
 				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
 
-				icon_thumbnail_url:  this.icon.get("thumb_url"),
+				icon_thumbnail_url:  this.icon.thumbnail(),
 
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
