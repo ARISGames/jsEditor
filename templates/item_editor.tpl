@@ -1,4 +1,4 @@
-<form class="form" role="form" onsubmit="return false;">
+<form class="form object-editor" role="form" onsubmit="return false;">
 	<!-- Item attributes -->
 
 	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
@@ -12,17 +12,19 @@
 
 	<div class="form-group">
 		<label for="item-description">Description</label>
-		<input type="text" class="form-control" id="item-description" placeholder="Description" value="<%= description %>">
+		<textarea class="form-control" id="item-description" placeholder="Description" rows=2><%= description %></textarea>
 	</div>
 
-	<div class="form-group">
-		<label for="item-weight">Weight</label>
-		<input type="number" class="form-control" id="item-weight" placeholder="Weight" value="<%= weight %>">
-	</div>
+	<div class="form-group row">
+		<div class="col-xs-6 padded">
+				<label for="item-weight">Weight</label>
+				<input type="number" class="form-control" id="item-weight" placeholder="Weight" value="<%= weight %>">
+		</div>
 
-	<div class="form-group">
-		<label for="item-max_qty_in_inventory">Max Quantity in Inventory</label>
-		<input type="number" class="form-control" id="item-max_qty_in_inventory" placeholder="Max Quantity" value="<%= max_qty_in_inventory %>">
+		<div class="col-xs-6 padded">
+				<label for="item-max_qty_in_inventory">Max Quantity in Inventory</label>
+				<input type="number" class="form-control" id="item-max_qty_in_inventory" placeholder="Max Quantity" value="<%= max_qty_in_inventory %>">
+		</div>
 	</div>
 
 	<div class="checkbox">
@@ -37,17 +39,6 @@
 			<input type="checkbox" id="item-destroyable" <%= is_checked(destroyable) %>>
 			Destroyable
 		</label>
-	</div>
-
-	<div class="form-group">
-		<label for="item-description">Icon</label>
-		<img src=<%= icon_thumbnail_url %>>
-		<button type="button" class="btn btn-info change-icon">
-			Select Icon
-		</button>
-	</div>
-
-	<div class="form-group" id="icon-chooser-container">
 	</div>
 
 	<div class="form-group">
@@ -69,25 +60,35 @@
 		</div>
 	</div>
 
+	<div class="form-group row">
+		<div class="col-xs-6 padded">
+			<div class="thumbnail change-icon">
+				<img src=<%= icon_thumbnail_url %>>
+			</div>
+			<button type="button" class="btn btn-info btn-block change-icon">
+				<span class="glyphicon glyphicon-picture"></span>
+				Select Icon
+			</button>
+		</div>
+
+		<div class="col-xs-6 padded trigger-tab NORMAL-fields ATTRIB-fields">
+			<div class="form-group">
+				<div class="thumbnail change-media">
+					<img src=<%= media_thumbnail_url %>>
+				</div>
+				<button type="button" class="btn btn-info btn-block change-media">
+					<span class="glyphicon glyphicon-facetime-video"></span>
+					Select Media
+				</button>
+			</div>
+		</div>
+	</div>
+
 	<div class="trigger-tab URL-fields">
 		<div class="form-group">
 			<label for="item-url">URL</label>
 			<input type="text" class="form-control" id="item-url" placeholder="URL" value="<%= url %>">
 		</div>
-	</div>
-
-
-	<div class="trigger-tab URL-fields ATTRIB-fields">
-		<div class="form-group">
-			<label for="item-description">Media</label>
-			<img src=<%= media_thumbnail_url %>>
-			<button type="button" class="btn btn-info change-media">
-				Select Media
-			</button>
-		</div>
-	</div>
-
-	<div class="form-group" id="media-chooser-container">
 	</div>
 
 	<div class="form-group">

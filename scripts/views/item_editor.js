@@ -16,8 +16,8 @@ define([
 		{
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.get("thumb_url"),
-				media_thumbnail_url: this.media.get("thumb_url"),
+				icon_thumbnail_url:  this.icon.thumbnail(),
+				media_thumbnail_url: this.media.thumbnail(),
 
 				is_checked: function(value)
 				{
@@ -125,50 +125,47 @@ define([
 
 		/* Media Selectors */
 
-		onClickChangeIcon: function()
-		{
+		onClickChangeIcon: function() {
 			var view = this;
 
 			var game  = new Game({game_id: this.model.get("game_id")});
 			var media = new MediaCollection([], {parent: game});
 
 			media.fetch({
-				success: function()
-				{
-					var icon_chooser = new MediaChooserView({collection: media, el: view.ui.iconchooser});
-					icon_chooser.render();
+				success: function() {
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media});
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
-						view.render();
-						view.onChangeType();
+						view.model.set("icon_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Item");
 					});
+
+					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});
 		},
 
-		onClickChangeMedia: function()
-		{
+		onClickChangeMedia: function() {
 			var view = this;
 
 			var game  = new Game({game_id: this.model.get("game_id")});
 			var media = new MediaCollection([], {parent: game});
 
 			media.fetch({
-				success: function()
-				{
-					var media_chooser = new MediaChooserView({collection: media, el: view.ui.mediachooser});
-					media_chooser.render();
+				success: function() {
+					/* Media */
+					var media_chooser = new MediaChooserView({collection: media});
+					vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
-					media_chooser.on("media:choose", function(media)
-					{
+					media_chooser.on("media:choose", function(media) {
 						view.media = media;
-						view.render();
-						view.onChangeType();
+						view.model.set("media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 				}
 			});
-		}
-
+		},
 	}); /* class */
 }); /* define */
