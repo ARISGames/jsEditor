@@ -15,8 +15,15 @@ define([
 	'models/requirement_package',
 	'collections/and_packages',
 	'collections/atoms',
+	'collections/items',
+	'collections/tags',
+	'collections/plaques',
+	'collections/dialogs',
+	'collections/web_pages',
+	'collections/quests',
+	'collections/web_hooks',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, vent) {
+], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -276,9 +283,18 @@ define([
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("active_requirement_root_package_id"), game_id: view.model.get("game_id")});
 
 			var game   = new Game({game_id: view.model.get("game_id")});
-			var items  = new ItemsCollection([], {parent: game});
 
-			$.when(items.fetch(), requirement_package.fetch()).done(function()
+			var contents = {
+				items:      new ItemsCollection    ([], {parent: game}),
+				tags:       new TagsCollection     ([], {parent: game}),
+				plaques:    new PlaquesCollection  ([], {parent: game}),
+				dialogs:    new DialogsCollection  ([], {parent: game}),
+				web_pages:  new WebPagesCollection ([], {parent: game}),
+				quests:     new QuestsCollection   ([], {parent: game}),
+				hooks:      new WebHooksCollection ([], {parent: game})
+			};
+
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
@@ -290,7 +306,7 @@ define([
 				});
 
 				// launch editor
-				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
 
 				requirements_editor.on("cancel", function()
 				{
@@ -313,9 +329,18 @@ define([
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("complete_requirement_root_package_id"), game_id: view.model.get("game_id")});
 
 			var game   = new Game({game_id: view.model.get("game_id")});
-			var items  = new ItemsCollection([], {parent: game});
 
-			$.when(items.fetch(), requirement_package.fetch()).done(function()
+			var contents = {
+				items:      new ItemsCollection    ([], {parent: game}),
+				tags:       new TagsCollection     ([], {parent: game}),
+				plaques:    new PlaquesCollection  ([], {parent: game}),
+				dialogs:    new DialogsCollection  ([], {parent: game}),
+				web_pages:  new WebPagesCollection ([], {parent: game}),
+				quests:     new QuestsCollection   ([], {parent: game}),
+				hooks:      new WebHooksCollection ([], {parent: game})
+			};
+
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
@@ -327,8 +352,7 @@ define([
 				});
 
 				// launch editor
-				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
-
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
 				requirements_editor.on("cancel", function()
 				{
 					vent.trigger("application:popup:show", view, "Edit Quest");

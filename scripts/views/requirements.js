@@ -43,9 +43,6 @@ define([
 			var view = this;
 			event.preventDefault();
 
-			// Save Event Package with children json
-			//view.model.set("and_packages", view.collection);
-
 			// Don't save package 0
 			if(view.model.get("requirement_package_id") === "0") {
 				view.model.unset("requirement_package_id");

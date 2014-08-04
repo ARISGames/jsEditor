@@ -8,11 +8,11 @@ define([
 	'views/media_chooser',
 	'views/requirements',
 	'models/requirement_package',
-	'collections/and_packages',
-	'collections/atoms',
 	'models/media',
 	'models/game',
 	'collections/media',
+	'collections/and_packages',
+	'collections/atoms',
 	'collections/items',
 	'collections/tags',
 	'collections/plaques',
@@ -21,7 +21,7 @@ define([
 	'collections/quests',
 	'collections/web_hooks',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, Media, Game, MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
