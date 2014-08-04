@@ -17,12 +17,12 @@ define([
 		itemViewOptions: function(model, index) {
 			return {
 				collection: model.get("atoms"),
-				items: this.items
+				contents: this.contents
 			}
 		},
 
 		initialize: function(options) {
-			this.items = options.items;
+			this.contents = options.contents;
 		},
 
 		events: {

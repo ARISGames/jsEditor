@@ -14,8 +14,15 @@ define([
 	'models/game',
 	'collections/media',
 	'collections/items',
+	'collections/tags',
+	'collections/plaques',
+	'collections/dialogs',
+	'collections/web_pages',
+	'collections/quests',
+	'collections/web_hooks',
+	'collections/notes',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, NotesCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -277,10 +284,21 @@ define([
 
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-			var game   = new Game({game_id: view.model.get("game_id")});
-			var items  = new ItemsCollection([], {parent: game});
+			var game = new Game({game_id: view.model.get("game_id")});
 
-			$.when(items.fetch(), requirement_package.fetch()).done(function()
+			var contents = {
+				items:      new ItemsCollection    ([], {parent: game}),
+				tags:       new TagsCollection     ([], {parent: game}),
+				plaques:    new PlaquesCollection  ([], {parent: game}),
+				dialogs:    new DialogsCollection  ([], {parent: game}),
+				web_pages:  new WebPagesCollection ([], {parent: game}),
+				quests:     new QuestsCollection   ([], {parent: game}),
+				hooks:      new WebHooksCollection ([], {parent: game}),
+				notes:      new NotesCollection    ([], {parent: game})
+			};
+
+			// TODO fetch notes, web hooks once api is fixed
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), /* contents.hooks.fetch(), contents.notes.fetch(), */ requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
@@ -292,7 +310,7 @@ define([
 				});
 
 				// launch editor
-				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
 
 				requirements_editor.on("cancel", function()
 				{

@@ -13,11 +13,11 @@ define([
 		itemViewContainer: ".atoms",
 
 		itemViewOptions: function(model, index) {
-			return { items: this.items }
+			return { contents: this.contents }
 		},
 
 		initialize: function(options) {
-			this.items = options.items;
+			this.contents = options.contents;
 		},
 
 		events: {
