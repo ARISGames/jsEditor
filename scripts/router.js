@@ -23,7 +23,6 @@ define([
 	'collections/items',
 	'collections/plaques',
 	'collections/web_pages',
-	'collections/requirements',
 	'collections/conversations',
 	'collections/media',
 	'collections/scenes',
@@ -31,15 +30,14 @@ define([
 
 	'models/game',
 	'models/item',
-	'models/requirement',
 	'models/conversation',
 	'models/media',
 
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
-	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, RequirementCollection, ConversationCollection, MediaCollection, SceneCollection, QuestsCollection,
-	Game, Item, Requirement, Conversation, Media,
+	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, ConversationCollection, MediaCollection, SceneCollection, QuestsCollection,
+	Game, Item, Conversation, Media,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -55,11 +53,6 @@ define([
 			"games/:game_id/locations": "listLocations",
 			"games/:game_id/quests":    "listQuests",
 			"games/:game_id/media":     "listMedia",
-
-			"games/:game_id/locations/:location_id/edit":       "editLocation",
-			"games/:game_id/requirements/:requirement_id/edit": "editRequirement",
-
-
 
 			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},

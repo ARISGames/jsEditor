@@ -282,6 +282,7 @@ define([
 
 			$.when(items.fetch(), requirement_package.fetch()).done(function()
 			{
+				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
 				requirement_package.set("and_packages", and_packages);
 
@@ -290,9 +291,6 @@ define([
 					and_package.set("atoms", atoms);
 				});
 
-				requirement_package.save();
-
-				/*
 				// launch editor
 				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
 
@@ -308,7 +306,6 @@ define([
 				});
 
 				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
-				*/
 			});
 		},
 
