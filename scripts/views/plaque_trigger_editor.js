@@ -277,7 +277,6 @@ define([
 
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-
 			var game   = new Game({game_id: view.model.get("game_id")});
 			var items  = new ItemsCollection([], {parent: game});
 

@@ -12,16 +12,18 @@ define([
 			"content_id",
 			"qty",
 			"latitude",
-			"longitude"
+			"longitude",
+		    "distance"
 		],
 
 		defaults: {
 			bool_operator:"0",
 			requirement:"PLAYER_HAS_ITEM",
 			content_id:"0",
-			qty:"4",
+			qty:"1",
 			latitude:"86.75309",
-			longitude:"3.141592"
+			longitude:"3.141592",
+			distance: "5.0"
 		}
 
 	});

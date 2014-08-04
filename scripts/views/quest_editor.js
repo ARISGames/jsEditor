@@ -11,8 +11,12 @@ define([
 	'models/event',
 	'views/media_chooser',
 	'views/events',
+	'views/requirements',
+	'models/requirement_package',
+	'collections/and_packages',
+	'collections/atoms',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, vent) {
+], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -261,9 +265,83 @@ define([
 
 				vent.trigger("application:popup:show", events_editor, "Player Modifier");
 			});
-		}
+		},
 
 
 		/* Requirements Editors */
+
+		onClickActiveRequirements: function() {
+			var view = this;
+
+			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("active_requirement_root_package_id"), game_id: view.model.get("game_id")});
+
+			var game   = new Game({game_id: view.model.get("game_id")});
+			var items  = new ItemsCollection([], {parent: game});
+
+			$.when(items.fetch(), requirement_package.fetch()).done(function()
+			{
+				// Load associations into collections
+				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
+				requirement_package.set("and_packages", and_packages);
+
+				and_packages.each(function(and_package) {
+					var atoms = new AtomsCollection(and_package.get("atoms"));
+					and_package.set("atoms", atoms);
+				});
+
+				// launch editor
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
+
+				requirements_editor.on("cancel", function()
+				{
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				requirements_editor.on("requirement_package:save", function(requirement_package)
+				{
+					view.model.set("active_requirement_root_package_id", requirement_package.id);
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
+			});
+		},
+
+		onClickCompleteRequirements: function() {
+			var view = this;
+
+			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("complete_requirement_root_package_id"), game_id: view.model.get("game_id")});
+
+			var game   = new Game({game_id: view.model.get("game_id")});
+			var items  = new ItemsCollection([], {parent: game});
+
+			$.when(items.fetch(), requirement_package.fetch()).done(function()
+			{
+				// Load associations into collections
+				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
+				requirement_package.set("and_packages", and_packages);
+
+				and_packages.each(function(and_package) {
+					var atoms = new AtomsCollection(and_package.get("atoms"));
+					and_package.set("atoms", atoms);
+				});
+
+				// launch editor
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
+
+				requirements_editor.on("cancel", function()
+				{
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				requirements_editor.on("requirement_package:save", function(requirement_package)
+				{
+					view.model.set("complete_requirement_root_package_id", requirement_package.id);
+					vent.trigger("application:popup:show", view, "Edit Quest");
+				});
+
+				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
+			});
+		}
 	});
 });
