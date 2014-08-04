@@ -25,14 +25,29 @@ define([
 		},
 
 		ui: {
+			operator: ".boolean-operator",
 			requirement: ".requirement",
-			quantity: ".quantity"
+			// content..
+			quantity: ".quantity",
+			latitude: ".latitude",
+			longitude: ".longitude",
+			distance: ".distance"
 		},
 
 		events: {
+			"change @ui.operator":    "onChangeBooleanOperator",
 			"change @ui.requirement": "onChangeRequirement",
+			// content ID here...
 			"change @ui.quantity":    "onChangeQuantity",
+			"change @ui.distance":    "onChangeDistance",
+			"change @ui.latitude":    "onChangeLatitude",
+			"change @ui.longitude":   "onChangeLongitude",
 			"click .delete-atom":     "onClickDeleteAtom"
+		},
+
+		onChangeBooleanOperator: function() {
+			var value = this.ui.operator.find("option:selected").val();
+			this.model.set("bool_operator", value);
 		},
 
 		onChangeRequirement: function() {
@@ -40,9 +55,19 @@ define([
 			this.model.set("requirement", value);
 		},
 
-
 		onChangeQuantity: function() {
 			this.model.set("qty", this.ui.quantity.val());
+		},
+
+		onChangeLatitude: function() {
+			this.model.set("latitude", this.ui.latitude.val());
+		},
+		onChangeLongitude: function() {
+			this.model.set("longitude", this.ui.longitude.val());
+		},
+
+		onChangeDistance: function() {
+			this.model.set("distance", this.ui.distance.val());
 		},
 
 		onClickDeleteAtom: function() {
