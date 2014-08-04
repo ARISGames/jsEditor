@@ -293,12 +293,10 @@ define([
 				dialogs:    new DialogsCollection  ([], {parent: game}),
 				web_pages:  new WebPagesCollection ([], {parent: game}),
 				quests:     new QuestsCollection   ([], {parent: game}),
-				hooks:      new WebHooksCollection ([], {parent: game}),
-				notes:      new NotesCollection    ([], {parent: game})
+				hooks:      new WebHooksCollection ([], {parent: game})
 			};
 
-			// TODO fetch notes, web hooks once api is fixed
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), /* contents.hooks.fetch(), contents.notes.fetch(), */ requirement_package.fetch()).done(function()
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));

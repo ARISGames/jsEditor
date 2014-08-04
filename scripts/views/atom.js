@@ -23,7 +23,6 @@ define([
 				content_web_pages: this.isContentWebPages(),
 				content_quests:    this.isContentQuests(),
 				content_web_hooks: this.isContentWebHooks(),
-				content_notes:     this.isContentNotes(),
 
 				items: this.items,
 				tags: this.tags,
@@ -31,8 +30,7 @@ define([
 				dialogs: this.dialogs,
 				web_pages: this.web_pages,
 				quests: this.quests,
-				web_hooks: this.web_hooks,
-				notes: this.notes
+				web_hooks: this.web_hooks
 			};
 		},
 
@@ -222,16 +220,6 @@ define([
 		isContentWebHooks: function() {
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK":
-					return true;
-
-				default:
-					return false;
-			}
-		},
-
-		isContentNotes: function() {
-			switch(this.model.get("requirement")) {
-				case "PLAYER_HAS_NOTE":
 					return true;
 
 				default:

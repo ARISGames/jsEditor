@@ -7,6 +7,9 @@ define([
 
 		model: WebHook,
 
-		amfphp_url: "webhooks.getWebHooksForGame"
+		amfphp_url: "webhooks.getWebHooksForGame",
+
+		// FIXME no-op until api is fixed
+		fetch: function() {}
 	});
 });

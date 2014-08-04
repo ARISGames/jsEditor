@@ -6,7 +6,7 @@
 		<button type="button" class="btn btn-link btn-large new-atom">
 			<span class="glyphicon glyphicon-plus-sign"></span>
 		</button>
-		<button type="button" class="btn btn-link delete-and-package">
+		<button type="button" class="btn btn-link delete-and-package pull-right">
 			Remove Group
 		</button>
 	</div>
