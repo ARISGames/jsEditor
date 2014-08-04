@@ -32,7 +32,7 @@ define([
 		events: {
 			"change @ui.requirement": "onChangeRequirement",
 			"change @ui.quantity":    "onChangeQuantity",
-			"click .delete-atom":          "onClickDeleteAtom"
+			"click .delete-atom":     "onClickDeleteAtom"
 		},
 
 		onChangeRequirement: function() {

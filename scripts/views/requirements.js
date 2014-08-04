@@ -4,8 +4,10 @@ define([
 	'text!templates/requirements.tpl',
 	'views/and_package_editor',
 	'models/and_package',
+	'collections/atoms',
+	'models/atom',
 	'vent'
-], function(_, Backbone, Template, AndPackageEditorView, AndPackage, vent) {
+], function(_, Backbone, Template, AndPackageEditorView, AndPackage, AtomsCollection, Atom, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -30,7 +32,10 @@ define([
 		},
 
 		onClickNewAndPackage: function() {
-			var and_package = new AndPackage();
+			var atom = new Atom();
+			var atoms = new AtomsCollection([atom]);
+			var and_package = new AndPackage({atoms:atoms});
+
 			this.collection.add(and_package);
 		},
 
