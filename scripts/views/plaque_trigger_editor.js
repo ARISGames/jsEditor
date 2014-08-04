@@ -6,6 +6,7 @@ define([
 	'text!templates/plaque_trigger_editor.tpl',
 	'views/plaque_editor',
 	'views/media_chooser',
+	'views/requirements',
 	'models/requirement_package',
 	'collections/and_packages',
 	'collections/atoms',
@@ -14,7 +15,7 @@ define([
 	'collections/media',
 	'collections/items',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -296,13 +297,13 @@ define([
 
 				requirements_editor.on("cancel", function()
 				{
-					vent.trigger("application:popup:show", view, "Edit Plaque");
+					vent.trigger("application:popup:hide");
 				});
 
 				requirements_editor.on("requirement_package:save", function(requirement_package)
 				{
 					view.model.set("requirement_root_package_id", requirement_package.id);
-					vent.trigger("application:popup:show", view, "Edit Plaque");
+					vent.trigger("application:popup:hide");
 				});
 
 				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");

@@ -16,6 +16,7 @@ define([
 		],
 
 		defaults: {
+			requirement_atom_id:"0",
 			bool_operator:"0",
 			requirement:"PLAYER_HAS_ITEM",
 			content_id:"0",

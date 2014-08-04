@@ -2,9 +2,8 @@
 	<div class="row">
 		<form class="form" role="form">
 			<div class="col-xs-4 padded">
-				<select class="form-control event-select">
-					<option value="GIVE_ITEM" <%= option_selected(event === "GIVE_ITEM") %>>Add</option>
-					<option value="TAKE_ITEM" <%= option_selected(event === "TAKE_ITEM") %>>Remove</option>
+				<select class="form-control requirement-select">
+					<option value="PLAYER_HAS_ITEM" <%= option_selected(requirement === "PLAYER_HAS_ITEM") %>>Player has Item</option>
 				</select>
 			</div>
 			<div class="col-xs-4 padded">
@@ -37,11 +36,13 @@
 					</optgroup>
 				</select>
 			</div>
+
 			<div class="col-xs-2 padded">
 				<input type="number" class="form-control quantity" value="<%= qty %>" min="0">
 			</div>
+
 			<div class="col-xs-2 padded">
-				<button type="button" class="btn btn-link delete">Remove</button>
+				<button type="button" class="btn btn-link delete-atom">Remove</button>
 			</div>
 		</form>
 	</div>

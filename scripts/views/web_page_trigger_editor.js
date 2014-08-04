@@ -5,7 +5,7 @@ define([
 	'qrcode',
 	'text!templates/web_page_trigger_editor.tpl',
 	'views/web_page_editor',
-	'views/requirements_editor',
+	'views/requirements',
 	'views/media_chooser',
 	'models/requirement_package',
 	'models/media',

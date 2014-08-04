@@ -15,10 +15,12 @@ define([
 		amfphp_url_attributes: [
 			"game_id",
 			"requirement_root_package_id",
+			"name",
 		    "and_packages" // Nested attribute
         ],
 
 		defaults: {
+			name: "requirement package",
 			and_packages: []
 		}
 

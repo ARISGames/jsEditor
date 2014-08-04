@@ -7,10 +7,12 @@ define([
 
 		amfphp_url_attributes: [
 			"requirement_and_package_id",
+			"name",
 			"atoms"
         ],
 
 		defaults: {
+			name: "and package",
 			atoms: []
 		}
 

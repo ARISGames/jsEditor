@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!templates/event_editor.tpl',
+	'text!templates/atom.tpl',
 	'vent'
 ], function(_, Backbone, Template, vent) {
 	return Backbone.Marionette.ItemView.extend({
@@ -25,34 +25,28 @@ define([
 		},
 
 		ui: {
-			event: ".event-select",
-			content: ".content-select",
+			requirement: ".requirement",
 			quantity: ".quantity"
 		},
 
 		events: {
-			"change @ui.event":    "onChangeEvent",
-			"change @ui.content":  "onChangeContent",
-			"change @ui.quantity": "onChangeQuantity",
-			"click .delete":       "onClickDeleteEvent"
+			"change @ui.requirement": "onChangeRequirement",
+			"change @ui.quantity":    "onChangeQuantity",
+			"click .delete-atom":          "onClickDeleteAtom"
 		},
 
-		onChangeEvent: function() {
-			var value = this.ui.event.find("option:selected").val();
-			this.model.set("event", value);
+		onChangeRequirement: function() {
+			var value = this.ui.requirement.find("option:selected").val();
+			this.model.set("requirement", value);
 		},
 
-		onChangeContent: function() {
-			var value = this.ui.content.find("option:selected").val();
-			this.model.set("content_id", value);
-		},
 
 		onChangeQuantity: function() {
 			this.model.set("qty", this.ui.quantity.val());
 		},
 
-		onClickDeleteEvent: function() {
-			this.trigger("event:remove", this.model);
+		onClickDeleteAtom: function() {
+			this.trigger("atom:remove", this.model);
 		}
 
 	});
