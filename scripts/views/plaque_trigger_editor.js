@@ -20,9 +20,8 @@ define([
 	'collections/web_pages',
 	'collections/quests',
 	'collections/web_hooks',
-	'collections/notes',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, NotesCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
