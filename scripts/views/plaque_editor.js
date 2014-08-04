@@ -68,6 +68,8 @@ define([
 		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
 
 
+		/* Media Selectors */
+
 		onClickChangeIcon: function() {
 			var view = this;
 
@@ -111,6 +113,8 @@ define([
 			});
 		},
 
+
+		/* Events Editor */
 
 		onClickEditEvents: function() {
 			var view = this;

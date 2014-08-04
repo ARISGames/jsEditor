@@ -3,23 +3,17 @@ define([
 ], function(JsonBaseModel) {
 
 	return JsonBaseModel.extend({
-		idAttribute: 'requirement_root_package_id',
-
-		amfphp_url_templates: {
-			read:   "",
-			update: "",
-			create: "",
-			delete: ""
-		},
+		idAttribute: 'requirement_and_package_id',
 
 		amfphp_url_attributes: [
-			"game_id",
+			"requirement_and_package_id",
+			"atoms"
         ],
 
 		defaults: {
+			atoms: []
 		}
 
 	});
 });
-
 

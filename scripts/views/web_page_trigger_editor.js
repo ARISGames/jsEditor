@@ -7,7 +7,7 @@ define([
 	'views/web_page_editor',
 	'views/requirements_editor',
 	'views/media_chooser',
-	'models/requirements_package',
+	'models/requirement_package',
 	'models/media',
 	'models/game',
 	'collections/media',
@@ -271,8 +271,8 @@ define([
 		},
 
 		onClickEditRequirements: function() {
-			var requirements_package = new RequirementsPackage({});
-			vent.trigger("application:popup:show", new RequirementsEditorView({model: requirements_package}));
+			var requirement_package = new RequirementsPackage({});
+			vent.trigger("application:popup:show", new RequirementsEditorView({model: requirement_package}));
 		},
 
 		onRender: function() {

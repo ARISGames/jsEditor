@@ -5,14 +5,16 @@ define([
 	'qrcode',
 	'text!templates/plaque_trigger_editor.tpl',
 	'views/plaque_editor',
-	'views/requirements_editor',
 	'views/media_chooser',
-	'models/requirements_package',
+	'models/requirement_package',
+	'collections/and_packages',
+	'collections/atoms',
 	'models/media',
 	'models/game',
 	'collections/media',
+	'collections/items',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, RequirementsEditorView, MediaChooserView, RequirementsPackage, Media, Game, MediaCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, PlaqueEditorView, MediaChooserView, RequirementPackage, AndPackagesCollection, AtomsCollection, Media, Game, MediaCollection, ItemsCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -270,8 +272,44 @@ define([
 		},
 
 		onClickEditRequirements: function() {
-			var requirements_package = new RequirementsPackage({});
-			vent.trigger("application:popup:show", new RequirementsEditorView({model: requirements_package}));
+			var view = this;
+
+			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
+
+
+			var game   = new Game({game_id: view.model.get("game_id")});
+			var items  = new ItemsCollection([], {parent: game});
+
+			$.when(items.fetch(), requirement_package.fetch()).done(function()
+			{
+				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
+				requirement_package.set("and_packages", and_packages);
+
+				and_packages.each(function(and_package) {
+					var atoms = new AtomsCollection(and_package.get("atoms"));
+					and_package.set("atoms", atoms);
+				});
+
+				requirement_package.save();
+
+				/*
+				// launch editor
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, items: items});
+
+				requirements_editor.on("cancel", function()
+				{
+					vent.trigger("application:popup:show", view, "Edit Plaque");
+				});
+
+				requirements_editor.on("requirement_package:save", function(requirement_package)
+				{
+					view.model.set("requirement_root_package_id", requirement_package.id);
+					vent.trigger("application:popup:show", view, "Edit Plaque");
+				});
+
+				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
+				*/
+			});
 		},
 
 		onRender: function() {
