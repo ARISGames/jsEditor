@@ -27,7 +27,7 @@
 					<option value="PLAYER_HAS_UPLOADED_MEDIA_ITEM_VIDEO" <%= option_selected(requirement === "PLAYER_HAS_UPLOADED_MEDIA_ITEM_VIDEO") %>>Created at least # Notes with Video near</option>
 					<option value="PLAYER_HAS_COMPLETED_QUEST" <%= option_selected(requirement === "PLAYER_HAS_COMPLETED_QUEST") %>>Completed Quest</option>
 					<option value="PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK" <%= option_selected(requirement === "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK") %>>Received Incoming Web Hook</option>
-					<option value="PLAYER_HAS_NOTE" <%= option_selected(requirement === "PLAYER_HAS_NOTE") %>>Created a Note</option>
+					<option value="PLAYER_HAS_NOTE" <%= option_selected(requirement === "PLAYER_HAS_NOTE") %>>Created at least # Notes</option>
 					<option value="PLAYER_HAS_NOTE_WITH_TAG" <%= option_selected(requirement === "PLAYER_HAS_NOTE_WITH_TAG") %>>Created at least # Notes with Tag</option>
 					<option value="PLAYER_HAS_NOTE_WITH_LIKES" <%= option_selected(requirement === "PLAYER_HAS_NOTE_WITH_LIKES") %>>Created a Note with # Likes</option>
 					<option value="PLAYER_HAS_NOTE_WITH_COMMENTS" <%= option_selected(requirement === "PLAYER_HAS_NOTE_WITH_COMMENTS") %>>Created Note with # Comments</option>
@@ -39,7 +39,7 @@
 
 		<div class="row form-group">
 
-			<div class="col-xs-2 padded-small">
+			<div class="col-xs-4 padded-small">
 				<% if(quantity_visible) { %>
 					<input type="number" class="form-control quantity" value="<%= qty %>" min="0">
 				<% } %>
@@ -48,7 +48,7 @@
 			<!-- Content Lists -->
 
 			<% if(content_visible) { %>
-				<div class="col-xs-8 padded-small">
+				<div class="col-xs-6 padded-small">
 					<select class="form-control content">
 						<option value="0" selected disabled>None</option>
 
@@ -82,71 +82,71 @@
 
 						<!-- Item Tags -->
 						<% if(content_tags) { %>
-							<% _.each(tags), function(object) { %>
+							<% tags.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 
 						<!-- Plaques -->
 						<% if(content_plaques) { %>
-							<% _.each(plaques), function(object) { %>
+							<% plaques.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 
 						<!-- Dialogs -->
 						<% if(content_dialogs) { %>
-							<% _.each(dialogs), function(object) { %>
+							<% dialogs.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 
 						<!-- Web Pages -->
 						<% if(content_web_pages) { %>
-							<% _.each(web_pages), function(object) { %>
+							<% web_pages.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 
 						<!-- Quests -->
 						<% if(content_quests) { %>
-							<% _.each(quests), function(object) { %>
+							<% quests.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 
 						<!-- Web Hooks -->
 						<% if(content_web_hooks) { %>
-							<% _.each(web_hooks), function(object) { %>
+							<% web_hooks.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 
 						<!-- Notes -->
 						<% if(content_notes) { %>
-							<% _.each(notes), function(object) { %>
+							<% notes.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
-							<% } %>
+							<% }); %>
 						<% } %>
 
 					</select>
@@ -157,15 +157,14 @@
 
 			<% if(location_visible) { %>
 				<div class="col-xs-2 padded-small">
-					<input type="number" class="form-control distance" value="<%= distance %>" min="0">
-				</div>
-
-				<div class="col-xs-3 padded-small">
 					<input type="number" class="form-control latitude" value="<%= latitude %>" min="0">
 				</div>
 
-				<div class="col-xs-3 padded-small">
+				<div class="col-xs-2 padded-small">
 					<input type="number" class="form-control longitude" value="<%= longitude %>" min="0">
+				</div>
+				<div class="col-xs-2 padded-small">
+					<input type="number" class="form-control distance" value="<%= distance %>" min="0">
 				</div>
 			<% } %>
 
