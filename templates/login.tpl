@@ -23,6 +23,10 @@
 			<%= gettext("Login") %>
 		</button>
 
+		<button id="register" class="btn btn-default" style="width: 33%;">
+			<%= gettext("Register") %>
+		</button>
+
 		<div class="btn-group pull-right">
 		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			<span class="current_language"><%= current_language.name %></span> <span class="caret"></span>
@@ -34,6 +38,12 @@
 		  </ul>
 		</div>
 	</form>
+
+	<div class="form-group">
+		<a href="http://dev.arisgames.org/server/services/dev_migration/migrate_user.html" target="_blank" class="btn btn-link pull-left">Migrate User</a>
+		<a href="http://dev.arisgames.org/server/services/dev_migration/migrate_game.html" target="_blank" class="btn btn-link pull-right">Migrate Game</a>
+	</div>
+
 </div>
 
 

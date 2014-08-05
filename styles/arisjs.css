@@ -292,6 +292,7 @@ h4:hover .object-id {
   padding-left: 5px;
 }
 /* Requirements Editor */
+.games-list .list-group,
 .and-package-editor .list-group {
   margin-bottom: 10px;
 }

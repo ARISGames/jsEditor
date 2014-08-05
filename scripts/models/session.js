@@ -40,6 +40,28 @@ define([
 			});
 		},
 
+		register: function(options) {
+			$.ajax({
+				url: config.aris_api_url + "users.createUser",
+				type: 'POST',
+				data: JSON.stringify({"user_name": options.username, "password": options.password, "permission": "read_write"}),
+				processData: false,
+				success: function(data) {
+					var json = JSON.parse(data);
+					if(json.returnCode == 0) {
+						$.cookie('username',   json.data.user_name);
+						$.cookie('editor_id',  json.data.user_id);
+						$.cookie('auth_token', json.data.read_write_key);
+
+						vent.trigger('session.login');
+					}
+					else {
+						vent.trigger("application:alert", {text: json.returnCodeDescription})
+					}
+				}
+			});
+		},
+
 		logout: function() {
 			$.removeCookie('username');
 			$.removeCookie('editor_id');

@@ -25,7 +25,8 @@ define([
 		},
 
 		events: {
-			"click #login": "onClickLogin",
+			"click #login":    "onClickLogin",
+			"click #register": "onClickRegister",
 			"click .change-language": "onClickChangeLanguage"
 		},
 
@@ -34,6 +35,19 @@ define([
 			// and trigger event instead of relying on session.
 			//
 			session.login({
+				username: this.$el.find('#username').val(),
+				password: this.$el.find('#password').val()
+			});
+
+			// Don't submit form
+			event.preventDefault();
+		},
+
+		onClickRegister: function() {
+			// TODO add field validation
+			// and trigger event instead of relying on session.
+			//
+			session.register({
 				username: this.$el.find('#username').val(),
 				password: this.$el.find('#password').val()
 			});
