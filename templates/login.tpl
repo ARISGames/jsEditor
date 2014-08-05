@@ -19,11 +19,11 @@
 			<input id="password" type="password" class="form-control" placeholder="<%= gettext("Password") %>"></input>
 		</div>
 
-		<button id="login" class="btn btn-primary" style="width: 33%;">
+		<button id="login" type="submit" class="btn btn-primary" style="width: 33%;">
 			<%= gettext("Login") %>
 		</button>
 
-		<button id="register" class="btn btn-default" style="width: 33%;">
+		<button id="register" type="button" class="btn btn-default" style="width: 33%;">
 			<%= gettext("Register") %>
 		</button>
 

@@ -74,6 +74,10 @@ define([
 						vent.trigger("application:popup:show", view, "Edit Conversation");
 					});
 
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:show", view, "Edit Conversation");
+					});
+
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});

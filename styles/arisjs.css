@@ -262,6 +262,9 @@ h4:hover .object-id {
   opacity: 0.5;
   cursor: pointer;
 }
+.thumbnail {
+  cursor: pointer;
+}
 .thumbnail img {
   border-radius: 3px;
 }

@@ -30,7 +30,7 @@
 <!-- Locks -->
 
 <div class="form-group">
-	<button type="button" class="btn btn-info btn-block edit-requirements">
+	<button type="button" class="btn btn-warning btn-block edit-requirements">
 		<span class="glyphicon glyphicon-lock"></span>
 		Locks
 	</button>
@@ -89,11 +89,13 @@
 	<div class="form-group">
 		<div class="thumbnail change-icon">
 			<img src=<%= icon_thumbnail_url %>>
+			<div class="caption">
+				<button type="button" class="btn btn-link btn-info btn-block change-icon">
+					<span class="glyphicon glyphicon-picture"></span>
+					Icon
+				</button>
+			</div>
 		</div>
-		<button type="button" class="btn btn-info btn-block change-icon">
-			<span class="glyphicon glyphicon-picture"></span>
-			Icon
-		</button>
 	</div>
 
 	<div class="form-group">

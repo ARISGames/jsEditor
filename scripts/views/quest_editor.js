@@ -143,6 +143,10 @@ define([
 						view.model.set("active_icon_media_id", media.id);
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
+
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:show", view, "Edit Quest");
+					});
 				}
 			});
 		},
@@ -158,11 +162,15 @@ define([
 				success: function() {
 					/* Icon */
 					var icon_chooser = new MediaChooserView({collection: media});
-					vent.trigger("application:popup:show", icon_chooser, "Start Quest Icon");
+					vent.trigger("application:popup:show", icon_chooser, "Start Quest Media");
 
 					icon_chooser.on("media:choose", function(media) {
 						view.active_media = media;
 						view.model.set("active_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Quest");
+					});
+
+					icon_chooser.on("cancel", function() {
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
 				}
@@ -188,6 +196,10 @@ define([
 						view.model.set("complete_icon_media_id", media.id);
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
+
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:show", view, "Edit Quest");
+					});
 				}
 			});
 		},
@@ -203,11 +215,15 @@ define([
 				success: function() {
 					/* Icon */
 					var icon_chooser = new MediaChooserView({collection: media});
-					vent.trigger("application:popup:show", icon_chooser, "Complete Quest Icon");
+					vent.trigger("application:popup:show", icon_chooser, "Complete Quest Media");
 
 					icon_chooser.on("media:choose", function(media) {
 						view.complete_media = media;
 						view.model.set("complete_media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Quest");
+					});
+
+					icon_chooser.on("cancel", function() {
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
 				}

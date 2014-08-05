@@ -225,6 +225,10 @@ define([
 						view.onChangeTriggerEnter();
 						vent.trigger("application:popup:hide");
 					});
+
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:hide");
+					});
 				}
 			});
 		},

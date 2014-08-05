@@ -142,6 +142,10 @@ define([
 						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:show", view, "Edit Item");
+					});
+
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});
@@ -162,6 +166,10 @@ define([
 					media_chooser.on("media:choose", function(media) {
 						view.media = media;
 						view.model.set("media_id", media.id);
+						vent.trigger("application:popup:show", view, "Edit Item");
+					});
+
+					media_chooser.on("cancel", function() {
 						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 				}

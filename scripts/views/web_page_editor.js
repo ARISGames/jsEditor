@@ -76,6 +76,10 @@ define([
 						vent.trigger("application:popup:show", view, "Edit Web Page");
 					});
 
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:show", view, "Edit Web Page");
+					});
+
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});

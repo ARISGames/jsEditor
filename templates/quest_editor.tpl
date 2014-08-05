@@ -26,28 +26,32 @@
 				<div class="col-xs-6 padded">
 					<div class="thumbnail change-active-icon">
 						<img src=<%= active_icon_thumbnail_url %>>
+						<div class="caption">
+							<button type="button" class="btn btn-link btn-info btn-block change-active-icon">
+								<span class="glyphicon glyphicon-picture"></span>
+								Icon
+							</button>
+						</div>
 					</div>
-					<button type="button" class="btn btn-info btn-block change-active-icon">
-						<span class="glyphicon glyphicon-picture"></span>
-						Icon
-					</button>
 				</div>
 
 				<div class="col-xs-6 padded">
 					<div class="thumbnail change-active-media">
 						<img src=<%= active_media_thumbnail_url %>>
+						<div class="caption">
+							<button type="button" class="btn btn-link btn-info btn-block change-active-media">
+								<span class="glyphicon glyphicon-facetime-video"></span>
+								Media
+							</button>
+						</div>
 					</div>
-					<button type="button" class="btn btn-info btn-block change-active-media">
-						<span class="glyphicon glyphicon-facetime-video"></span>
-						Media
-					</button>
 				</div>
 			</div>
 
 
 			<div class="form-group row">
 				<div class="col-xs-6 padded">
-					<button type="button" class="btn btn-block btn-info edit-active-requirements">
+					<button type="button" class="btn btn-block btn-warning edit-active-requirements">
 						<span class="glyphicon glyphicon-lock"></span>
 						Locks
 					</button>
@@ -108,27 +112,31 @@
 				<div class="col-xs-6 padded">
 					<div class="thumbnail change-complete-icon">
 						<img src=<%= complete_icon_thumbnail_url %>>
+						<div class="caption">
+							<button type="button" class="btn btn-link btn-info btn-block change-complete-icon">
+								<span class="glyphicon glyphicon-picture"></span>
+								Icon
+							</button>
+						</div>
 					</div>
-					<button type="button" class="btn btn-info btn-block change-complete-icon">
-						<span class="glyphicon glyphicon-picture"></span>
-						Icon
-					</button>
 				</div>
 
 				<div class="col-xs-6 padded">
 					<div class="thumbnail change-complete-media">
 						<img src=<%= complete_media_thumbnail_url %>>
+						<div class="caption">
+							<button type="button" class="btn btn-link btn-info btn-block change-complete-media">
+								<span class="glyphicon glyphicon-facetime-video"></span>
+								Media
+							</button>
+						</div>
 					</div>
-					<button type="button" class="btn btn-info btn-block change-complete-media">
-						<span class="glyphicon glyphicon-facetime-video"></span>
-						Media
-					</button>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<div class="col-xs-6 padded">
-					<button type="button" class="btn btn-block btn-info edit-complete-requirements">
+					<button type="button" class="btn btn-block btn-warning edit-complete-requirements">
 						<span class="glyphicon glyphicon-lock"></span>
 						Locks
 					</button>

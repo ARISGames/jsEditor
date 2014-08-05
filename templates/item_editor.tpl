@@ -60,26 +60,30 @@
 		</div>
 	</div>
 
-	<div class="form-group row">
+	<div class="row">
 		<div class="col-xs-6 padded">
 			<div class="thumbnail change-icon">
 				<img src=<%= icon_thumbnail_url %>>
+				<div class="caption">
+					<button type="button" class="btn btn-link btn-info btn-block change-icon">
+						<span class="glyphicon glyphicon-picture"></span>
+						Icon
+					</button>
+				</div>
 			</div>
-			<button type="button" class="btn btn-info btn-block change-icon">
-				<span class="glyphicon glyphicon-picture"></span>
-				Icon
-			</button>
 		</div>
 
 		<div class="col-xs-6 padded">
 			<div class="trigger-tab NORMAL-fields ATTRIB-fields">
 				<div class="thumbnail change-media">
 					<img src=<%= media_thumbnail_url %>>
+					<div class="caption">
+						<button type="button" class="btn btn-link btn-info btn-block change-media">
+							<span class="glyphicon glyphicon-facetime-video"></span>
+							Media
+						</button>
+					</div>
 				</div>
-				<button type="button" class="btn btn-info btn-block change-media">
-					<span class="glyphicon glyphicon-facetime-video"></span>
-					Media
-				</button>
 			</div>
 			<div class="trigger-tab URL-fields">
 				<label for="item-url">URL</label>

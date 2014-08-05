@@ -13,6 +13,10 @@ define([
 		itemView: MediaChooserThumbnailView,
 		itemViewContainer: '.itemViewContainer',
 
+		triggers: {
+			"click .cancel-chooser": "cancel"
+		},
+
 		onItemviewMediaChoose: function(item_view, media) {
 			this.trigger("media:choose", media);
 		}
