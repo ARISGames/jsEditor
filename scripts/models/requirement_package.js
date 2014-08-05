@@ -1,6 +1,7 @@
 define([
+	'backbone',
 	'models/json_base'
-], function(JsonBaseModel) {
+], function(Backbone, JsonBaseModel) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'requirement_root_package_id',

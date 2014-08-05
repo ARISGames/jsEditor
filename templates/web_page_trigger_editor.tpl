@@ -30,7 +30,7 @@
 <!-- Locks -->
 
 <div class="form-group">
-	<button type="button" class="btn btn-info btn-block edit-requirements" disabled>
+	<button type="button" class="btn btn-info btn-block edit-requirements">
 		<span class="glyphicon glyphicon-lock"></span>
 		Locks
 	</button>

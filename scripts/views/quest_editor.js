@@ -294,6 +294,8 @@ define([
 				hooks:      new WebHooksCollection ([], {parent: game})
 			};
 
+			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
+
 			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
@@ -339,6 +341,9 @@ define([
 				quests:     new QuestsCollection   ([], {parent: game}),
 				hooks:      new WebHooksCollection ([], {parent: game})
 			};
+
+			// FIXME temporary fix for conditional fetch
+			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
 			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{

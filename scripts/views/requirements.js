@@ -44,8 +44,8 @@ define([
 			event.preventDefault();
 
 			// Don't save package 0
-			if(view.model.get("requirement_package_id") === "0") {
-				view.model.unset("requirement_package_id");
+			if(view.model.get("requirement_root_package_id") === "0") {
+				view.model.unset("requirement_root_package_id");
 			}
 
 			view.model.save({}, {
