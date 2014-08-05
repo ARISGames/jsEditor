@@ -22,7 +22,7 @@
 		</div>
 		<div class="panel-body">
 
-			<div class="form-group row">
+			<div class="row">
 				<div class="col-xs-6 padded">
 					<div class="thumbnail change-active-icon">
 						<img src=<%= active_icon_thumbnail_url %>>
@@ -108,7 +108,7 @@
 		</div>
 		<div class="panel-body">
 
-			<div class="form-group row">
+			<div class="row">
 				<div class="col-xs-6 padded">
 					<div class="thumbnail change-complete-icon">
 						<img src=<%= complete_icon_thumbnail_url %>>
