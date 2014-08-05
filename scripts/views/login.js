@@ -6,8 +6,9 @@ define([
 	'marionette',
 	'models/session',
 	'text!templates/login.tpl',
-	'i18n'
-], function(_, $, Cookie, Backbone, Marionette, session, Template, i18n) {
+	'i18n',
+	'vent'
+], function(_, $, Cookie, Backbone, Marionette, session, Template, i18n, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
@@ -30,14 +31,24 @@ define([
 			"click .change-language": "onClickChangeLanguage"
 		},
 
+		ui: {
+			username: "#username",
+			password: "#password"
+		},
+
 		onClickLogin: function() {
 			// TODO add field validation
 			// and trigger event instead of relying on session.
-			//
-			session.login({
-				username: this.$el.find('#username').val(),
-				password: this.$el.find('#password').val()
-			});
+
+			if(this.ui.username.val() === "" || this.ui.password.val() === "") {
+				vent.trigger("application:alert", {text: "Username and Password can't be blank"});
+			}
+			else {
+				session.login({
+					username: this.ui.username.val(),
+					password: this.ui.password.val()
+				});
+			}
 
 			// Don't submit form
 			event.preventDefault();
@@ -46,11 +57,16 @@ define([
 		onClickRegister: function() {
 			// TODO add field validation
 			// and trigger event instead of relying on session.
-			//
-			session.register({
-				username: this.$el.find('#username').val(),
-				password: this.$el.find('#password').val()
-			});
+
+			if(this.ui.username.val() === "" || this.ui.password.val() === "") {
+				vent.trigger("application:alert", {text: "Username and Password can't be blank"});
+			}
+			else {
+				session.register({
+					username: this.ui.username.val(),
+					password: this.ui.password.val()
+				});
+			}
 
 			// Don't submit form
 			event.preventDefault();
