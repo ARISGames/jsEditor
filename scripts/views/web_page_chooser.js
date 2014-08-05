@@ -31,7 +31,7 @@ define([
 			var web_page   = new WebPage   ({game_id: this.options.parent.get("game_id")});
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
-			var icon     = new Media    ({media_id: web_page.get("icon_media_id")});
+			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
 
 			var trigger_editor = new WebPageTriggerEditorView({scene: this.options.parent, icon: icon, web_page: web_page, instance: instance, model: trigger, visible_fields: "create_web_page_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add WebPage to Scene");

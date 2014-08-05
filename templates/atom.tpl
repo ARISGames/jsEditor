@@ -23,7 +23,7 @@
 					<optgroup label="Viewed Game Object">
 						<option value="PLAYER_VIEWED_ITEM" <%= option_selected(requirement === "PLAYER_VIEWED_ITEM") %>>Viewed Item</option>
 						<option value="PLAYER_VIEWED_PLAQUE" <%= option_selected(requirement === "PLAYER_VIEWED_PLAQUE") %>>Viewed Plaque</option>
-						<option value="PLAYER_VIEWED_DIALOG" <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG") %>>Viewed Dialog</option>
+						<option value="PLAYER_VIEWED_DIALOG" <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG") %>>Viewed Conversation</option>
 						<option value="PLAYER_VIEWED_WEB_PAGE" <%= option_selected(requirement === "PLAYER_VIEWED_WEB_PAGE") %>>Viewed Web Page</option>
 					</optgroup>
 

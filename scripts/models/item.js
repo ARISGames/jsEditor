@@ -32,12 +32,12 @@ define([
 			description: "",
 			droppable: "1",
 			destroyable: "1",
-			max_qty_in_inventory:500,
-			weight:0,
+			max_qty_in_inventory:"500",
+			weight:"0",
 			url: "",
 			type: "NORMAL",
-			icon_media_id: 0,
-			media_id: 0
+			icon_media_id: "0",
+			media_id: "0"
 		}
 
 	});
