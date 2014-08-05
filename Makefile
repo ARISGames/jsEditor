@@ -15,8 +15,17 @@ css:
 build:
 	r.js -o build.js
 	@echo "Built! Make sure to check the result into the build branch, not master"
+	@echo ""
+	@date
+	@echo ""
 
 deploy:
 	git push -f heroku build:master
 
-all: css build
+checksum:
+	@echo "-------------------"
+	@echo ""
+	@md5sum styles/arisjs.css
+	@md5sum dist/aris.js
+
+all: css build checksum
