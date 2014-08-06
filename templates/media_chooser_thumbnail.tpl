@@ -2,6 +2,6 @@
 	<img src="<%= thumb_url %>">
 
 	<div class="caption">
-		<%= name || "&nbsp;" %>
+		<%= name ||  "&nbsp;" %>
 	</div>
 </div>
