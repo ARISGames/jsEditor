@@ -1,7 +1,7 @@
-<div class="thumbnail chooser">
+<div class="thumbnail choose">
 	<img src="<%= thumb_url %>">
 
 	<div class="caption">
-		<%= name %>
+		<%= name || "&nbsp;" %>
 	</div>
 </div>

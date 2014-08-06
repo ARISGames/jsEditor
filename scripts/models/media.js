@@ -37,7 +37,7 @@ define([
 
 
 		defaults: {
-			"display_name": ""
+			"name": ""
 		},
 
 

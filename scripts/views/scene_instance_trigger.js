@@ -44,7 +44,7 @@ define([
 					var type = view.model.get("type");
 					if(type === "QR")        { view.type_icon = "qrcode";     }
 					if(type === "LOCATION")  { view.type_icon = "map-marker"; }
-					if(type === "IMMEDIATE") { view.type_icon = "flash"; }
+					if(type === "IMMEDIATE") { view.type_icon = "link"; }
 
 					view.render();
 				}
@@ -65,7 +65,7 @@ define([
 			var type = view.model.get("type");
 			if(type === "QR")        { view.type_icon = "qrcode";     }
 			if(type === "LOCATION")  { view.type_icon = "map-marker"; }
-			if(type === "IMMEDIATE") { view.type_icon = "flash"; }
+			if(type === "IMMEDIATE") { view.type_icon = "link"; }
 
 			view.instance = new Instance({instance_id: view.model.get("instance_id")});
 			view.instance.fetch({
