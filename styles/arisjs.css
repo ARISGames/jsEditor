@@ -190,10 +190,6 @@ h4:hover .object-id {
   margin-top: 2em;
 }
 /* Media Editor */
-.media-editor {
-  height: 100%;
-  overflow-x: auto;
-}
 .media-editor .thumbnail .caption p,
 .media-editor .thumbnail .caption div,
 .media-editor .thumbnail .caption h4 {
@@ -298,4 +294,12 @@ h4:hover .object-id {
 .games-list .list-group,
 .and-package-editor .list-group {
   margin-bottom: 10px;
+}
+/* Scrolling for tall areas */
+.scenes,
+.media-editor,
+.quests-editor,
+.conversations-editor {
+  height: 100%;
+  overflow-x: auto;
 }

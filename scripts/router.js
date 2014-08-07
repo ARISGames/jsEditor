@@ -15,6 +15,8 @@ define([
 	'views/game_objects_organizer',
 	'views/locations_organizer',
 	'views/media_organizer',
+	'views/conversations',
+	'views/character_organizer',
 
 	'collections/games',
 	'collections/game_triggers',
@@ -34,7 +36,7 @@ define([
 
 	'vent'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, CharactersOrganizerView,
 	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection,
 	Game, Item, Media,
 	vent) {
@@ -179,9 +181,9 @@ define([
 			var characters    = new CharactersCollection([], {parent: game});
 
 			$.when(conversations.fetch(), characters.fetch()).done(function() {
-				vent.trigger("application.show",      new ConversationsView  ({model: game, collection: quests}));
-				vent.trigger("application:nav:show",  new GameNavMenu        ({model: game, active: ".conversations"}));
-				vent.trigger("application:list:show", new CharacterOrganizerView({collection: characters}));
+				vent.trigger("application.show",      new ConversationsView ({model: game, collection: conversations}));
+				vent.trigger("application:nav:show",  new GameNavMenu       ({model: game, active: ".conversations"}));
+				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters}));
 				vent.trigger("application:info:hide");
 			});
 		},
