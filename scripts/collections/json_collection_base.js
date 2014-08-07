@@ -11,6 +11,7 @@ define([
 		initialize: function(models, options) {
 			options || (options = {});
 			this.parent = options.parent;
+			this.game   = options.game;
 		},
 
 		amfphp_url_root: config.aris_api_url,
@@ -30,6 +31,12 @@ define([
 				if(this.parent) {
 					request_attributes[this.parent.idAttribute] = this.parent.get(this.parent.idAttribute);
 				}
+
+				// Collections still need a game id if parent isn't game
+				if(this.game) {
+					request_attributes["game_id"] = this.game.id;
+				}
+
 				_.extend(request_attributes, auth_data);
 
 				options.data = JSON.stringify(request_attributes);
