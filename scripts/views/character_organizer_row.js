@@ -1,9 +1,11 @@
 define([
+	'jquery',
 	'backbone',
 	'text!templates/character_organizer_row.tpl',
-	//'views/character_editor',
+	'views/character_editor',
+	'models/media',
 	'vent'
-], function(Backbone, Template, /* CharacterEditorView, */ vent) {
+], function($, Backbone, Template, CharacterEditorView, Media, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -24,8 +26,15 @@ define([
 		},
 
 		onClickEdit: function() {
-			//var location_editor = new CharacterEditorView({model: this.model});
-			//vent.trigger("application:popup:show", location_editor);
+			var view = this;
+
+			var media = new Media({media_id: this.model.get("media_id")});
+
+			$.when(media.fetch()).done(function()
+			{
+				var character_editor = new CharacterEditorView({model: view.model, media: media});
+				vent.trigger("application:popup:show", character_editor, "Edit Character");
+			});
 		}
 	});
 });

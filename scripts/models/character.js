@@ -3,7 +3,7 @@ define([
 ], function(JsonBaseModel) {
 
 	return JsonBaseModel.extend({
-		idAttribute: 'character_id',
+		idAttribute: 'dialog_character_id',
 
 		amfphp_url_templates: {
 			read:   "dialogs.getDialogCharacter",
@@ -14,7 +14,7 @@ define([
 
 		amfphp_url_attributes: [
 			"game_id",
-			"character_id",
+			"dialog_character_id",
 			"name",
 			"title",
 			"media_id"
