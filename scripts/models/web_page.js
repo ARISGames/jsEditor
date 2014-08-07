@@ -23,7 +23,7 @@ define([
 		defaults: {
 			name: "",
 			url: "",
-			icon_media_id: 0
+			icon_media_id: "0"
 		}
 
 	});

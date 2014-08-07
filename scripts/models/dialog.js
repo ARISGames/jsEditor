@@ -18,16 +18,14 @@ define([
 			"name",
 			"description",
 			"icon_media_id",
-			"opening_script_id",
-			"closing_script_id"
+			"opening_script_id"
         ],
 
 		defaults: {
 			name: "",
 			description: "",
-			icon_media_id: 0,
-			opening_script_id: 0,
-			closing_script_id: 0
+			icon_media_id: "0",
+			opening_script_id: "0"
 		}
 
 	});
