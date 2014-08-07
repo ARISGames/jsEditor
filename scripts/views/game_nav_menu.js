@@ -9,13 +9,16 @@ define([
 		template:  _.template(Template),
 
 		events: {
-			"click .settings":  "onClickSettings",
-			"click .locations": "onClickLocations",
-			"click .quests":    "onClickQuests",
-			"click .media":     "onClickMedia",
-			"click .scenes":    "onClickScenes"
+			"click .settings":     "onClickSettings",
+			"click .locations":    "onClickLocations",
+			"click .quests":       "onClickQuests",
+			"click .media":        "onClickMedia",
+			"click .scenes":       "onClickScenes",
+			"click .conversations":"onClickConversations",
 		},
 
+		// TODO replace all of these with controller actions
+		//
 		onRender: function() {
 			this.$el.find(this.options.active).parent().addClass("active");
 		},
@@ -38,6 +41,10 @@ define([
 
 		onClickScenes: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
+		},
+
+		onClickConversations: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/conversations", {trigger: true});
 		}
 	});
 });

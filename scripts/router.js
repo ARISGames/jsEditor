@@ -23,21 +23,20 @@ define([
 	'collections/items',
 	'collections/plaques',
 	'collections/web_pages',
-	'collections/conversations',
 	'collections/media',
 	'collections/scenes',
 	'collections/quests',
+	'collections/characters',
 
 	'models/game',
 	'models/item',
-	'models/conversation',
 	'models/media',
 
 	'vent'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
-	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, ConversationCollection, MediaCollection, SceneCollection, QuestsCollection,
-	Game, Item, Conversation, Media,
+	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection,
+	Game, Item, Media,
 	vent) {
 	return Backbone.Router.extend({
 
@@ -49,10 +48,11 @@ define([
 			"games/new":           "newGame",
 			"games/:game_id/edit": "editGame",
 
-			"games/:game_id/scenes":    "showSceneEditor",
-			"games/:game_id/locations": "listLocations",
-			"games/:game_id/quests":    "listQuests",
-			"games/:game_id/media":     "listMedia",
+			"games/:game_id/scenes":       "showSceneEditor",
+			"games/:game_id/locations":    "listLocations",
+			"games/:game_id/quests":       "listQuests",
+			"games/:game_id/media":        "listMedia",
+			"games/:game_id/conversations":"listConversations",
 
 			"*nomatch": function(url) { throw "Route not found: "+url; },
 		},
@@ -170,6 +170,20 @@ define([
 					vent.trigger("application:info:hide");
 				}
 			});
-		}
+		},
+
+		listConversations: function(game_id) {
+			var game  = new Game({game_id: game_id});
+
+			var conversations = new DialogsCollection   ([], {parent: game});
+			var characters    = new CharactersCollection([], {parent: game});
+
+			$.when(conversations.fetch(), characters.fetch()).done(function() {
+				vent.trigger("application.show",      new ConversationsView  ({model: game, collection: quests}));
+				vent.trigger("application:nav:show",  new GameNavMenu        ({model: game, active: ".conversations"}));
+				vent.trigger("application:list:show", new CharacterOrganizerView({collection: characters}));
+				vent.trigger("application:info:hide");
+			});
+		},
 	});
 });

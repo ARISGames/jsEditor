@@ -23,7 +23,7 @@
 		<span class="nav-name"> QR Codes</span>
 	</a></li>
 -->
-	<li><a class="">
+	<li><a class="conversations">
 		<span class="glyphicon glyphicon-comment"></span>
 		<span class="nav-name"> Conversations</span>
 	</a></li>
