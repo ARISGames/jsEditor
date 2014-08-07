@@ -1,6 +1,6 @@
 <table class="table table-hover">
 	<thead>
-		<th class="organizer-section-header"><span class="glyphicon glyphicon-align-justify"></span> Plaques</th>
+		<th class="text-muted"><span class="glyphicon glyphicon-align-justify"></span> Plaques</th>
 	</thead>
 	<tbody class="plaques">
 	</tbody>
