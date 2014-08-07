@@ -189,10 +189,11 @@ h4:hover .object-id {
   margin-right: auto;
   margin-top: 2em;
 }
-/* Media Editor */
-.media-editor .thumbnail .caption p,
-.media-editor .thumbnail .caption div,
-.media-editor .thumbnail .caption h4 {
+/* Media */
+.thumbnail .caption p,
+.thumbnail .caption div,
+.thumbnail .caption h4 {
+  white-space: nowrap;
   overflow: hidden;
 }
 /* TODO temporarily unused, bootstrap used instead */
