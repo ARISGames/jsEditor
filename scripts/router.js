@@ -40,7 +40,7 @@ define([
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, CharactersOrganizerView,
 	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection,
 	Game, Item, Media,
-	vent) {
+	vent, session) {
 	return Backbone.Router.extend({
 
 		routes: {
