@@ -45,7 +45,11 @@ define([
 			if(json.faultCode) {
 				throw "amf Fault: "+json.faultString;
 			}
-			else if(json.returnCode != 0) {
+			else if(json.returnCode === 6) {
+				session.logout();
+				console.error("Logout! got returnCode "+json.returnCode+": "+json.returnCodeDescription);
+			}
+			else if(json.returnCode !== 0) {
 				throw "returnCode "+json.returnCode+": "+json.returnCodeDescription;
 			}
 			else {

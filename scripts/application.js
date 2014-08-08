@@ -135,7 +135,9 @@ define([
 	// Redirect back to intended destination after authorization
 	//
 	vent.on("session.login", function() {
-		Backbone.history.navigate(application.intended_destination, {trigger: true});
+		// force visit root if empty
+		var destination = application.intended_destination || "#";
+		Backbone.history.navigate(destination, {trigger: true});
 		vent.trigger("application:user:show");
 	});
 

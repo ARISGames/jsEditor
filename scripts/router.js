@@ -33,12 +33,13 @@ define([
 	'models/conversation',
 	'models/media',
 
-	'vent'
+	'vent',
+	'models/session'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView,
 	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, ConversationCollection, MediaCollection, SceneCollection, QuestsCollection,
 	Game, Item, Conversation, Media,
-	vent) {
+	vent, session) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -67,6 +68,9 @@ define([
 		/* Game Routes ************************/
 
 		listGames: function() {
+			// FIXME hack to prevent clicking the logo going to blank area when database is empty
+			if(!session.logged_in()) { return false; }
+
 			var games = new GameCollection;
 			games.fetch({
 				success: function() {
