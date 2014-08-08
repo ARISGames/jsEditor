@@ -2,7 +2,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'text!templates/quest_row.tpl',
+	'text!templates/conversation_row.tpl',
 	'views/script_editor',
 	'models/media',
 	'models/game',
@@ -34,6 +34,7 @@ define([
 			$.when(scripts.fetch(), options.fetch()).done(function()
 			{
 				var conversations_editor = new ScriptEditorView({collection: scripts, dialog: this.model, script_options: options});
+				vent.trigger("application:popup:show", conversations_editor, "Edit Conversation Script");
 
 			}.bind(this));
 		}
