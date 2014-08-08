@@ -299,3 +299,11 @@ h4:hover .object-id {
 .and-package-editor .list-group {
   margin-bottom: 10px;
 }
+/* Scrolling for tall areas */
+.scenes,
+.media-editor,
+.quests-editor,
+.conversations-editor {
+  height: 100%;
+  overflow-x: auto;
+}

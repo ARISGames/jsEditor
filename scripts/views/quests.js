@@ -14,6 +14,8 @@ define([
 		itemView: QuestRowView,
 		itemViewContainer: '.quests',
 
+		className: "quests-editor",
+
 		events: {
 			"click .new": "onClickNew"
 		},
