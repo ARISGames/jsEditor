@@ -1,5 +1,7 @@
 <div style="border: 2px solid red; padding: 5px;">
-	Character: <%= dialog_character_id %>
+	Character: <%= character.get("name") %>
+
+	<img src="<%= character.get("media").get("thumb_url") %>">
 
 	Text: <%= text %>
 
