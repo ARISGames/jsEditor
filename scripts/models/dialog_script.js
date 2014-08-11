@@ -14,7 +14,11 @@ define([
 
 		amfphp_url_attributes: [
 			"game_id",
-			"dialog_script_id"
+			"dialog_script_id",
+			"dialog_id",
+			"dialog_character_id",
+			"text",
+			"event_package_id"
         ],
 
 		defaults: {

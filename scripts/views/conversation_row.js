@@ -33,6 +33,12 @@ define([
 
 			$.when(scripts.fetch(), options.fetch()).done(function()
 			{
+				// Wire up children
+				scripts.each(function(script) {
+					var script_options = options.where({parent_dialog_script_id: script.id});
+					script.set("dialog_options", new DialogOptionsCollection(script_options));
+				});
+
 				var conversations_editor = new ScriptEditorView({collection: scripts, dialog: this.model, script_options: options});
 				vent.trigger("application:popup:show", conversations_editor, "Edit Conversation Script");
 
