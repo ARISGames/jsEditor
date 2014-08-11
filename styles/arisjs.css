@@ -303,7 +303,8 @@ h4:hover .object-id {
 .scenes,
 .media-editor,
 .quests-editor,
-.conversations-editor {
+.conversations-editor,
+.games-list-container {
   height: 100%;
   overflow-x: auto;
 }

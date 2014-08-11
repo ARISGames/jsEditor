@@ -18,6 +18,8 @@ define([
 			"click .new": "onClickNew"
 		},
 
+		className: "games-list-container",
+
 		onClickNew: function() {
 			var game = new Game();
 			vent.trigger("application.show", new GameEditorView({model: game}));
