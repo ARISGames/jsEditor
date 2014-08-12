@@ -307,3 +307,18 @@ h4:hover .object-id {
   height: 100%;
   overflow-x: auto;
 }
+/* Conversation Editor */
+.intro_script {
+  overflow-x: auto;
+}
+.script_options {
+  white-space: nowrap;
+}
+.script_options .script_option {
+  vertical-align: top;
+  min-width: 300px;
+  display: inline-block;
+}
+.script_options .script_option + .script_option {
+  margin-left: 100px;
+}

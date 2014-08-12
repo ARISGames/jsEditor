@@ -88,12 +88,17 @@ define([
 		application.info_region.reset();
 	});
 
-	vent.on("application:popup:show", function(view, title) {
+	vent.on("application:popup:show", function(view, title, large) {
 		// TODO add a title property to views which is smart based on where its rendered
 
 		// Reset
 		$('#modal-title').text("");
 		$('.modal-header').hide();
+		$('.modal-dialog').removeClass("modal-lg");
+
+		if(large) {
+			$('.modal-dialog').addClass("modal-lg");
+		}
 
 		// Notify View
 		view.options.in_modal = true;
