@@ -1,5 +1,5 @@
-<div style="">
-	<div style="width: 300px">
+<div style="text-align: center; display: inline-block;">
+	<div style="display: inline-block; width: 300px; padding-bottom: 20px;">
 		<div class="thumbnail change-active-icon">
 			<img src="<%= character.get("media").get("thumb_url") %>">
 			<div class="caption">
@@ -19,6 +19,6 @@
 
 	<br/>
 
-	<div class="script_options clearfix">
+	<div class="display: inline-block; script_options clearfix">
 	</div>
 </div>

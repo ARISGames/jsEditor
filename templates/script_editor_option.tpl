@@ -1,5 +1,5 @@
-<div style="">
-	<div style="width: 300px;">
+<div style="display: inline-block; text-align: center;">
+	<div style="display: inline-block; width: 300px; padding-bottom: 10px; ">
 		<div>
 			<input type="text" value="<%= prompt %>">
 		</div>
