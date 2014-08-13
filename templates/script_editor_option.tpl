@@ -1,7 +1,7 @@
 <div style="display: inline-block; text-align: center;">
-	<div style="display: inline-block; width: 300px; padding-bottom: 10px; ">
-		<div>
-			<input type="text" value="<%= prompt %>">
+	<div class="panel panel-default" style="padding: 0.25em; display: inline-block; width: 250px; margin-bottom: 5px;">
+		<div class="form-group">
+			<input type="text" class="form-control" value="<%= prompt %>">
 		</div>
 
 		<div>
