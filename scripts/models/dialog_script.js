@@ -22,6 +22,9 @@ define([
         ],
 
 		defaults: {
+			text: "",
+			dialog_character_id: "0",
+			event_package_id: "0"
 		}
 
 	});

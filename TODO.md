@@ -28,9 +28,6 @@ FLOW
 TODO
 ----
 - fix media resetting values in view due to re-render without setting the values on model
-- remove media from dialog and into own view
-- plaque give item events
-- quest editor
 - Move trigger between scenes
 - Visual helper to see active edited object/instance
 - separate views that operate on two models into multiple (scene instance trigger, dialog trigger)
@@ -53,15 +50,9 @@ TODO
 
 DOING
 -----
-- reword requirements -> locks
-- reword instant sequence
-- media thumbnails everywhere
-- non image media thumbs/players
-- default media 0 thumb
-- events item split group
-- events on quests
-- media list of users
--
+- Conversation editing
+- non image media players
+- media list of references
 - fix events for tracking changes on models between the 3 main areas affected by adding plaques/items
 - media shows references (and can remove them/add more)
 - media style fix

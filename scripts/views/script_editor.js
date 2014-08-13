@@ -20,7 +20,6 @@ define([
 		},
 
 		initialize: function(options) {
-			console.log("editor", this.options);
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;

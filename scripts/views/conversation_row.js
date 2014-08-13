@@ -7,12 +7,13 @@ define([
 	'models/media',
 	'models/game',
 	'models/character',
+	'models/dialog_script',
 	'collections/characters',
 	'collections/media',
 	'collections/dialog_scripts',
 	'collections/dialog_options',
 	'vent'
-], function($, _, Backbone, Template, ScriptEditorView, Media, Game, Character, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, vent) {
+], function($, _, Backbone, Template, ScriptEditorView, Media, Game, Character, DialogScript, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -39,7 +40,15 @@ define([
 
 			$.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch()).done(function()
 			{
-				var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
+
+				// FIXME Load in null script like client does until migration is changed
+				if(dialog.get("intro_dialog_script_id") === "0") {
+					var intro_script = new DialogScript({dialog_script_id: "0"});
+					scripts.add(intro_script);
+				}
+				else {
+					var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
+				}
 
 				// Wire up children, characters, and media
 				scripts.each(function(script) {
