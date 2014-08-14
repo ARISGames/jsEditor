@@ -1,18 +1,44 @@
 define([
+	'underscore',
+	'underscore.string',
 	'backbone',
 	'text!templates/script_editor_option.tpl',
 	'vent'
-], function(Backbone, Template, vent) {
+], function(_, _s, Backbone, Template, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
 		className: "script_option",
+
+		templateHelpers: function() {
+			return {
+				option_selected: function(boolean_statement) {
+					return boolean_statement ? "selected" : "";
+				},
+				link_types: this.link_types,
+
+				scripts: this.scripts
+				// all game items
+			}
+		},
+
+		// field change events
 
 		initialize: function(options) {
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
 			this.script_editor_view = options.script_editor_view;
+		},
+
+		link_types: {
+			'DIALOG_SCRIPT':    "Script",
+			'EXIT':             "Exit Conversation",
+			'EXIT_TO_PLAQUE':   "Exit to Plaque",
+			'EXIT_TO_ITEM':     "Exit to Item",
+			'EXIT_TO_WEB_PAGE': "Exit to Web Page",
+			'EXIT_TO_DIALOG':   "Exit to Dialog",
+			'EXIT_TO_TAB':      "Exit to Tab"
 		},
 
 		onRender: function() {

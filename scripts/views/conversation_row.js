@@ -42,37 +42,52 @@ define([
 			{
 
 				// FIXME Load in null script like client does until migration is changed
-				if(dialog.get("intro_dialog_script_id") === "0") {
+				if(dialog.get("intro_dialog_script_id") === "0")
+				{
 					var intro_script = new DialogScript({dialog_script_id: "0"});
 					scripts.add(intro_script);
 				}
-				else {
+				else
+				{
 					var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
 				}
 
+
 				// Wire up children, characters, and media
-				scripts.each(function(script) {
+				scripts.each(function(script)
+				{
+					// Prevent recursive rendering
 					script.set("rendered", false);
 
 					var script_options = options.where({parent_dialog_script_id: script.id});
 					script.set("dialog_options", new DialogOptionsCollection(script_options));
 
 					// "YOU"
-					if(script.get("dialog_character_id") === "0") {
+					if(script.get("dialog_character_id") === "0")
+					{
 						var character = new Character({name: "You"})
-						script.set("character", character);
-
-						var character_media = new Media({media_id: "0"});
-						character.set("media", character_media);
 					}
-					else {
+					else
+					{
 						var character = characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
-						script.set("character", character);
-
-						var character_media = media.findWhere({media_id: character.get("media_id")});
-						character.set("media", character_media);
 					}
+
+					script.set("character", character);
+
+
+					// Default Media
+					if(character.get("media_id") === "0")
+					{
+						var character_media = new Media({media_id: "0"});
+					}
+					else
+					{
+						var character_media = media.findWhere({media_id: character.get("media_id")});
+					}
+
+					character.set("media", character_media);
 				});
+
 
 				var conversations_editor = new ScriptEditorView({model: intro_script, collection: intro_script.get("dialog_options"), dialog: dialog, scripts: scripts, script_options: options, className: "intro_script"});
 				vent.trigger("application:popup:show", conversations_editor, "Edit Conversation Script", true);

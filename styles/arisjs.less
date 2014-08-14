@@ -1,3 +1,7 @@
+// Bootstrap source
+@import "background-variant";
+@import "variables";
+
 @import "xray-debug";
 
 /* Cursor for anchors with no hrefs */
@@ -354,4 +358,12 @@ h4:hover .object-id {
 	.script_option + .script_option {
 		margin-left: 100px;
 	}
+}
+
+.script-panel {
+	.bg-variant(@state-warning-bg);
+}
+
+.script-option-panel {
+	.bg-variant(@state-info-bg);
 }

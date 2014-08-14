@@ -322,3 +322,15 @@ h4:hover .object-id {
 .script_options .script_option + .script_option {
   margin-left: 100px;
 }
+.script-panel {
+  background-color: #fcf8e3;
+}
+a.script-panel:hover {
+  background-color: #f7ecb5;
+}
+.script-option-panel {
+  background-color: #d9edf7;
+}
+a.script-option-panel:hover {
+  background-color: #afd9ee;
+}
