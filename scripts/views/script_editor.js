@@ -15,7 +15,8 @@ define([
 				scripts: this.scripts,
 				script_options: this.script_options,
 				dialog: this.dialog,
-				script_editor_view: ScriptEditorView
+				script_editor_view: ScriptEditorView,
+				contents: this.contents
 			}
 		},
 
@@ -23,6 +24,7 @@ define([
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
+			this.contents = options.contents;
 
 			// FIXME keep track of this in a parent view or controller/app
 			this.model.set("rendered", true);

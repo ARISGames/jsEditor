@@ -12,8 +12,13 @@ define([
 	'collections/media',
 	'collections/dialog_scripts',
 	'collections/dialog_options',
+	'collections/plaques',
+	'collections/items',
+	'collections/web_pages',
+	'collections/dialogs',
+	'collections/tabs',
 	'vent'
-], function($, _, Backbone, Template, ScriptEditorView, Media, Game, Character, DialogScript, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, vent) {
+], function($, _, Backbone, Template, ScriptEditorView, Media, Game, Character, DialogScript, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -38,7 +43,16 @@ define([
 			var scripts    = new DialogScriptsCollection([], {parent: dialog, game: game});
 			var options    = new DialogOptionsCollection([], {parent: dialog, game: game});
 
-			$.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch()).done(function()
+
+			var contents = {
+				plaques:    new PlaquesCollection  ([], {parent: game}),
+				items:      new ItemsCollection    ([], {parent: game}),
+				web_pages:  new WebPagesCollection ([], {parent: game}),
+				dialogs:    new DialogsCollection  ([], {parent: game}),
+				tabs:       new TabsCollection     ([], {parent: game})
+			};
+
+			$.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch(), contents.tabs.fetch()).done(function()
 			{
 
 				// FIXME Load in null script like client does until migration is changed
@@ -89,7 +103,7 @@ define([
 				});
 
 
-				var conversations_editor = new ScriptEditorView({model: intro_script, collection: intro_script.get("dialog_options"), dialog: dialog, scripts: scripts, script_options: options, className: "intro_script"});
+				var conversations_editor = new ScriptEditorView({model: intro_script, collection: intro_script.get("dialog_options"), dialog: dialog, scripts: scripts, script_options: options, contents: contents, className: "intro_script"});
 				vent.trigger("application:popup:show", conversations_editor, "Edit Conversation Script", true);
 
 			}.bind(this));

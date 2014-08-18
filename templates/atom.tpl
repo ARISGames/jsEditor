@@ -67,7 +67,7 @@
 			<% if(content_visible) { %>
 				<div class="col-xs-6 padded-small">
 					<select class="form-control content">
-						<option value="0" selected disabled>None</option>
+						<option value="0" selected disabled>- Select One -</option>
 
 						<!-- Game Items -->
 						<% if(content_items) { %>
