@@ -25,6 +25,10 @@ a {
 .game_objects .edit {
   cursor: pointer;
 }
+/* Long unbreakable names */
+.media-organizer {
+  overflow-x: hidden;
+}
 /* Navbar */
 .aris-nav li {
   text-align: center;

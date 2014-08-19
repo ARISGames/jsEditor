@@ -11,6 +11,8 @@ define([
 		itemView: MediaOrganizerRowView,
 		itemViewContainer: ".media",
 
+		className: 'media-organizer',
+
 		initialize: function() {
 			var view = this;
 			vent.on("media:upload", function(media) {
