@@ -50,12 +50,13 @@ TODO
 
 DOING
 -----
-- Conversation editing
+- Create characters
+- Create options/dialogs
+- Game Settings
 - non image media players
 - media list of references
 - fix events for tracking changes on models between the 3 main areas affected by adding plaques/items
 - media shows references (and can remove them/add more)
-- media style fix
 
 JS THINGS
 ---------
