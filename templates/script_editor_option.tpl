@@ -1,9 +1,12 @@
 <div style="display: inline-block; text-align: center;">
-	<div class="script-option-panel panel panel-default" style="padding: 0.25em; display: inline-block; width: 250px; margin-bottom: 5px;">
-		<div class="form-group">
+	<div class="script-option-panel panel panel-default" style="padding: 0.25em; display: inline-block; width: 200px; margin-bottom: 5px;">
+		<!--<div class="form-group">
 			<input type="text" class="form-control" value="<%= prompt %>">
+		</div>-->
+		<div class="option-text" style="overflow: hidden;">
+			<%= prompt %>
 		</div>
-
+<!--
 		<div class="form-group">
 			<select class="form-control link-type">
 				<% _.each(link_types, function(type_name, type_value) { %>
@@ -55,17 +58,19 @@
 
 				</select>
 			</div>
-		<% } %> <!-- link options visible -->
+		<% } %> --> <!-- link options visible -->
 
 		<!--
 		<div class="form-group">
 			<input type="text" class="form-control" value="<%= link_info %>">
 		</div>-->
 
+<!--
 		<button type="button" class="btn btn-block btn-warning edit-requirements">
 			<span class="glyphicon glyphicon-lock"></span>
 			Locks
 		</button>
+		-->
 	</div>
 
 	<br/>

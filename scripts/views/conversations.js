@@ -18,7 +18,9 @@ define([
 		},
 
 		onClickNew: function() {
+			// Prompt for name
 
+			// launch conversation editor
 		},
 
 

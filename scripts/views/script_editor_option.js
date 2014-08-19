@@ -65,8 +65,8 @@ define([
 
 
 		link_types: {
-			'DIALOG_SCRIPT':    "Script",
-			'EXIT':             "Exit",
+			'DIALOG_SCRIPT':    "Say Line",
+			'EXIT':             "End Conversation",
 			'EXIT_TO_PLAQUE':   "Exit to Plaque",
 			'EXIT_TO_ITEM':     "Exit to Item",
 			'EXIT_TO_WEB_PAGE': "Exit to Web Page",

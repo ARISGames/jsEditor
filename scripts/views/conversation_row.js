@@ -58,7 +58,7 @@ define([
 				// FIXME Load in null script like client does until migration is changed
 				if(dialog.get("intro_dialog_script_id") === "0")
 				{
-					var intro_script = new DialogScript({dialog_script_id: "0"});
+					var intro_script = new DialogScript({});
 					scripts.add(intro_script);
 				}
 				else

@@ -29,6 +29,14 @@ define([
 			// FIXME keep track of this in a parent view or controller/app
 			this.model.set("rendered", true);
 		},
+
+		onShow: function() {
+			// Center root node in view
+			var view = this;
+			if(this.className === "intro_script") {
+				setTimeout(function() { view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 400);
+			}
+		}
 	});
 
 	return ScriptEditorView;
