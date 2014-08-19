@@ -110,8 +110,6 @@ body {
 	.absolute;
 	z-index: 2;
 	padding: 2em;
-	background: rgba(175, 175, 175, 0.5);
-	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
 }
 
 /* Remove bootstraps gutter */
@@ -122,8 +120,17 @@ body {
   overflow: auto;
 }
 
-nav, .scene-panel {
+/* Shadows */
+
+nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail {
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+/* Shaded Backgrounds */
+
+#main .scenes, .media-editor, .intro_script {
+	background: rgba(175, 175, 175, 0.5);
+	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
 }
 
 .scene-panel:hover .panel-heading {
@@ -345,7 +352,13 @@ h4:hover .object-id {
 /* Conversation Editor */
 .intro_script {
 	overflow-x: auto;
+	height: 100%;
+
+	padding: 2em;
+	text-align: center;
 }
+
+
 .script_options {
 	white-space: nowrap;
 
@@ -358,12 +371,4 @@ h4:hover .object-id {
 	.script_option + .script_option {
 		margin-left: 100px;
 	}
-}
-
-.script-panel {
-	.bg-variant(@state-warning-bg);
-}
-
-.script-option-panel {
-	.bg-variant(@state-info-bg);
 }

@@ -4,6 +4,7 @@ define([
 	'backbone',
 	'text!templates/conversation_row.tpl',
 	'views/script_editor',
+	'views/character_organizer',
 	'models/media',
 	'models/game',
 	'models/character',
@@ -18,7 +19,7 @@ define([
 	'collections/dialogs',
 	'collections/tabs',
 	'vent'
-], function($, _, Backbone, Template, ScriptEditorView, Media, Game, Character, DialogScript, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection, vent) {
+], function($, _, Backbone, Template, ScriptEditorView, CharactersOrganizerView, Media, Game, Character, DialogScript, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -104,7 +105,8 @@ define([
 
 
 				var conversations_editor = new ScriptEditorView({model: intro_script, collection: intro_script.get("dialog_options"), dialog: dialog, scripts: scripts, script_options: options, contents: contents, className: "intro_script"});
-				vent.trigger("application:popup:show", conversations_editor, "Edit Conversation Script", true);
+				vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
+				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters}));
 
 			}.bind(this));
 		}

@@ -97,8 +97,6 @@ body {
   width: 100%;
   z-index: 2;
   padding: 2em;
-  background: rgba(175, 175, 175, 0.5);
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 /* Remove bootstraps gutter */
 #info,
@@ -107,9 +105,20 @@ body {
   padding-left: 15px;
   overflow: auto;
 }
+/* Shadows */
 nav,
-.scene-panel {
+.scene-panel,
+.script-panel,
+.script-option-panel,
+.media-editor .thumbnail {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+/* Shaded Backgrounds */
+#main .scenes,
+.media-editor,
+.intro_script {
+  background: rgba(175, 175, 175, 0.5);
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .scene-panel:hover .panel-heading {
   color: #428bca;
@@ -310,6 +319,9 @@ h4:hover .object-id {
 /* Conversation Editor */
 .intro_script {
   overflow-x: auto;
+  height: 100%;
+  padding: 2em;
+  text-align: center;
 }
 .script_options {
   white-space: nowrap;
@@ -321,16 +333,4 @@ h4:hover .object-id {
 }
 .script_options .script_option + .script_option {
   margin-left: 100px;
-}
-.script-panel {
-  background-color: #fcf8e3;
-}
-a.script-panel:hover {
-  background-color: #f7ecb5;
-}
-.script-option-panel {
-  background-color: #d9edf7;
-}
-a.script-option-panel:hover {
-  background-color: #afd9ee;
 }

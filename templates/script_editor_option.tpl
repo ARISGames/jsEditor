@@ -1,10 +1,12 @@
 <div style="display: inline-block; text-align: center;">
-	<div class="script-option-panel panel panel-default" style="padding: 0.25em; display: inline-block; width: 200px; margin-bottom: 5px;">
+	<div class="script-option-panel panel panel-info" style="display: inline-block; width: 200px; margin-bottom: 5px;">
 		<!--<div class="form-group">
 			<input type="text" class="form-control" value="<%= prompt %>">
 		</div>-->
-		<div class="option-text" style="overflow: hidden;">
-			<%= prompt %>
+		<div class="panel-heading">
+			<div class="option-text" style="overflow: hidden;">
+				<%= prompt %>
+			</div>
 		</div>
 <!--
 		<div class="form-group">
