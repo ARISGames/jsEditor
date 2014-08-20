@@ -6,10 +6,10 @@ define([
 		idAttribute: 'dialog_script_id',
 
 		amfphp_url_templates: {
-			read:   "dialogs.getDialogCharacter",
-			update: "dialogs.updateDialogCharacter",
-			create: "dialogs.createDialogCharacter",
-			delete: "dialogs.deleteDialogCharacter"
+			read:   "dialogs.getDialogScript",
+			update: "dialogs.updateDialogScript",
+			create: "dialogs.createDialogScript",
+			delete: "dialogs.deleteDialogScript"
 		},
 
 		amfphp_url_attributes: [

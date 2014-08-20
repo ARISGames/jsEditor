@@ -99,7 +99,7 @@ define([
 					var intro_script_options = intro_script.get("dialog_options");
 				}
 
-				var conversations_editor = new ConversationEditorView({model: intro_script, collection: intro_script_options, dialog: dialog, scripts: scripts, script_options: options, contents: contents});
+				var conversations_editor = new ConversationEditorView({model: intro_script, collection: intro_script_options, dialog: dialog, scripts: scripts, script_options: options, contents: contents, game: game});
 				vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
 				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters}));
 

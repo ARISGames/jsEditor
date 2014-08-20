@@ -25,7 +25,6 @@ define([
 			name: "",
 			description: "",
 			icon_media_id: "0",
-			intro_dialog_script_id: "0"
 		}
 
 	});

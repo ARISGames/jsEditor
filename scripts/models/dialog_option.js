@@ -6,10 +6,10 @@ define([
 		idAttribute: 'dialog_option_id',
 
 		amfphp_url_templates: {
-			read:   "dialogs.getDialogCharacter",
-			update: "dialogs.updateDialogCharacter",
-			create: "dialogs.createDialogCharacter",
-			delete: "dialogs.deleteDialogCharacter"
+			read:   "dialogs.getDialogOption",
+			update: "dialogs.updateDialogOption",
+			create: "dialogs.createDialogOption",
+			delete: "dialogs.deleteDialogOption"
 		},
 
 		amfphp_url_attributes: [
@@ -26,6 +26,12 @@ define([
         ],
 
 		defaults: {
+			prompt: "",
+			link_type: "EXIT",
+			link_id: "0",
+			link_info: "",
+			requirement_root_package_id: "0",
+			sort_index: "0"
 		}
 
 	});
