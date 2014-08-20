@@ -1,8 +1,10 @@
 <div class="media-drop-target">
-	<br>
-
 	<div class="text-center">
-		<button class="upload btn btn-primary">Upload Media</button>
+		<button class="upload btn btn-primary">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+			<br/>
+			Upload Media
+		</button>
 	</div>
 
 	<br/>

@@ -3,12 +3,13 @@ define([
 	'underscore',
 	'backbone',
 	'text!templates/conversation_row.tpl',
-	'views/script_editor',
+	'views/conversation_editor',
 	'views/character_organizer',
 	'models/media',
 	'models/game',
 	'models/character',
 	'models/dialog_script',
+	'models/dialog_option',
 	'collections/characters',
 	'collections/media',
 	'collections/dialog_scripts',
@@ -19,7 +20,7 @@ define([
 	'collections/dialogs',
 	'collections/tabs',
 	'vent'
-], function($, _, Backbone, Template, ScriptEditorView, CharactersOrganizerView, Media, Game, Character, DialogScript, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection, vent) {
+], function($, _, Backbone, Template, ConversationEditorView, CharactersOrganizerView, Media, Game, Character, DialogScript, DialogOption, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -57,16 +58,7 @@ define([
 			{
 
 				// FIXME Load in null script like client does until migration is changed
-				if(dialog.get("intro_dialog_script_id") === "0")
-				{
-					var intro_script = new DialogScript({});
-					scripts.add(intro_script);
-				}
-				else
-				{
-					var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
-				}
-
+				var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
 
 				// Wire up children, characters, and media
 				scripts.each(function(script)
@@ -103,8 +95,11 @@ define([
 					character.set("media", character_media);
 				});
 
+				if(intro_script) {
+					var intro_script_options = intro_script.get("dialog_options");
+				}
 
-				var conversations_editor = new ScriptEditorView({model: intro_script, collection: intro_script.get("dialog_options"), dialog: dialog, scripts: scripts, script_options: options, contents: contents, className: "intro_script"});
+				var conversations_editor = new ConversationEditorView({model: intro_script, collection: intro_script_options, dialog: dialog, scripts: scripts, script_options: options, contents: contents});
 				vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
 				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters}));
 

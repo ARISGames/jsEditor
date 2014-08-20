@@ -21,6 +21,7 @@ define([
 		},
 
 		initialize: function(options) {
+			this.root_dialog = options.root_dialog;
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
@@ -28,15 +29,8 @@ define([
 
 			// FIXME keep track of this in a parent view or controller/app
 			this.model.set("rendered", true);
-		},
-
-		onShow: function() {
-			// Center root node in view
-			var view = this;
-			if(this.className === "intro_script") {
-				setTimeout(function() { view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 400);
-			}
 		}
+
 	});
 
 	return ScriptEditorView;

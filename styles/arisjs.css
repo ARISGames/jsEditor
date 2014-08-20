@@ -120,7 +120,7 @@ nav,
 /* Shaded Backgrounds */
 #main .scenes,
 .media-editor,
-.intro_script {
+.conversation-editor {
   background: rgba(175, 175, 175, 0.5);
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
@@ -245,8 +245,11 @@ h4:hover .object-id {
   max-width: 100%;
   max-height: 45%;
 }
+.media-editor .media-drop-target {
+  padding: 2em 1em;
+}
 .media-drop-target.media-hover {
-  background: #999;
+  background: rgba(0, 0, 0, 0.25);
 }
 /* Media Selector */
 .media-chooser {
@@ -314,16 +317,16 @@ h4:hover .object-id {
 /* Scrolling for tall areas */
 .scenes,
 .media-editor,
+.media-editor .media-drop-target,
 .quests-editor,
+.conversation-editor,
 .conversations-editor,
 .games-list-container {
   height: 100%;
   overflow-x: auto;
 }
 /* Conversation Editor */
-.intro_script {
-  overflow-x: auto;
-  height: 100%;
+.conversation-editor {
   padding: 2em;
   text-align: center;
 }

@@ -23,6 +23,6 @@
 
 	<br/>
 
-	<div class="display: inline-block; script_options clearfix">
+	<div class="script_options clearfix">
 	</div>
 </div>
