@@ -9,10 +9,10 @@ require.config({
 		'jed':      'library/jed',
 		'qrcode':   'library/qrcode',
 
-		'jquery':    'library/jquery',
-		'cookie':    'library/jquery.cookie',
-		'jqueryui':  'library/jquery.ui',
-		'jquerypan': 'library/jquery.pan',
+		'jquery':   'library/jquery',
+		'cookie':   'library/jquery.cookie',
+		'jqueryui': 'library/jquery.ui',
+		'panzoom':  'library/jquery.panzoom',
 
 		/* Backbone */
 		'underscore':          'library/underscore',

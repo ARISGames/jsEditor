@@ -330,9 +330,13 @@ h4:hover .object-id {
   padding: 2em;
   text-align: center;
 }
+/* Jquery pan/zoom */
 .conversation-editor,
-.conversation-editor .intro_script_region {
+.conversation_pan_region {
   position: relative;
+}
+.intro_script_region {
+  display: inline-block;
 }
 .script_options {
   white-space: nowrap;
