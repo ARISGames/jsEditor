@@ -34,7 +34,8 @@ define([
 			return {
 				model: this.model,
 				scripts: this.scripts,
-				cid: this.model.cid
+				cid: this.model.cid,
+				link_icon: this.linkIcon()
 			}
 		},
 
@@ -46,6 +47,26 @@ define([
 		},
 
 
+		linkIcon: function() {
+			switch(this.model.get("link_type")) {
+				case "DIALOG_SCRIPT":
+					return "arrow-down";
+				case "EXIT":
+					return "export";
+				case "EXIT_TO_DIALOG":
+					return "comment";
+				case "EXIT_TO_PLAQUE":
+					return "align-justify";
+				case "EXIT_TO_ITEM":
+					return "stop";
+				case "EXIT_TO_WEB_PAGE":
+					return "globe";
+				case "EXIT_TO_TAB":
+					return "list-alt";
+			}
+		},
+
+
 		/* Nested rendering */
 		onRender: function() {
 			if(this.model.get("link_type") === "DIALOG_SCRIPT") {
@@ -54,7 +75,7 @@ define([
 
 				// TODO need a handle on events so all related options have a chance to re-render this object if it gets removed elsewhere
 				if(dialog_script.get("rendered") === false) {
-					var child_view = this.$el.find(".child_script_"+this.model.get("dialog_option_id"));
+					var child_view = this.$el.find(".child_script_"+this.model.cid);
 
 					var conversations_editor = new this.script_editor_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view});
 					conversations_editor.render();

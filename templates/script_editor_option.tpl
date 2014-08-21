@@ -2,6 +2,7 @@
 	<div class="script-option-panel panel panel-info edit-option" style="display: inline-block; width: 200px; margin-bottom: 5px;">
 		<div class="panel-heading">
 			<div class="option-text" style="overflow: hidden;">
+				<span class="glyphicon glyphicon-<%= link_icon %>"></span>
 				<%= prompt %>
 			</div>
 		</div>
@@ -22,6 +23,6 @@
 		<% }
 	} %>
 
-	<div class="child_script_<%= dialog_option_id %>">
+	<div class="child_script_<%= cid %>">
 	</div>
 </div>

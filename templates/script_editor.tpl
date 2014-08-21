@@ -4,6 +4,7 @@
 		<div class="script-option-panel panel panel-primary" style="display: inline-block; width: 200px; margin-bottom: 5px;">
 			<div class="panel-heading">
 				<div class="option-text" style="overflow: hidden;">
+					<span class="glyphicon glyphicon-play"></span>
 					Start
 				</div>
 			</div>
