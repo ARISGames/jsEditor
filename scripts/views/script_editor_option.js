@@ -35,7 +35,8 @@ define([
 				model: this.model,
 				scripts: this.scripts,
 				cid: this.model.cid,
-				link_icon: this.linkIcon()
+				link_icon: this.linkIcon(),
+				link_color: this.linkColor()
 			}
 		},
 
@@ -63,6 +64,25 @@ define([
 					return "globe";
 				case "EXIT_TO_TAB":
 					return "list-alt";
+			}
+		},
+
+		linkColor: function() {
+			switch(this.model.get("link_type")) {
+				case "DIALOG_SCRIPT":
+					return "info";
+				case "EXIT":
+					return "success";
+				case "EXIT_TO_DIALOG":
+					return "success";
+				case "EXIT_TO_PLAQUE":
+					return "success";
+				case "EXIT_TO_ITEM":
+					return "success";
+				case "EXIT_TO_WEB_PAGE":
+					return "success";
+				case "EXIT_TO_TAB":
+					return "success";
 			}
 		},
 

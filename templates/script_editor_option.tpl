@@ -1,5 +1,5 @@
 <div style="display: inline-block; text-align: center;">
-	<div class="script-option-panel panel panel-info edit-option" style="display: inline-block; width: 200px; margin-bottom: 5px;">
+	<div class="script-option-panel panel panel-<%= link_color %> info edit-option" style="display: inline-block; width: 200px; margin-bottom: 5px;">
 		<div class="panel-heading">
 			<div class="option-text" style="overflow: hidden;">
 				<span class="glyphicon glyphicon-<%= link_icon %>"></span>
