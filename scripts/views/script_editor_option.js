@@ -33,7 +33,8 @@ define([
 		templateHelpers: function() {
 			return {
 				model: this.model,
-				scripts: this.scripts
+				scripts: this.scripts,
+				cid: this.model.cid
 			}
 		},
 
@@ -41,6 +42,7 @@ define([
 		onClickEdit: function() {
 			var option_editor = new DialogOptionEditor({model: this.model, scripts: this.scripts, contents: this.contents});
 			vent.trigger("application:info:show", option_editor);
+			return false;
 		},
 
 
