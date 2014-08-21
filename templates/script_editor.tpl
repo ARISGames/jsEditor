@@ -1,4 +1,17 @@
 <div style="text-align: center; display: inline-block;">
+
+	<% if(root_node) { %>
+		<div class="script-option-panel panel panel-primary" style="display: inline-block; width: 200px; margin-bottom: 5px;">
+			<div class="panel-heading">
+				<div class="option-text" style="overflow: hidden;">
+					Start
+				</div>
+			</div>
+		</div>
+
+		<br />
+	<% } %>
+
 	<div class="script-panel panel panel-default clearfix" style="display: inline-block; width: 300px; margin-bottom: 20px;">
 		<div class="panel-body" style="padding: 0.5em;">
 			<div class="thumbnail change-active-icon pull-left" style="width: 25%; margin-bottom: 0;">

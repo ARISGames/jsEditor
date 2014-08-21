@@ -6,6 +6,11 @@ define([
 ], function(Backbone, Template, ScriptEditorOptionView, vent) {
 	var ScriptEditorView = Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
+		templateHelpers: function() {
+			return {
+				root_node: this.model.has('root_node')
+			}
+		},
 
 		itemView: ScriptEditorOptionView,
 		itemViewContainer: '.script_options',
@@ -21,7 +26,6 @@ define([
 		},
 
 		initialize: function(options) {
-			this.root_dialog = options.root_dialog;
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;

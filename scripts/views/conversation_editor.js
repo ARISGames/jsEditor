@@ -51,6 +51,7 @@ define([
 			});
 
 			if(this.model) {
+				this.model.set("root_node", true)
 				var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
 				script_editor.render();
 
