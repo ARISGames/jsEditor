@@ -44,6 +44,7 @@ define([
 		},
 
 
+
 		ui: {
 			"name": "#name",
 			"description": "#description",
