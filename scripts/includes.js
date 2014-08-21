@@ -9,9 +9,10 @@ require.config({
 		'jed':      'library/jed',
 		'qrcode':   'library/qrcode',
 
-		'jquery':   'library/jquery',
-		'cookie':   'library/jquery.cookie',
-		'jqueryui': 'library/jquery.ui',
+		'jquery':    'library/jquery',
+		'cookie':    'library/jquery.cookie',
+		'jqueryui':  'library/jquery.ui',
+		'jquerypan': 'library/jquery.pan',
 
 		/* Backbone */
 		'underscore':          'library/underscore',
@@ -39,6 +40,11 @@ require.config({
 		},
 
         "jqueryui": {
+            exports: "$",
+            deps: ['jquery']
+        },
+
+        "jquerypan": {
             exports: "$",
             deps: ['jquery']
         },

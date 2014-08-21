@@ -1,10 +1,10 @@
 define([
 	'underscore',
-	'underscore.string',
 	'backbone',
 	'text!templates/script_editor_option.tpl',
+	'views/dialog_option_editor',
 	'vent'
-], function(_, _s, Backbone, Template, vent) {
+], function(_, Backbone, Template, DialogOptionEditor, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -43,6 +43,7 @@ define([
 		},
 
 		events: {
+			"click .edit-option": "onClickEdit",
 			"change @ui.link_type": "onChangeLinkType",
 			"change @ui.link_id":   "onChangeLinkId"
 		},
@@ -82,6 +83,12 @@ define([
 			// 0 out link ID before re-rendering sub select
 			this.model.set("link_id", "0");
 			this.render();
+		},
+
+
+		onClickEdit: function() {
+			var option_editor = new DialogOptionEditor();
+			vent.trigger("application:info:show", option_editor);
 		},
 
 

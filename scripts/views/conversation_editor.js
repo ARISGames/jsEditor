@@ -1,5 +1,6 @@
 define([
 	'underscore',
+	'jquerypan',
 	'backbone',
 	'text!templates/conversation_editor.tpl',
 	'views/script_editor',
@@ -9,7 +10,7 @@ define([
 	'models/media',
 	'collections/dialog_options',
 	'vent'
-], function(_, Backbone, Template, ScriptEditorView, DialogScript, DialogOption, Character, Media, DialogOptionsCollection, vent) {
+], function(_, $pan, Backbone, Template, ScriptEditorView, DialogScript, DialogOption, Character, Media, DialogOptionsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -45,6 +46,8 @@ define([
 
 				setTimeout(function() { view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 200);
 			}
+
+			setTimeout(function() { view.$el.pan() }, 300);
 		},
 
 		onClickNew: function() {

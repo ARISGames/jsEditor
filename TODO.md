@@ -50,13 +50,16 @@ TODO
 
 DOING
 -----
+- Edit options/dialogs
+- Select characters
 - Create characters
 - Create options/dialogs
 - Game Settings
+- Fix clickable region for all lists (so its the whole thing)
 - non image media players
 - media list of references
 - fix events for tracking changes on models between the 3 main areas affected by adding plaques/items
-- media shows references (and can remove them/add more)
+- media show references to itself (and can remove them/add more)
 
 JS THINGS
 ---------
