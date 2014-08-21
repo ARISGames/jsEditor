@@ -73,7 +73,8 @@ define([
 
 			// Add them to collection for saving
 			//
-			this.model = new DialogScript({text: "Hello", game_id: this.game.id, dialog_id: this.dialog.id})
+			this.model = new DialogScript({text: "Hello", game_id: this.game.id,
+				dialog_id: this.dialog.id});
 
 			var dialog_option = new DialogOption({prompt: "Bye bye", game_id: this.game.id, dialog_id: this.dialog.id});
 			this.model.set("dialog_options", new DialogOptionsCollection([dialog_option]));
