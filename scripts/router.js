@@ -112,10 +112,23 @@ define([
 			var game = new Game({game_id: game_id});
 			game.fetch({
 				success: function() {
-					vent.trigger("application.show",     new GameEditorView ({model: game}));
-					vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".settings"}));
-					vent.trigger("application:info:hide");
-					vent.trigger("application:list:hide");
+
+					var icons = {
+						icon:  new Media({media_id: game.get("icon_media_id")}),
+						media: new Media({media_id: game.get("media_id"     )})
+					};
+					icons.icon.fetch({
+						success: function() {
+							icons.media.fetch({
+								success: function() {
+									vent.trigger("application.show",     new GameEditorView (_.extend({model: game},icons)));
+									vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".settings"}));
+									vent.trigger("application:info:hide");
+									vent.trigger("application:list:hide");
+								}
+							});
+						}
+					});
 				}
 			});
 		},
