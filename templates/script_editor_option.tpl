@@ -9,6 +9,19 @@
 
 	<br/>
 
+	<% if(model.get("link_type") === "DIALOG_SCRIPT") {
+			var dialog_script = scripts.findWhere({dialog_script_id: model.get("link_id")});
+
+			if(dialog_script.get("rendered") === true) { %>
+				<div class="script-panel panel panel-warning clearfix" style="display: inline-block; width: 300px; margin-bottom: 20px;">
+					<div class="panel-heading" style="padding: 0.5em;">
+						<span class="glyphicon glyphicon-open"></span>
+						<%= dialog_script.get("text") %>
+					</div>
+				</div>
+		<% }
+	} %>
+
 	<div class="child_script_<%= dialog_option_id %>">
 	</div>
 </div>

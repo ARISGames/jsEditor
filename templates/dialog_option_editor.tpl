@@ -1,8 +1,23 @@
+<br />
+
+<h4>Edit Choice <span class="object-id text-muted"><%= is_new ? "" : dialog_option_id %></span></h4>
+
+<form class="form" role="form" onsubmit="return false;">
 <div class="form-group">
-	<input type="text" class="form-control" value="<%= prompt %>">
+	<button type="button" class="btn btn-block btn-warning edit-requirements">
+		<span class="glyphicon glyphicon-lock"></span>
+		Locks
+	</button>
 </div>
 
 <div class="form-group">
+	<label>Prompt</label>
+	<input autofocus type="text" class="form-control prompt" value="<%= prompt %>">
+</div>
+
+<div class="form-group">
+	<label>Action</label>
+
 	<select class="form-control link-type">
 		<% _.each(link_types, function(type_name, type_value) { %>
 			<option value="<%= type_value %>" <%= option_selected(link_type === type_value) %>><%= type_name %></option>
@@ -12,12 +27,14 @@
 
 <% if(link_options_visible) { %>
 	<div class="form-group">
+		<label>Destination</label>
+
 		<select class="form-control link-id">
 			<option value="0" selected disabled>- Select One -</option>
 
 			<% if(link_scripts) { %>
 				<% scripts.each(function(script) { %>
-					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(script.get("text"), 30) %></option>
+					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(script.get("text"), 600) %></option>
 				<% }); %>
 			<% } %>
 
@@ -56,11 +73,20 @@
 <% } %> <!-- link options visible -->
 
 
+<!-- For scanner tab only
 <div class="form-group">
+	<label>Destination</label>
 	<input type="text" class="form-control" value="<%= link_info %>">
 </div>
+-->
 
-<button type="button" class="btn btn-block btn-warning edit-requirements">
-	<span class="glyphicon glyphicon-lock"></span>
-	Locks
-</button>
+<div class="form-group">
+	<button type="submit" class="btn btn-primary save">
+		Save
+	</button>
+	<button type="button" class="btn btn-default cancel">
+		Cancel
+	</button>
+</div>
+</form>
+

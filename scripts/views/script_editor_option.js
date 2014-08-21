@@ -10,44 +10,9 @@ define([
 
 		className: "script_option",
 
-		templateHelpers: function() {
-			return {
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
-				link_types: this.link_types,
-
-				scripts: this.scripts,
-
-				// game objects for option menu
-				plaques:   this.plaques,
-				items:     this.items,
-				web_pages: this.web_pages,
-				dialogs:   this.dialogs,
-				tabs:      this.tabs,
-
-				link_options_visible: this.model.get("link_type") !== "EXIT",
-
-				link_scripts:   this.model.get("link_type") === "DIALOG_SCRIPT",
-				link_plaques:   this.model.get("link_type") === "EXIT_TO_PLAQUE",
-				link_items:     this.model.get("link_type") === "EXIT_TO_ITEM",
-				link_web_pages: this.model.get("link_type") === "EXIT_WEB_PAGE",
-				link_dialogs:   this.model.get("link_type") === "EXIT_DIALOG",
-				link_tabs:      this.model.get("link_type") === "EXIT_TAB",
-			}
-		},
-
-		ui: {
-			link_type: ".link-type",
-			link_id:   ".link-id"
-		},
-
 		events: {
-			"click .edit-option": "onClickEdit",
-			"change @ui.link_type": "onChangeLinkType",
-			"change @ui.link_id":   "onChangeLinkId"
+			"click .edit-option": "onClickEdit"
 		},
-
 
 		initialize: function(options) {
 			this.scripts = options.scripts;
@@ -65,29 +30,16 @@ define([
 		},
 
 
-		link_types: {
-			'DIALOG_SCRIPT':    "Say Line",
-			'EXIT':             "End Conversation",
-			'EXIT_TO_PLAQUE':   "Exit to Plaque",
-			'EXIT_TO_ITEM':     "Exit to Item",
-			'EXIT_TO_WEB_PAGE': "Exit to Web Page",
-			'EXIT_TO_DIALOG':   "Exit to Conversation",
-			'EXIT_TO_TAB':      "Exit to Tab"
-		},
-
-
-		onChangeLinkType: function() {
-			var value = this.ui.link_type.find("option:selected").val();
-			this.model.set("link_type", value);
-
-			// 0 out link ID before re-rendering sub select
-			this.model.set("link_id", "0");
-			this.render();
+		templateHelpers: function() {
+			return {
+				model: this.model,
+				scripts: this.scripts
+			}
 		},
 
 
 		onClickEdit: function() {
-			var option_editor = new DialogOptionEditor();
+			var option_editor = new DialogOptionEditor({model: this.model, scripts: this.scripts, contents: this.contents});
 			vent.trigger("application:info:show", option_editor);
 		},
 

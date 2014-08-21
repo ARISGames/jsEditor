@@ -35,11 +35,21 @@ define([
 			this.incoming_options = options;
 			this.game   = options.game;
 			this.dialog = options.dialog;
+
+			vent.on("conversation:update", this.render);
 		},
 
 
 		onRender: function() {
 			var view = this;
+
+			// Reset view
+			this.incoming_options.scripts.each(function(script)
+			{
+				// Prevent recursive rendering
+				script.set("rendered", false);
+			});
+
 			if(this.model) {
 				var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
 				script_editor.render();
