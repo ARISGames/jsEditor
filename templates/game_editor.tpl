@@ -77,9 +77,9 @@
 				<label for="map_type">Type</label>
 
 				<select class="form-control" id="game-map_type">
-					<option value="NONE"        <%= option_selected(map_type === "STREET")    %>>Street</option>
-					<option value="FULL_SCREEN" <%= option_selected(map_type === "SATELLITE") %>>Satellite</option>
-					<option value="DROP_DOWN"   <%= option_selected(map_type === "HYBRID")    %>>Hybrid</option>
+					<option value="STREET"    <%= option_selected(map_type === "STREET")    %>>Street</option>
+					<option value="SATELLITE" <%= option_selected(map_type === "SATELLITE") %>>Satellite</option>
+					<option value="HYBRID"    <%= option_selected(map_type === "HYBRID")    %>>Hybrid</option>
 				</select>
 			</div>
 
