@@ -122,19 +122,19 @@ define([
 
 			this.model.set("name",        this.ui.name.val());
 			this.model.set("description", this.ui.description.val());
-			this.model.set("ready_for_public", this.ui.ready_for_public.val());
+			this.model.set("ready_for_public", this.ui.ready_for_public.is(":checked") ? "1" : "0");
 			this.model.set("intro_scene_id", this.ui.intro_scene_id.val());
 			this.model.set("map_type", this.ui.map_type.val());
 			this.model.set("map_latitude", this.ui.map_latitude.val());
 			this.model.set("map_longitude", this.ui.map_longitude.val());
 			this.model.set("map_zoom_level", this.ui.map_zoom_level.val());
-			this.model.set("map_show_player", this.ui.map_show_player.val());
-			this.model.set("map_show_players", this.ui.map_show_players.val());
-			this.model.set("map_offsite_mode", this.ui.map_offsite_mode.val());
-			this.model.set("notebook_allow_comments", this.ui.notebook_allow_comments.val());
-			this.model.set("notebook_allow_likes", this.ui.notebook_allow_likes.val());
-			this.model.set("notebook_allow_player_tags", this.ui.notebook_allow_player_tags.val());
-			this.model.set("inventory_weight_cap", this.ui.inventory_weight_ca.val());
+			this.model.set("map_show_player", this.ui.map_show_player.is(":checked") ? "1" : "0");
+			this.model.set("map_show_players", this.ui.map_show_players.is(":checked") ? "1" : "0");
+			this.model.set("map_offsite_mode", this.ui.map_offsite_mode.is(":checked") ? "1" : "0");
+			this.model.set("notebook_allow_comments", this.ui.notebook_allow_comments.is(":checked") ? "1" : "0");
+			this.model.set("notebook_allow_likes", this.ui.notebook_allow_likes.is(":checked") ? "1" : "0");
+			this.model.set("notebook_allow_player_tags", this.ui.notebook_allow_player_tags.is(":checked") ? "1" : "0");
+			this.model.set("inventory_weight_cap", this.ui.inventory_weight_cap.val());
 
 			this.model.save({}, {
 				create: function() {
