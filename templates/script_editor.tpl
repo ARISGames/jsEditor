@@ -13,7 +13,7 @@
 		<br />
 	<% } %>
 
-	<div class="script-panel panel panel-default clearfix" style="display: inline-block; width: 300px; margin-bottom: 20px;">
+	<div class="script-panel panel panel-default clearfix edit-script" style="display: inline-block; width: 300px; margin-bottom: 20px;">
 		<div class="panel-body" style="padding: 0.5em;">
 			<div class="thumbnail change-active-icon pull-left" style="width: 25%; margin-bottom: 0;">
 				<img style="height: auto; width: 100%" src="<%= character.get("media").thumbnail() %>">
@@ -23,17 +23,7 @@
 				<%= text %>
 			</div>
 		</div>
-		<!--
-		<div class="form-group">
-			<textarea class="form-control" rows=3><%= text %></textarea>
-		</div>-->
-
-		<!-- <button type="button" class="btn btn-block btn-info edit-events">
-			<span class="glyphicon glyphicon-user"></span>
-			Modify Player
-		</button>
-		-->
-	</div> <!-- script form -->
+	</div>
 
 	<br/>
 

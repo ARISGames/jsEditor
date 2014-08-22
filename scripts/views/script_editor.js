@@ -2,8 +2,9 @@ define([
 	'backbone',
 	'text!templates/script_editor.tpl',
 	'views/script_editor_option',
+	'views/dialog_script_editor',
 	'vent'
-], function(Backbone, Template, ScriptEditorOptionView, vent) {
+], function(Backbone, Template, ScriptEditorOptionView, DialogScriptEditorView, vent) {
 	var ScriptEditorView = Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 		templateHelpers: function() {
@@ -33,6 +34,16 @@ define([
 
 			// FIXME keep track of this in a parent view or controller/app
 			this.model.set("rendered", true);
+		},
+
+		events: {
+			"click .edit-script": "onClickEdit"
+		},
+
+		onClickEdit: function() {
+			var script_editor = new DialogScriptEditorView({model: this.model});
+			vent.trigger("application:info:show", script_editor);
+			return false;
 		}
 
 	});

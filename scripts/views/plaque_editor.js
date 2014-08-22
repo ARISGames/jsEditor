@@ -8,11 +8,10 @@ define([
 	'collections/items',
 	'models/game',
 	'models/event_package',
-	'models/event',
 	'views/media_chooser',
 	'views/events',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, vent) {
+], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, MediaChooserView, EventsEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
