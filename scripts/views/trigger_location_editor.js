@@ -26,7 +26,6 @@ define([
 			"show_title": "#trigger-show_title"
 		},
 
-
 		events: {
 			"click .save":   "onClickSave",
 			"click .delete": "onClickDelete",
