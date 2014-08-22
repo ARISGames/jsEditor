@@ -56,9 +56,23 @@
 
 	<div class="form-group">
 		<label>
-			<input type="checkbox" id="game-ready_for_public" <%= is_checked(ready_for_public) %>>
+			<input type="checkbox" id="game-published" <%= is_checked(published) %>>
 			Published (available to public)
 		</label>
+		<div class="alert alert-info">
+			<span class="glyphicon glyphicon-info-sign"></span>
+			If checked, your game will be listed as playable on the ARIS client. If not, your game will not be playable unless the "show games in development" switch is flipped in the ARIS client settings.
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="type">Type</label>
+
+		<select class="form-control" id="game-type">
+			<option value="LOCATION" <%= option_selected(type === "LOCATION") %>>To be played around a specific location</option>
+			<option value="ANYWHERE" <%= option_selected(type === "ANYWHERE") %>>Can be played anywhere</option>
+			<option value="QR"       <%= option_selected(type === "QR")       %>>Intended for play with QR Codes</option>
+		</select>
 	</div>
 
 	<div class="form-group">
@@ -117,6 +131,10 @@
 					<input type="checkbox" id="game-map_offsite_mode" <%= is_checked(map_offsite_mode) %>>
 					Offsite Mode (All locations temporarily infinite range)
 				</label>
+				<div class="alert alert-info">
+					<span class="glyphicon glyphicon-info-sign"></span>
+					When checked, all locations will be accessible from anywhere on the map. Useful for off-site debugging.
+				</div>
 			</div>
 
 		</div>
@@ -148,6 +166,10 @@
 					<input type="checkbox" id="game-notebook_allow_player_tags" <%= is_checked(notebook_allow_player_tags) %>>
 					Player Created Tags Allowed
 				</label>
+				<div class="alert alert-info">
+					<span class="glyphicon glyphicon-info-sign"></span>
+					If checked, allows players to define their own labels for notes.
+				</div>
 			</div>
 
 		</div>
@@ -163,7 +185,10 @@
 				<label for="game-inventory_weight_cap">Weight Cap (0 = no weight cap)</label>
 				<input type="text" class="form-control" id="game-inventory_weight_cap" placeholder="0" value="<%= inventory_weight_cap %>">
 			</div>
-
+			<div class="alert alert-info">
+				<span class="glyphicon glyphicon-info-sign"></span>
+				Items can be assigned a weight. Setting a cap will prevent players from holding an inventory with sum weight total greater than this cap.
+			</div>
 		</div>
 	</div>
 

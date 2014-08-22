@@ -33,7 +33,8 @@ define([
 		ui: {
 			"name": "#game-name",
 			"description": "#game-description",
-			"ready_for_public":"#game-ready_for_public",
+			"published":"#game-published",
+			"type":"#game-type",
 			"intro_scene_id":"#game-intro_scene_id",
 			"map_type":"#game-map_type",
 			"map_latitude":"#game-map_latitude",
@@ -122,7 +123,8 @@ define([
 
 			this.model.set("name",        this.ui.name.val());
 			this.model.set("description", this.ui.description.val());
-			this.model.set("ready_for_public", this.ui.ready_for_public.is(":checked") ? "1" : "0");
+			this.model.set("published", this.ui.published.is(":checked") ? "1" : "0");
+			this.model.set("type", this.ui.type.val());
 			this.model.set("intro_scene_id", this.ui.intro_scene_id.val());
 			this.model.set("map_type", this.ui.map_type.val());
 			this.model.set("map_latitude", this.ui.map_latitude.val());
