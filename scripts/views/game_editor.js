@@ -81,11 +81,11 @@ define([
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.model.set("icon_media_id", media.id);
-						vent.trigger("application:popup:show", view, "Edit Game");
+						vent.trigger("application:popup:hide");
 					});
 
 					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Game");
+						vent.trigger("application:popup:hide");
 					});
 				}
 			});
@@ -107,11 +107,11 @@ define([
 					icon_chooser.on("media:choose", function(media) {
 						view.media = media;
 						view.model.set("media_id", media.id);
-						vent.trigger("application:popup:show", view, "Edit Game");
+						vent.trigger("application:popup:hide");
 					});
 
 					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Game");
+						vent.trigger("application:popup:hide");
 					});
 				}
 			});
