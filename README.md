@@ -2,6 +2,7 @@ ARIS Web Editor
 ===============
 
 A browser based javascript editor for the ARIS games platform. Built on top of the `Backbone.Marionette` MVC framework.
+See http://arisgames.org
 
 Requirements
 ------------
