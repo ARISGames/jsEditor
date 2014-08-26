@@ -1,4 +1,7 @@
-.x-ray-backbone-view {
+/*PHIL BEING AN IDIOT AND DEBUGGING- FEEL FREE TO DELETE*/
+/*div,span { border:2px solid black; }*/
+
+x-ray-backbone-view {
   border: 1px solid blue;
   margin: 2px;
   overflow: hidden;

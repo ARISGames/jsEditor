@@ -1,5 +1,11 @@
 <div style="display: inline-block; text-align: center;">
+
 	<div class="script-option-panel panel panel-<%= link_color %> info edit-option" style="display: inline-block; width: 200px; margin-bottom: 5px;">
+
+		<div class="script-option-inject inject-option" style="display:block; width:60px; margin-bottom:5px;">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+		</div>
+
 		<div class="panel-heading">
 			<div class="option-text" style="overflow: hidden;">
 				<span class="glyphicon glyphicon-<%= link_icon %>"></span>
@@ -14,7 +20,7 @@
 			var dialog_script = scripts.findWhere({dialog_script_id: model.get("link_id")});
 
 			if(dialog_script.get("rendered") === true) { %>
-				<div class="script-panel panel panel-warning clearfix" style="display: inline-block; width: 300px; margin-bottom: 20px;">
+				<div class="script-panel panel panel-warning clearfix" style="display: inline-block; width: 300px; margin-bottom: 20px; overflow:hidden;">
 					<div class="panel-heading" style="padding: 0.5em;">
 						<span class="glyphicon glyphicon-open"></span>
 						<%= dialog_script.get("text") %>

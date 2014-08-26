@@ -15,9 +15,7 @@ define([
 		template: _.template(Template),
 
 		templateHelpers: function() {
-			return {
-				no_intro_script: !this.model
-			}
+			return { }
 		},
 
 		className: 'conversation-editor',
@@ -25,11 +23,6 @@ define([
 		ui: {
 			intro_script_region: '.intro_script_region'
 		},
-
-		events: {
-			'click .add-intro-script': "onClickNew"
-		},
-
 
 		initialize: function(options) {
 			this.incoming_options = options;
@@ -50,14 +43,12 @@ define([
 				script.set("rendered", false);
 			});
 
-			if(this.model) {
-				this.model.set("root_node", true)
-				var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
-				script_editor.render();
+			this.model.set("root_node", true)
+			var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
+			script_editor.render();
 
-				if(!this.centered_once) {
-					setTimeout(function() { view.centered_once = true; view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 200);
-				}
+			if(!this.centered_once) {
+				setTimeout(function() { view.centered_once = true; view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 200);
 			}
 
 			/*setTimeout(function() {
@@ -67,31 +58,5 @@ define([
 
 			}, 300);*/
 		},
-
-		onClickNew: function() {
-			var view = this;
-
-			// Add them to collection for saving
-			//
-			this.model = new DialogScript({text: "Hello", game_id: this.game.id,
-				dialog_id: this.dialog.id});
-
-			var dialog_option = new DialogOption({prompt: "Bye bye", game_id: this.game.id, dialog_id: this.dialog.id});
-			this.model.set("dialog_options", new DialogOptionsCollection([dialog_option]));
-
-			var character = new Character({name: "You"})
-			var media = new Media({media_id: "0"});
-
-			character.set("media", media);
-			this.model.set("character", character);
-
-			// FIXME make them temporary until 'saved'
-			$.when(this.model.save()).done(function () {
-					view.dialog.set("intro_dialog_script_id", view.model.id);
-					dialog_option.set("parent_dialog_script_id", view.model.id);
-
-					$.when(view.dialog.save(), dialog_option.save()).done(view.render);
-			});
-		}
 	});
 });

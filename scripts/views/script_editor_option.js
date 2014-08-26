@@ -8,10 +8,12 @@ define([
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
+
 		className: "script_option",
 
 		events: {
-			"click .edit-option": "onClickEdit"
+			"click .edit-option": "onClickEdit",
+			"click .inject-option": "onClickInject"
 		},
 
 		initialize: function(options) {
@@ -47,6 +49,11 @@ define([
 			return false;
 		},
 
+		onClickInject: function() {
+			var script_editor = new DialogScriptEditorView({model: this.model});
+			vent.trigger("application:info:show", script_editor);
+			return false;
+		},
 
 		linkIcon: function() {
 			switch(this.model.get("link_type")) {

@@ -37,13 +37,21 @@ define([
 		},
 
 		events: {
-			"click .edit-script": "onClickEdit"
+			"click .edit-script": "onClickEdit",
+			"click .add-option": "onClickAdd",
 		},
 
 		onClickEdit: function() {
 			var script_editor = new DialogScriptEditorView({model: this.model});
 			vent.trigger("application:info:show", script_editor);
 			return false;
+		},
+		onClickAdd: function() {
+                  /*
+			var script_editor = new DialogScriptEditorView({model: this.model});
+			vent.trigger("application:info:show", script_editor);
+			return false;
+                  */
 		}
 
 	});
