@@ -2,12 +2,13 @@ define([
 	'underscore',
 	'backbone',
 	'text!templates/script_editor_option.tpl',
+	'models/dialog_script',
+	'models/dialog_option',
 	'views/dialog_option_editor',
 	'vent'
-], function(_, Backbone, Template, DialogOptionEditor, vent) {
+], function(_, Backbone, Template, DialogScript, DialogOption, DialogOptionEditor, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
-
 
 		className: "script_option",
 
@@ -50,8 +51,28 @@ define([
 		},
 
 		onClickInject: function() {
-			var script_editor = new DialogScriptEditorView({model: this.model});
-			vent.trigger("application:info:show", script_editor);
+                        var self = this; //cool
+
+			var script = new DialogScript();
+			script.set("game_id",this.model.get("game_id"));
+			script.set("dialog_id",this.model.get("dialog_id"));
+			script.set("text","Hello");
+			script.save({}, {
+				success: function() {
+					var option = new DialogOption();
+					option.set("game_id",self.model.get("game_id"));
+					option.set("dialog_id",self.model.get("dialog_id"));
+					option.set("parent_dialog_script_id",self.model.get("parent_dialog_script_id"));
+					option.set("link_type","DIALOG_SCRIPT");
+					option.set("link_id",script.get("dialog_script_id"));
+					option.set("prompt","Continue");
+					option.save();
+
+					self.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
+					self.model.save();
+				}
+			})
+
 			return false;
 		},
 

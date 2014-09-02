@@ -1,10 +1,11 @@
 define([
 	'backbone',
 	'text!templates/script_editor.tpl',
+	'models/dialog_option',
 	'views/script_editor_option',
 	'views/dialog_script_editor',
 	'vent'
-], function(Backbone, Template, ScriptEditorOptionView, DialogScriptEditorView, vent) {
+], function(Backbone, Template, DialogOption, ScriptEditorOptionView, DialogScriptEditorView, vent) {
 	var ScriptEditorView = Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 		templateHelpers: function() {
@@ -27,6 +28,7 @@ define([
 		},
 
 		initialize: function(options) {
+			this.incoming_options = options;
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
@@ -47,11 +49,13 @@ define([
 			return false;
 		},
 		onClickAdd: function() {
-                  /*
-			var script_editor = new DialogScriptEditorView({model: this.model});
-			vent.trigger("application:info:show", script_editor);
+			var option = new DialogOption();
+			option.set("game_id",this.model.get("game_id"));
+			option.set("dialog_id",this.model.get("dialog_id"));
+			option.set("parent_dialog_script_id",this.model.get("dialog_script_id"));
+			option.set("prompt","Exit");
+			option.save();
 			return false;
-                  */
 		}
 
 	});
