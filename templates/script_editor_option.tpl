@@ -1,8 +1,8 @@
 <div style="display: inline-block; text-align: center;">
 
-	<div class="script-option-panel panel panel-<%= link_color %> info edit-option" style="display: inline-block; width: 200px; margin-bottom: 5px;">
+	<div class="script-option-panel panel panel-<%= link_color %> info edit-option" style="display: inline-block; position:relative; width: 200px; margin-bottom: 5px;">
 
-		<div class="script-option-inject inject-option" style="display:block; width:60px; margin-bottom:5px;">
+		<div class="script-option-inject inject-option" style="display:block; position:absolute; left:70px; top:-20px; width:60px; margin-bottom:5px;">
 			<span class="glyphicon glyphicon-plus-sign"></span>
 		</div>
 

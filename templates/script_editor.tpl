@@ -27,8 +27,8 @@
 
 	<br/>
 	<div class="script-options-panel clearfix">
-		<div class="script_options clearfix">
-			<div class="script-option-add add-option" style="display:inline-block; width:60px; margin-bottom:5px;">
+		<div class="script_options clearfix" style="position:relative;">
+			<div class="script-option-add add-option" style="display:block; position:absolute; width:60px; top:15px; right:-20px; margin-bottom:5px;">
 				<span class="glyphicon glyphicon-plus-sign"></span>
 			</div>
 		</div>
