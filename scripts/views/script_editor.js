@@ -49,12 +49,17 @@ define([
 			return false;
 		},
 		onClickAdd: function() {
+			var self = this; //cool
 			var option = new DialogOption();
 			option.set("game_id",this.model.get("game_id"));
 			option.set("dialog_id",this.model.get("dialog_id"));
 			option.set("parent_dialog_script_id",this.model.get("dialog_script_id"));
 			option.set("prompt","Exit");
-			option.save();
+			option.save({}, {
+				success:function() {
+					//self.incoming_options.conversation_editor_view.render();
+				}
+			});
 			return false;
 		}
 

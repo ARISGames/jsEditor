@@ -44,7 +44,7 @@ define([
 			});
 
 			this.model.set("root_node", true)
-			var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
+			var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options"), conversation_editor_view: this}));
 			script_editor.render();
 
 			if(!this.centered_once) {

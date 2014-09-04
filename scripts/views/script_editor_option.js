@@ -18,6 +18,7 @@ define([
 		},
 
 		initialize: function(options) {
+			this.incoming_options = options;
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
@@ -43,7 +44,6 @@ define([
 			}
 		},
 
-
 		onClickEdit: function() {
 			var option_editor = new DialogOptionEditor({model: this.model, scripts: this.scripts, contents: this.contents});
 			vent.trigger("application:info:show", option_editor);
@@ -66,10 +66,17 @@ define([
 					option.set("link_type","DIALOG_SCRIPT");
 					option.set("link_id",script.get("dialog_script_id"));
 					option.set("prompt","Continue");
-					option.save();
+					option.save({},{
+						success: function() {
+							self.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
+							self.model.save({},{
+								success: function() {
+									//self.incoming_options.conversation_editor_view.render();
+								}
+							});
+						}
+					});
 
-					self.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
-					self.model.save();
 				}
 			})
 
@@ -125,7 +132,7 @@ define([
 				if(dialog_script.get("rendered") === false) {
 					var child_view = this.$el.find(".child_script_"+this.model.cid);
 
-					var conversations_editor = new this.script_editor_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view});
+					var conversations_editor = new this.script_editor_view(_.extend(this.incoming_options,{model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view}));
 					conversations_editor.render();
 				}
 			}
