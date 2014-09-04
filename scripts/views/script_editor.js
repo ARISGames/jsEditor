@@ -28,7 +28,6 @@ define([
 		},
 
 		initialize: function(options) {
-			this.incoming_options = options;
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
@@ -49,7 +48,7 @@ define([
 			return false;
 		},
 		onClickAdd: function() {
-			var self = this; //cool
+			var view = this;
 			var option = new DialogOption();
 			option.set("game_id",this.model.get("game_id"));
 			option.set("dialog_id",this.model.get("dialog_id"));
@@ -57,7 +56,9 @@ define([
 			option.set("prompt","Exit");
 			option.save({}, {
 				success:function() {
-					//self.incoming_options.conversation_editor_view.render();
+					var scriptOpts = view.model.get("dialog_options");
+					scriptOpts.push(option);
+					vent.trigger("conversation:update");
 				}
 			});
 			return false;

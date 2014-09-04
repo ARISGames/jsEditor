@@ -18,7 +18,6 @@ define([
 		},
 
 		initialize: function(options) {
-			this.incoming_options = options;
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
@@ -51,7 +50,7 @@ define([
 		},
 
 		onClickInject: function() {
-                        var self = this; //cool
+                        var view = this;
 
 			var script = new DialogScript();
 			script.set("game_id",this.model.get("game_id"));
@@ -60,18 +59,18 @@ define([
 			script.save({}, {
 				success: function() {
 					var option = new DialogOption();
-					option.set("game_id",self.model.get("game_id"));
-					option.set("dialog_id",self.model.get("dialog_id"));
-					option.set("parent_dialog_script_id",self.model.get("parent_dialog_script_id"));
+					option.set("game_id",view.model.get("game_id"));
+					option.set("dialog_id",view.model.get("dialog_id"));
+					option.set("parent_dialog_script_id",view.model.get("parent_dialog_script_id"));
 					option.set("link_type","DIALOG_SCRIPT");
 					option.set("link_id",script.get("dialog_script_id"));
 					option.set("prompt","Continue");
 					option.save({},{
 						success: function() {
-							self.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
-							self.model.save({},{
+							view.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
+							view.model.save({},{
 								success: function() {
-									//self.incoming_options.conversation_editor_view.render();
+									vent.trigger("conversation:update");
 								}
 							});
 						}
@@ -132,7 +131,7 @@ define([
 				if(dialog_script.get("rendered") === false) {
 					var child_view = this.$el.find(".child_script_"+this.model.cid);
 
-					var conversations_editor = new this.script_editor_view(_.extend(this.incoming_options,{model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view}));
+					var conversations_editor = new this.script_editor_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view});
 					conversations_editor.render();
 				}
 			}
