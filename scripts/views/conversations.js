@@ -46,7 +46,7 @@ define([
 
 			var dialog = new Dialog({game_id: this.model.get("game_id")});
 			var dialog_creator = new DialogCreatorView({model: dialog});
-			vent.trigger("application:popup:show", dialog_creator, "Create Dialog");
+			vent.trigger("application:popup:show", dialog_creator, "Create Conversation");
 
 			dialog_creator.on("dialog:create", function() {
 				view.editConversation(dialog);
