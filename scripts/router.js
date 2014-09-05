@@ -47,7 +47,6 @@ define([
 			"login": "showLogin",
 
 			"games":               "listGames",
-			"games/new":           "newGame",
 			"games/:game_id/edit": "editGame",
 
 			"games/:game_id/scenes":       "showSceneEditor",
@@ -132,13 +131,6 @@ define([
 				}
 			});
 		},
-
-
-		newGame: function() {
-			var game = new Game();
-			vent.trigger("application.show", new GameEditorView({model: game}));
-		},
-
 
 
 		/* List Routes ************************/

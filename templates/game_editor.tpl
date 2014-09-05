@@ -1,11 +1,7 @@
 <div class="shrink-center well well-lg">
 	<form class="form" role="form" onsubmit="return false;">
 	<h4>
-		<% if(is_new) { %>
-			Create Game
-		<% } else { %>
-			Edit Game <span class="object-id text-muted"><%= game_id %></span>
-		<% } %>
+		Edit Game <span class="object-id text-muted"><%= game_id %></span>
 	</h4>
 
 	<div class="form-group">

@@ -139,10 +139,6 @@ define([
 			this.model.set("inventory_weight_cap", this.ui.inventory_weight_cap.val());
 
 			this.model.save({}, {
-				create: function() {
-					Backbone.history.navigate("#games/"+view.model.get('game_id')+"/scenes", {trigger: true});
-				},
-
 				update: function() {
 					Backbone.history.navigate("#games/"+view.model.get('game_id')+"/scenes", {trigger: true});
 				}
@@ -150,12 +146,7 @@ define([
 		},
 
 		onClickCancel: function() {
-			if(this.model.isNew()) {
-				Backbone.history.navigate("#games", {trigger: true});
-			}
-			else {
-				Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
-			}
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
 		}
 
 	});

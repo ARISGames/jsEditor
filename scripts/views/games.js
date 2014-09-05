@@ -4,10 +4,10 @@ define([
 	'text!templates/games.tpl',
 	'collections/games',
 	'views/game_row',
-	'views/game_editor',
+	'views/game_create',
 	'models/game',
 	'vent'
-], function(_, Backbone, Template, GameCollection, GameRowView, GameEditorView, Game, vent) {
+], function(_, Backbone, Template, GameCollection, GameRowView, GameCreateView, Game, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -22,7 +22,7 @@ define([
 
 		onClickNew: function() {
 			var game = new Game();
-			vent.trigger("application.show", new GameEditorView({model: game}));
+			vent.trigger("application.show", new GameCreateView({model: game}));
 		},
 
 		// Marionette override
