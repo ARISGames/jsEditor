@@ -50,7 +50,7 @@ define([
 		},
 
 		onClickInject: function() {
-                        var view = this;
+			var view = this;
 
 			var script = new DialogScript();
 			script.set("game_id",this.model.get("game_id"));
@@ -70,6 +70,8 @@ define([
 							view.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
 							view.model.save({},{
 								success: function() {
+									view.scripts.push(script);
+									view.script_options.push(option);
 									vent.trigger("conversation:update");
 								}
 							});

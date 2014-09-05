@@ -60,46 +60,25 @@ define([
 				// FIXME Load in null script like client does until migration is changed
 				var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
 
-				// Wire up children, characters, and media
-				scripts.each(function(script)
-				{
-					// Prevent recursive rendering
-					script.set("rendered", false);
+				//add 'null' character
+				var character = new Character({name: "You", dialog_character_id: "0"})
+				characters.push(character);
 
-					var script_options = options.where({parent_dialog_script_id: script.id});
-					script.set("dialog_options", new DialogOptionsCollection(script_options));
+				//add 'null' media
+				var character_media = new Media({media_id: "0"});
+				media.push(character_media);
 
-					// "YOU"
-					if(script.get("dialog_character_id") === "0")
+				var conversations_editor = new ConversationEditorView(
 					{
-						var character = new Character({name: "You"})
-					}
-					else
-					{
-						var character = characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
-					}
-
-					script.set("character", character);
-
-
-					// Default Media
-					if(character.get("media_id") === "0")
-					{
-						var character_media = new Media({media_id: "0"});
-					}
-					else
-					{
-						var character_media = media.findWhere({media_id: character.get("media_id")});
-					}
-
-					character.set("media", character_media);
-				});
-
-				if(intro_script) {
-					var intro_script_options = intro_script.get("dialog_options");
-				}
-
-				var conversations_editor = new ConversationEditorView({model: intro_script, collection: intro_script_options, dialog: dialog, scripts: scripts, script_options: options, contents: contents, game: game});
+						model: intro_script,
+						dialog: dialog,
+						characters: characters,
+						media: media,
+						scripts: scripts,
+						script_options: options,
+						contents: contents,
+						game: game
+					});
 				vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
 				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters}));
 
