@@ -42,11 +42,20 @@ define([
 		onRender: function() {
 			var view = this;
 
-			// Reset view
+			// re-wire up children, characters, and media
 			this.incoming_options.scripts.each(function(script)
 			{
-				// Prevent recursive rendering
+				// Flag to prevent infinitely recursive rendering
 				script.set("rendered", false);
+
+				var script_options = view.incoming_options.script_options.where({parent_dialog_script_id: script.id});
+				script.set("dialog_options", new DialogOptionsCollection(script_options));
+
+				var character = view.incoming_options.characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
+				script.set("character", character);
+
+				var character_media = view.incoming_options.media.findWhere({media_id: character.get("media_id")});
+				character.set("media", character_media);
 			});
 
 			if(this.model) {

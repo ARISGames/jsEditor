@@ -56,8 +56,7 @@ define([
 			option.set("prompt","Exit");
 			option.save({}, {
 				success:function() {
-					var scriptOpts = view.model.get("dialog_options");
-					scriptOpts.push(option);
+					view.script_options.push(option);
 					vent.trigger("conversation:update");
 				}
 			});
