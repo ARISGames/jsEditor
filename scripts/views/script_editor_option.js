@@ -39,7 +39,9 @@ define([
 				scripts: this.scripts,
 				cid: this.model.cid,
 				link_icon: this.linkIcon(),
-				link_color: this.linkColor()
+				link_color: this.linkColor(),
+				isFirst: this.model.firstOption,
+				isLast: this.model.lastOption
 			}
 		},
 

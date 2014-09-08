@@ -49,6 +49,19 @@ define([
 				script.set("rendered", false);
 
 				var script_options = view.incoming_options.script_options.where({parent_dialog_script_id: script.id});
+
+				//Adds property to options to know whether first or last for rendering styling
+				for(var i = 0; i < script_options.length; i++)
+				{
+					script_options[i].firstOption = false;
+					script_options[i].lastOption = false;
+				}
+				if(script_options.length > 0)
+				{
+					script_options[0].firstOption = true;
+					script_options[script_options.length-1].lastOption = true;
+				}
+
 				script.set("dialog_options", new DialogOptionsCollection(script_options));
 
 				var character = view.incoming_options.characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
