@@ -13,9 +13,9 @@
 		<br />
 	<% } %>
 
-	<div class="script-panel panel panel-default clearfix edit-script" style="display: inline-block; width: 300px; margin-bottom: 20px;">
+	<div class="script-panel panel panel-default clearfix edit-script" style="display: inline-block; width: 300px; margin-bottom:0px;">
 		<div class="panel-body" style="padding:0.5em;">
-			<div class="thumbnail change-active-icon pull-left" style="width: 25%; margin-bottom: 0;">
+			<div class="thumbnail change-active-icon pull-left" style="width: 25%; margin-bottom: 0px;">
 				<img style="height: auto; width: 100%" src="<%= character.get("media").thumbnail() %>">
 			</div>
 
@@ -25,12 +25,19 @@
 		</div>
 	</div>
 
-	<br/>
-	<div class="script-options-panel clearfix">
+	<!-- Hack- draw vertical 'line' with thin div w/ 1 px border. -->
+	<div style="margin:0px auto; width:200px; position:relative;">
+		<div style="margin:0px auto; width:0px; height:40px; border-left:2px solid black;">
+		</div>
+
+		<div class="script-option-add add-option" style="position:absolute; top:10px; right:80px;">
+			<span class="glyphicon glyphicon-plus-sign"></span>
+		</div>
+	</div>
+
+	<!-- Hack- draw horizontal 'line' with thin div w/ 1 px border. NOTE- will overflow past edge of end options. -->
+	<div class="script-options-panel clearfix" style="border-top:2px solid black;">
 		<div class="script_options clearfix" style="position:relative;">
-			<div class="script-option-add add-option" style="display:block; position:absolute; width:60px; top:15px; right:-20px; margin-bottom:5px;">
-				<span class="glyphicon glyphicon-plus-sign"></span>
-			</div>
 		</div>
 	</div>
 </div>
