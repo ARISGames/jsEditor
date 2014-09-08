@@ -27,6 +27,7 @@ FLOW
 
 TODO
 ----
+- Organize view files into folders
 - fix media resetting values in view due to re-render without setting the values on model
 - Move trigger between scenes
 - Visual helper to see active edited object/instance

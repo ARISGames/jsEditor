@@ -87,7 +87,12 @@ define([
 			item.set("max_qty_in_inventory", view.ui.max_qty_in_inventory.val());
 
 			item.save({}, {
-				success: function()
+				create: function() {
+					vent.trigger("item:add", item);
+					vent.trigger("application:popup:hide");
+				},
+
+				update: function()
 				{
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", item);

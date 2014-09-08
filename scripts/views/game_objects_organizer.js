@@ -26,10 +26,10 @@ define([
 		},
 
 		onShow: function() {
-			this.dialogs_region.show(new DialogOrganizerView ({collection: this.dialog_collection}));
-			this.plaques_region.show(new PlaqueOrganizerView ({collection: this.plaque_collection}));
-			this.items_region.show  (new ItemOrganizerView   ({collection: this.item_collection  }));
-			this.pages_region.show  (new WebPageOrganizerView({collection: this.page_collection  }));
+			this.dialogs_region.show(new DialogOrganizerView ({model: this.model, collection: this.dialog_collection}));
+			this.plaques_region.show(new PlaqueOrganizerView ({model: this.model, collection: this.plaque_collection}));
+			this.items_region.show  (new ItemOrganizerView   ({model: this.model, collection: this.item_collection  }));
+			this.pages_region.show  (new WebPageOrganizerView({model: this.model, collection: this.page_collection  }));
 		}
 	});
 });

@@ -50,7 +50,14 @@ define([
 			dialog.set("description",   view.ui.description.val());
 
 			dialog.save({}, {
-				success: function() {
+				create: function() {
+					vent.trigger("dialog:add", dialog);
+					vent.trigger("application:popup:hide");
+				},
+
+				update: function()
+				{
+					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", dialog);
 					vent.trigger("application:popup:hide");
 				}
