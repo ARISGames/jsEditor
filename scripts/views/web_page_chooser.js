@@ -34,7 +34,7 @@ define([
 			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
 
 			var trigger_editor = new WebPageTriggerEditorView({scene: this.options.parent, icon: icon, web_page: web_page, instance: instance, model: trigger, visible_fields: "create_web_page_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add WebPage to Scene");
+			vent.trigger("application:popup:show", trigger_editor, "Add Web Page to Scene");
 		},
 
 		// Marionette override

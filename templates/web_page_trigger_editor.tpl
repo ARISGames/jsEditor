@@ -1,5 +1,5 @@
 <% if(!in_modal) { %>
-	<h4>WebPage Trigger <span class="object-id text-muted"><%= is_new ? "" : web_page_id %></span></h4>
+	<h4>Web Page Trigger <span class="object-id text-muted"><%= is_new ? "" : web_page_id %></span></h4>
 	<h5><%= name %></h5>
 <% } %>
 
@@ -9,7 +9,7 @@
 <!-- WebPage attributes -->
 
 <div class="form-group">
-	<label class="sr-only" for="web_page-name">WebPage Name</label>
+	<label class="sr-only" for="web_page-name">Web Page Name</label>
 	<input type="text" autofocus class="form-control" id="web_page-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
