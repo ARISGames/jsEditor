@@ -11,11 +11,11 @@
 
 	<!-- Holy wow is this a hack. Cover up horizontal line draw overflows with opaque divs at either end of options list. -->
 	<% if(isFirst) { %>
-		<div style="background-color:#D2D2D2; position:absolute; top:-5px; left:-100px; width:100px; height:10px;"></div>
+		<div style="background-color:#D2D2D2; position:absolute; top:-5px; right:150px; width:49%; height:10px;"></div>
 		<div style="background-color:#D2D2D2; position:absolute; top:-5px; left:0px; width:100px; height:10px;"></div>
 	<% } %>
 	<% if(isLast) { %>
-		<div style="background-color:#D2D2D2; position:absolute; top:-5px; right:-99px; width:99px; height:10px;"></div>
+		<div style="background-color:#D2D2D2; position:absolute; top:-5px; left:150px; width:49%; height:10px;"></div>
 		<div style="background-color:#D2D2D2; position:absolute; top:-5px; right:0px; width:99px; height:10px;"></div>
 	<% } %>
 	</div>
