@@ -3,7 +3,7 @@
 
 	<div class="caption">
 		<h4>
-			<%= name || file_name || "&nbsp;" %>
+			<%= name || "&nbsp;" %>
 		</h4>
 	</div>
 </div>
