@@ -67,6 +67,7 @@ define([
 					option.set("link_type","DIALOG_SCRIPT");
 					option.set("link_id",script.get("dialog_script_id"));
 					option.set("prompt","Continue");
+					option.set("sort_index",view.model.get("sort_index"));
 					option.save({},{
 						success: function() {
 							view.model.set("parent_dialog_script_id",script.get("dialog_script_id"));

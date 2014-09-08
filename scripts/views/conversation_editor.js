@@ -50,9 +50,16 @@ define([
 
 				var script_options = view.incoming_options.script_options.where({parent_dialog_script_id: script.id});
 
-				//Adds property to options to know whether first or last for rendering styling
+				script_options.sort(function(a,b){ if(parseInt(a.get("sort_index")) < parseInt(b.get("sort_index"))) return -1; if(parseInt(a.get("sort_index")) > parseInt(b.get("sort_index"))) return 1; return 0; });
+
+				//Normalizes sort_indexes, adds property of first/last for rendering
 				for(var i = 0; i < script_options.length; i++)
 				{
+					var oldindex = script_options[i].get("sort_index");
+					script_options[i].set("sort_index",i);
+
+					if(oldindex != script_options[i].get("sort_index")) script_options[i].save();
+
 					script_options[i].firstOption = false;
 					script_options[i].lastOption = false;
 				}
