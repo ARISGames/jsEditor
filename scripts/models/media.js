@@ -48,7 +48,7 @@ define([
 			else if(this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v)/)) {
 				return "images/video128.png";
 			}
-			else if(this.get("file_name").match(/\.(wav|mp3|alac|flac|caf)/)) {
+			else if(this.get("file_name").match(/\.(wav|mp3|alac|flac|caf|m4a)/)) {
 				return "images/audio128.png";
 			}
 			else {
