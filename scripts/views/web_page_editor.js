@@ -51,7 +51,13 @@ define([
 			web_page.set("url",  view.ui.url.val());
 
 			web_page.save({}, {
-				success: function() {
+				create: function() {
+					vent.trigger("web_page:add", web_page);
+					vent.trigger("application:popup:hide");
+				},
+
+				update: function()
+				{
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", web_page);
 					vent.trigger("application:popup:hide");

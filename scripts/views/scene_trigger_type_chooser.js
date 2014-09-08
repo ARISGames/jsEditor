@@ -81,7 +81,7 @@ define([
 			web_pages.fetch({
 				success: function() {
 					var web_page_chooser = new WebPageChooserView({collection: web_pages, parent: scene});
-					vent.trigger("application:popup:show", web_page_chooser, "Add WebPage to Scene");
+					vent.trigger("application:popup:show", web_page_chooser, "Add Web Page to Scene");
 				}
 			});
 		},
