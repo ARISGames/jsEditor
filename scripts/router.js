@@ -28,6 +28,7 @@ define([
 	'collections/scenes',
 	'collections/quests',
 	'collections/characters',
+	'collections/factories',
 
 	'models/game',
 	'models/item',
@@ -37,7 +38,7 @@ define([
 	'models/session'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView,
-	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection,
+	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection,
 	Game, Item, Media,
 	vent, session) {
 	return Backbone.Router.extend({
