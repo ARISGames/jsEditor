@@ -37,7 +37,7 @@ define([
 	'models/session'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView,
-	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, PageCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection,
+	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection,
 	Game, Item, Media,
 	vent, session) {
 	return Backbone.Router.extend({
@@ -88,18 +88,19 @@ define([
 			game.fetch({
 				success: function() {
 
-					var scenes  = new SceneCollection  ([], {parent: game});
-					var plaques = new PlaqueCollection ([], {parent: game});
-					var items   = new ItemCollection   ([], {parent: game});
-					var dialogs = new DialogsCollection([], {parent: game});
-					var pages   = new PageCollection   ([], {parent: game});
+					var scenes    = new SceneCollection    ([], {parent: game});
+					var plaques   = new PlaqueCollection   ([], {parent: game});
+					var items     = new ItemCollection     ([], {parent: game});
+					var dialogs   = new DialogsCollection  ([], {parent: game});
+					var pages     = new WebPagesCollection ([], {parent: game});
+					var factories = new FactoriesCollection([], {parent: game});
 
 					// TODO catch errors if any fail (since its a non-standard failure)
-					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch()).done(function()
+					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch(), factories.fetch()).done(function()
 					{
 						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
 						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages}));
+						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages, factories: factories}));
 						vent.trigger("application:info:hide");
 					});
 				}
