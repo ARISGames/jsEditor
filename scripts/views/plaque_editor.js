@@ -52,12 +52,18 @@ define([
 		},
 
 		onClickSave: function() {
-			var view = this;
+			var plaque = this.model;
 
-			this.model.save({}, {
-				success: function() {
+			plaque.save({}, {
+				create: function() {
+					vent.trigger("plaque:add", plaque);
+					vent.trigger("application:popup:hide");
+				},
+
+				update: function()
+				{
 					// FIXME get rid of global update broadcasts for models
-					vent.trigger("game_object:update", view.model);
+					vent.trigger("game_object:update", plaque);
 					vent.trigger("application:popup:hide");
 				}
 			});
