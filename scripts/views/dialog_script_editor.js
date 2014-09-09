@@ -22,6 +22,10 @@ define([
 
 
 		initialize: function(options) {
+			this.scripts = options.scripts;
+			this.script_options = options.script_options;
+			this.instance_parent_option = options.instance_parent_option;
+
 			this.previous_attributes = _.clone(this.model.attributes)
 		},
 
@@ -45,8 +49,9 @@ define([
 			"click .save":        "onClickSave",
 			"click .cancel":      "onClickCancel",
 			"click .edit-events": "onClickEditEvents",
+			"click .delete-this": "onClickDeleteThis",
+			"click .delete-all":  "onClickDeleteAll",
 		},
-
 
 		onChangeText: function() {
 			this.model.set("text", this.ui.text.val());
@@ -93,6 +98,42 @@ define([
 
 				vent.trigger("application:popup:show", events_editor, "Player Modifier");
 			});
+		},
+
+		onClickDeleteThis: function() {
+			if(!this.instance_parent_option) return;
+			this.script_options.remove(this.instance_parent_option);
+			this.instance_parent_option.destroy({
+				success: function() {
+					vent.trigger("conversation:update");
+					vent.trigger("application:info:hide");
+				}
+			});
+		},
+
+		onClickDeleteAll: function() {
+			var child_options = this.script_options.where({parent_dialog_script_id:this.model.get("dialog_script_id")});
+			for(var i = 0; i < child_options.length; i++)
+			{
+				this.script_options.remove(child_options[i]);
+				child_options[i].destroy();
+			}
+
+			var parent_options = this.script_options.where({link_type:"DIALOG_SCRIPT", link_id:this.model.get("dialog_script_id")});
+			for(var i = 0; i < parent_options.length; i++) //should actually only be one
+			{
+				this.script_options.remove(parent_options[i]);
+				parent_options[i].destroy();
+			}
+
+			this.scripts.remove(this.model);
+			this.model.destroy({
+				success: function() {
+					vent.trigger("conversation:update");
+					vent.trigger("application:info:hide");
+				}
+			});
 		}
+
 	});
 });

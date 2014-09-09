@@ -38,7 +38,6 @@ define([
 			vent.on("conversation:update", this.render);
 		},
 
-
 		onRender: function() {
 			var view = this;
 

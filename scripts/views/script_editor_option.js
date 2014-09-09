@@ -46,7 +46,7 @@ define([
 		},
 
 		onClickEdit: function() {
-			var option_editor = new DialogOptionEditor({model: this.model, scripts: this.scripts, contents: this.contents});
+			var option_editor = new DialogOptionEditor({model: this.model, scripts: this.scripts, script_options: this.script_options, contents: this.contents});
 			vent.trigger("application:info:show", option_editor);
 			return false;
 		},
@@ -136,7 +136,7 @@ define([
 				if(dialog_script.get("rendered") === false) {
 					var child_view = this.$el.find(".child_script_"+this.model.cid);
 
-					var conversations_editor = new this.script_editor_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view});
+					var conversations_editor = new this.script_editor_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view, instance_parent_option:this.model});
 					conversations_editor.render();
 				}
 			}

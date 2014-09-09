@@ -87,6 +87,9 @@
 	<button type="button" class="btn btn-default cancel">
 		Cancel
 	</button>
+	<button type="button" class="btn btn-danger delete">
+		Delete
+	</button>
 </div>
 </form>
 

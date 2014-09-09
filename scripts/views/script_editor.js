@@ -31,6 +31,7 @@ define([
 		initialize: function(options) {
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
+			this.instance_parent_option = options.instance_parent_option;
 			this.script_options = options.script_options;
 			this.contents = options.contents;
 
@@ -44,7 +45,7 @@ define([
 		},
 
 		onClickEdit: function() {
-			var script_editor = new DialogScriptEditorView({model: this.model});
+			var script_editor = new DialogScriptEditorView({model: this.model, scripts:this.scripts, script_options:this.script_options, instance_parent_option:this.instance_parent_option});
 			vent.trigger("application:info:show", script_editor);
 			return false;
 		},

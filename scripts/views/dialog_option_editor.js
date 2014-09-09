@@ -36,6 +36,7 @@ define([
 
 		initialize: function(options) {
 			this.scripts = options.scripts;
+			this.script_options = options.script_options;
 
 			this.plaques   = options.contents.plaques;
 			this.items     = options.contents.items;
@@ -83,12 +84,13 @@ define([
 		},
 
 		events: {
-			"change @ui.link_type": "onChangeLinkType",
-			"change @ui.link_id":   "onChangeLinkId",
-			"change @ui.prompt":    "onChangePrompt",
-			"click .save":          "onClickSave",
-			"click .cancel":        "onClickCancel",
+			"change @ui.link_type":     "onChangeLinkType",
+			"change @ui.link_id":       "onChangeLinkId",
+			"change @ui.prompt":        "onChangePrompt",
+			"click .save":              "onClickSave",
+			"click .cancel":            "onClickCancel",
 			"click .edit-requirements": "onClickEditRequirements",
+			"click .delete":            "onClickDelete",
 		},
 
 		link_types: {
@@ -100,7 +102,6 @@ define([
 			'EXIT_TO_DIALOG':   "Exit to Conversation",
 			'EXIT_TO_TAB':      "Exit to Tab"
 		},
-
 
 		onChangeLinkType: function() {
 			var value = this.ui.link_type.find("option:selected").val();
@@ -119,7 +120,6 @@ define([
 		onChangePrompt: function() {
 			this.model.set("prompt", this.ui.prompt.val());
 		},
-
 
 		onClickSave: function() {
 			this.model.save({}, {
@@ -181,6 +181,17 @@ define([
 
 				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
 			});
+		},
+
+		onClickDelete: function() {
+			this.script_options.remove(this.model);
+			this.model.destroy({
+				success: function() {
+					vent.trigger("conversation:update");
+					vent.trigger("application:info:hide");
+				}
+			});
 		}
+
 	});
 });
