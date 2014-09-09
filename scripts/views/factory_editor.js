@@ -15,7 +15,15 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail()
+				icon_thumbnail_url:  this.icon.thumbnail(),
+
+				is_checked: function(value) {
+					return value === "1" ? "checked" : "";
+				},
+
+				radio_selected: function(boolean_statement) {
+					return boolean_statement ? "checked" : "";
+				},
 			}
 		},
 
@@ -33,7 +41,9 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
-			"click .change-icon": "onClickChangeIcon"
+			"click .change-icon": "onClickChangeIcon",
+			"change @ui.name": "onChangeName",
+			"change @ui.description": "onChangeDescription",
 		},
 
 		initialize: function(options) {
@@ -43,12 +53,6 @@ define([
 		onClickSave: function() {
 			var view    = this;
 			var factory = this.model;
-
-			// Save Object
-			factory.set("trigger_icon_media_id", view.icon.get( "media_id"));
-
-			factory.set("name",        view.ui.name.val());
-			factory.set("description", view.ui.description.val());
 
 			factory.save({}, {
 				create: function() {
@@ -64,6 +68,15 @@ define([
 				}
 			});
 		},
+
+
+		/* Field changes */
+
+		onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
+		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
+
+
+		/* Icon Selection */
 
 		onClickChangeIcon: function() {
 			var view = this;
@@ -90,5 +103,8 @@ define([
 				}
 			});
 		}
+
+
+		/* Requirements Editor */
 	});
 });
