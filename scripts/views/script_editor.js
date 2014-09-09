@@ -2,10 +2,11 @@ define([
 	'backbone',
 	'text!templates/script_editor.tpl',
 	'models/dialog_option',
+	'models/dialog_script',
 	'views/script_editor_option',
 	'views/dialog_script_editor',
 	'vent'
-], function(Backbone, Template, DialogOption, ScriptEditorOptionView, DialogScriptEditorView, vent) {
+], function(Backbone, Template, DialogOption, DialogScript, ScriptEditorOptionView, DialogScriptEditorView, vent) {
 	var ScriptEditorView = Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 		templateHelpers: function() {
@@ -49,17 +50,44 @@ define([
 		},
 		onClickAdd: function() {
 			var view = this;
-			var option = new DialogOption();
-			option.set("game_id",this.model.get("game_id"));
-			option.set("dialog_id",this.model.get("dialog_id"));
-			option.set("parent_dialog_script_id",this.model.get("dialog_script_id"));
-			option.set("prompt","Exit");
-			option.save({}, {
-				success:function() {
-					view.script_options.push(option);
-					vent.trigger("conversation:update");
+
+			var script = new DialogScript();
+			script.set("game_id",view.model.get("game_id"));
+			script.set("dialog_id",view.model.get("dialog_id"));
+			script.set("text","Hello");
+			script.save({}, {
+				success: function() {
+					view.scripts.push(script);
+
+					var option = new DialogOption();
+					option.set("game_id",view.model.get("game_id"));
+					option.set("dialog_id",view.model.get("dialog_id"));
+					option.set("parent_dialog_script_id",view.model.get("dialog_script_id"));
+					option.set("link_type","DIALOG_SCRIPT");
+					option.set("link_id",script.get("dialog_script_id"));
+					option.set("prompt","Continue");
+					option.save({}, {
+						success:function() {
+							view.script_options.push(option);
+
+							option = new DialogOption();
+							option.set("game_id",view.model.get("game_id"));
+							option.set("dialog_id",view.model.get("dialog_id"));
+							option.set("parent_dialog_script_id",script.get("dialog_script_id"));
+							option.set("link_type","EXIT");
+							option.set("prompt","Exit");
+							option.save({}, {
+								success:function() {
+									view.script_options.push(option);
+
+									vent.trigger("conversation:update");
+								}
+							});
+						}
+					});
 				}
 			});
+
 			return false;
 		}
 
