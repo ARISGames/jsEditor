@@ -1,7 +1,4 @@
-/*PHIL BEING AN IDIOT AND DEBUGGING- FEEL FREE TO DELETE*/
-/*div,span { border:2px solid black; }*/
-
-x-ray-backbone-view {
+.x-ray-backbone-view {
   border: 1px solid blue;
   margin: 2px;
   overflow: hidden;
@@ -25,8 +22,12 @@ a {
 }
 .scene-trigger,
 .scene-title,
-.game_objects .edit {
+.game_objects .edit,
+table td {
   cursor: pointer;
+}
+table th {
+  cursor: default;
 }
 /* Long unbreakable names */
 .media-organizer {
