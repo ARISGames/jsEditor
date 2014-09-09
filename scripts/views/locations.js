@@ -3,8 +3,9 @@ define([
 	'backbone',
 	'text!templates/locations.tpl',
 	'views/trigger_location_editor',
+	'models/media',
 	'vent'
-], function(_, Backbone, Template, TriggerLocationEditorView, vent) {
+], function(_, Backbone, Template, TriggerLocationEditorView, Media, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 		className: 'full-height',
@@ -93,11 +94,19 @@ define([
 				// Edit side bar
 
 				google.maps.event.addListener(circle_marker, 'mousedown', function() {
-					vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger}));
+					var icon = new Media({media_id: trigger.get("icon_media_id")});
+
+					$.when(icon.fetch()).done(function () {
+						vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
+					});
 				});
 
 				google.maps.event.addListener(drag_marker, 'mousedown', function() {
-					vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger}));
+					var icon = new Media({media_id: trigger.get("icon_media_id")});
+
+					$.when(icon.fetch()).done(function () {
+						vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
+					});
 				});
 
 

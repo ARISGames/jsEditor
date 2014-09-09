@@ -11,10 +11,20 @@ define([
 
 		templateHelpers: function() {
 			return {
+				icon_thumbnail_url:  this.icon.thumbnail(),
+
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
+				},
+
+				radio_selected: function(boolean_statement) {
+					return boolean_statement ? "checked" : "";
 				}
 			};
+		},
+
+		initialize: function(options) {
+			this.icon     = options.icon;
 		},
 
 		ui: {
