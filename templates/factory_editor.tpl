@@ -84,7 +84,7 @@
 				<label>Production Rate</label>
 
 				<div class="input-group">
-					<input type="number" class="form-control" id="factory-production_probability" placeholder="Rate" min=0 max=100 value="<%= production_probability * 100 %>">
+					<input type="number" class="form-control" id="factory-production_probability" placeholder="Rate" min=0 max=100 value="<%= Math.round(production_probability * 100) %>">
 					<span class="input-group-addon">%</span>
 				</div>
 
@@ -101,7 +101,7 @@
 					<option value="LOCATION" <%= option_selected(location_bound_type === "LOCATION") %>>Specified Location</option>
 				</select>
 
-				<div id="LOCATION-fields" class="enter-trigger-tab">
+				<div id="LOCATION-fields" class="factory-location-bound-tab">
 					<input type="text" class="form-control" id="factory-latitude"  placeholder="Latitude"  value="<%= trigger_latitude %>">
 					<input type="text" class="form-control" id="factory-longitude" placeholder="Longitude" value="<%= trigger_longitude %>">
 				</div>
@@ -198,7 +198,7 @@
 						</div>
 					</div>
 
-					<div id="1-fields" class="enter-factory-tab">
+					<div id="1-fields" class="enter-factory-trigger-tab">
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" id="factory-hidden" <%= is_checked(trigger_hidden) %>>

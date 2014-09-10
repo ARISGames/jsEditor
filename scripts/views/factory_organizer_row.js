@@ -32,9 +32,9 @@ define([
 		tagName: 'tr',
 
 		onClickEdit: function() {
-			var view  = this;
-			var game  = new Game ({game_id:  this.model.get("game_id")});
-			var icon  = new Media({media_id: this.model.get("trigger_icon_media_id")});
+			var view = this;
+			var game = new Game ({game_id:  this.model.get("game_id")});
+			var icon = new Media({media_id: this.model.get("trigger_icon_media_id")});
 
 			var contents = {
 				items:      new ItemsCollection    ([], {parent: game}),

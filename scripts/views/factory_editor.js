@@ -61,12 +61,26 @@ define([
 			"name": "#factory-name",
 			"description": "#factory-description",
 
+			"max_production": "#factory-max_production",
+			"production_probability": "#factory-production_probability",
+			"seconds_per_production": "#factory-seconds_per_production",
+			"min_production_distance": "#factory-min_production_distance",
+			"max_production_distance": "#factory-max_production_distance",
+			"trigger_latitude": "#factory-latitude",
+			"trigger_longitude": "#factory-longitude",
+			"produce_expiration_time": "#factory-produce_expiration_time",
+
 			"object_id":   "#factory-object_id",
-			"object_type": "#factory-object_type"
+			"object_type": "#factory-object_type",
+			"production_bound_type": "#factory-production_bound_type",
+			"location_bound_type": "#factory-location_bound_type",
+
+			"produce_expire_on_view": "#factory-produce_expire_on_view"
 		},
 
 		onShow: function() {
 			this.onChangeTriggerEnter();
+			this.onChangeLocationBoundType();
 
 			this.$el.find('input[autofocus]').focus();
 		},
@@ -74,14 +88,30 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+
+			"change @ui.name":                    "onChangeName",
+			"change @ui.description":             "onChangeDescription",
+			"change @ui.max_production":          "onChangeMaxProduction",
+			"change @ui.production_probability":  "onChangeProductionProbability",
+			"change @ui.seconds_per_production":  "onChangeSecondsPerProduction",
+			"change @ui.min_production_distance": "onChangeMinProductionDistance",
+			"change @ui.max_production_distance": "onChangeMaxProductionDistance",
+			"change @ui.trigger_latitude":        "onChangeTriggerLatitude",
+			"change @ui.trigger_longitude":       "onChangeTriggerLongitude",
+			"change @ui.produce_expiration_time": "onChangeProduceExpirationTime",
+
+			"change @ui.object_type":             "onChangeObjectType",
+			"change @ui.object_id":               "onChangeObject",
+			"change @ui.production_bound_type":   "onChangeProductionBoundType",
+			"change @ui.location_bound_type":     "onChangeLocationBoundType",
+
+			"change @ui.produce_expire_on_view":  "onChangeProduceExpireOnView",
+
+
+			/* Trigger section */
+
 			"click .change-icon": "onClickChangeIcon",
 			"click .edit-requirements": "onClickEditRequirements",
-
-			"change @ui.name":        "onChangeName",
-			"change @ui.description": "onChangeDescription",
-			"change @ui.object_type": "onChangeObjectType",
-			"change @ui.object_id":   "onChangeObject",
-
 
 			"change input[name='factory-trigger_on_enter']": "onChangeTriggerEnter"
 		},
@@ -117,8 +147,19 @@ define([
 
 		/* Field changes */
 
-		onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
-		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
+		onChangeName:                  function() { this.model.set("name",                    this.ui.name.val())        },
+		onChangeDescription:           function() { this.model.set("description",             this.ui.description.val()) },
+		onChangeMaxProduction:         function() { this.model.set("max_production",          this.ui.max_production.val()) },
+		onChangeProductionProbability: function() { this.model.set("production_probability",  this.ui.production_probability.val() / 100) },
+		onChangeSecondsPerProduction:  function() { this.model.set("seconds_per_production",  this.ui.seconds_per_production.val()) },
+		onChangeMinProductionDistance: function() { this.model.set("min_production_distance", this.ui.min_production_distance.val()) },
+		onChangeMaxProductionDistance: function() { this.model.set("max_production_distance", this.ui.max_production_distance.val()) },
+		onChangeTriggerLatitude:       function() { this.model.set("trigger_latitude",        this.ui.trigger_latitude.val()) },
+		onChangeTriggerLongitude:      function() { this.model.set("trigger_longitude",       this.ui.trigger_longitude.val()) },
+		onChangeProduceExpirationTime: function() { this.model.set("produce_expiration_time", this.ui.produce_expiration_time.val()) },
+
+
+		/* Select Fields */
 
 		onChangeObjectType: function() {
 			var value = this.ui.object_type.find("option:selected").val();
@@ -127,12 +168,41 @@ define([
 			// 0 out content ID before re-rendering select
 			this.model.set("object_id", "0");
 			this.render();
+			this.onShow();
 		},
 
 		onChangeObject: function() {
 			var value = this.ui.object_id.find("option:selected").val();
 			this.model.set("object_id", value);
 		},
+
+		onChangeProductionBoundType: function() {
+			var value = this.ui.production_bound_type.find("option:selected").val();
+			this.model.set("production_bound_type", value);
+		},
+
+		onChangeLocationBoundType: function() {
+
+			var selected_option = this.ui.location_bound_type.find("option:selected");
+			this.model.set("location_bound_type", selected_option.val());
+
+			// Hide all and open selected tab
+			//
+			this.$el.find('.factory-location-bound-tab').hide();
+
+			var display_tab = "#" + selected_option.val() + "-fields";
+			$(display_tab).show();
+		},
+
+
+		/* Checkbox Fields */
+
+		onChangeProduceExpireOnView: function() {
+			this.model.set("produce_expire_on_view",  this.ui.produce_expire_on_view.is(":checked") ? "1" : "0");
+		},
+
+
+		/* Radio Fields */
 
 		onChangeTriggerEnter: function() {
 			// Hide radio buttons and add bootstrap classes
@@ -147,7 +217,7 @@ define([
 
 			// Hide all and open selected tab
 			//
-			this.$el.find('.enter-trigger-tab').hide();
+			this.$el.find('.enter-factory-trigger-tab').hide();
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
 			$(display_tab).show();
