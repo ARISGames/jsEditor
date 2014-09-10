@@ -43,6 +43,16 @@ define([
 				radio_selected: function(boolean_statement) {
 					return boolean_statement ? "checked" : "";
 				},
+
+				content_items:     this.isContentItems(),
+				content_plaques:   this.isContentPlaques(),
+				content_dialogs:   this.isContentDialogs(),
+				content_web_pages: this.isContentWebPages(),
+
+				items:     this.items,
+				plaques:   this.plaques,
+				dialogs:   this.dialogs,
+				web_pages: this.web_pages,
 			}
 		},
 
@@ -50,7 +60,9 @@ define([
 		ui: {
 			"name": "#factory-name",
 			"description": "#factory-description",
-			"iconchooser": "#icon-chooser-container"
+
+			"object_id":   "#factory-object_id",
+			"object_type": "#factory-object_type"
 		},
 
 		onShow: function() {
@@ -65,14 +77,22 @@ define([
 			"click .change-icon": "onClickChangeIcon",
 			"click .edit-requirements": "onClickEditRequirements",
 
-			"change @ui.name": "onChangeName",
+			"change @ui.name":        "onChangeName",
 			"change @ui.description": "onChangeDescription",
+			"change @ui.object_type": "onChangeObjectType",
+			"change @ui.object_id":   "onChangeObject",
+
 
 			"change input[name='factory-trigger_on_enter']": "onChangeTriggerEnter"
 		},
 
 		initialize: function(options) {
-			this.icon  = options.icon;
+			this.icon      = options.icon;
+
+			this.items     = options.contents.items;
+			this.plaques   = options.contents.plaques;
+			this.dialogs   = options.contents.dialogs;
+			this.web_pages = options.contents.web_pages;
 		},
 
 		onClickSave: function() {
@@ -100,6 +120,19 @@ define([
 		onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
 		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
 
+		onChangeObjectType: function() {
+			var value = this.ui.object_type.find("option:selected").val();
+			this.model.set("object_type", value);
+
+			// 0 out content ID before re-rendering select
+			this.model.set("object_id", "0");
+			this.render();
+		},
+
+		onChangeObject: function() {
+			var value = this.ui.object_id.find("option:selected").val();
+			this.model.set("object_id", value);
+		},
 
 		onChangeTriggerEnter: function() {
 			// Hide radio buttons and add bootstrap classes
@@ -118,6 +151,25 @@ define([
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
 			$(display_tab).show();
+		},
+
+
+		/* Visibility of selections */
+
+		isContentItems: function() {
+			return this.model.get("object_type") === "ITEM";
+		},
+
+		isContentPlaques: function() {
+			return this.model.get("object_type") === "PLAQUE";
+		},
+
+		isContentDialogs: function() {
+			return this.model.get("object_type") === "DIALOG";
+		},
+
+		isContentWebPages: function() {
+			return this.model.get("object_type") === "WEB_PAGE";
 		},
 
 		/* Icon Selection */

@@ -28,6 +28,44 @@
 
 				<select class="form-control content" id="factory-object_id" style="margin-top: 0.5em">
 					<option value="0" selected disabled>- Select One -</option>
+
+					<!-- Items -->
+					<% if(content_items) { %>
+						<% items.each(function(object) { %>
+							<option value="<%= object.id %>" <%= option_selected(object_id === object.id) %>>
+								<%= object.get("name") %>
+							</option>
+						<% }); %>
+					<% } %>
+
+					<!-- Plaques -->
+					<% if(content_plaques) { %>
+						<% plaques.each(function(object) { %>
+							<option value="<%= object.id %>" <%= option_selected(object_id === object.id) %>>
+								<%= object.get("name") %>
+							</option>
+						<% }); %>
+					<% } %>
+
+
+					<!-- Dialogs -->
+					<% if(content_dialogs) { %>
+						<% dialogs.each(function(object) { %>
+							<option value="<%= object.id %>" <%= option_selected(object_id === object.id) %>>
+								<%= object.get("name") %>
+							</option>
+						<% }); %>
+					<% } %>
+
+
+					<!-- Web Pages -->
+					<% if(content_web_pages) { %>
+						<% web_pages.each(function(object) { %>
+							<option value="<%= object.id %>" <%= option_selected(object_id === object.id) %>>
+								<%= object.get("name") %>
+							</option>
+						<% }); %>
+					<% } %>
 				</select>
 			</div>
 
@@ -45,7 +83,11 @@
 			<div class="form-group">
 				<label>Production Rate</label>
 
-				<input type="number" class="form-control" id="factory-production_probability" placeholder="Rate" min=0 max=100 value="<%= production_probability %>">
+				<div class="input-group">
+					<input type="number" class="form-control" id="factory-production_probability" placeholder="Rate" min=0 max=100 value="<%= production_probability * 100 %>">
+					<span class="input-group-addon">%</span>
+				</div>
+
 				<input type="number" class="form-control" id="factory-seconds_per_production" placeholder="Rate" min=0 value="<%= seconds_per_production %>">
 			</div>
 

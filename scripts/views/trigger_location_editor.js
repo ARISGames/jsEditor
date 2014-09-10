@@ -24,6 +24,9 @@ define([
 	Game, RequirementPackage,
 	vent) {
 
+	// FIXME this view can be simplified with a library that either does model binding every field, OR only re-drawing elements of changed fields
+	// else it just ends up overwriting text areas when you draw the map
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
