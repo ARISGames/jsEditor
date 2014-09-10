@@ -35,6 +35,10 @@ define([
 
 
 		initialize: function(options) {
+			//These are essentially the classes, not actual properties (can't include via require- circular reqs)
+			this.DialogScript = options.DialogScript;
+			this.DialogOption = options.DialogOption;
+
 			this.scripts = options.scripts;
 			this.script_options = options.script_options;
 
@@ -122,12 +126,52 @@ define([
 		},
 
 		onClickSave: function() {
-			this.model.save({}, {
-				success: function() {
-					vent.trigger("conversation:update");
-					vent.trigger("application:info:hide");
-				}
-			});
+			var view = this;
+
+			if(this.model.get("link_id") == 0) {
+				//create new script, set link id to that script
+
+				var script = new view.DialogScript();
+				script.set("game_id",view.model.get("game_id"));
+				script.set("dialog_id",view.model.get("dialog_id"));
+				script.set("text","Hello");
+				script.save({}, {
+					success: function() {
+						view.scripts.push(script);
+
+						var option = new view.DialogOption();
+						option.set("game_id",view.model.get("game_id"));
+						option.set("dialog_id",view.model.get("dialog_id"));
+						option.set("parent_dialog_script_id",script.get("dialog_script_id"));
+						option.set("link_type","EXIT");
+						option.set("prompt","Exit");
+
+						option.save({}, {
+							success:function() {
+								view.script_options.push(option);
+
+								view.model.set("link_type","DIALOG_SCRIPT");
+								view.model.set("link_id",script.get("dialog_script_id"));
+
+								view.model.save({}, {
+									success:function() {
+										vent.trigger("conversation:update");
+										vent.trigger("application:info:hide");
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+			else {
+				this.model.save({}, {
+					success: function() {
+						vent.trigger("conversation:update");
+						vent.trigger("application:info:hide");
+					}
+				});
+			}
 		},
 
 		onClickCancel: function() {

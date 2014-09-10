@@ -36,6 +36,7 @@
 				<% scripts.each(function(script) { %>
 					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(script.get("text"), 600) %></option>
 				<% }); %>
+					<option value="0">New Script</option>
 			<% } %>
 
 			<% if(link_plaques) { %>
