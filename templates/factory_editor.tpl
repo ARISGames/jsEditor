@@ -17,6 +17,69 @@
 			</div>
 
 			<div class="form-group">
+				<label for="factory-object_type">Game Object to Produce</label>
+
+				<select class="form-control content" id="factory-object_type">
+					<option value="DIALOG"   <%= option_selected(object_type === "DIALOG")   %>>Conversation</option>
+					<option value="PLAQUE"   <%= option_selected(object_type === "PLAQUE")   %>>Plaque</option>
+					<option value="ITEM"     <%= option_selected(object_type === "ITEM")     %>>Item</option>
+					<option value="WEB_PAGE" <%= option_selected(object_type === "WEB_PAGE") %>>Web Page</option>
+				</select>
+
+				<select class="form-control content" id="factory-object_id" style="margin-top: 0.5em">
+					<option value="0" selected disabled>- Select One -</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label>Production Limit</label>
+
+				<input type="number" class="form-control" id="factory-max_production" placeholder="Production Limit" min=0 value="<%= max_production %>">
+
+				<select class="form-control content" id="factory-production_bound_type">
+					<option value="PER_PLAYER" <%= option_selected(production_bound_type === "PER_PLAYER") %>>Per Player</option>
+					<option value="TOTAL"      <%= option_selected(production_bound_type === "TOTAL")      %>>Total</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label>Production Rate</label>
+
+				<input type="number" class="form-control" id="factory-production_probability" placeholder="Rate" min=0 max=100 value="<%= production_probability %>">
+				<input type="number" class="form-control" id="factory-seconds_per_production" placeholder="Rate" min=0 value="<%= seconds_per_production %>">
+			</div>
+
+			<div class="form-group">
+				<label>Destination</label>
+
+				<input type="number" class="form-control" id="factory-min_production_distance" placeholder="Near Distance" min=0 value="<%= min_production_distance %>">
+				<input type="number" class="form-control" id="factory-max_production_distance" placeholder="Far Distance" min=0 value="<%= max_production_distance %>">
+				<select class="form-control content" id="factory-location_bound_type">
+					<option value="PLAYER"   <%= option_selected(location_bound_type === "PLAYER")   %>>Near Player</option>
+					<option value="LOCATION" <%= option_selected(location_bound_type === "LOCATION") %>>Specified Location</option>
+				</select>
+
+				<div id="LOCATION-fields" class="enter-trigger-tab">
+					<input type="text" class="form-control" id="factory-latitude"  placeholder="Latitude"  value="<%= trigger_latitude %>">
+					<input type="text" class="form-control" id="factory-longitude" placeholder="Longitude" value="<%= trigger_longitude %>">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>Expiration</label>
+
+				<input type="number" class="form-control" id="factory-produce_expiration_time" placeholder="Expiration Time" min=0 value="<%= produce_expiration_time %>">
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="factory-produce_expire_on_view" <%= is_checked(produce_expire_on_view) %>>
+						Expire when viewed
+					</label>
+				</div>
+			</div>
+
+
+			<div class="form-group">
 				<button type="submit" class="btn btn-primary save">
 					Save
 				</button>
@@ -29,7 +92,7 @@
 		<div class="col-xs-6 padded">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					Location Trigger to Create
+					Trigger placed in Scene
 				</div>
 				<div class="panel-body">
 
@@ -41,21 +104,21 @@
 					</div>
 
 					<div class="form-group">
-						<label for="trigger-title">Map Title</label>
-						<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= trigger_title %>">
+						<label for="factory-title">Map Title</label>
+						<input type="text" class="form-control" id="factory-title" placeholder="Title" value="<%= trigger_title %>">
 					</div>
 
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="trigger-show_title" <%= is_checked(trigger_show_title) %>>
+							<input type="checkbox" id="factory-show_title" <%= is_checked(trigger_show_title) %>>
 							Show Title
 						</label>
 					</div>
 
 
 					<div class="form-group">
-						<label for="trigger-distance">Distance</label>
-						<input type="text" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= trigger_distance %>">
+						<label for="factory-distance">Distance</label>
+						<input type="text" class="form-control" id="factory-distance" placeholder="Distance" value="<%= trigger_distance %>">
 					</div>
 
 					<div class="thumbnail change-icon">
@@ -70,7 +133,7 @@
 
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="trigger-wiggle" <%= is_checked(trigger_wiggle) %>>
+							<input type="checkbox" id="factory-wiggle" <%= is_checked(trigger_wiggle) %>>
 							Animate Icon on Map
 						</label>
 					</div>
@@ -79,24 +142,24 @@
 						<label>
 							When in range, trigger:
 						</label>
-						<div class="btn-group btn-group-sm btn-group-justified trigger-trigger_on_enter">
+						<div class="btn-group btn-group-sm btn-group-justified factory-trigger_on_enter">
 							<label class="btn btn-info">
-								<input type="radio" name="trigger-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
+								<input type="radio" name="factory-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
 								<span class="glyphicon glyphicon-flash"></span>
 								Immediately
 							</label>
 							<label class="btn btn-info">
-								<input type="radio" name="trigger-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
+								<input type="radio" name="factory-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
 								<span class="glyphicon glyphicon-hand-up"></span>
 								By Touch
 							</label>
 						</div>
 					</div>
 
-					<div id="1-fields" class="enter-trigger-tab">
+					<div id="1-fields" class="enter-factory-tab">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" id="trigger-hidden" <%= is_checked(trigger_hidden) %>>
+								<input type="checkbox" id="factory-hidden" <%= is_checked(trigger_hidden) %>>
 								Hidden from Map on Client
 							</label>
 						</div>

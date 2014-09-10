@@ -21,6 +21,10 @@ define([
 					return value === "1" ? "checked" : "";
 				},
 
+				option_selected: function(boolean_statement) {
+					return boolean_statement ? "selected" : "";
+				},
+
 				radio_selected: function(boolean_statement) {
 					return boolean_statement ? "checked" : "";
 				},
@@ -35,6 +39,8 @@ define([
 		},
 
 		onShow: function() {
+			this.onChangeTriggerEnter();
+
 			this.$el.find('input[autofocus]').focus();
 		},
 
@@ -44,6 +50,7 @@ define([
 			"click .change-icon": "onClickChangeIcon",
 			"change @ui.name": "onChangeName",
 			"change @ui.description": "onChangeDescription",
+			"change input[name='factory-trigger_on_enter']": "onChangeTriggerEnter"
 		},
 
 		initialize: function(options) {
@@ -75,6 +82,25 @@ define([
 		onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
 		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
 
+
+		onChangeTriggerEnter: function() {
+			// Hide radio buttons and add bootstrap classes
+			//
+			var selected_radio = this.$el.find("input[name=factory-trigger_on_enter]:checked");
+
+			this.model.set("trigger_on_enter", selected_radio.val());
+
+			this.$el.find("input[name=factory-trigger_on_enter]").parent().removeClass("active");
+			selected_radio.parent().addClass("active");
+
+
+			// Hide all and open selected tab
+			//
+			this.$el.find('.enter-trigger-tab').hide();
+
+			var display_tab = "#" + selected_radio.val() + "-fields";
+			$(display_tab).show();
+		},
 
 		/* Icon Selection */
 

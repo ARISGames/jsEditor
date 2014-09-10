@@ -25,7 +25,7 @@
 
 	<div class="form-group">
 		<label for="trigger-distance">Distance</label>
-		<input type="text" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
+		<input type="number" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
 	</div>
 
 
@@ -89,6 +89,7 @@
 	</div>
 </div>
 
+<hr>
 
 <div class="form-group">
 	<button type="submit" class="btn btn-primary save">
