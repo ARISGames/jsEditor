@@ -4,10 +4,25 @@ define([
 	'backbone',
 	'text!templates/factory_editor.tpl',
 	'collections/media',
+	'collections/and_packages',
+	'collections/atoms',
+	'collections/items',
+	'collections/tags',
+	'collections/plaques',
+	'collections/dialogs',
+	'collections/web_pages',
+	'collections/quests',
+	'collections/web_hooks',
 	'models/game',
+	'models/requirement_package',
 	'views/media_chooser',
+	'views/requirements',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, Game, MediaChooserView, vent) {
+], function(_, $, Backbone, Template,
+	MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection,
+	Game, RequirementPackage,
+	MediaChooserView, RequirementsEditorView,
+	vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -48,8 +63,11 @@ define([
 		events: {
 			"click .save": "onClickSave",
 			"click .change-icon": "onClickChangeIcon",
+			"click .edit-requirements": "onClickEditRequirements",
+
 			"change @ui.name": "onChangeName",
 			"change @ui.description": "onChangeDescription",
+
 			"change input[name='factory-trigger_on_enter']": "onChangeTriggerEnter"
 		},
 
@@ -128,9 +146,57 @@ define([
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});
-		}
+		},
 
 
 		/* Requirements Editor */
+
+		onClickEditRequirements: function() {
+			var view = this;
+
+			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("trigger_requirement_root_package_id"), game_id: view.model.get("game_id")});
+
+			var game = new Game({game_id: view.model.get("game_id")});
+
+			var contents = {
+				items:      new ItemsCollection    ([], {parent: game}),
+				tags:       new TagsCollection     ([], {parent: game}),
+				plaques:    new PlaquesCollection  ([], {parent: game}),
+				dialogs:    new DialogsCollection  ([], {parent: game}),
+				web_pages:  new WebPagesCollection ([], {parent: game}),
+				quests:     new QuestsCollection   ([], {parent: game}),
+				hooks:      new WebHooksCollection ([], {parent: game})
+			};
+
+			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
+
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+			{
+				// Load associations into collections
+				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
+				requirement_package.set("and_packages", and_packages);
+
+				and_packages.each(function(and_package) {
+					var atoms = new AtomsCollection(and_package.get("atoms"));
+					and_package.set("atoms", atoms);
+				});
+
+				// launch editor
+				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
+
+				requirements_editor.on("cancel", function()
+				{
+					vent.trigger("application:popup:show", view, "Edit Factory");
+				});
+
+				requirements_editor.on("requirement_package:save", function(requirement_package)
+				{
+					view.model.set("trigger_requirement_root_package_id", requirement_package.id);
+					vent.trigger("application:popup:show", view, "Edit Factory");
+				});
+
+				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
+			});
+		}
 	});
 });
