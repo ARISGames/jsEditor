@@ -16,18 +16,20 @@ define([
 				content_visible:  this.isContentVisible (),
 				location_visible: this.isLocationVisible(),
 
-				content_items:     this.isContentItems(),
-				content_tags:      this.isContentTags(),
-				content_plaques:   this.isContentPlaques(),
-				content_dialogs:   this.isContentDialogs(),
-				content_web_pages: this.isContentWebPages(),
-				content_quests:    this.isContentQuests(),
-				content_web_hooks: this.isContentWebHooks(),
+				content_items:          this.isContentItems(),
+				content_tags:           this.isContentTags(),
+				content_plaques:        this.isContentPlaques(),
+				content_dialogs:        this.isContentDialogs(),
+				content_dialog_scripts: this.isContentDialogScripts(),
+				content_web_pages:      this.isContentWebPages(),
+				content_quests:         this.isContentQuests(),
+				content_web_hooks:      this.isContentWebHooks(),
 
 				items: this.items,
 				tags: this.tags,
 				plaques: this.plaques,
 				dialogs: this.dialogs,
+				dialog_scripts: this.dialog_scripts,
 				web_pages: this.web_pages,
 				quests: this.quests,
 				web_hooks: this.web_hooks
@@ -43,6 +45,7 @@ define([
 			this.tags = options.contents.tags;
 			this.plaques = options.contents.plaques;
 			this.dialogs = options.contents.dialogs;
+			this.dialog_scripts = options.contents.dialog_scripts;
 			this.web_pages = options.contents.web_pages;
 			this.quests = options.contents.quests;
 			this.web_hooks = options.contents.web_hooks;
@@ -130,6 +133,7 @@ define([
 				case "PLAYER_VIEWED_ITEM":
 				case "PLAYER_VIEWED_PLAQUE":
 				case "PLAYER_VIEWED_DIALOG":
+				case "PLAYER_VIEWED_DIALOG_SCRIPT":
 				case "PLAYER_VIEWED_WEB_PAGE":
 				case "PLAYER_HAS_COMPLETED_QUEST":
 				case "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK":
@@ -190,6 +194,16 @@ define([
 		isContentDialogs: function() {
 			switch(this.model.get("requirement")) {
 				case "PLAYER_VIEWED_DIALOG":
+					return true;
+
+				default:
+					return false;
+			}
+		},
+
+		isContentDialogScripts: function() {
+			switch(this.model.get("requirement")) {
+				case "PLAYER_VIEWED_DIALOG_SCRIPT":
 					return true;
 
 				default:

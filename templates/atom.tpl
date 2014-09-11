@@ -21,10 +21,11 @@
 					</optgroup>
 
 					<optgroup label="Game Object Interactions">
-						<option value="PLAYER_VIEWED_DIALOG"   <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG")   %>>Started Conversation</option>
-						<option value="PLAYER_VIEWED_PLAQUE"   <%= option_selected(requirement === "PLAYER_VIEWED_PLAQUE")   %>>Viewed Plaque</option>
-						<option value="PLAYER_VIEWED_ITEM"     <%= option_selected(requirement === "PLAYER_VIEWED_ITEM")     %>>Inspected Item</option>
-						<option value="PLAYER_VIEWED_WEB_PAGE" <%= option_selected(requirement === "PLAYER_VIEWED_WEB_PAGE") %>>Visited Web Page</option>
+						<option value="PLAYER_VIEWED_DIALOG"        <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG")        %>>Started Conversation</option>
+						<option value="PLAYER_VIEWED_DIALOG_SCRIPT" <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG_SCRIPT") %>>Seen Conversation Line</option>
+						<option value="PLAYER_VIEWED_PLAQUE"        <%= option_selected(requirement === "PLAYER_VIEWED_PLAQUE")        %>>Viewed Plaque</option>
+						<option value="PLAYER_VIEWED_ITEM"          <%= option_selected(requirement === "PLAYER_VIEWED_ITEM")          %>>Inspected Item</option>
+						<option value="PLAYER_VIEWED_WEB_PAGE"      <%= option_selected(requirement === "PLAYER_VIEWED_WEB_PAGE")      %>>Visited Web Page</option>
 					</optgroup>
 
 					<optgroup label="Notes">
@@ -122,6 +123,15 @@
 							<% dialogs.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
+								</option>
+							<% }); %>
+						<% } %>
+
+						<!-- Dialog Scripts -->
+						<% if(content_dialog_scripts) { %>
+							<% dialog_scripts.each(function(object) { %>
+								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
+									<%= object.get("text") %>
 								</option>
 							<% }); %>
 						<% } %>

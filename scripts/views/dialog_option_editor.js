@@ -12,6 +12,7 @@ define([
 	'collections/tags',
 	'collections/plaques',
 	'collections/dialogs',
+	'collections/dialog_scripts',
 	'collections/web_pages',
 	'collections/quests',
 	'collections/web_hooks',
@@ -26,6 +27,7 @@ define([
 	TagsCollection,
 	PlaquesCollection,
 	DialogsCollection,
+	DialogScriptsCollection,
 	WebPagesCollection,
 	QuestsCollection,
 	WebHooksCollection,
@@ -188,18 +190,19 @@ define([
 			var game = new Game({game_id: view.model.get("game_id")});
 
 			var contents = {
-				items:      new ItemsCollection    ([], {parent: game}),
-				tags:       new TagsCollection     ([], {parent: game}),
-				plaques:    new PlaquesCollection  ([], {parent: game}),
-				dialogs:    new DialogsCollection  ([], {parent: game}),
-				web_pages:  new WebPagesCollection ([], {parent: game}),
-				quests:     new QuestsCollection   ([], {parent: game}),
-				hooks:      new WebHooksCollection ([], {parent: game})
+				items:          new ItemsCollection         ([], {parent: game}),
+				tags:           new TagsCollection          ([], {parent: game}),
+				plaques:        new PlaquesCollection       ([], {parent: game}),
+				dialogs:        new DialogsCollection       ([], {parent: game}),
+				dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
+				web_pages:      new WebPagesCollection      ([], {parent: game}),
+				quests:         new QuestsCollection        ([], {parent: game}),
+				hooks:          new WebHooksCollection      ([], {parent: game})
 			};
 
 			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
