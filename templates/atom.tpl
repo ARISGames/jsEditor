@@ -101,7 +101,7 @@
 						<% if(content_tags) { %>
 							<% tags.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
-									<%= object.get("name") %>
+									<%= object.get("tag") %>
 								</option>
 							<% }); %>
 						<% } %>
