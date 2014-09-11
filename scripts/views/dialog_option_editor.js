@@ -1,5 +1,6 @@
 define([
 	'underscore',
+	'underscore.string',
 	'backbone',
 	'text!templates/dialog_option_editor.tpl',
 	'views/requirements',
@@ -15,7 +16,7 @@ define([
 	'collections/quests',
 	'collections/web_hooks',
 	'vent'
-], function(_, Backbone, Template,
+], function(_, _S, Backbone, Template,
 	RequirementsEditorView,
 	RequirementPackage,
 	Game,
@@ -75,9 +76,9 @@ define([
 				link_scripts:   this.model.get("link_type") === "DIALOG_SCRIPT",
 				link_plaques:   this.model.get("link_type") === "EXIT_TO_PLAQUE",
 				link_items:     this.model.get("link_type") === "EXIT_TO_ITEM",
-				link_web_pages: this.model.get("link_type") === "EXIT_WEB_PAGE",
-				link_dialogs:   this.model.get("link_type") === "EXIT_DIALOG",
-				link_tabs:      this.model.get("link_type") === "EXIT_TAB"
+				link_web_pages: this.model.get("link_type") === "EXIT_TO_WEB_PAGE",
+				link_dialogs:   this.model.get("link_type") === "EXIT_TO_DIALOG",
+				link_tabs:      this.model.get("link_type") === "EXIT_TO_TAB"
 			}
 		},
 

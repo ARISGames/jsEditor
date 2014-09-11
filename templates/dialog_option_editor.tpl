@@ -64,8 +64,9 @@
 			<% } %>
 
 			<% if(link_tabs) { %>
+				<!-- TODO make some styled dropdowns with type icons -->
 				<% tabs.each(function(tab) { %>
-					<option value="<%= tab.id %>" <%= option_selected(link_id === tab.id) %>><%= tab.get("name") %></option>
+					<option value="<%= tab.id %>" <%= option_selected(link_id === tab.id) %>><%= tab.get("name") || _.str.humanize(tab.get("type")) %></option>
 				<% }); %>
 			<% } %>
 
