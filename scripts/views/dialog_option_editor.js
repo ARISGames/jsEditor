@@ -128,7 +128,7 @@ define([
 		onClickSave: function() {
 			var view = this;
 
-			if(this.model.get("link_id") == 0) {
+			if(this.model.get("link_type") == "DIALOG_SCRIPT" && this.model.get("link_id") == 0) {
 				//create new script, set link id to that script
 
 				var script = new view.DialogScript();
