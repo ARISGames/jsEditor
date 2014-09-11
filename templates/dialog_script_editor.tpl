@@ -15,6 +15,8 @@
 	<textarea class="form-control text" rows=3><%= text %></textarea>
 </div>
 
+<hr>
+
 <div class="form-group">
 	<button type="submit" class="btn btn-primary save">
 		Save

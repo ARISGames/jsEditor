@@ -27,7 +27,6 @@
 
 <% if(link_options_visible) { %>
 	<div class="form-group">
-		<label>Destination</label>
 
 		<select class="form-control link-id">
 			<option value="0" selected disabled>- Select One -</option>
@@ -36,7 +35,7 @@
 				<% scripts.each(function(script) { %>
 					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(script.get("text"), 600) %></option>
 				<% }); %>
-					<option value="0">New Script</option>
+				<option value="0">- Add New Line -</option>
 			<% } %>
 
 			<% if(link_plaques) { %>
@@ -81,6 +80,8 @@
 	<input type="text" class="form-control" value="<%= link_info %>">
 </div>
 -->
+
+<hr>
 
 <div class="form-group">
 	<button type="submit" class="btn btn-primary save">

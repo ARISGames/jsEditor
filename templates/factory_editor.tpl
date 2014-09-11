@@ -25,8 +25,10 @@
 					<option value="ITEM"     <%= option_selected(object_type === "ITEM")     %>>Item</option>
 					<option value="WEB_PAGE" <%= option_selected(object_type === "WEB_PAGE") %>>Web Page</option>
 				</select>
+			</div>
 
-				<select class="form-control content" id="factory-object_id" style="margin-top: 0.5em">
+			<div class="form-group">
+				<select class="form-control content" id="factory-object_id">
 					<option value="0" selected disabled>- Select One -</option>
 
 					<!-- Items -->
