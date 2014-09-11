@@ -37,7 +37,7 @@ define([
 			latitude: "43.073",
 			longitude: "-89.4012",
 			distance: "5",
-			wiggle: "1",
+			wiggle: "0",
 			show_title: "1",
 			hidden: "0",
 			trigger_on_enter: "0",

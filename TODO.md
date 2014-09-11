@@ -27,6 +27,7 @@ FLOW
 
 TODO
 ----
+- Remove synchronous events if possible? Let collections be referenced, and views re-drawn if things are added (which needs to be handled anyways)
 - Organize view files into folders
 - fix media resetting values in view due to re-render without setting the values on model
 - Move trigger between scenes
@@ -51,11 +52,16 @@ TODO
 
 DOING
 -----
-- Edit options/dialogs
+- All location/factory fields in template
+- List game objects in select
+- Conditional hiding/showing for related fields, and option sets
+- Wire click/change events to all fields
+- Media / Requirements popup
+
+- click/change events/media popup for locations tab
+
 - Select characters
 - Create characters
-- Create options/dialogs
-- Game Settings
 - Fix clickable region for all lists (so its the whole thing)
 - non image media players
 - media list of references
