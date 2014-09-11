@@ -146,21 +146,21 @@
 					</div>
 
 					<div class="form-group">
-						<label for="factory-title">Map Title</label>
-						<input type="text" class="form-control" id="factory-title" placeholder="Title" value="<%= trigger_title %>">
+						<label for="factory-trigger-title">Map Title</label>
+						<input type="text" class="form-control" id="factory-trigger-title" placeholder="Title" value="<%= trigger_title %>">
 					</div>
 
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="factory-show_title" <%= is_checked(trigger_show_title) %>>
+							<input type="checkbox" id="factory-trigger-show_title" <%= is_checked(trigger_show_title) %>>
 							Show Title
 						</label>
 					</div>
 
 
 					<div class="form-group">
-						<label for="factory-distance">Distance</label>
-						<input type="text" class="form-control" id="factory-distance" placeholder="Distance" value="<%= trigger_distance %>">
+						<label for="factory-trigger-distance">Distance</label>
+						<input type="text" class="form-control" id="factory-trigger-distance" placeholder="Distance" value="<%= trigger_distance %>">
 					</div>
 
 					<div class="thumbnail change-icon">
@@ -175,7 +175,7 @@
 
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="factory-wiggle" <%= is_checked(trigger_wiggle) %>>
+							<input type="checkbox" id="factory-trigger-wiggle" <%= is_checked(trigger_wiggle) %>>
 							Animate Icon on Map
 						</label>
 					</div>
@@ -201,7 +201,7 @@
 					<div id="1-fields" class="enter-factory-trigger-tab">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" id="factory-hidden" <%= is_checked(trigger_hidden) %>>
+								<input type="checkbox" id="factory-trigger-hidden" <%= is_checked(trigger_hidden) %>>
 								Hidden from Map on Client
 							</label>
 						</div>

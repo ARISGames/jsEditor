@@ -58,9 +58,9 @@ define([
 
 
 		ui: {
+			/* Factory */
 			"name": "#factory-name",
 			"description": "#factory-description",
-
 			"max_production": "#factory-max_production",
 			"production_probability": "#factory-production_probability",
 			"seconds_per_production": "#factory-seconds_per_production",
@@ -75,7 +75,16 @@ define([
 			"production_bound_type": "#factory-production_bound_type",
 			"location_bound_type": "#factory-location_bound_type",
 
-			"produce_expire_on_view": "#factory-produce_expire_on_view"
+			"produce_expire_on_view": "#factory-produce_expire_on_view",
+
+
+			/* Trigger */
+			"trigger_title": "#factory-trigger-title",
+			"trigger_distance": "#factory-trigger-distance",
+
+			"trigger_show_title": "#factory-trigger-show_title",
+			"trigger_wiggle": "#factory-trigger-wiggle",
+			"trigger_hidden": "#factory-trigger-hidden"
 		},
 
 		onShow: function() {
@@ -110,8 +119,15 @@ define([
 
 			/* Trigger section */
 
-			"click .change-icon": "onClickChangeIcon",
-			"click .edit-requirements": "onClickEditRequirements",
+			"click .change-icon":            "onClickChangeIcon",
+			"click .edit-requirements":      "onClickEditRequirements",
+
+			"change @ui.trigger_title":      "onChangeTriggerTitle",
+			"change @ui.trigger_distance":   "onChangeTriggerDistance",
+
+			"change @ui.trigger_show_title": "onChangeTriggerShowTitle",
+			"change @ui.trigger_hidden":     "onChangeTriggerHidden",
+			"change @ui.trigger_wiggle":     "onChangeTriggerWiggle",
 
 			"change input[name='factory-trigger_on_enter']": "onChangeTriggerEnter"
 		},
@@ -147,7 +163,7 @@ define([
 
 		/* Field changes */
 
-		onChangeName:                  function() { this.model.set("name",                    this.ui.name.val())        },
+		onChangeName:                  function() { this.model.set("name",                    this.ui.name.val()) },
 		onChangeDescription:           function() { this.model.set("description",             this.ui.description.val()) },
 		onChangeMaxProduction:         function() { this.model.set("max_production",          this.ui.max_production.val()) },
 		onChangeProductionProbability: function() { this.model.set("production_probability",  this.ui.production_probability.val() / 100) },
@@ -157,6 +173,9 @@ define([
 		onChangeTriggerLatitude:       function() { this.model.set("trigger_latitude",        this.ui.trigger_latitude.val()) },
 		onChangeTriggerLongitude:      function() { this.model.set("trigger_longitude",       this.ui.trigger_longitude.val()) },
 		onChangeProduceExpirationTime: function() { this.model.set("produce_expiration_time", this.ui.produce_expiration_time.val()) },
+
+		onChangeTriggerTitle:          function() { this.model.set("trigger_title",           this.ui.trigger_title.val()) },
+		onChangeTriggerDistance:       function() { this.model.set("trigger_distance",        this.ui.trigger_distance.val()) },
 
 
 		/* Select Fields */
@@ -198,9 +217,21 @@ define([
 		/* Checkbox Fields */
 
 		onChangeProduceExpireOnView: function() {
-			this.model.set("produce_expire_on_view",  this.ui.produce_expire_on_view.is(":checked") ? "1" : "0");
+			this.model.set("produce_expire_on_view", this.ui.produce_expire_on_view.is(":checked") ? "1" : "0");
 		},
 
+
+		onChangeTriggerShowTitle: function() {
+			this.model.set("trigger_show_title", this.ui.trigger_show_title.is(":checked") ? "1" : "0");
+		},
+
+		onChangeTriggerHidden: function() {
+			this.model.set("trigger_hidden", this.ui.trigger_hidden.is(":checked") ? "1" : "0");
+		},
+
+		onChangeTriggerWiggle: function() {
+			this.model.set("trigger_wiggle", this.ui.trigger_wiggle.is(":checked") ? "1" : "0");
+		},
 
 		/* Radio Fields */
 
