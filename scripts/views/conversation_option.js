@@ -1,7 +1,7 @@
 define([
 	'underscore',
 	'backbone',
-	'text!templates/script_editor_option.tpl',
+	'text!templates/conversation_option.tpl',
 	'models/dialog_script',
 	'models/dialog_option',
 	'views/dialog_option_editor',
@@ -21,7 +21,7 @@ define([
 			this.scripts = options.scripts;
 			this.dialog  = options.dialog;
 			this.script_options = options.script_options;
-			this.script_editor_view = options.script_editor_view;
+			this.conversation_script_view = options.conversation_script_view;
 
 			this.contents = options.contents;
 
@@ -136,8 +136,8 @@ define([
 				if(dialog_script.get("rendered") === false) {
 					var child_view = this.$el.find(".child_script_"+this.model.cid);
 
-					var conversations_editor = new this.script_editor_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view, instance_parent_option:this.model});
-					conversations_editor.render();
+					var conversation_view = new this.conversation_script_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view, instance_parent_option:this.model});
+					conversation_view.render();
 				}
 			}
 		}

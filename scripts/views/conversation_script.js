@@ -1,13 +1,13 @@
 define([
 	'backbone',
-	'text!templates/script_editor.tpl',
+	'text!templates/conversation_script.tpl',
 	'models/dialog_option',
 	'models/dialog_script',
-	'views/script_editor_option',
+	'views/conversation_option',
 	'views/dialog_script_editor',
 	'vent'
-], function(Backbone, Template, DialogOption, DialogScript, ScriptEditorOptionView, DialogScriptEditorView, vent) {
-	var ScriptEditorView = Backbone.Marionette.CompositeView.extend({
+], function(Backbone, Template, DialogOption, DialogScript, ConversationOptionView, DialogScriptEditorView, vent) {
+	var ConversationScriptView = Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 		templateHelpers: function() {
 			return {
@@ -15,7 +15,7 @@ define([
 			}
 		},
 
-		itemView: ScriptEditorOptionView,
+		itemView: ConversationOptionView,
 		itemViewContainer: '.script_options',
 
 		itemViewOptions: function(model, index) {
@@ -23,7 +23,7 @@ define([
 				scripts: this.scripts,
 				script_options: this.script_options,
 				dialog: this.dialog,
-				script_editor_view: ScriptEditorView,
+				conversation_script_view: ConversationScriptView,
 				contents: this.contents
 			}
 		},
@@ -94,5 +94,5 @@ define([
 
 	});
 
-	return ScriptEditorView;
+	return ConversationScriptView;
 });

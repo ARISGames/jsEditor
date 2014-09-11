@@ -3,14 +3,14 @@ define([
 	'panzoom',
 	'backbone',
 	'text!templates/conversation_editor.tpl',
-	'views/script_editor',
+	'views/conversation_script',
 	'models/dialog_script',
 	'models/dialog_option',
 	'models/character',
 	'models/media',
 	'collections/dialog_options',
 	'vent'
-], function(_, $panzoom, Backbone, Template, ScriptEditorView, DialogScript, DialogOption, Character, Media, DialogOptionsCollection, vent) {
+], function(_, $panzoom, Backbone, Template, ConversationScriptView, DialogScript, DialogOption, Character, Media, DialogOptionsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -79,8 +79,8 @@ define([
 
 			if(this.model) {
 				this.model.set("root_node", true)
-				var script_editor = new ScriptEditorView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
-				script_editor.render();
+				var conversation_script = new ConversationScriptView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
+				conversation_script.render();
 
 				if(!this.centered_once) {
 					setTimeout(function() { view.centered_once = true; view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 200);
