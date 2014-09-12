@@ -61,8 +61,8 @@ define([
 				var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
 
 				//add 'null' character
-				var character = new Character({name: "You", dialog_character_id: "0"})
-				characters.push(character);
+				var character = new Character({name: "You", dialog_character_id: "0", title: "The Player"})
+				characters.unshift(character);
 
 				//add 'null' media
 				var character_media = new Media({media_id: "0"});
