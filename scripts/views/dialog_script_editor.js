@@ -39,7 +39,13 @@ define([
 			this.script_options = options.script_options;
 			this.instance_parent_option = options.instance_parent_option;
 
+			// Undo abilities for cancel button
+			//
 			this.previous_attributes = _.clone(this.model.attributes)
+
+			// Render when new characters created on left
+			//
+			this.characters.on("add", this.render);
 		},
 
 

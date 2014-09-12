@@ -80,7 +80,7 @@ define([
 						game: game
 					});
 				vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
-				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters}));
+				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters, model: game}));
 
 			}.bind(this));
 		}
