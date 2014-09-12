@@ -16,7 +16,7 @@ define([
 
 		tagName: 'tr',
 
-		// FIXME is this needed
+		// FIXME is this needed (especially if we live bind attributes and need cancel)
 		modelEvents: {
 			"change": "modelChanged"
 		},

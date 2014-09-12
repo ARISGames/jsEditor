@@ -23,6 +23,7 @@ define([
 				scripts: this.scripts,
 				script_options: this.script_options,
 				dialog: this.dialog,
+				characters: this.characters,
 				conversation_script_view: ConversationScriptView,
 				contents: this.contents
 			}
@@ -33,6 +34,7 @@ define([
 			this.dialog  = options.dialog;
 			this.instance_parent_option = options.instance_parent_option;
 			this.script_options = options.script_options;
+			this.characters = options.characters;
 			this.contents = options.contents;
 
 			// FIXME keep track of this in a parent view or controller/app
@@ -45,7 +47,7 @@ define([
 		},
 
 		onClickEdit: function() {
-			var script_editor = new DialogScriptEditorView({model: this.model, scripts:this.scripts, script_options:this.script_options, instance_parent_option:this.instance_parent_option});
+			var script_editor = new DialogScriptEditorView({model: this.model, scripts:this.scripts, characters: this.characters, script_options:this.script_options, instance_parent_option:this.instance_parent_option});
 			vent.trigger("application:info:show", script_editor);
 			return false;
 		},

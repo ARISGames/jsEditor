@@ -30,6 +30,8 @@ define([
 			this.web_pages = options.contents.web_pages;
 			this.dialogs   = options.contents.dialogs;
 			this.tabs      = options.contents.tabs;
+
+			this.characters = options.characters;
 		},
 
 
@@ -136,7 +138,7 @@ define([
 				if(dialog_script.get("rendered") === false) {
 					var child_view = this.$el.find(".child_script_"+this.model.cid);
 
-					var conversation_view = new this.conversation_script_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, el: child_view, instance_parent_option:this.model});
+					var conversation_view = new this.conversation_script_view({model: dialog_script, collection: dialog_script.get("dialog_options"), dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, characters: this.characters, contents: this.contents, el: child_view, instance_parent_option:this.model});
 					conversation_view.render();
 				}
 			}

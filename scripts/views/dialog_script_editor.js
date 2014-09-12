@@ -20,8 +20,21 @@ define([
 
 		template: _.template(Template),
 
+		templateHelpers: function() {
+			return {
+				is_new: this.model.isNew(),
+
+				option_selected: function(boolean_statement) {
+					return boolean_statement ? "selected" : "";
+				},
+
+				characters: this.characters
+			}
+		},
+
 
 		initialize: function(options) {
+			this.characters = options.characters;
 			this.scripts = options.scripts;
 			this.script_options = options.script_options;
 			this.instance_parent_option = options.instance_parent_option;
@@ -30,31 +43,29 @@ define([
 		},
 
 
-		templateHelpers: function() {
-			return {
-				is_new: this.model.isNew(),
-
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				}
-			}
-		},
-
 		ui: {
-			text: ".text"
+			text: ".text",
+			character: ".character"
 		},
+
 
 		events: {
-			"change @ui.text":    "onChangeText",
-			"click .save":        "onClickSave",
-			"click .cancel":      "onClickCancel",
-			"click .edit-events": "onClickEditEvents",
-			"click .delete-this": "onClickDeleteThis",
-			"click .delete-all":  "onClickDeleteAll",
+			"change @ui.text":      "onChangeText",
+			"change @ui.character": "onChangeCharacter",
+			"click .save":          "onClickSave",
+			"click .cancel":        "onClickCancel",
+			"click .edit-events":   "onClickEditEvents",
+			"click .delete-this":   "onClickDeleteThis",
+			"click .delete-all":    "onClickDeleteAll",
 		},
 
 		onChangeText: function() {
 			this.model.set("text", this.ui.text.val());
+		},
+
+		onChangeCharacter: function() {
+			var value = this.ui.character.find("option:selected").val();
+			this.model.set("dialog_character_id", value);
 		},
 
 		onClickSave: function() {

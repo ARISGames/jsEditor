@@ -52,16 +52,9 @@ TODO
 
 DOING
 -----
-- All location/factory fields in template
-- List game objects in select
-- Conditional hiding/showing for related fields, and option sets
-- Wire click/change events to all fields
-- Media / Requirements popup
-
-- click/change events/media popup for locations tab
-
 - Select characters
 - Create characters
+- Listen to field changes for locations pane.
 - Fix clickable region for all lists (so its the whole thing)
 - non image media players
 - media list of references
