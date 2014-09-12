@@ -12,7 +12,7 @@ define([
 	'collections/tags',
 	'collections/plaques',
 	'collections/dialogs',
-	'collections/dialog_scripts',
+	'collections/game_dialog_scripts',
 	'collections/web_pages',
 	'collections/quests',
 	'collections/web_hooks',
