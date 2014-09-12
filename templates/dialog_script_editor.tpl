@@ -11,6 +11,17 @@
 </div>
 
 <div class="form-group">
+	<label>Speaker</label>
+	<select class="form-control character">
+		<% characters.each(function(character) { %>
+			<option value="<%= character.id %>" <%= option_selected(dialog_character_id === character.id) %>>
+				<%= character.get("name") %>
+			</option>
+		<% }); %>
+	</select>
+</div>
+
+<div class="form-group">
 	<label>Text</label>
 	<textarea class="form-control text" rows=3><%= text %></textarea>
 </div>
