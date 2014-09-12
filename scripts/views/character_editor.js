@@ -14,6 +14,7 @@ define([
 
 		templateHelpers: function() {
 			return {
+				player_readonly: this.player_readonly() ? "disabled" : "",
 				is_new: this.model.isNew(),
 				media_thumbnail_url:  this.media.thumbnail()
 			}
@@ -43,11 +44,19 @@ define([
 			this.media = options.media;
 		},
 
+		player_readonly: function() {
+			return this.model.get("dialog_character_id") === "0";
+		},
+
 		onClickSave: function() {
 			var character = this.model;
 
 			character.save({}, {
-				success: function() {
+				create: function() {
+					vent.trigger("character:add", character);
+					vent.trigger("application:popup:hide");
+				},
+				update: function() {
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", character);
 					vent.trigger("application:popup:hide");
@@ -59,6 +68,8 @@ define([
 		onChangeTitle: function() { this.model.set("title", this.ui.title.val()); },
 
 		onClickChangeMedia: function() {
+			if(this.player_readonly()) { return }
+
 			var view = this;
 
 			var game  = new Game({game_id: this.model.get("game_id")});
