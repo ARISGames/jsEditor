@@ -6,11 +6,12 @@ define([
 	'marionette',
 	'models/session',
 	'text!templates/login.tpl',
+	'views/register',
 	'i18n',
 	'vent'
-], function(_, $, Cookie, Backbone, Marionette, session, Template, i18n, vent) {
+], function(_, $, Cookie, Backbone, Marionette, session, Template, RegisterView, i18n, vent) {
 
-	return Backbone.Marionette.ItemView.extend({
+	var LoginView = Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
 		templateHelpers: function() {
@@ -49,27 +50,12 @@ define([
 					password: this.ui.password.val()
 				});
 			}
-
-			// Don't submit form
-			event.preventDefault();
 		},
 
 		onClickRegister: function() {
-			// TODO add field validation
-			// and trigger event instead of relying on session.
+			var register_view = new RegisterView({login_view: LoginView});
 
-			if(this.ui.username.val() === "" || this.ui.password.val() === "") {
-				vent.trigger("application:alert", {text: "Username and Password can't be blank"});
-			}
-			else {
-				session.register({
-					username: this.ui.username.val(),
-					password: this.ui.password.val()
-				});
-			}
-
-			// Don't submit form
-			event.preventDefault();
+			vent.trigger("application.show", register_view);
 		},
 
 		onClickChangeLanguage: function(event) {
@@ -80,4 +66,6 @@ define([
 			window.location.reload();
 		}
 	});
+
+	return LoginView;
 });

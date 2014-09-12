@@ -44,7 +44,7 @@ define([
 			$.ajax({
 				url: config.aris_api_url + "users.createUser",
 				type: 'POST',
-				data: JSON.stringify({"user_name": options.username, "password": options.password, "permission": "read_write"}),
+				data: JSON.stringify({"user_name": options.username, "email": options.email, "password": options.password, "permission": "read_write"}),
 				processData: false,
 				success: function(data) {
 					var json = JSON.parse(data);
