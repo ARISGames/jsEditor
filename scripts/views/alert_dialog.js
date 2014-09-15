@@ -19,6 +19,11 @@ define([
 
 		initialize: function(options) {
 			this.text = options.text;
+		},
+
+		onShow: function() {
+			// gross
+			setTimeout(function() { this.$el.find('button[autofocus]').focus()}.bind(this), 300);
 		}
 
 	});

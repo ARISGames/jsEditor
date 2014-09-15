@@ -4,4 +4,6 @@
 
 <hr>
 
-<button type="button" class="btn btn-primary ok" style="width: 20%">OK</button>
+<form onsubmit="return false">
+	<button type="submit" autofocus class="btn btn-primary ok" style="width: 20%">OK</button>
+</form>
