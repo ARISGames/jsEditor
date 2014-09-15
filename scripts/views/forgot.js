@@ -6,9 +6,10 @@ define([
 	'marionette',
 	'models/session',
 	'text!templates/forgot.tpl',
+	'views/alert_dialog',
 	'i18n',
 	'vent'
-], function(_, $, Cookie, Backbone, Marionette, session, Template, i18n, vent) {
+], function(_, $, Cookie, Backbone, Marionette, session, Template, AlertDialog, i18n, vent) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
@@ -36,6 +37,8 @@ define([
 		},
 
 		onClickSend: function() {
+			var view = this;
+
 			if(this.ui.username.val() === "" && this.ui.email.val() === "") {
 				vent.trigger("application:alert", {text: "Enter an E-mail or Username"});
 			}
@@ -44,6 +47,15 @@ define([
 					user_name: this.ui.username.val(),
 					email:     this.ui.email.val()
 				});
+
+				var alert_dialog = new AlertDialog({text: "If an account exists with this username or email address an email will be sent with a link to reset your account password."});
+
+				alert_dialog.on("ok", function() {
+					vent.trigger("application:popup:hide");
+					view.onClickCancel();
+				});
+
+				vent.trigger("application:popup:show", alert_dialog, "Password Reset E-Mail Sent");
 			}
 		},
 

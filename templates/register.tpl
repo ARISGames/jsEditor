@@ -27,7 +27,7 @@
 			<input id="password-confirm" type="password" class="form-control" placeholder="<%= gettext("Password Confirmation") %>"></input>
 		</div>
 
-		<button id="register" type="button" class="btn btn-primary" style="width: 45%;">
+		<button id="register" type="submit" class="btn btn-primary" style="width: 45%;">
 			<%= gettext("Register") %>
 		</button>
 

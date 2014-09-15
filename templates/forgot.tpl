@@ -22,7 +22,7 @@
 		</div>
 
 
-		<button id="send" type="button" class="btn btn-primary" style="width: 45%;">
+		<button id="send" type="submit" class="btn btn-primary" style="width: 45%;">
 			<%= gettext("Send Reset Link") %>
 		</button>
 
