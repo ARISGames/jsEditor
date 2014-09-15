@@ -7,9 +7,10 @@ define([
 	'models/session',
 	'text!templates/login.tpl',
 	'views/register',
+	'views/forgot',
 	'i18n',
 	'vent'
-], function(_, $, Cookie, Backbone, Marionette, session, Template, RegisterView, i18n, vent) {
+], function(_, $, Cookie, Backbone, Marionette, session, Template, RegisterView, ForgotView, i18n, vent) {
 
 	var LoginView = Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
@@ -29,6 +30,7 @@ define([
 		events: {
 			"click #login":    "onClickLogin",
 			"click #register": "onClickRegister",
+			"click #forgot":   "onClickForgot",
 			"click .change-language": "onClickChangeLanguage"
 		},
 
@@ -56,6 +58,12 @@ define([
 			var register_view = new RegisterView({login_view: LoginView});
 
 			vent.trigger("application.show", register_view);
+		},
+
+		onClickForgot: function() {
+			var forgot_view = new ForgotView({login_view: LoginView});
+
+			vent.trigger("application.show", forgot_view);
 		},
 
 		onClickChangeLanguage: function(event) {

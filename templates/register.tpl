@@ -27,11 +27,11 @@
 			<input id="password-confirm" type="password" class="form-control" placeholder="<%= gettext("Password Confirmation") %>"></input>
 		</div>
 
-		<button id="register" type="button" class="btn btn-primary" style="width: 33%;">
+		<button id="register" type="button" class="btn btn-primary" style="width: 45%;">
 			<%= gettext("Register") %>
 		</button>
 
-		<button id="cancel" type="button" class="btn btn-default" style="width: 33%;">
+		<button id="cancel" type="button" class="btn btn-default pull-right" style="width: 45%;">
 			<%= gettext("Cancel") %>
 		</button>
 	</form>
