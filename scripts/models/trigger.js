@@ -27,23 +27,25 @@ define([
 			"show_title",
 			"hidden",
 			"trigger_on_enter",
-			"code",
+			"qr_code",
 			"icon_media_id"
         ],
 
-		defaults: {
-			title: "triggerTitle",
-			type: "LOCATION",
-			latitude: "43.073",
-			longitude: "-89.4012",
-			distance: "5",
-			wiggle: "0",
-			show_title: "1",
-			hidden: "0",
-			trigger_on_enter: "0",
-			code: "abc123",
-			requirement_root_package_id: "0",
-			icon_media_id: "0"
+		defaults: function() {
+			return {
+				title: "triggerTitle",
+				type: "LOCATION",
+				latitude: "43.073",
+				longitude: "-89.4012",
+				distance: "5",
+				wiggle: "0",
+				show_title: "1",
+				hidden: "0",
+				trigger_on_enter: "0",
+				qr_code: new Date().getTime(),
+				requirement_root_package_id: "0",
+				icon_media_id: "0"
+			}
 		}
 
 	});
