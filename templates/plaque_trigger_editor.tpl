@@ -132,7 +132,7 @@
 <div id="QR-fields" class="type-trigger-tab">
 	<div class="form-group">
 		<label for="trigger-code">QR Code</label>
-		<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= code %>">
+		<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= qr_code %>">
 		<div class="qr_image"></div>
 	</div>
 </div>

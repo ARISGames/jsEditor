@@ -169,7 +169,7 @@ define([
 							// FIXME temporary fix to grab fields only when visible
 							if(view.options.visible_fields === "trigger") {
 								trigger.set("title",       view.ui.title.val());
-								trigger.set("code",        view.ui.code.val());
+								trigger.set("qr_code",     view.ui.code.val());
 
 								trigger.set("wiggle",      view.ui.wiggle.is    (":checked") ? "1" : "0");
 								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
@@ -337,7 +337,7 @@ define([
 
 			if(this.options.visible_fields === "trigger") {
 				setTimeout(function() {view.renderMap()}, 300);
-				this.qr_code = new QRCode(this.$el.find('.qr_image').get(0), this.model.get("code"));
+				this.qr_code = new QRCode(this.$el.find('.qr_image').get(0), this.model.get("qr_code"));
 			}
 
 		},
