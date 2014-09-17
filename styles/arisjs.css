@@ -354,3 +354,13 @@ h4:hover .object-id {
 .script_options .script_option + .script_option {
   margin-left: 100px;
 }
+/* Modal spacing */
+.modal-dialog {
+  margin-top: 100px !important;
+}
+.aris-alert {
+  top: 25px;
+  position: absolute;
+  left: 50%;
+  z-index: 9000;
+}

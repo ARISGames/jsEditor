@@ -3,8 +3,9 @@ define([
 	'underscore',
 	'backbone',
 	'models/session',
-	'config'
-], function($, _, Backbone, session, config) {
+	'config',
+	'vent'
+], function($, _, Backbone, session, config, vent) {
 
 	return Backbone.Model.extend({
 
@@ -107,6 +108,7 @@ define([
 
 			// Build url from model attributes for update
 			if(method === "read") {
+				vent.trigger("application:working:show", "<span class='glyphicon glyphicon-refresh'></span> Loading");
 				var request_attributes = {}
 
 				request_attributes[model.idAttribute] = model.get(model.idAttribute);
@@ -114,7 +116,10 @@ define([
 
 				options.data = JSON.stringify(request_attributes);
 			}
-			else if(method === "update" || method === "create" || method === "delete") {
+			else if(method === "update" || method === "create" || method === "delete")
+			{
+				vent.trigger("application:working:show", "<span class='glyphicon glyphicon-floppy-disk'></span> Saving");
+
 				var model_attributes = {}
 				$.each(this.get_amfphp_url_attributes(), function(index, key) {
 
@@ -162,13 +167,17 @@ define([
 			// Handle amfPHP 200 based errors.
 			var success_callback = options.success;
 
+
 			// TODO make sure this does not break expected callback argument order for error vs success.
 			options.success = function(data, success, success_options) {
+
+				vent.trigger("application:working:hide");
+
 				if(data.faultCode) {
-					throw "amf Fault: "+data.faultString;
+					throw "amf Model Fault: "+data.faultString;
 				}
 				else if(data.returnCode != 0) {
-					throw "returnCode "+data.returnCode+": "+data.returnCodeDescription;
+					throw "Model returnCode "+data.returnCode+": "+data.returnCodeDescription;
 				}
 				else {
 					// Call original callback

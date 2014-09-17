@@ -127,6 +127,15 @@ define([
 		application.user_region.show(new UserNavMenuView());
 	});
 
+	vent.on("application:working:show", function(text) {
+		$('.aris-alert').html(text);
+		$('.aris-alert').show();
+	});
+
+	vent.on("application:working:hide", function() {
+		$('.aris-alert').delay(500).fadeOut(1000);
+	});
+
 	vent.on("application:alert", function(options) {
 		$('.alert-text').text(options.text)
 		$('.alert').show();

@@ -25,6 +25,8 @@ define([
 			var auth_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
 
 			if(method === "read") {
+				vent.trigger("application:working:show", "<span class='glyphicon glyphicon-refresh'></span> Loading");
+
 				var request_attributes = {}
 
 				// Add parent id into json request
@@ -43,6 +45,29 @@ define([
 			}
 
 			options.url = this.amfphp_url_root + this.amfphp_url;
+
+			// Handle amfPHP 200 based errors.
+			var success_callback = options.success;
+
+
+			// TODO make sure this does not break expected callback argument order for error vs success.
+			options.success = function(data, success, success_options) {
+
+				vent.trigger("application:working:hide");
+
+				if(data.faultCode) {
+					throw "amf Collection Fault: "+data.faultString;
+				}
+				else if(data.returnCode != 0) {
+					throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription;
+				}
+				else {
+					// Call original callback
+					if(success_callback) {
+						success_callback.apply(this, arguments);
+					}
+				}
+			}
 
 			return Backbone.sync.apply(this, arguments);
 		},
