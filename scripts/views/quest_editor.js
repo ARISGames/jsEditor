@@ -256,6 +256,13 @@ define([
 				events_editor.on("event_package:save", function(event_package)
 				{
 					view.model.set("active_event_package_id", event_package.id);
+
+					if(!view.model.isNew() && view.model.hasChanged("active_event_package_id"))
+					{
+						// Quicksave if moving from 0 so user has consistent experience
+						view.model.save({"active_event_package_id": event_package.id}, {patch: true});
+					}
+
 					vent.trigger("application:popup:show", view, "Edit Quest");
 				});
 
@@ -285,6 +292,13 @@ define([
 				events_editor.on("event_package:save", function(event_package)
 				{
 					view.model.set("complete_event_package_id", event_package.id);
+
+					if(!view.model.isNew() && view.model.hasChanged("complete_event_package_id"))
+					{
+						// Quicksave if moving from 0 so user has consistent experience
+						view.model.save({"complete_event_package_id": event_package.id}, {patch: true});
+					}
+
 					vent.trigger("application:popup:show", view, "Edit Quest");
 				});
 
@@ -338,6 +352,13 @@ define([
 				requirements_editor.on("requirement_package:save", function(requirement_package)
 				{
 					view.model.set("active_requirement_root_package_id", requirement_package.id);
+
+					if(!view.model.isNew() && view.model.hasChanged("active_requirement_root_package_id"))
+					{
+						// Quicksave if moving from 0 so user has consistent experience
+						view.model.save({"active_requirement_root_package_id": requirement_package.id}, {patch: true});
+					}
+
 					vent.trigger("application:popup:show", view, "Edit Quest");
 				});
 
@@ -387,6 +408,13 @@ define([
 				requirements_editor.on("requirement_package:save", function(requirement_package)
 				{
 					view.model.set("complete_requirement_root_package_id", requirement_package.id);
+
+					if(!view.model.isNew() && view.model.hasChanged("complete_requirement_root_package_id"))
+					{
+						// Quicksave if moving from 0 so user has consistent experience
+						view.model.save({"complete_requirement_root_package_id": requirement_package.id}, {patch: true});
+					}
+
 					vent.trigger("application:popup:show", view, "Edit Quest");
 				});
 

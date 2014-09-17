@@ -178,6 +178,7 @@ define([
 		},
 
 		onClickCancel: function() {
+			delete this.previous_attributes.requirement_root_package_id;
 			this.model.set(this.previous_attributes);
 			vent.trigger("application:info:hide");
 		},
@@ -224,6 +225,13 @@ define([
 				requirements_editor.on("requirement_package:save", function(requirement_package)
 				{
 					view.model.set("requirement_root_package_id", requirement_package.id);
+
+					if(view.model.hasChanged("requirement_root_package_id"))
+					{
+						// Quicksave if moving from 0 so user has consistent experience
+						view.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
+					}
+
 					vent.trigger("application:popup:hide");
 				});
 
