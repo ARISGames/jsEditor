@@ -98,6 +98,7 @@ define([
 			options.contentType = "application/x-www-form-urlencoded; charset=UTF-8";
 			options.data = null;
 			options.type = "POST";
+			options.jsonp = false;
 
 			// Collect needed values for url
 			var template_values = {}
