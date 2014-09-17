@@ -44,7 +44,16 @@ define([
 		},
 
 		onClickConversations: function() {
-			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/conversations", {trigger: true});
+			// FIXME quick fix for back navigation to same tab
+			var scene_url = "#games/"+this.model.get('game_id')+"/conversations";
+
+			console.log(window.location.hash, scene_url);
+
+			if(window.location.hash === scene_url) {
+				window.location.reload();
+			}
+
+			Backbone.history.navigate(scene_url, {trigger: true});
 		}
 	});
 });
