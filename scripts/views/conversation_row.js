@@ -20,7 +20,11 @@ define([
 	'collections/dialogs',
 	'collections/tabs',
 	'vent'
-], function($, _, Backbone, Template, ConversationEditorView, CharactersOrganizerView, Media, Game, Character, DialogScript, DialogOption, CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection, vent) {
+], function($, _, Backbone, Template,
+		ConversationEditorView, CharactersOrganizerView,
+		Media, Game, Character, DialogScript, DialogOption,
+		CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection,
+		vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

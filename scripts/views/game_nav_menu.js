@@ -17,6 +17,16 @@ define([
 			"click .conversations":"onClickConversations",
 		},
 
+		initialize: function(options) {
+			var view = this;
+
+			vent.on("application:active_nav", function(tab_name) {
+				view.options.active = tab_name;
+				view.$el.find('li').removeClass("active");
+				view.$el.find(tab_name).parent().addClass("active");
+			});
+		},
+
 		// TODO replace all of these with controller actions
 		//
 		onRender: function() {

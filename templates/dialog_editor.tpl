@@ -45,7 +45,7 @@
 		</div>
 
 		<div class="col-xs-6 padded">
-			<button type="button" class="btn btn-info btn-block edit-script" disabled>
+			<button type="button" class="btn btn-info btn-block edit-script">
 				<span class="glyphicon glyphicon-file"></span>
 				Script Editor
 			</button>
