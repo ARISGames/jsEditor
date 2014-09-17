@@ -138,9 +138,23 @@ define([
 
 				options.data = JSON.stringify(model_attributes);
 			}
+			else if(method === "patch") {
+				var patch_attributes = {};
+
+				_.extend(patch_attributes, auth_data);
+				_.extend(patch_attributes, options.attrs);
+
+				// FIXME this is just to save triggers as a patch for now
+				var id_attribute = model.idAttribute;
+				patch_attributes[model.idAttribute] = model.get(model.idAttribute);
+				patch_attributes["game_id"] = model.get("game_id");
+
+				options.data = JSON.stringify(patch_attributes);
+			}
 
 			// Render url with values
-			var url      = this.amfphp_url_root + this.amfphp_url_templates[method] + this.amfphp_url_patterns[method];
+			var url_method = method === "patch" ? "update" : method;
+			var url      = this.amfphp_url_root + this.amfphp_url_templates[url_method] + this.amfphp_url_patterns[url_method];
 			var template = _.template(url);
 			options.url  = template(template_values);
 
