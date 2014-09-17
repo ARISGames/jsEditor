@@ -30,8 +30,8 @@
 		<div style="margin:0px auto; width:0px; height:40px; border-left:2px solid black;">
 		</div>
 
-		<div class="script-option-add add-option" style="position:absolute; top:10px; right:80px;">
-			<span class="glyphicon glyphicon-plus-sign"></span>
+		<div class="script-option-add add-option conversation-button" style="position:absolute; top:10px; right:80px;">
+			<span class="glyphicon glyphicon-chevron-right"></span>
 		</div>
 	</div>
 
