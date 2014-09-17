@@ -28,4 +28,7 @@ checksum:
 	@md5sum styles/arisjs.css
 	@md5sum dist/aris.js
 
-all: css build checksum
+rebase:
+	git rebase -f master
+
+all: rebase css build checksum
