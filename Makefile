@@ -5,7 +5,7 @@ help:
 	@echo " rebase: force rebase over build branch"
 	@echo "    css: compile less"
 	@echo "  build: optimize all js into one file with requireJS"
-	@echo "    all: compile/optimize but no deploy"
+	@echo "    all: rebase compile optimize"
 	@echo " heroku: push build branch to heroku"
 	@echo " deploy: push build branch to aris"
 	@echo ""
