@@ -112,10 +112,14 @@ define([
 			character.set("media", media);
 			this.model.set("character", character);
 
+
 			// FIXME make them temporary until 'saved'
 			$.when(this.model.save()).done(function () {
 					view.dialog.set("intro_dialog_script_id", view.model.id);
 					dialog_option.set("parent_dialog_script_id", view.model.id);
+
+					view.incoming_options.scripts.add(view.model);
+					view.incoming_options.script_options.add(dialog_option);
 
 					$.when(view.dialog.save(), dialog_option.save()).done(view.render);
 			});
