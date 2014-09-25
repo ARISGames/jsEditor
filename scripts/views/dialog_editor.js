@@ -154,6 +154,7 @@ define([
 					});
 				vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
 				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters, model: game}));
+				vent.trigger("application:info:hide");
 
 				// FIXME hack to launch editor
 
