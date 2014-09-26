@@ -12,7 +12,21 @@
 	</div>
 
 	<div class="form-group">
-		<img class="upload-preview" src="">
+		<div class="audio-preview media-previewer" style="display: none;">
+			<audio controls class="upload-preview">
+				Audio Format Unsupported in this Browser.
+			</audio>
+		</div>
+
+		<div class="video-preview media-previewer" style="display: none;">
+			<video controls class="upload-preview">
+				Video Format Unsupported in this Browser
+			</video>
+		</div>
+
+		<div class="image-preview media-previewer" style="display: none;">
+			<img class="upload-preview">
+		</div>
 	</div>
 
 

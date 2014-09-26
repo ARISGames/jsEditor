@@ -40,6 +40,7 @@ define([
 
 			// Preview
 			this.ui.preview.attr("src", data);
+			this.switchMediaPreviewer();
 
 			// strip base64 header
 			var start = data.indexOf(",") + 1;
@@ -63,6 +64,14 @@ define([
 			});
 
 			event.preventDefault();
+		},
+
+		switchMediaPreviewer: function() {
+			this.$el.find('.media-previewer').hide();
+
+			if     (this.model.is_video()) { this.$el.find('.video-preview').show(); }
+			else if(this.model.is_audio()) { this.$el.find('.audio-preview').show(); }
+			else                           { this.$el.find('.image-preview').show(); }
 		}
 	});
 });

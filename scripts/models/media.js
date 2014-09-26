@@ -41,14 +41,24 @@ define([
 		},
 
 
+		is_video: function() {
+			return this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v|3gp)/);
+		},
+
+		is_audio: function() {
+			return this.get("file_name").match(/\.(wav|mp3|alac|flac|caf|m4a)/);
+		},
+
+
+		// TODO show video in place!
 		thumbnail: function() {
 			if(this.id === "0") {
 				return "images/default128.png";
 			}
-			else if(this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v)/)) {
+			else if(this.is_video()) {
 				return "images/video128.png";
 			}
-			else if(this.get("file_name").match(/\.(wav|mp3|alac|flac|caf|m4a)/)) {
+			else if(this.is_audio()) {
 				return "images/audio128.png";
 			}
 			else {
