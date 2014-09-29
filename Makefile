@@ -32,10 +32,10 @@ heroku:
 
 deploy:
 	@echo "Pushing to Github."
-	@git push -f
+	@git push -f 1>/dev/null
 	@echo "   (Done)"
 	@echo "Deploying to server."
-	@ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build"
+	@ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build" 1>/dev/null
 	@echo "   (Done)"
 
 render:
