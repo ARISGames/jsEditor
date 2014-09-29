@@ -86,6 +86,15 @@ define([
 				}
 			}
 
+			options.xhrFields = {
+				onprogress: function (e) {
+					console.log("progress");
+					if (e.lengthComputable) {
+						console.log(e.loaded / e.total * 100 + '%');
+					}
+				}
+			}
+
 			return Backbone.Model.prototype.save.call(this, attrs, options);
 		},
 
