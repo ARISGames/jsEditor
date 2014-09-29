@@ -296,21 +296,25 @@ h4:hover .object-id {
 .quest-editor .padded,
 .media-editor .padded,
 .object-editor .padded,
+.games-list-container .padded,
 .events-editor .event-table-header div,
 .quest-editor .event-table-header div,
 .media-editor .event-table-header div,
 .object-editor .event-table-header div,
+.games-list-container .event-table-header div,
 .events-editor .event-table-header label,
 .quest-editor .event-table-header label,
 .media-editor .event-table-header label,
-.object-editor .event-table-header label {
+.object-editor .event-table-header label,
+.games-list-container .event-table-header label {
   padding-right: 15px;
   padding-left: 15px;
 }
 .events-editor .padded-small,
 .quest-editor .padded-small,
 .media-editor .padded-small,
-.object-editor .padded-small {
+.object-editor .padded-small,
+.games-list-container .padded-small {
   padding-right: 5px;
   padding-left: 5px;
 }

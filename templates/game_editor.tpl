@@ -62,7 +62,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="type">Type</label>
+		<label for="type">Game Category</label>
 
 		<select class="form-control" id="game-type">
 			<option value="LOCATION" <%= option_selected(type === "LOCATION") %>>To be played around a specific location</option>
@@ -73,7 +73,14 @@
 
 	<div class="form-group">
 		<label for="game-intro_scene_id">Intro Scene</label>
-		<input type="text" class="form-control" id="game-intro_scene_id" placeholder="0" value="<%= intro_scene_id %>">
+
+		<select class="form-control intro_scene_id">
+			<option value="0" selected disabled>- Select One -</option>
+
+			<% scenes.each(function(scene) { %>
+				<option value="<%= scene.id %>" <%= option_selected(intro_scene_id === scene.id) %>><%= scene.get("name") %></option>
+			<% }); %>
+		</select>
 	</div>
 
 
@@ -173,7 +180,7 @@
 
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			Inventory
+			Player Inventory
 		</div>
 		<div class="panel-body">
 

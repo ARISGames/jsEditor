@@ -26,7 +26,9 @@ define([
 
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
-				}
+				},
+
+				scenes: this.scenes
 			};
 		},
 
@@ -61,8 +63,9 @@ define([
 		},
 
 		initialize: function(options) {
-			this.icon    = options.icon;
-			this.media   = options.media;
+			this.icon   = options.icon;
+			this.media  = options.media;
+			this.scenes = options.scenes;
 		},
 
 		onClickIcon: function() {

@@ -47,15 +47,18 @@
 		<div class="btn-group btn-group-sm btn-group-justified item-types">
 			<label class="btn btn-info">
 				<input type="radio" name="item-type" value="NORMAL" <%= radio_selected(type === "NORMAL") %>>
-				Normal
+				<span class="glyphicon glyphicon-stop"></span>
+				&nbsp;Normal
 			</label>
 			<label class="btn btn-info">
 				<input type="radio" name="item-type" value="ATTRIB" <%= radio_selected(type === "ATTRIB") %>>
-				Attribute
+				<span class="glyphicon glyphicon-stats"></span>
+				&nbsp;Attribute
 			</label>
 			<label class="btn btn-info">
 				<input type="radio" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
-				Web URL
+				<span class="glyphicon glyphicon-globe"></span>
+				&nbsp;Web URL
 			</label>
 		</div>
 	</div>
