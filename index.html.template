@@ -8,12 +8,12 @@
 		<!-- Bootstrap CDN CSS -->
 		<!-- TODO failover require <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> -->
 		<link rel="stylesheet" href="styles/bootstrap.css">
-		<link rel="stylesheet" href="styles/arisjs.css?c54d765a87cb4fe369c46d9bd2e7315e">
+		<link rel="stylesheet" href="styles/arisjs.css?{{css_signature}}">
 
 		<title>ARIS Editor</title>
 
 		<!-- Built:
-			Mon Sep 29 12:10:06 CDT 2014
+			{{build_date}}
 		-->
 	</head>
 
@@ -91,7 +91,7 @@
 		<!-- google maps api. move to requireJS -->
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
-		<script src="dist/aris.js?f3c5b795cc701a75834adae6bd6f9a78"></script>
+		<script src="dist/aris.js?{{js_signature}}"></script>
 		<script>
 		  require(['main']);
 		</script>

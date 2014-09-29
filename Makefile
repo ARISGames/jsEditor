@@ -18,8 +18,6 @@ build:
 	r.js -o build.js
 	@echo "Built! Make sure to check the result into the build branch, not master"
 	@echo ""
-	@date
-	@echo ""
 
 heroku:
 	git push -f heroku build:master
@@ -28,13 +26,13 @@ deploy:
 	git push -f
 	ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build"
 
-checksum:
-	@echo "-------------------"
-	@echo ""
-	@md5sum styles/arisjs.css
-	@md5sum dist/aris.js
+render:
+	@echo "-------------------------------"
+	@echo "Render index.html from template"
+	@bin/render_index.sh
+
 
 rebase:
 	git rebase -f master
 
-all: rebase css build checksum
+all: rebase css build render
