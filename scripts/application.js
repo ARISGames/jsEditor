@@ -145,6 +145,11 @@ define([
 		//vent.trigger("application:popup:show", new AlertView({text: options.text}));
 	});
 
+	vent.on("application:alert:hide", function() {
+		$('.alert-text').text('')
+		$('.alert').hide();
+	});
+
 
 	// Redirect back to intended destination after authorization
 	//

@@ -1,5 +1,10 @@
 <form role="form">
 
+	<div class="alert alert-warning alert-dismissable" style="display:none">
+		<button type="button" class="close" aria-hidden="true">&times;</button>
+		<div class="alert-text"></div>
+	</div>
+
 	<div class="form-group">
 		<label for="media-name">Name</label>
 		<input type="text" autofocus class="form-control" id="media-name" placeholder="Name" value="<%= name %>">
@@ -31,6 +36,12 @@
 
 
 	<div class="form-group">
+		<div class="progress" style="opacity: 0">
+			<div class="progress-bar bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%; text-align: left;">
+				&nbsp;<span class="bar-text">0%</span>
+			</div>
+		</div>
+
 		<button type="submit" class="btn btn-primary save">Save</button>
 	</div>
 </form>

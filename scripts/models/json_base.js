@@ -86,18 +86,15 @@ define([
 				}
 			}
 
-			options.xhr: function() {
-				// custom XMLHttpRequest
-				//
+			options.xhr = function() {
 				var xhr = $.ajaxSettings.xhr();
 				if(xhr.upload) {
-					if(options.onprogress) {
-						xhr.upload.addEventListener('progress', options.onprogress, false);
+					if(options.progress) {
+						xhr.upload.addEventListener('progress', options.progress, false);
 					}
 				}
 				return xhr;
 			}
-
 
 			return Backbone.Model.prototype.save.call(this, attrs, options);
 		},
@@ -191,7 +188,12 @@ define([
 					throw "amf Model Fault: "+data.faultString;
 				}
 				else if(data.returnCode != 0) {
-					throw "Model returnCode "+data.returnCode+": "+data.returnCodeDescription;
+					if(options.amf_error) {
+						options.amf_error.apply(this, [data.returnCode, data.returnCodeDescription]);
+					}
+					else {
+						throw "Model returnCode "+data.returnCode+": "+data.returnCodeDescription;
+					}
 				}
 				else {
 					// Call original callback
