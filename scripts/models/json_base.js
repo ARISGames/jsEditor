@@ -86,14 +86,18 @@ define([
 				}
 			}
 
-			options.xhrFields = {
-				onprogress: function (e) {
-					console.log("progress");
-					if (e.lengthComputable) {
-						console.log(e.loaded / e.total * 100 + '%');
+			options.xhr: function() {
+				// custom XMLHttpRequest
+				//
+				var xhr = $.ajaxSettings.xhr();
+				if(xhr.upload) {
+					if(options.onprogress) {
+						xhr.upload.addEventListener('progress', options.onprogress, false);
 					}
 				}
+				return xhr;
 			}
+
 
 			return Backbone.Model.prototype.save.call(this, attrs, options);
 		},
