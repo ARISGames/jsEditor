@@ -16,7 +16,7 @@ css:
 
 build:
 	r.js -o build.js
-	@echo "Built! Make sure to check the result into the build branch, not master"
+	@echo "Built application into dist/aris.js"
 	@echo ""
 
 heroku:
@@ -27,12 +27,13 @@ deploy:
 	ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build"
 
 render:
-	@echo "-------------------------------"
-	@echo "Render index.html from template"
 	@bin/render_index.sh
-
+	@echo "Rendered template into index.html"
 
 rebase:
 	git rebase -f master
 
-all: rebase css build render
+note:
+	@echo "*** Now commit to the build branch and make deploy!"
+
+all: rebase css build render note
