@@ -33,7 +33,7 @@ heroku:
 deploy:
 	@echo "Deploying to server."
 	@git push -f
-	ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build"
+	@ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build"
 	@echo "   (Done)"
 
 render:
@@ -42,7 +42,9 @@ render:
 	@echo "   (Done)"
 
 rebase:
-	git rebase -f master
+	@echo "Rebasing master onto build branch."
+	@git rebase -f master
+	@echo "   (Done)"
 
 note:
 	@echo ""
