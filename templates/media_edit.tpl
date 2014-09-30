@@ -6,12 +6,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="uploader">File</label>
-		<input type="file" id="uploader" name="uploader">
-		<p class="help-block">Select an image to upload.</p>
-	</div>
-
-	<div class="form-group">
+		<label>Preview</label>
 		<div class="audio-preview media-previewer" style="display: none;">
 			<audio controls class="upload-preview">
 				<source src="<%= url %>"/>
