@@ -25,7 +25,7 @@ define([
 		tagName: 'tr',
 
 		onClickEditDialog: function() {
-			vent.trigger("application:popup:show", new MediaEditView({model: this.model}));
+			vent.trigger("application:popup:show", new MediaEditView({model: this.model}), "Edit Media");
 		}
 	});
 });
