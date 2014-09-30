@@ -7,6 +7,7 @@ define([
 	'collections/items',
 	'models/event_package',
 	'models/game',
+	'models/dialog_option',
 	'views/events',
 	'vent'
 ], function(_, Backbone, Template,
@@ -14,6 +15,7 @@ define([
 	ItemsCollection,
 	EventPackage,
 	Game,
+	DialogOption,
 	EventsEditorView,
 	vent) {
 	return Backbone.Marionette.ItemView.extend({
@@ -32,7 +34,6 @@ define([
 			}
 		},
 
-
 		initialize: function(options) {
 			this.characters = options.characters;
 			this.scripts = options.scripts;
@@ -48,12 +49,10 @@ define([
 			this.characters.on("add", this.render);
 		},
 
-
 		ui: {
 			text: ".text",
 			character: ".character"
 		},
-
 
 		events: {
 			"change @ui.text":      "onChangeText",
@@ -61,8 +60,7 @@ define([
 			"click .save":          "onClickSave",
 			"click .cancel":        "onClickCancel",
 			"click .edit-events":   "onClickEditEvents",
-			"click .delete-this":   "onClickDeleteThis",
-			"click .delete-all":    "onClickDeleteAll",
+			"click .delete":        "onClickDelete"
 		},
 
 		onChangeText: function() {
@@ -125,15 +123,48 @@ define([
 			});
 		},
 
-		onClickDeleteThis: function() {
-			if(!this.instance_parent_option) return;
-			this.script_options.remove(this.instance_parent_option);
-			this.instance_parent_option.destroy({
-				success: function() {
-					vent.trigger("conversation:update");
-					vent.trigger("application:info:hide");
+		onClickDelete: function() {
+			if(!this.instance_parent_option) return; //actually should do something else
+			var view = this;
+
+			var copied_child_options = [];
+			var current_child_options = view.script_options.where({parent_dialog_script_id:view.model.get("dialog_script_id")});
+			for(var i = 0; i < current_child_options.length; i++) {
+				copied_child_options[i] = new DialogOption();
+				copied_child_options[i].set("game_id",    current_child_options[i].get("game_id"));
+				copied_child_options[i].set("dialog_id",  current_child_options[i].get("dialog_id"));
+				copied_child_options[i].set("link_type",  current_child_options[i].get("link_type"));
+				copied_child_options[i].set("link_id",    current_child_options[i].get("link_id"));
+				copied_child_options[i].set("prompt",     current_child_options[i].get("prompt"));
+				copied_child_options[i].set("sort_index", current_child_options[i].get("sort_index"));
+				copied_child_options[i].set("parent_dialog_script_id", view.instance_parent_option.get("parent_dialog_script_id"));
+			}
+
+			//poor man's map
+			function saveRemainingChildOptions()
+			{
+				if(copied_child_options.length > 0) {
+					copied_child_options[0].save({}, {
+						success: function() {
+							view.script_options.push(copied_child_options[0]);
+							copied_child_options.splice(0,1);
+							saveRemainingChildOptions();
+						}
+					});
 				}
-			});
+				else {
+					view.script_options.remove(view.instance_parent_option);
+					view.instance_parent_option.destroy({
+						success: function() {
+							vent.trigger("conversation:update");
+							vent.trigger("application:info:hide");
+						}
+					});
+				}
+			}
+
+			saveRemainingChildOptions();
+			return false;
 		},
 
 		onClickDeleteAll: function() {
