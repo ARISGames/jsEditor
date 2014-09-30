@@ -3,12 +3,6 @@
 <h4>Edit Line <span class="object-id text-muted"><%= is_new ? "" : dialog_script_id %></span></h4>
 
 <form class="form" role="form" onsubmit="return false;">
-<div class="form-group">
-	<button type="button" class="btn btn-block btn-info edit-events">
-		<span class="glyphicon glyphicon-user"></span>
-		Modify Player
-	</button>
-</div>
 
 <div class="form-group">
 	<label>Speaker</label>
@@ -24,6 +18,13 @@
 <div class="form-group">
 	<label>Text</label>
 	<textarea class="form-control text" rows=3><%= text %></textarea>
+</div>
+
+<div class="form-group">
+	<button type="button" class="btn btn-block btn-info edit-events" data-toggle="popover" data-html="true" title="When Player reads this line." data-content="Will give and take <strong>Items</strong> or set Player <strong>Attributes</strong>">
+		<span class="glyphicon glyphicon-user"></span>
+		Modify Player
+	</button>
 </div>
 
 <hr>

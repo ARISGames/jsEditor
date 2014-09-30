@@ -49,6 +49,10 @@ define([
 			this.characters.on("add", this.render);
 		},
 
+		onRender: function() {
+			this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover','placement': 'top'});
+		},
+
 		ui: {
 			text: ".text",
 			character: ".character"
