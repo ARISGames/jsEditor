@@ -31,8 +31,16 @@
 		<span class="glyphicon glyphicon-picture"></span>
 		<span class="nav-name"> Media</span>
 	</a></li>
-	<li><a class="settings">
-		<span class="glyphicon glyphicon-cog"></span>
-		<span class="nav-name"> Game Settings</span>
-	</a></li>
+	<li class="dropdown">
+		<a class="game dropdown-toggle" data-toggle="dropdown">
+			<span class="glyphicon glyphicon-cog"></span>
+			<span class="nav-name"> Game</span>
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<li class="settings" style="text-align: left;"><a><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+			<li style="text-align: left;"><a><span class="glyphicon glyphicon-share"></span> Sharing</a></li>
+			<li style="text-align: left;"><a><span class="glyphicon glyphicon-list"></span> Tabs</a></li>
+		</ul>
+	</li>
 </ul>

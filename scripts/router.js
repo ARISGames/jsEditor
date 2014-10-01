@@ -124,7 +124,7 @@ define([
 					$.when(icons.icon.fetch(), icons.media.fetch(), scenes.fetch()).done(function()
 					{
 						vent.trigger("application.show",     new GameEditorView (_.extend({model: game, scenes: scenes}, icons)));
-						vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".settings"}));
+						vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".game"}));
 						vent.trigger("application:info:hide");
 						vent.trigger("application:list:hide");
 					});
