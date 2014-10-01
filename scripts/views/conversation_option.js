@@ -48,7 +48,7 @@ define([
 		},
 
 		onClickEdit: function() {
-			var option_editor = new DialogOptionEditor({model: this.model, scripts: this.scripts, script_options: this.script_options, contents: this.contents, DialogScript: DialogScript, DialogOption: DialogOption});
+			var option_editor = new DialogOptionEditor({model: this.model, dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, DialogScript: DialogScript, DialogOption: DialogOption});
 			vent.trigger("application:info:show", option_editor);
 			return false;
 		},

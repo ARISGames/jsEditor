@@ -4,6 +4,7 @@ define([
 	'backbone',
 	'text!templates/dialog_option_editor.tpl',
 	'views/requirements',
+	'views/alert_dialog',
 	'models/requirement_package',
 	'models/game',
 	'collections/and_packages',
@@ -19,6 +20,7 @@ define([
 	'vent'
 ], function(_, _S, Backbone, Template,
 	RequirementsEditorView,
+	AlertDialog,
 	RequirementPackage,
 	Game,
 	AndPackagesCollection,
@@ -42,6 +44,7 @@ define([
 			this.DialogScript = options.DialogScript;
 			this.DialogOption = options.DialogOption;
 
+			this.dialog = options.dialog;
 			this.scripts = options.scripts;
 			this.script_options = options.script_options;
 
@@ -240,13 +243,68 @@ define([
 		},
 
 		onClickDelete: function() {
-			this.script_options.remove(this.model);
-			this.model.destroy({
-				success: function() {
-					vent.trigger("conversation:update");
-					vent.trigger("application:info:hide");
+                  var view = this;
+
+  //Dry Run / Count deletes
+
+  //Set up regular old arrays of nodes/edges
+  var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
+  var optmap     = []; for(var i = 0; i < opts.length;                i++) { optmap[parseInt(opts[i].get("dialog_option_id"))] = opts[i]; } //opts map for access
+  var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
+  var scriptmap  = []; for(var i = 0; i < scripts.length;             i++) { scriptmap[parseInt(scripts[i].get("dialog_script_id"))] = scripts[i]; } //scripts map for access
+
+  var vmap = []; for(var i = 0; i < scripts.length; i++) { vmap[parseInt(scripts[i].get("dialog_script_id"))] = false; } //visited map
+
+  //traverse tree, marking vmap
+  var parents = [scriptmap[parseInt(view.dialog.get("intro_dialog_script_id"))]];
+  var children;
+  while(parents.length > 0)
+  {
+    //mark visited
+    vmap[parseInt(parents[0].get("dialog_script_id"))] = true;
+
+    //find children
+    children = [];
+    for(var i = 0; i < opts.length; i++) if(parseInt(opts[i].get("parent_dialog_script_id")) == parseInt(parents[0].get("dialog_script_id"))) children.push(opts[i]);
+
+    for(var i = 0; i < children.length; i++)
+    {
+      //add children scripts to be visited iff
+      if(children[i].get("link_type") == "DIALOG_SCRIPT" && //link type is script (duh)
+         parseInt(children[i].get("dialog_option_id")) != parseInt(view.model.get("dialog_option_id")) && //and option ISN'T option to be deleted (THIS option)
+         !vmap[parseInt(scriptmap[parseInt(children[i].get("link_id"))].get("dialog_script_id"))]) //and script not yet visited
+        parents.push(scriptmap[parseInt(children[i].get("link_id"))]);
+    }
+
+    parents.splice(0,1);
+  }
+
+  var TBD = []; //To Be Deleted (caps cuz important)
+  for(var i = 0; i < scripts.length; i++) if(!vmap[parseInt(scripts[i].get("dialog_script_id"))]) TBD.push(scripts[i]);
+
+  //for(var i = 0; i < TBD.length; i++) console.log("Q'd4Delete: "+TBD[i].get("dialog_script_id"));
+
+
+			var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
+
+			alert_dialog.on("danger", function() {
+				vent.trigger("application:popup:hide");
+				view.script_options.remove(view.model);
+				view.model.destroy({
+					success: function() {
+						vent.trigger("conversation:update");
+						vent.trigger("application:info:hide");
+					}
+				});
+				for(var i = 0; i < TBD.length; i++)
+				{
+					view.scripts.remove(TBD[i]);
+					TBD[i].destroy();
 				}
 			});
+
+			vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
+
 		}
 
 	});
