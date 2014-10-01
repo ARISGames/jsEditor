@@ -9,16 +9,33 @@ define([
 
 		templateHelpers: function() {
 			return {
-				text: this.text
+				text: this.text,
+				confirm_button: this.confirm_button,
+				cancel_button:  this.cancel_button,
+				danger_button:  this.danger_button,
+
+				confirm_text: this.confirm_text,
+				cancel_text:  this.cancel_text,
+				danger_text:  this.danger_text
 			}
 		},
 
 		triggers: {
-			"click .ok": "ok"
+			"click .confirm": "confirm",
+			"click .danger":  "danger",
+			"click .cancel":  "cancel"
 		},
 
 		initialize: function(options) {
 			this.text = options.text;
+
+			this.confirm_button = options.confirm_button;
+			this.cancel_button  = options.cancel_button;
+			this.danger_button  = options.danger_button;
+
+			this.confirm_text = options.confirm_text;
+			this.cancel_text  = options.cancel_text;
+			this.danger_text  = options.danger_text;
 		},
 
 		onShow: function() {

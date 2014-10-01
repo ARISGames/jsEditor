@@ -48,9 +48,9 @@ define([
 					email:     this.ui.email.val()
 				});
 
-				var alert_dialog = new AlertDialog({text: "If an account exists with this username or email address an email will be sent with a link to reset your account password."});
+				var alert_dialog = new AlertDialog({text: "If an account exists with this username or email address an email will be sent with a link to reset your account password.", confirm_button: true});
 
-				alert_dialog.on("ok", function() {
+				alert_dialog.on("confirm", function() {
 					vent.trigger("application:popup:hide");
 					view.onClickCancel();
 				});
