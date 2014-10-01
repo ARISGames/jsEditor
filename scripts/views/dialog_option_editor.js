@@ -242,14 +242,11 @@ define([
 			});
 		},
 
-		onClickDelete: function() {
-                  var view = this;
-
-  //Dry Run / Count deletes
-
+                findCascadingScriptDeletesFromPruningOption: function()
+                {
+  var view = this;
   //Set up regular old arrays of nodes/edges
   var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
-  var optmap     = []; for(var i = 0; i < opts.length;                i++) { optmap[parseInt(opts[i].get("dialog_option_id"))] = opts[i]; } //opts map for access
   var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
   var scriptmap  = []; for(var i = 0; i < scripts.length;             i++) { scriptmap[parseInt(scripts[i].get("dialog_script_id"))] = scripts[i]; } //scripts map for access
 
@@ -285,12 +282,53 @@ define([
   //for(var i = 0; i < TBD.length; i++) console.log("Q'd4Delete: "+TBD[i].get("dialog_script_id"));
 
 
-  if(TBD.length > 0)
-  {
-			var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
+  return TBD;
+                },
 
-			alert_dialog.on("danger", function() {
-				vent.trigger("application:popup:hide");
+                findOptionlessScripts: function() {
+  var view = this;
+  //Find option-less scripts and give them an exit option
+  var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
+  var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
+
+  var cmap = []; for(var i = 0; i < scripts.length; i++) { vmap[parseInt(scripts[i].get("dialog_script_id"))] = 0; } //children count map
+
+  for(var i = 0; i < opts.length; i++) cmap[parseInt(opts[i].get("parent_dialog_script_id"))]++;
+
+  var TBA = []
+  for(var i = 0; i < scripts.length; i++) if(cmap[parseInt(scripts[i].get("dialog_script_id"))] == 0) TBA.push(scripts[i]);
+
+  //for(var i = 0; i < TBA.length; i++) console.log("Q'd4AddExit: "+TBA[i].get("dialog_script_id"));
+
+  return TBA;
+                },
+
+		onClickDelete: function() {
+			var view = this;
+
+			var TBD = view.findCascadingScriptDeletesFromPruningOption();
+			if(TBD.length > 0) {
+				var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
+
+				alert_dialog.on("danger", function() {
+					vent.trigger("application:popup:hide");
+					view.script_options.remove(view.model);
+					view.model.destroy({
+						success: function() {
+							vent.trigger("conversation:update");
+							vent.trigger("application:info:hide");
+						}
+					});
+					for(var i = 0; i < TBD.length; i++)
+					{
+						view.scripts.remove(TBD[i]);
+						TBD[i].destroy();
+					}
+				});
+
+				vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
+			}
+			else {
 				view.script_options.remove(view.model);
 				view.model.destroy({
 					success: function() {
@@ -298,25 +336,7 @@ define([
 						vent.trigger("application:info:hide");
 					}
 				});
-				for(var i = 0; i < TBD.length; i++)
-				{
-					view.scripts.remove(TBD[i]);
-					TBD[i].destroy();
-				}
-			});
-
-			vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
-  }
-  else
-  {
-				view.script_options.remove(view.model);
-				view.model.destroy({
-					success: function() {
-						vent.trigger("conversation:update");
-						vent.trigger("application:info:hide");
-					}
-				});
-  }
+			}
 
 		}
 
