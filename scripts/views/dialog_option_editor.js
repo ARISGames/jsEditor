@@ -285,6 +285,8 @@ define([
   //for(var i = 0; i < TBD.length; i++) console.log("Q'd4Delete: "+TBD[i].get("dialog_script_id"));
 
 
+  if(TBD.length > 0)
+  {
 			var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
 
 			alert_dialog.on("danger", function() {
@@ -304,6 +306,17 @@ define([
 			});
 
 			vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
+  }
+  else
+  {
+				view.script_options.remove(view.model);
+				view.model.destroy({
+					success: function() {
+						vent.trigger("conversation:update");
+						vent.trigger("application:info:hide");
+					}
+				});
+  }
 
 		}
 
