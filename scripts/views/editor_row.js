@@ -11,7 +11,8 @@ define([
 
 		templateHelpers: function() {
 			return {
-				current_user: session.editor_id() === this.model.get("user_id")
+				current_user: session.editor_id() === this.model.get("user_id"),
+				only_user: this.editors.length === 1
 			}
 		},
 
@@ -20,6 +21,17 @@ define([
 
 		events: {
 			"click .remove": "onClickRemove"
+		},
+
+		initialize: function(options) {
+			var view = this;
+
+			this.editors = options.editors;
+
+			this.editors.on("remove", function(model) {
+				view.render();
+			});
+
 		},
 
 		onClickRemove: function() {

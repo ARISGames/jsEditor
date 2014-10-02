@@ -10,6 +10,11 @@ define([
 
 		itemView: EditorRowView,
 		itemViewContainer: '.editors',
+		itemViewOptions: function(model, index) {
+			return {
+				editors: this.collection
+			}
+		},
 
 		className: 'editor-sharing',
 
