@@ -14,7 +14,7 @@
 
 	<div class="form-group">
 		<label for="game-description">Description</label>
-		<textarea class="form-control" id="game-description" placeholder="Description" rows=4><%= description %></textarea>
+		<textarea class="form-control" id="game-description" placeholder="Description" rows=6><%= description %></textarea>
 	</div>
 
 	<div class="form-group">
@@ -30,7 +30,9 @@
 	</div>
 
 	<div class="form-group">
-		<div class="btn-group btn-group-lg btn-group-justified published-toggle">
+	<br>
+		<label for="game-intro_scene_id">Visibility To ARIS Client</label>
+		<div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong style='color: green'>Published</strong> your game will be listed as playable on the ARIS client. If not, your game will not be playable unless the <strong>Show games in development</strong> switch is flipped in the ARIS client settings.">
 			<label class="btn btn-success">
 				<input type="radio" name="game-published" value="1" <%= radio_selected(published === "1") %>>
 				<span class="glyphicon glyphicon-saved"></span>
@@ -42,13 +44,6 @@
 				In Development
 			</label>
 
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="alert alert-info">
-			<span class="glyphicon glyphicon-info-sign"></span>
-			If published your game will be listed as playable on the ARIS client. If not, your game will not be playable unless the "show games in development" switch is flipped in the ARIS client settings.
 		</div>
 	</div>
 
@@ -92,7 +87,7 @@
 
 	<!-- Advanced Section -->
 
-	<div class="panel panel-warning">
+	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h5 class="panel-title collapsed" data-toggle="collapse" data-target="#advanced-settings">
 				<a>

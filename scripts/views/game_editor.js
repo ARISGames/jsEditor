@@ -74,6 +74,7 @@ define([
 
 		onRender: function() {
 			this.onChangePublished();
+			this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
 		},
 
 		onChangePublished: function() {
