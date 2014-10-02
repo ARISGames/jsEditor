@@ -32,6 +32,10 @@ define([
 				view.render();
 			});
 
+			this.editors.on("add", function(model) {
+				view.render();
+			});
+
 		},
 
 		onClickRemove: function() {
