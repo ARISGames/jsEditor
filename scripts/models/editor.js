@@ -7,8 +7,8 @@ define([
 
 		amfphp_url_templates: {
 			read:   "",
-			update: "",
-			create: "editors.addEditorToGame",
+			update: "editors.addEditorToGame",
+			create: "",
 			delete: "editors.removeEditorFromGame"
 		},
 
