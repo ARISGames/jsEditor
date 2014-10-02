@@ -12,12 +12,14 @@ define([
 	'views/media_editor',
 	'views/edit_json_model',
 	'views/game_editor',
+	'views/editors',
 	'views/game_objects_organizer',
 	'views/locations_organizer',
 	'views/media_organizer',
 	'views/conversations',
 
 	'collections/games',
+	'collections/editors',
 	'collections/game_triggers',
 	'collections/instances',
 	'collections/dialogs',
@@ -37,8 +39,8 @@ define([
 	'vent',
 	'models/session'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView,
-	GameCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView,
+	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection,
 	Game, Item, Media,
 	vent, session) {
 	return Backbone.Router.extend({
@@ -48,7 +50,9 @@ define([
 			"login": "showLogin",
 
 			"games":               "listGames",
-			"games/:game_id/edit": "editGame",
+			"games/:game_id/edit":  "editGame",
+			"games/:game_id/share": "editSharing",
+			"games/:game_id/tabs":  "editTabs",
 
 			"games/:game_id/scenes":       "showSceneEditor",
 			"games/:game_id/locations":    "listLocations",
@@ -129,6 +133,23 @@ define([
 						vent.trigger("application:list:hide");
 					});
 				}
+			});
+		},
+
+
+		editSharing: function(game_id) {
+			var game = new Game({game_id: game_id});
+
+			var editors = new EditorsCollection([], {parent: game});
+
+			$.when(editors.fetch()).done(function()
+			{
+				editors.invoke('set', 'game_id', game.id);
+
+				vent.trigger("application.show",     new EditorSharingView ({model: game, collection: editors}));
+				vent.trigger("application:nav:show", new GameNavMenu       ({model: game, active: ".game"}));
+				vent.trigger("application:info:hide");
+				vent.trigger("application:list:hide");
 			});
 		},
 
