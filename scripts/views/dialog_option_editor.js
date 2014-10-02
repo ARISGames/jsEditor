@@ -291,7 +291,7 @@ define([
   var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
   var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
 
-  var cmap = []; for(var i = 0; i < scripts.length; i++) { vmap[parseInt(scripts[i].get("dialog_script_id"))] = 0; } //children count map
+  var cmap = []; for(var i = 0; i < scripts.length; i++) { cmap[parseInt(scripts[i].get("dialog_script_id"))] = 0; } //children count map
 
   for(var i = 0; i < opts.length; i++) cmap[parseInt(opts[i].get("parent_dialog_script_id"))]++;
 
@@ -324,6 +324,23 @@ define([
 						view.scripts.remove(TBD[i]);
 						TBD[i].destroy();
 					}
+
+					var TBA = view.findOptionlessScripts();
+					for(var i = 0; i < TBA.length; i++)
+					{
+						var option = new view.DialogOption();
+						option.set("game_id",view.model.get("game_id"));
+						option.set("dialog_id",view.model.get("dialog_id"));
+						option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
+						option.set("link_type","EXIT");
+						option.set("prompt","Exit");
+						option.save({}, {
+							success:function() {
+								view.script_options.push(option);
+								vent.trigger("conversation:update");
+							}
+						});
+					}
 				});
 
 				vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
@@ -336,6 +353,23 @@ define([
 						vent.trigger("application:info:hide");
 					}
 				});
+
+				var TBA = view.findOptionlessScripts();
+				for(var i = 0; i < TBA.length; i++)
+				{
+					var option = new view.DialogOption();
+					option.set("game_id",view.model.get("game_id"));
+					option.set("dialog_id",view.model.get("dialog_id"));
+					option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
+					option.set("link_type","EXIT");
+					option.set("prompt","Exit");
+					option.save({}, {
+						success:function() {
+							view.script_options.push(option);
+							vent.trigger("conversation:update");
+						}
+					});
+				}
 			}
 
 		}
