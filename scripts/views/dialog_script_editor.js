@@ -50,7 +50,7 @@ define([
 		},
 
 		onRender: function() {
-			this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover','placement': 'top'});
+			this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
 		},
 
 		ui: {
