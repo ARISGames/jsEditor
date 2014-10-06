@@ -21,6 +21,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+			"click .delete": "onClickDelete",
 			"change #uploader": "onChangeFile"
 		},
 
@@ -64,6 +65,14 @@ define([
 			});
 
 			event.preventDefault();
+		},
+
+		onClickDelete: function() {
+			this.model.destroy({
+				success: function() {
+					vent.trigger("application:popup:hide");
+				}
+			});
 		},
 
 		onRender: function() {

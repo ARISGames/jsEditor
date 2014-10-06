@@ -13,7 +13,7 @@ define([
 			read:   "media.getMedia",
 			update: "media.updateMedia",
 			create: "media.createMedia",
-			delete: "media.deleteMiedia"
+			delete: "media.deleteMedia"
 		},
 
 
