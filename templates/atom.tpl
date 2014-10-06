@@ -21,7 +21,7 @@
 					</optgroup>
 
 					<optgroup label="Game Object Interactions">
-						<option value="PLAYER_VIEWED_DIALOG"        <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG")        %>>Started Conversation</option>
+						<option value="PLAYER_VIEWED_DIALOG"        <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG")        %>>Exited Conversation</option>
 						<option value="PLAYER_VIEWED_DIALOG_SCRIPT" <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG_SCRIPT") %>>Seen Conversation Line</option>
 						<option value="PLAYER_VIEWED_PLAQUE"        <%= option_selected(requirement === "PLAYER_VIEWED_PLAQUE")        %>>Viewed Plaque</option>
 						<option value="PLAYER_VIEWED_ITEM"          <%= option_selected(requirement === "PLAYER_VIEWED_ITEM")          %>>Inspected Item</option>
