@@ -65,6 +65,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+			"click .delete": "onClickDelete",
 
 			"click .change-active-icon":    "onClickActiveIcon",
 			"click .change-active-media":   "onClickActiveMedia",
@@ -104,6 +105,14 @@ define([
 					view.trigger("quest:add", view.model);
 				},
 
+				success: function() {
+					vent.trigger("application:popup:hide");
+				}
+			});
+		},
+
+		onClickDelete: function() {
+			this.model.destroy({
 				success: function() {
 					vent.trigger("application:popup:hide");
 				}
