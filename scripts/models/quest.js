@@ -36,6 +36,7 @@ define([
         ],
 
 		defaults: {
+			name: "",
 			description: "",
 
 			active_description: "",

@@ -1,1 +1,1 @@
-<div class="new-instance"><%= name %></div>
+<div class="new-instance"><%= name || "(unnamed)" %></div>
