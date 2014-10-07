@@ -2,14 +2,14 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'jqueryui',
+	'jquidrag',
 	'bootstrap',
 	'text!templates/scenes.tpl',
 	'models/scene',
 	'views/scene',
 	'views/scene_editor',
 	'vent'
-], function($, _, Backbone, jQueryUi, Bootstrap, Template, Scene, SceneView, SceneEditorView, vent) {
+], function($, _, Backbone, jQueryUiDraggable, Bootstrap, Template, Scene, SceneView, SceneEditorView, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
