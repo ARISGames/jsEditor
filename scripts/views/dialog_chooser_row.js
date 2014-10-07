@@ -35,7 +35,7 @@ define([
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
 
-					trigger.set("title", Trigger.title_for(dialog);
+					trigger.set("title", Trigger.title_for(dialog));
 
 					trigger.save({},
 					{
