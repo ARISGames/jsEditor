@@ -37,7 +37,7 @@ define([
 				type: "LOCATION",
 				latitude: "43.073",
 				longitude: "-89.4012",
-				distance: "5",
+				distance: "25",
 				wiggle: "0",
 				show_title: "1",
 				hidden: "0",
