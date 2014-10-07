@@ -27,7 +27,7 @@ define([
 
 			// Save directly and insert into scene/show sidebar
 			instance.set("object_id",   plaque.id);
-			instance.set("object_type", instance.type_for(plaque));
+			instance.set("object_type", Instance.type_for(plaque));
 
 			instance.save({}, {
 				success: function() {
@@ -35,7 +35,7 @@ define([
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
 
-					trigger.set("title", plaque.get("name") + " #" + instance.id);
+					trigger.set("title", Trigger.title_for(plaque);
 
 					trigger.save({},
 					{

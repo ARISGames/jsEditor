@@ -27,14 +27,14 @@ define([
 
 			// Save directly and insert into scene/show sidebar
 			instance.set("object_id",   web_page.id);
-			instance.set("object_type", instance.type_for(web_page));
+			instance.set("object_type", Instance.type_for(web_page));
 
 			instance.save({}, {
 				success: function() {
 
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
-					trigger.set("title", web_page.get("name") + " #" + instance.id);
+					trigger.set("title", Trigger.title_for(web_page);
 
 					trigger.save({},
 					{

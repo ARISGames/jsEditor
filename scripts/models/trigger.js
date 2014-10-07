@@ -48,6 +48,12 @@ define([
 			}
 		}
 
+	},
+	// Static methods
+	{
+		title_for: function(game_object) {
+			return game_object.get("name");
+		}
 	});
 });
 

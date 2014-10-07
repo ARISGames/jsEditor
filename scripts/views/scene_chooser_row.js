@@ -27,7 +27,7 @@ define([
 
 			// Save directly and insert into scene/show sidebar
 			instance.set("object_id",   scene.id);
-			instance.set("object_type", instance.type_for(scene));
+			instance.set("object_type", Instance.type_for(scene));
 
 			instance.save({}, {
 				success: function() {
@@ -35,8 +35,7 @@ define([
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
 
-					// TODO give nicer unique names (sequential)
-					trigger.set("title", scene.get("name") + " #" + instance.id);
+					trigger.set("title", Trigger.title_for(scene);
 
 					trigger.save({},
 					{
