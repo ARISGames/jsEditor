@@ -24,8 +24,8 @@
 	</div>
 
 	<div class="form-group">
-		<label for="trigger-distance">Distance</label>
-		<input type="number" class="form-control" id="trigger-distance" placeholder="Distance" value="<%= distance %>">
+		<label for="trigger-distance">Range in Meters</label>
+		<input type="number" class="form-control" id="trigger-distance" placeholder="Range" value="<%= distance %>">
 	</div>
 
 
