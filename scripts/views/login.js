@@ -9,8 +9,9 @@ define([
 	'views/register',
 	'views/forgot',
 	'i18n',
-	'vent'
-], function(_, $, Cookie, Backbone, Marionette, session, Template, RegisterView, ForgotView, i18n, vent) {
+	'vent',
+	'config',
+], function(_, $, Cookie, Backbone, Marionette, session, Template, RegisterView, ForgotView, i18n, vent, config) {
 
 	var LoginView = Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
@@ -19,7 +20,8 @@ define([
 			return {
 				gettext: function(text) { return i18n.gettext(text); },
 				available_languages: i18n.available_languages,
-				current_language: i18n.current_language
+				current_language: i18n.current_language,
+				migrate_path: config.migrate_path
 			}
 		},
 
