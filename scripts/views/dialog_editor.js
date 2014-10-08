@@ -51,6 +51,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+			"click .delete": "onClickDelete",
 			"click .change-icon": "onClickChangeIcon",
 			"click .edit-script": "onClickEditConversation"
 		},
@@ -78,6 +79,16 @@ define([
 				{
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", dialog);
+					vent.trigger("application:popup:hide");
+				}
+			});
+		},
+
+		onClickDelete: function() {
+			var view = this;
+			this.model.destroy({
+				success: function() {
+					vent.trigger("game_object:delete", view.model);
 					vent.trigger("application:popup:hide");
 				}
 			});
