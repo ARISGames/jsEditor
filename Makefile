@@ -54,7 +54,7 @@ merge:
 
 note:
 	@echo ""
-	@echo "--- Now commit to the build branch and $(INFO_COLOR)make deploy$(CLEAR)! ---"
+	@echo "[$(INFO_COLOR)!$(CLEAR)] Now commit to the build branch and $(INFO_COLOR)make deploy$(CLEAR)!"
 	@echo ""
 
 all: merge css build render note
