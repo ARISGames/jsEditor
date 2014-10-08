@@ -98,6 +98,7 @@ define([
 
 		events: {
 			"click .save": "onClickSave",
+			"click .delete": "onClickDelete",
 
 			"change @ui.name":                    "onChangeName",
 			"change @ui.description":             "onChangeDescription",
@@ -161,6 +162,15 @@ define([
 			});
 		},
 
+		onClickDelete: function() {
+			var view = this;
+			this.model.destroy({
+				success: function() {
+					vent.trigger("game_object:delete", view.model);
+					vent.trigger("application:popup:hide");
+				}
+			});
+		},
 
 		/* Field changes */
 

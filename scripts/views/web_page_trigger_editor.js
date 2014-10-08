@@ -47,6 +47,12 @@ define([
 					view.onChangeTriggerEnter();
 				}
 			});
+
+			vent.on("game_object:delete", function(game_object) {
+				if(game_object.id === view.web_page.id && game_object.idAttribute === view.web_page.idAttribute) {
+					view.close();
+				}
+			});
 		},
 
 
