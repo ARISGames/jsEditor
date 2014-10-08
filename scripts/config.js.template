@@ -1,5 +1,8 @@
 define([], function() {
+	var base_url = "http://dev.arisgames.org/server/";
+
 	return {
-		"aris_api_url": "http://dev.arisgames.org/server/json.php/v2."
+		"aris_api_url": base_url + "json.php/v2.",
+		"migrate_path": base_url + "services/migration/"
 	};
 });

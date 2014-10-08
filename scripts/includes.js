@@ -11,7 +11,7 @@ require.config({
 
 		'jquery':   'library/jquery',
 		'cookie':   'library/jquery.cookie',
-		'jqueryui': 'library/jquery.ui',
+		'jquidrag': 'library/jquery.ui.draggable',
 		'panzoom':  'library/jquery.panzoom',
 
 		/* Backbone */

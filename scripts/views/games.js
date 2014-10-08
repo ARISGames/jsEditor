@@ -6,13 +6,20 @@ define([
 	'views/game_row',
 	'views/game_create',
 	'models/game',
-	'vent'
-], function(_, Backbone, Template, GameCollection, GameRowView, GameCreateView, Game, vent) {
+	'vent',
+	'config'
+], function(_, Backbone, Template, GameCollection, GameRowView, GameCreateView, Game, vent, config) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: GameRowView,
 		itemViewContainer: '.games',
+
+		templateHelpers: function() {
+			return {
+				migrate_path: config.migrate_path
+			}
+		},
 
 		events: {
 			"click .new": "onClickNew"

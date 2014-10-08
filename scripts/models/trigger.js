@@ -37,7 +37,7 @@ define([
 				type: "LOCATION",
 				latitude: "43.073",
 				longitude: "-89.4012",
-				distance: "5",
+				distance: "25",
 				wiggle: "0",
 				show_title: "1",
 				hidden: "0",
@@ -48,6 +48,12 @@ define([
 			}
 		}
 
+	},
+	// Static methods
+	{
+		title_for: function(game_object) {
+			return game_object.get("name");
+		}
 	});
 });
 

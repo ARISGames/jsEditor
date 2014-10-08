@@ -50,10 +50,10 @@
 <div class="well well-lg shrink-center object-editor">
 	<div class="row">
 		<div class="col-xs-6 padded">
-			<a href="http://dev.arisgames.org/server/services/migration/migrate_user.html" target="_blank" class="btn btn-info btn-block">Migrate User</a>
+			<a href="<%= migrate_path %>migrate_user.html" target="_blank" class="btn btn-info btn-block">Migrate User</a>
 		</div>
 		<div class="col-xs-6 padded">
-			<a href="http://dev.arisgames.org/server/services/migration/migrate_game.html" target="_blank" class="btn btn-info btn-block">Migrate Games</a>
+			<a href="<%= migrate_path %>migrate_game.html" target="_blank" class="btn btn-info btn-block">Migrate Games</a>
 		</div>
 	</div>
 </div>

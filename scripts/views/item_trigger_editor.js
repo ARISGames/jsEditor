@@ -10,6 +10,8 @@ define([
 	'models/requirement_package',
 	'models/media',
 	'models/game',
+	'models/instance',
+	'models/trigger',
 	'collections/media',
 	'collections/and_packages',
 	'collections/atoms',
@@ -22,7 +24,7 @@ define([
 	'collections/quests',
 	'collections/web_hooks',
 	'vent'
-], function(_, $, Backbone, QRCode, Template, ItemEditorView, RequirementsEditorView, MediaChooserView, RequirementPackage, Media, Game, MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
+], function(_, $, Backbone, QRCode, Template, ItemEditorView, RequirementsEditorView, MediaChooserView, RequirementPackage, Media, Game, Instance, Trigger, MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -151,7 +153,7 @@ define([
 					// Save Instance
 
 					instance.set("object_id",   item.id);
-					instance.set("object_type", instance.type_for(item));
+					instance.set("object_type", Instance.type_for(item));
 
 					instance.save({}, {
 						success: function() {
@@ -182,7 +184,7 @@ define([
 							}
 							// Initial Title
 							else {
-								trigger.set("title", item.get("name") +" #"+instance.id);
+								trigger.set("title", Trigger.title_for(item));
 							}
 
 							trigger.save({},
