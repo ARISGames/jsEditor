@@ -3,6 +3,10 @@
 # Takes care of pulling code into build branch, combining all JS into one, and timestamping the index to avoid browser caches for changed files, and deploying.
 #
 # Some output is supressed, just remove the @ or dev/null redirects if troubleshooting.
+#
+OK_COLOR=\033[0;32m
+INFO_COLOR=\033[1;36m
+CLEAR=\033[m\017
 
 help:
 	@echo "Aris Javascript Editor"
@@ -20,12 +24,12 @@ help:
 css:
 	@echo "Compiling LESS into CSS."
 	@lessc styles/arisjs.less > styles/arisjs.css
-	@echo "   (Done)"
+	@echo "   $(OK_COLOR)(Done)"
 
 build:
 	@echo "Builing application into dist/aris.js."
 	@r.js -o build.js 1>/dev/null
-	@echo "   (Done)"
+	@echo "   $(OK_COLOR)(Done)"
 
 heroku:
 	git push -f heroku build:master
@@ -36,21 +40,21 @@ deploy:
 	@echo "   (Done)"
 	@echo "Deploying to server."
 	@ssh aris-prod "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
-	@echo "   (Done)"
+	@echo "   $(OK_COLOR)(Done)"
 
 render:
 	@echo "Rendering template into index.html."
 	@bin/render_index.sh
-	@echo "   (Done)"
+	@echo "   $(OK_COLOR)(Done)"
 
 merge:
 	@echo "Merging master onto build branch."
 	@git merge master
-	@echo "   (Done)"
+	@echo "   $(OK_COLOR)(Done)"
 
 note:
 	@echo ""
-	@echo "--- Now commit to the build branch and make deploy! ---"
+	@echo "--- Now commit to the build branch and $(INFO_COLOR)make deploy$(CLEAR)! ---"
 	@echo ""
 
 all: merge css build render note
