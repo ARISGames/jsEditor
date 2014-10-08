@@ -8,10 +8,10 @@ help:
 	@echo "Aris Javascript Editor"
 	@echo ""
 	@echo "Targets:"
-	@echo " rebase: force rebase over build branch"
+	@echo "  merge: merge master into build branch"
 	@echo "    css: compile less"
 	@echo "  build: optimize all js into one file with requireJS"
-	@echo "    all: rebase compile optimize"
+	@echo "    all: merge compile optimize"
 	@echo " heroku: push build branch to heroku"
 	@echo " deploy: push build branch to aris"
 	@echo ""
@@ -32,10 +32,10 @@ heroku:
 
 deploy:
 	@echo "Pushing to Github."
-	@git push -f 1>/dev/null
+	@git push 1>/dev/null
 	@echo "   (Done)"
 	@echo "Deploying to server."
-	@ssh aris "cd /var/www/html/jseditor/ && git checkout build && git fetch && git rebase -f origin/build" 1>/dev/null
+	@ssh aris-prod "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
 	@echo "   (Done)"
 
 render:
@@ -43,9 +43,9 @@ render:
 	@bin/render_index.sh
 	@echo "   (Done)"
 
-rebase:
-	@echo "Rebasing master onto build branch."
-	@git rebase -f master
+merge:
+	@echo "Merging master onto build branch."
+	@git merge master
 	@echo "   (Done)"
 
 note:
@@ -53,4 +53,4 @@ note:
 	@echo "--- Now commit to the build branch and make deploy! ---"
 	@echo ""
 
-all: rebase css build render note
+all: merge css build render note
