@@ -24,12 +24,12 @@ help:
 css:
 	@echo "Compiling LESS into CSS."
 	@lessc styles/arisjs.less > styles/arisjs.css
-	@echo "   $(OK_COLOR)(Done)"
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 build:
 	@echo "Builing application into dist/aris.js."
 	@r.js -o build.js 1>/dev/null
-	@echo "   $(OK_COLOR)(Done)"
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 heroku:
 	git push -f heroku build:master
@@ -37,20 +37,20 @@ heroku:
 deploy:
 	@echo "Pushing to Github."
 	@git push 1>/dev/null
-	@echo "   (Done)"
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server."
 	@ssh aris-prod "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
-	@echo "   $(OK_COLOR)(Done)"
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 render:
 	@echo "Rendering template into index.html."
 	@bin/render_index.sh
-	@echo "   $(OK_COLOR)(Done)"
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 merge:
 	@echo "Merging master onto build branch."
 	@git merge master
-	@echo "   $(OK_COLOR)(Done)"
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 note:
 	@echo ""
