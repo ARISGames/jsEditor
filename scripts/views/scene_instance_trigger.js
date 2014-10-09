@@ -101,6 +101,12 @@ define([
 										view.render();
 									}
 								});
+
+								vent.on("game_object:delete", function(game_object) {
+									if(game_object.id === view.game_object.id && game_object.idAttribute === view.game_object.idAttribute) {
+										view.trigger("trigger:remove", view.model);
+									}
+								});
 							}
 						});
 					} // try load game object

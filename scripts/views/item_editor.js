@@ -57,6 +57,7 @@ define([
 		events:
 		{
 			"click .save": "onClickSave",
+			"click .delete": "onClickDelete",
 			"click .change-icon":  "onClickChangeIcon",
 			"click .change-media": "onClickChangeMedia",
 			"change input[name='item-type']": "onChangeType"
@@ -101,6 +102,15 @@ define([
 			});
 		},
 
+		onClickDelete: function() {
+			var view = this;
+			this.model.destroy({
+				success: function() {
+					vent.trigger("game_object:delete", view.model);
+					vent.trigger("application:popup:hide");
+				}
+			});
+		},
 
 		/* Radio Button field logic */
 
