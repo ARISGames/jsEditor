@@ -39,6 +39,7 @@
 		</a>
 		<ul class="dropdown-menu" role="menu">
 			<li class="settings" style="text-align: left;"><a><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+			<li class="tabs"     style="text-align: left;"><a><span class="glyphicon glyphicon-th-list"></span> Tabs</a></li>
 			<li class="sharing"  style="text-align: left;"><a><span class="glyphicon glyphicon-share"></span> Sharing</a></li>
 		</ul>
 	</li>
