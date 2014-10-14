@@ -112,7 +112,7 @@ define([
 			'NOTEBOOK':  'Notebook',
 
 			'DIALOG':    'Dialog',
-			'ITEM':      'Item',
+			'ITEM':      'Item/Player Attribute',
 			'PLAQUE':    'Plaque',
 			'WEB_PAGE':  'Web Page'
 		},
@@ -122,19 +122,15 @@ define([
 			// TODO add section headers
 			switch(this.model.get("type")) {
 				case "DIALOG":
-					console.log("dialog");
 					return this.dialogs.map(function(model) { return {name: model.get("name"), value: model.id} });
 
 				case "ITEM":
-					console.log("item");
 					return this.items.map(function(model) { return {name: model.get("name"), value: model.id} });
 
 				case "PLAQUE":
-					console.log("plaque");
 					return this.plaques.map(function(model) { return {name: model.get("name"), value: model.id} });
 
 				case "WEB_PAGE":
-					console.log("web_page");
 					return this.web_pages.map(function(model) { return {name: model.get("name"), value: model.id} });
 				default:
 					return [];

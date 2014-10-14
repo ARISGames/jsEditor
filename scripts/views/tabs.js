@@ -6,12 +6,13 @@ define([
 	'views/tab_editor',
 	'models/tab',
 	'models/media',
+	'models/game',
 	'collections/items',
 	'collections/plaques',
 	'collections/web_pages',
 	'collections/dialogs',
 	'vent'
-], function(_, Backbone, Template, TabRowView, TabEditorView, Tab, Media, ItemsCollection, PlaquesCollection, WebPagesCollection, DialogsCollection, vent) {
+], function(_, Backbone, Template, TabRowView, TabEditorView, Tab, Media, Game, ItemsCollection, PlaquesCollection, WebPagesCollection, DialogsCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -29,11 +30,19 @@ define([
 
 			var tab = new Tab({game_id: this.model.get("game_id")});
 
+			var game = new Game({game_id: this.model.get("game_id")});
 			var icon = new Media({media_id: tab.get("icon_media_id")});
 
-			$.when(icon.fetch()).done(function()
+			var contents = {
+				plaques:    new PlaquesCollection  ([], {parent: game}),
+				items:      new ItemsCollection    ([], {parent: game}),
+				web_pages:  new WebPagesCollection ([], {parent: game}),
+				dialogs:    new DialogsCollection  ([], {parent: game}),
+			};
+
+			$.when(icon.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch()).done(function()
 			{
-				var tab_editor = new TabEditorView({model: tab, icon: icon});
+				var tab_editor = new TabEditorView({model: tab, icon: icon, contents: contents});
 
 				tab_editor.on("tab:add", function(tab) {
 					view.collection.add(tab);
