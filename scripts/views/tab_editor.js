@@ -36,6 +36,8 @@ define([
 				icon_thumbnail_url:  this.icon.thumbnail(),
 
 				tab_types: this.tab_types,
+				tab_options_visible: _.contains(["DIALOG", "ITEM", "PLAQUE", "WEB_PAGE"], this.model.get("type")),
+				tab_content_options: this.tab_content_options(),
 
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
@@ -71,7 +73,11 @@ define([
 		},
 
 		initialize: function(options) {
-			this.icon    = options.icon;
+			this.icon      = options.icon;
+			this.plaques   = options.contents.plaques;
+			this.items     = options.contents.items;
+			this.web_pages = options.contents.web_pages;
+			this.dialogs   = options.contents.dialogs;
 		},
 
 		onClickSave: function() {
@@ -104,10 +110,35 @@ define([
 			'INVENTORY': 'Inventory',
 			'PLAYER':    'Player',
 			'NOTEBOOK':  'Notebook',
+
 			'DIALOG':    'Dialog',
 			'ITEM':      'Item',
 			'PLAQUE':    'Plaque',
 			'WEB_PAGE':  'Web Page'
+		},
+
+
+		tab_content_options: function() {
+			// TODO add section headers
+			switch(this.model.get("type")) {
+				case "DIALOG":
+					console.log("dialog");
+					return this.dialogs.map(function(model) { return {name: model.get("name"), value: model.id} });
+
+				case "ITEM":
+					console.log("item");
+					return this.items.map(function(model) { return {name: model.get("name"), value: model.id} });
+
+				case "PLAQUE":
+					console.log("plaque");
+					return this.plaques.map(function(model) { return {name: model.get("name"), value: model.id} });
+
+				case "WEB_PAGE":
+					console.log("web_page");
+					return this.web_pages.map(function(model) { return {name: model.get("name"), value: model.id} });
+				default:
+					return [];
+			}
 		},
 
 		/* Field Changes */
@@ -117,12 +148,25 @@ define([
 
 
 		onChangeType:   function() {
-			this.model.set("type", this.ui.type_select.val())
+			var type = this.ui.type_select.val();
+			this.model.set("type", type)
+
+			// Change name to avoid confusion.
+			this.model.set("name", this.tab_types[type]);
+
+			// Reset Game Object Dropdown.
 			this.model.set("content_id", "0");
+
+			this.render();
 		},
 
 		onChangeContent:   function() {
 			this.model.set("content_id", this.ui.content_select.val())
+
+			// Change name to avoid confusion.
+			this.model.set("name", this.ui.content_select.find("option:selected").text());
+
+			this.render();
 		},
 
 

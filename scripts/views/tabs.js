@@ -6,8 +6,12 @@ define([
 	'views/tab_editor',
 	'models/tab',
 	'models/media',
+	'collections/items',
+	'collections/plaques',
+	'collections/web_pages',
+	'collections/dialogs',
 	'vent'
-], function(_, Backbone, Template, TabRowView, TabEditorView, Tab, Media, vent) {
+], function(_, Backbone, Template, TabRowView, TabEditorView, Tab, Media, ItemsCollection, PlaquesCollection, WebPagesCollection, DialogsCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -30,7 +34,6 @@ define([
 			$.when(icon.fetch()).done(function()
 			{
 				var tab_editor = new TabEditorView({model: tab, icon: icon});
-				console.log("ICON", icon);
 
 				tab_editor.on("tab:add", function(tab) {
 					view.collection.add(tab);

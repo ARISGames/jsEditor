@@ -209,11 +209,19 @@ h4:hover .object-id {
   margin-top: 2em;
 }
 /* Media */
+.thumbnail .caption {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 .thumbnail .caption p,
 .thumbnail .caption div,
 .thumbnail .caption h4 {
   white-space: nowrap;
   overflow: hidden;
+}
+.thumbnail.small img {
+  width: 96px;
+  height: 96px;
 }
 /* TODO temporarily unused, bootstrap used instead */
 .media-editor .aris-media-thumbnail {
