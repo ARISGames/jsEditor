@@ -33,6 +33,24 @@ define([
 			requirement_root_package_id: "0",
 			sort_index: "0"
 		}
+	},
+	// Static
+	{
+		tab_types:
+		{
+			'MAP':       'Map',
+			'DECODER':   'Decoder',
+			'SCANNER':   'Scanner',
+			'QUESTS':    'Quests',
+			'INVENTORY': 'Inventory',
+			'PLAYER':    'Player',
+			'NOTEBOOK':  'Notebook',
+
+			'DIALOG':    'Dialog',
+			'ITEM':      'Item/Player Attribute',
+			'PLAQUE':    'Plaque',
+			'WEB_PAGE':  'Web Page'
+		}
 	});
 });
 

@@ -5,12 +5,13 @@ define([
 	'views/tab_editor',
 	'models/media',
 	'models/game',
+	'models/tab',
 	'collections/items',
 	'collections/plaques',
 	'collections/web_pages',
 	'collections/dialogs',
 	'vent'
-], function(_, Backbone, Template, TabEditorView, Media, Game, ItemsCollection, PlaquesCollection, WebPagesCollection, DialogsCollection, vent) {
+], function(_, Backbone, Template, TabEditorView, Media, Game, Tab, ItemsCollection, PlaquesCollection, WebPagesCollection, DialogsCollection, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -19,11 +20,18 @@ define([
 		className: "list-group-item",
 
 		events: {
-			"click .edit": "onClickEdit"
+			"click": "onClickEdit"
 		},
 
 		modelEvents: {
 			"change": "render"
+		},
+
+		templateHelpers: function() {
+			return {
+				display_type: this.model.get("name") !== Tab.tab_types[this.model.get("type")],
+				tab_type: Tab.tab_types[this.model.get("type")]
+			}
 		},
 
 		onClickEdit: function() {

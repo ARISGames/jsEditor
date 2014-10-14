@@ -9,6 +9,7 @@ define([
 	'models/game',
 	'models/event_package',
 	'models/event',
+	'models/tab',
 	'views/media_chooser',
 	'views/events',
 	'views/requirements',
@@ -24,7 +25,7 @@ define([
 	'collections/tabs',
 	'collections/web_hooks',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, TabsCollection, WebHooksCollection, vent) {
+], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, Tab, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, TabsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -102,21 +103,7 @@ define([
 			});
 		},
 
-		tab_types: {
-			'MAP':       'Map',
-			'DECODER':   'Decoder',
-			'SCANNER':   'Scanner',
-			'QUESTS':    'Quests',
-			'INVENTORY': 'Inventory',
-			'PLAYER':    'Player',
-			'NOTEBOOK':  'Notebook',
-
-			'DIALOG':    'Dialog',
-			'ITEM':      'Item/Player Attribute',
-			'PLAQUE':    'Plaque',
-			'WEB_PAGE':  'Web Page'
-		},
-
+		tab_types: Tab.tab_types,
 
 		tab_content_options: function() {
 			// TODO add section headers
