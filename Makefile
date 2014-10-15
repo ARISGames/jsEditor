@@ -38,8 +38,14 @@ deploy:
 	@echo "Pushing to Github."
 	@git push 1>/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
-	@echo "Deploying to server."
-	@ssh aris-prod "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
+	@echo "Deploying to server 1."
+	@ssh aris-prod1 "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 2."
+	@ssh aris-prod2 "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 3."
+	@ssh aris-prod3 "cd /var/www/html/editor2/ && git checkout build && git pull" 1>/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 render:
