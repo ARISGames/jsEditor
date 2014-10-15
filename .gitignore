@@ -1,4 +1,5 @@
-scripts/config.js
+scripts/config*.js
+!scripts/config.js.template
 node_modules
 
 .DS_Store
