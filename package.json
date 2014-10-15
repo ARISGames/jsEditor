@@ -1,0 +1,8 @@
+{
+"name": "arisJS-editor",
+"version": "0.0.0",
+	"dependencies": {
+		"less": "*",
+		"require.js": "*"
+	}
+}

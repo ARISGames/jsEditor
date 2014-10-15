@@ -3,8 +3,8 @@
 		<form class="form" role="form">
 			<div class="col-xs-4 padded">
 				<select class="form-control event-select">
-					<option value="GIVE_ITEM" <%= option_selected(event === "GIVE_ITEM") %>>Add</option>
-					<option value="TAKE_ITEM" <%= option_selected(event === "TAKE_ITEM") %>>Remove</option>
+					<option value="GIVE_ITEM" <%= option_selected(event === "GIVE_ITEM") %>>Give</option>
+					<option value="TAKE_ITEM" <%= option_selected(event === "TAKE_ITEM") %>>Take</option>
 				</select>
 			</div>
 			<div class="col-xs-4 padded">

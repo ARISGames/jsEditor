@@ -82,17 +82,12 @@
 				</div>
 
 				<div class="col-xs-6 padded active-function-box">
-					<label for="active-function">Notification Button Action</label>
+					<label for="active-function">Notification Button Destination</label>
 
 					<select class="form-control" id="active-function">
-						<option value="NONE"       <%= option_selected(active_function === "NONE")       %>>None</option>
-						<option value="GPS"        <%= option_selected(active_function === "GPS")        %>>Gps</option>
-						<option value="QUESTS"     <%= option_selected(active_function === "QUESTS")     %>>Quests</option>
-						<option value="INVENTORY"  <%= option_selected(active_function === "INVENTORY")  %>>Inventory</option>
-						<option value="PLAYER"     <%= option_selected(active_function === "PLAYER")     %>>Player</option>
-						<option value="NOTE"       <%= option_selected(active_function === "NOTE")       %>>Notes</option>
-						<option value="PICKGAME"   <%= option_selected(active_function === "PICKGAME")   %>>Game List</option>
-						<option value="JAVASCRIPT" <%= option_selected(active_function === "JAVASCRIPT") %>>Javascript</option>
+						<% _.each(function_types, function(name, value) { %>
+							<option value="<%= value %>" <%= option_selected(active_function === value) %>><%= name %></option>
+						<% }) %>
 					</select>
 				</div>
 			</div>
@@ -167,17 +162,12 @@
 				</div>
 
 				<div class="col-xs-6 padded complete-function-box">
-					<label for="complete-function">Notification Button Action</label>
+					<label for="complete-function">Notification Button Destination</label>
 
 					<select class="form-control" id="complete-function">
-						<option value="NONE"       <%= option_selected(complete_function === "NONE")       %>>None</option>
-						<option value="GPS"        <%= option_selected(complete_function === "GPS")        %>>Gps</option>
-						<option value="QUESTS"     <%= option_selected(complete_function === "QUESTS")     %>>Quests</option>
-						<option value="INVENTORY"  <%= option_selected(complete_function === "INVENTORY")  %>>Inventory</option>
-						<option value="PLAYER"     <%= option_selected(complete_function === "PLAYER")     %>>Player</option>
-						<option value="NOTE"       <%= option_selected(complete_function === "NOTE")       %>>Notes</option>
-						<option value="PICKGAME"   <%= option_selected(complete_function === "PICKGAME")   %>>Game List</option>
-						<option value="JAVASCRIPT" <%= option_selected(complete_function === "JAVASCRIPT") %>>Javascript</option>
+						<% _.each(function_types, function(name, value) { %>
+							<option value="<%= value %>" <%= option_selected(complete_function === value) %>><%= name %></option>
+						<% }) %>
 					</select>
 				</div>
 			</div>

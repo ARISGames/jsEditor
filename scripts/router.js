@@ -17,6 +17,7 @@ define([
 	'views/locations_organizer',
 	'views/media_organizer',
 	'views/conversations',
+	'views/tabs',
 
 	'collections/games',
 	'collections/editors',
@@ -31,6 +32,7 @@ define([
 	'collections/quests',
 	'collections/characters',
 	'collections/factories',
+	'collections/tabs',
 
 	'models/game',
 	'models/item',
@@ -39,8 +41,8 @@ define([
 	'vent',
 	'models/session'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView,
-	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView,
+	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection,
 	Game, Item, Media,
 	vent, session) {
 	return Backbone.Router.extend({
@@ -150,6 +152,20 @@ define([
 				vent.trigger("application:nav:show", new GameNavMenu       ({model: game, active: ".game"}));
 				vent.trigger("application:info:hide");
 				vent.trigger("application:list:hide");
+			});
+		},
+
+		editTabs: function(game_id) {
+			var game  = new Game({game_id: game_id});
+
+			var tabs = new TabsCollection([], {parent: game});
+			tabs.fetch({
+				success: function() {
+					vent.trigger("application.show",     new TabsView  ({model: game, collection: tabs}));
+					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+					vent.trigger("application:list:hide");
+					vent.trigger("application:info:hide");
+				}
 			});
 		},
 
