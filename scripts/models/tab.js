@@ -46,7 +46,7 @@ define([
 			'PLAYER':    'Player',
 			'NOTEBOOK':  'Notebook',
 
-			'DIALOG':    'Dialog',
+			'DIALOG':    'Conversation',
 			'ITEM':      'Item/Player Attribute',
 			'PLAQUE':    'Plaque',
 			'WEB_PAGE':  'Web Page'
