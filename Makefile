@@ -15,7 +15,7 @@ help:
 	@echo "  merge: merge master into build branch"
 	@echo "    css: compile less"
 	@echo "  build: optimize all js into one file with requireJS"
-	@echo "    all: merge compile optimize"
+	@echo "    all: merge css build render"
 	@echo " heroku: push build branch to heroku"
 	@echo " deploy: push build branch to aris"
 	@echo ""
