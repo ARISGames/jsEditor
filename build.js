@@ -8,7 +8,8 @@
 	out: "dist/aris.js",
 	optimize: 'uglify2',
 	paths: {
-		"inlineRequireJS": 'library/require'
+		"inlineRequireJS": 'library/require',
+		"config": 'config.production'
 		// "config": 'empty' /* Load config.js every time */
 	},
 	include : ['inlineRequireJS', 'main'],
