@@ -26,13 +26,29 @@ The flow control of the application goes:
 * `scripts/models/session.js` Manages session cookie and authentication.
 * `scripts/router.js` Maps starting point urls (the application does not map 1 to 1 for urls and views) to functions, loads models and renders their views.
 
+Installation
+------------
+
+The aris editor uses RequireJS in two modes 'dev' (master branch) and 'production' (build branch).
+
+For dev, copy `scripts/config.js.template` to `scripts/config.js`. Index.html will access all files individually.
+
+For production switch to the build branch and copy `scripts/config.js.template` to `scripts/config.production.js` and run `make all` which will compile css, run the r.js optimizer to unify all modules, and tag the index file with sha256 signatures of both files. Building requires:
+
+* Make
+* Bash
+* LessCSS
+* Require.js (R.js optimizer tool)
+* sha256sum (Installed on OSX/Linux by default)
+
+Install these however you wish. For development you can install node.js and then npm install from the project folder. Then add `./node_modules/.bin` to your path.
 
 Notes
 -----
 
-All Aris database objects are backed by Backbone models located in the `scripts/models/` directory.
+All Aris API is backed by Backbone models located in the `scripts/models/` directory.
 
-> A custom Backbone.sync method replaces the normal REST style of communication with one friendly to the Aris Amfphp backend.
+    A custom Backbone.sync method replaces the normal REST style of communication with one friendly to the Aris Amfphp Json backend.
 
 Translations
 ------------
