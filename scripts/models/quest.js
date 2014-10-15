@@ -57,6 +57,23 @@ define([
 			complete_requirement_root_package_id: "0"
 		}
 
+	},
+	// Static
+	{
+		function_types: {
+						'NONE':       'None',
+
+						'MAP':        'Map',
+						'DECODER':    'Decoder',
+						'SCANNER':    'Scanner',
+						'QUESTS':     'Quests',
+						'INVENTORY':  'Inventory',
+						'PLAYER':     'Player',
+						'NOTEBOOK':   'Notebook',
+
+						'PICKGAME':   'Game List',
+						'JAVASCRIPT': 'Javascript'
+		}
 	});
 });
 

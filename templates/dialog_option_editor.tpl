@@ -31,6 +31,7 @@
 		<select class="form-control link-id">
 			<option value="0" selected disabled>- Select One -</option>
 
+			<!-- FIXME move logic into view like tabs -->
 			<% if(link_scripts) { %>
 				<% scripts.each(function(script) { %>
 					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(script.get("text"), 600) %></option>

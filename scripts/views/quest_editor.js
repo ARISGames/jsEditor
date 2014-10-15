@@ -9,6 +9,7 @@ define([
 	'models/game',
 	'models/event_package',
 	'models/event',
+	'models/quest',
 	'views/media_chooser',
 	'views/events',
 	'views/requirements',
@@ -24,7 +25,7 @@ define([
 	'collections/quests',
 	'collections/web_hooks',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
+], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, Quest, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -40,7 +41,9 @@ define([
 
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
-				}
+				},
+
+				function_types: Quest.function_types
 			};
 		},
 

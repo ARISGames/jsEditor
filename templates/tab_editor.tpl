@@ -48,7 +48,7 @@
 				</div>
 			</div>
 
-			<div class="form-group"
+			<div class="form-group">
 				<label for="name">Title</label>
 				<input type="text" autofocus class="form-control" id="name" placeholder="Name" value="<%= name %>">
 			</div>
