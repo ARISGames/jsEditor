@@ -1,7 +1,21 @@
 #!/bin/sh
 
+# Helper for conditional inclusion of features.
+function command_exists() {
+	type "$1" &> /dev/null ;
+}
+
+file_signature() {
+	if command_exists sha256
+	then
+		sha256sum $1 | awk '{ print $1 }'
+	else
+		shasum -a 256 $1 | awk '{ print $1 }'
+	fi
+}
+
 cat index.html.template |\
 	sed "s/{{build_date}}/$(date)/g" |\
-	sed "s/{{js_signature}}/$(md5sum dist/aris.js | awk '{ print $1 }')/g" |\
-	sed "s/{{css_signature}}/$(md5sum styles/arisjs.css | awk '{ print $1 }')/g" \
+	sed "s/{{js_signature}}/$(file_signature dist/aris.js)/g" |\
+	sed "s/{{css_signature}}/$(file_signature styles/arisjs.css)/g" \
 	> index.html
