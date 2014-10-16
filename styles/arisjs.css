@@ -37,6 +37,9 @@ table th {
 .aris-nav li {
   text-align: center;
 }
+.nav-name-wrapper {
+  display: inline-block;
+}
 @media (max-width: 767px) {
   .aris-nav li {
     text-align: left !important;
@@ -50,6 +53,8 @@ table th {
 @media (min-width: 881px) and (max-width: 960px) {
   .nav-name {
     font-size: 80%;
+  }
+  .nav-name-wrapper {
     display: block;
   }
   body {
@@ -57,7 +62,7 @@ table th {
   }
 }
 @media (min-width: 961px) and (max-width: 1100px) {
-  .nav-name {
+  .nav-name-wrapper {
     display: block;
   }
   body {

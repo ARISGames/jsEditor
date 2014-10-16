@@ -17,6 +17,7 @@ define([
 			"click .conversations":"onClickConversations",
 			"click .sharing":      "onClickSharing",
 			"click .tabs":         "onClickTabs",
+			"click .tags":         "onClickTags",
 		},
 
 		initialize: function(options) {
@@ -45,6 +46,10 @@ define([
 
 		onClickTabs: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/tabs", {trigger: true});
+		},
+
+		onClickTags: function() {
+			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/tags", {trigger: true});
 		},
 
 		onClickLocations: function() {

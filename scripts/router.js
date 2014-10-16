@@ -18,6 +18,7 @@ define([
 	'views/media_organizer',
 	'views/conversations',
 	'views/tabs',
+	'views/tags',
 
 	'collections/games',
 	'collections/editors',
@@ -33,6 +34,7 @@ define([
 	'collections/characters',
 	'collections/factories',
 	'collections/tabs',
+	'collections/tags',
 
 	'models/game',
 	'models/item',
@@ -41,8 +43,8 @@ define([
 	'vent',
 	'models/session'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView,
-	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView,
+	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection,
 	Game, Item, Media,
 	vent, session) {
 	return Backbone.Router.extend({
@@ -55,6 +57,7 @@ define([
 			"games/:game_id/edit":  "editGame",
 			"games/:game_id/share": "editSharing",
 			"games/:game_id/tabs":  "editTabs",
+			"games/:game_id/tags":  "editTags",
 
 			"games/:game_id/scenes":       "showSceneEditor",
 			"games/:game_id/locations":    "listLocations",
@@ -162,6 +165,20 @@ define([
 			tabs.fetch({
 				success: function() {
 					vent.trigger("application.show",     new TabsView  ({model: game, collection: tabs}));
+					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+					vent.trigger("application:list:hide");
+					vent.trigger("application:info:hide");
+				}
+			});
+		},
+
+		editTags: function(game_id) {
+			var game  = new Game({game_id: game_id});
+
+			var tags = new TagsCollection([], {parent: game});
+			tags.fetch({
+				success: function() {
+					vent.trigger("application.show",     new TagsView  ({model: game, collection: tags}));
 					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
 					vent.trigger("application:list:hide");
 					vent.trigger("application:info:hide");
