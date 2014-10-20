@@ -19,6 +19,7 @@ define([
 	'views/conversations',
 	'views/tabs',
 	'views/tags',
+	'views/notes',
 
 	'collections/games',
 	'collections/editors',
@@ -35,6 +36,7 @@ define([
 	'collections/factories',
 	'collections/tabs',
 	'collections/tags',
+	'collections/notes',
 
 	'models/game',
 	'models/item',
@@ -43,8 +45,8 @@ define([
 	'vent',
 	'models/session'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView,
-	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView, NotesView,
+	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection, NotesCollection,
 	Game, Item, Media,
 	vent, session) {
 	return Backbone.Router.extend({
@@ -58,6 +60,7 @@ define([
 			"games/:game_id/share": "editSharing",
 			"games/:game_id/tabs":  "editTabs",
 			"games/:game_id/tags":  "editTags",
+			"games/:game_id/notes": "editNotes",
 
 			"games/:game_id/scenes":       "showSceneEditor",
 			"games/:game_id/locations":    "listLocations",
@@ -179,6 +182,20 @@ define([
 			tags.fetch({
 				success: function() {
 					vent.trigger("application.show",     new TagsView  ({model: game, collection: tags}));
+					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+					vent.trigger("application:list:hide");
+					vent.trigger("application:info:hide");
+				}
+			});
+		},
+
+		editNotes: function(game_id) {
+			var game  = new Game({game_id: game_id});
+
+			var notes = new NotesCollection([], {parent: game});
+			notes.fetch({
+				success: function() {
+					vent.trigger("application.show",     new NotesView  ({model: game, collection: notes}));
 					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
 					vent.trigger("application:list:hide");
 					vent.trigger("application:info:hide");

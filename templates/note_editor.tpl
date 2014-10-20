@@ -1,11 +1,14 @@
-<form role="form">
-	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
-		<span class="object-id text-muted"><%= media_id %></span>
-	</h4>
+<form class="form note-editor object-editor" role="form" onsubmit="return false;">
+
+	<!-- Note attributes -->
+	<div class="form-group">
+		<label for="name">Name</label>
+		<input type="text" disabled class="form-control" id="name" placeholder="Name" value="<%= name %>">
+	</div>
 
 	<div class="form-group">
-		<label for="media-name">Name</label>
-		<input type="text" autofocus class="form-control" id="media-name" placeholder="Name" value="<%= name %>">
+		<label for="description">Description</label>
+		<input type="text" disabled class="form-control" id="description" placeholder="Description" value="<%= description %>">
 	</div>
 
 	<div class="form-group">
@@ -30,17 +33,14 @@
 	</div>
 
 	<div class="form-group">
-		<button type="submit" class="btn btn-primary save">
-			Save
-		</button>
-
-		<button type="button" class="btn btn-danger delete">
-			Delete
-		</button>
+		<% if(!is_new) { %>
+			<button type="button" class="btn btn-danger delete">
+				Delete
+			</button>
+		<% } %>
 
 		<button type="button" class="btn btn-default" data-dismiss="modal">
 			Cancel
 		</button>
 	</div>
-
 </form>
