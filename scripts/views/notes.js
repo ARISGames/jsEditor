@@ -14,6 +14,22 @@ define([
 		itemView: NoteRowView,
 		itemViewContainer: '.notes',
 
-		className: 'notes-editor'
+		className: 'notes-editor',
+
+		ui: {
+			search_text: "#note-search-text"
+		},
+
+		events:
+		{
+			"click .search-notes": "onClickSearch"
+		},
+
+		onClickSearch: function()
+		{
+			this.collection.fetch({
+				data: {search_text: this.ui.search_text.val()}
+			});
+		}
 	});
 });

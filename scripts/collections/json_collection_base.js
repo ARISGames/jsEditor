@@ -39,6 +39,11 @@ define([
 					request_attributes["game_id"] = this.game.id;
 				}
 
+				// Allow extra attributes. ie. search criteria
+				if(options.data) {
+					_.extend(request_attributes, options.data);
+				}
+
 				_.extend(request_attributes, auth_data);
 
 				options.data = JSON.stringify(request_attributes);
