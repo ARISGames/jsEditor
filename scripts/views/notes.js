@@ -28,7 +28,7 @@ define([
 		onClickSearch: function()
 		{
 			this.collection.fetch({
-				data: {search_text: this.ui.search_text.val()}
+				data: {search: this.ui.search_text.val()}
 			});
 		}
 	});
