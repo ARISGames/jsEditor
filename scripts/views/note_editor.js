@@ -1,15 +1,13 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/note_editor.tpl',
-	'collections/media',
-	'collections/items',
-	'models/game',
-	'models/note',
-	'views/media_chooser',
-	'vent'
-], function(_, $, Backbone, Template, MediaCollection, ItemsCollection, Game, Note, MediaChooserView, vent) {
+define(function(require)
+{
+	var _        = require('underscore');
+	var $        = require('jquery');
+	var Backbone = require('backbone');
+	var Template = require('text!templates/note_editor.tpl');
+	var vent     = require('vent');
+
+	var NoteCommentRowView = require('views/note_comment_row');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -21,6 +19,9 @@ define([
 				url:  this.media.content()
 			};
 		},
+
+		itemView: NoteCommentRowView,
+		itemViewContainer: '.note_comments',
 
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();

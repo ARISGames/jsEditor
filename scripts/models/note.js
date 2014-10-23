@@ -1,8 +1,10 @@
-define([
-	'models/user',
-	'models/json_base',
-	'storage'
-], function(User, JsonBaseModel, storage) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
+	var NoteComments  = require('collections/note_comments');
+	var Game          = require('models/game');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'note_id',
@@ -33,6 +35,20 @@ define([
 
 		tag: function() {
 			return storage.tags.retrieve(this.get('tag_id'));
+		},
+
+		comments: function() {
+			if(this.comments_collection)
+			{
+				return this.comments_collection;
+			}
+			else
+			{
+				var game = new Game({game_id: this.get('game_id')});
+				this.comments_collection = new NoteComments([], {parent: this, game: game});
+				this.comments_collection.fetch();
+				return this.comments_collection;
+			}
 		}
 
 	});

@@ -1,4 +1,7 @@
 <form class="form note-editor object-editor" role="form" onsubmit="return false;">
+	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+		<span class="object-id text-muted"><%= note_id %></span>
+	</h4>
 
 	<!-- Note attributes -->
 	<div class="form-group">
@@ -30,6 +33,9 @@
 		<div class="image-preview media-previewer" style="display: none;">
 			<img class="upload-preview" src="<%= url %>">
 		</div>
+	</div>
+
+	<div class="list-group note_comments">
 	</div>
 
 	<div class="form-group">

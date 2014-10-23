@@ -39,7 +39,7 @@ define([
 
 		onClickEdit: function()
 		{
-			var note_editor = new NoteEditorView({model: this.model});
+			var note_editor = new NoteEditorView({model: this.model, collection: this.model.comments()});
 			vent.trigger("application:popup:show", note_editor, "Edit Note");
 		}
 
