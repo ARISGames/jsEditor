@@ -11,26 +11,36 @@ define([
 
 		// Bootstrap
 		tagName: 'a',
-		className: "list-group-item",
+		className: "list-group-item clearfix",
 
-		events: {
-			"click": "onClickEdit"
+
+		initialize: function(options)
+		{
+			// FIXME my having sub views this can be removed.
+			this.model.user ().on('change', this.render);
+			this.model.media().on('change', this.render);
+			this.model.tag  ().on('change', this.render);
 		},
 
-		modelEvents: {
-			"change": "render"
+
+		templateHelpers: function()
+		{
+			return {
+				tag_name:  this.model.tag  ().get("tag"),
+				user_name: this.model.user ().get("display_name"),
+				media_url: this.model.media().thumbnail()
+			}
 		},
 
-		onClickEdit: function() {
-			var view = this;
 
-			var media = new Media({media_id: this.model.get("media_id")});
+		modelEvents: { "change": "render"      },
+		events:      { "click":  "onClickEdit" },
 
-			$.when(media.fetch()).done(function()
-			{
-				var note_editor = new NoteEditorView({model: view.model, media: media});
-				vent.trigger("application:popup:show", note_editor, "Edit Note");
-			});
+
+		onClickEdit: function()
+		{
+			var note_editor = new NoteEditorView({model: this.model});
+			vent.trigger("application:popup:show", note_editor, "Edit Note");
 		}
 
 	});

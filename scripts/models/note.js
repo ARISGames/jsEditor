@@ -1,6 +1,8 @@
 define([
-	'models/json_base'
-], function(JsonBaseModel) {
+	'models/user',
+	'models/json_base',
+	'storage'
+], function(User, JsonBaseModel, storage) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'note_id',
@@ -18,8 +20,21 @@ define([
 		],
 
 		defaults: {
-			media_id: "5628"
+			media_id: "0"
+		},
+
+		user: function() {
+			return storage.users.retrieve(this.get('user'));
+		},
+
+		media: function() {
+			return storage.media.retrieve(this.get('media_id'));
+		},
+
+		tag: function() {
+			return storage.tags.retrieve(this.get('tag_id'));
 		}
+
 	});
 });
 

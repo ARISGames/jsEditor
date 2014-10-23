@@ -43,12 +43,13 @@ define([
 	'models/media',
 
 	'vent',
-	'models/session'
+	'models/session',
+	'storage'
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView, NotesView,
 	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection, NotesCollection,
 	Game, Item, Media,
-	vent, session) {
+	vent, session, storage) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -191,15 +192,16 @@ define([
 
 		editNotes: function(game_id) {
 			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
 			var notes = new NotesCollection([], {parent: game});
-			notes.fetch({
-				success: function() {
-					vent.trigger("application.show",     new NotesView  ({model: game, collection: notes}));
-					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
-					vent.trigger("application:list:hide");
-					vent.trigger("application:info:hide");
-				}
+
+			$.when(notes.fetch()).done(function()
+			{
+				vent.trigger("application.show",     new NotesView   ({model: game, collection: notes}));
+				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+				vent.trigger("application:list:hide");
+				vent.trigger("application:info:hide");
 			});
 		},
 

@@ -18,15 +18,8 @@ define([
 			return {
 				is_new: this.model.isNew(),
 
-				url:  this.media.get('url')
+				url:  this.media.content()
 			};
-		},
-
-
-
-		ui: {
-			"name":        "#name",
-			"description": "#description"
 		},
 
 		onShow: function() {
@@ -34,73 +27,17 @@ define([
 		},
 
 		events: {
-			"click .save":   "onClickSave",
-			"click .delete": "onClickDelete",
-
-			"click .change-media": "onClickMedia",
-
-			// Field events
-			"change @ui.name":        "onChangeName",
-			"change @ui.description": "onChangeDescription"
+			"click .delete": "onClickDelete"
 		},
 
 		initialize: function(options) {
-			this.media      = options.media;
-		},
-
-		onClickSave: function() {
-			var view  = this;
-
-			view.model.save({}, {
-				create: function() {
-					view.trigger("note:add", view.model);
-				},
-
-				success: function() {
-					vent.trigger("application:popup:hide");
-				}
-			});
+			this.media      = this.model.media();
 		},
 
 		onClickDelete: function() {
 			this.model.destroy({
 				success: function() {
 					vent.trigger("application:popup:hide");
-				}
-			});
-		},
-
-
-		/* Field Changes */
-
-		onChangeName:        function() { this.model.set("name",        this.ui.note.val()); },
-		onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
-
-
-		/* Media Selection */
-
-		onClickMedia: function() {
-			var view = this;
-			event.preventDefault();
-
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
-
-			media.fetch({
-				success: function() {
-					/* Media */
-					var media_chooser = new MediaChooserView({collection: media, back_view: view});
-					vent.trigger("application:popup:show", media_chooser, "Note Media");
-
-					media_chooser.on("media:choose", function(media) {
-						view.media = media;
-						view.model.set("media_id", media.id);
-						vent.trigger("application:popup:show", view, "Edit Note");
-					});
-
-					media_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Note");
-					});
 				}
 			});
 		},
