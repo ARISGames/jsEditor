@@ -263,6 +263,11 @@ h4:hover .object-id {
 	height: 96px;
 }
 
+.thumbnail.tiny img {
+	width: 48px;
+	height: 48px;
+}
+
 /* TODO temporarily unused, bootstrap used instead */
 .media-editor .aris-media-thumbnail {
 	display: inline-block;
@@ -372,7 +377,7 @@ h4:hover .object-id {
 }
 
 /* Scrolling for tall areas */
-.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container  {
+.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container, .notes-editor  {
 	height: 100%;
 	overflow-x: auto;
 }
@@ -479,4 +484,15 @@ h4:hover .object-id {
 }
 .author-row:hover .remove {
 	visibility: inherit;
+}
+
+
+/* Notes View */
+.notes-editor {
+	.thumbnail {
+		margin-right: 10px;
+	}
+	.list-group-item {
+		padding: 10px;
+	}
 }
