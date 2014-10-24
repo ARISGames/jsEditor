@@ -41,6 +41,12 @@
 			<span class="nav-name"> Media</span>
 		</span>
 	</a></li>
+	<li><a class="notes">
+		<span class="glyphicon glyphicon-book"></span>
+		<span class="nav-name-wrapper">
+			<span class="nav-name"> Notebook</span>
+		</span>
+	</a></li>
 	<li class="dropdown">
 		<a class="game dropdown-toggle" data-toggle="dropdown">
 			<span class="glyphicon glyphicon-cog"></span>
@@ -50,7 +56,6 @@
 			</span>
 		</a>
 		<ul class="dropdown-menu" role="menu">
-			<li class="notes"    style="text-align: left;"><a><span class="glyphicon glyphicon-file"   ></span> Player Notes</a></li>
 			<li class="settings" style="text-align: left;"><a><span class="glyphicon glyphicon-wrench" ></span> Settings</a></li>
 			<li class="tabs"     style="text-align: left;"><a><span class="glyphicon glyphicon-th-list"></span> Tabs</a></li>
 			<li class="tags"     style="text-align: left;"><a><span class="glyphicon glyphicon-tags"   ></span> Tags</a></li>

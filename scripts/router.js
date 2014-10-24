@@ -199,7 +199,7 @@ define([
 			$.when(notes.fetch()).done(function()
 			{
 				vent.trigger("application.show",     new NotesView   ({model: game, collection: notes}));
-				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".notes"}));
 				vent.trigger("application:list:hide");
 				vent.trigger("application:info:hide");
 			});
