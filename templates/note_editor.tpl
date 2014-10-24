@@ -14,6 +14,14 @@
 		</footer>
 	</blockquote>
 
+	<% if(tag_name) { %>
+		<p class="pull-right">
+			<span class="glyphicon glyphicon-tags"></span>
+			&nbsp;
+			<%= tag_name %>
+		</p>
+	<% } %>
+
 
 	<% if(has_media) { %>
 		<div class="form-group">
