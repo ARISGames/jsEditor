@@ -17,7 +17,7 @@ define([
 		},
 
 		// Bootstrap
-		className: "list-group-item author-row",
+		className: "list-group-item",
 
 		events: {
 			"click .remove": "onClickRemove"

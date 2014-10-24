@@ -18,6 +18,8 @@ define([
 	'views/media_organizer',
 	'views/conversations',
 	'views/tabs',
+	'views/tags',
+	'views/notes',
 
 	'collections/games',
 	'collections/editors',
@@ -33,18 +35,21 @@ define([
 	'collections/characters',
 	'collections/factories',
 	'collections/tabs',
+	'collections/tags',
+	'collections/notes',
 
 	'models/game',
 	'models/item',
 	'models/media',
 
 	'vent',
-	'models/session'
+	'models/session',
+	'storage'
 ], function($, _, Backbone,
-	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView,
-	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection,
+	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView, NotesView,
+	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection, NotesCollection,
 	Game, Item, Media,
-	vent, session) {
+	vent, session, storage) {
 	return Backbone.Router.extend({
 
 		routes: {
@@ -55,6 +60,8 @@ define([
 			"games/:game_id/edit":  "editGame",
 			"games/:game_id/share": "editSharing",
 			"games/:game_id/tabs":  "editTabs",
+			"games/:game_id/tags":  "editTags",
+			"games/:game_id/notes": "editNotes",
 
 			"games/:game_id/scenes":       "showSceneEditor",
 			"games/:game_id/locations":    "listLocations",
@@ -166,6 +173,35 @@ define([
 					vent.trigger("application:list:hide");
 					vent.trigger("application:info:hide");
 				}
+			});
+		},
+
+		editTags: function(game_id) {
+			var game  = new Game({game_id: game_id});
+
+			var tags = new TagsCollection([], {parent: game});
+			tags.fetch({
+				success: function() {
+					vent.trigger("application.show",     new TagsView  ({model: game, collection: tags}));
+					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+					vent.trigger("application:list:hide");
+					vent.trigger("application:info:hide");
+				}
+			});
+		},
+
+		editNotes: function(game_id) {
+			var game  = new Game({game_id: game_id});
+			storage.for(game);
+
+			var notes = new NotesCollection([], {parent: game});
+
+			$.when(notes.fetch()).done(function()
+			{
+				vent.trigger("application.show",     new NotesView   ({model: game, collection: notes}));
+				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+				vent.trigger("application:list:hide");
+				vent.trigger("application:info:hide");
 			});
 		},
 

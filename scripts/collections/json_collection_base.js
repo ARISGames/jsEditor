@@ -39,6 +39,11 @@ define([
 					request_attributes["game_id"] = this.game.id;
 				}
 
+				// Allow extra attributes. ie. search criteria
+				if(options.data) {
+					_.extend(request_attributes, options.data);
+				}
+
 				_.extend(request_attributes, auth_data);
 
 				options.data = JSON.stringify(request_attributes);
@@ -88,6 +93,47 @@ define([
 				return json.data;
 			}
 		},
+
+
+		// App storage
+		retrieve: function(attributes) {
+			// Get by ID or by attribute hash
+			if(typeof attributes === "string" || typeof attributes === "number")
+			{
+				var id = attributes;
+				var attributes = null;
+			}
+			else
+			{
+				var id = attributes[new this.model().idAttribute];
+			}
+
+			// Find existing or Initialize.
+			var model = this.get(id);
+			if(!model)
+			{
+				var model = new this.model();
+				model.set(model.idAttribute, id);
+
+				// Got values from caller, else fetch from server.
+				if(attributes) {
+					model.set(attributes);
+				}
+				else if(id !== "0")
+				{
+					model.fetch();
+				}
+				this.add(model);
+			}
+
+			// Update attributes from caller
+			if(attributes)
+			{
+				model.set(attributes);
+			}
+
+			return model;
+		}
 
 	});
 });

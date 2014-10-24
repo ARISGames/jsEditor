@@ -1,4 +1,7 @@
 <form role="form">
+	<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+		<span class="object-id text-muted"><%= media_id %></span>
+	</h4>
 
 	<div class="form-group">
 		<label for="media-name">Name</label>

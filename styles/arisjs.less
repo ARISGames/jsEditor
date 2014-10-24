@@ -44,6 +44,9 @@ table th {
 .aris-nav li {
 	text-align: center;
 }
+.nav-name-wrapper {
+	display: inline-block;
+}
 @media (max-width: 767px) {
 	.aris-nav li {
 		text-align: left !important;
@@ -58,6 +61,8 @@ table th {
 @media (min-width: 881px) and (max-width: 960px) {
 	.nav-name {
 		font-size: 80%;
+	}
+	.nav-name-wrapper {
 		display: block;
 	}
 	body {
@@ -65,7 +70,7 @@ table th {
 	}
 }
 @media (min-width: 961px) and (max-width: 1100px) {
-	.nav-name {
+	.nav-name-wrapper {
 		display: block;
 	}
 	body {
@@ -258,6 +263,11 @@ h4:hover .object-id {
 	height: 96px;
 }
 
+.thumbnail.tiny img {
+	width: 48px;
+	height: 48px;
+}
+
 /* TODO temporarily unused, bootstrap used instead */
 .media-editor .aris-media-thumbnail {
 	display: inline-block;
@@ -367,7 +377,7 @@ h4:hover .object-id {
 }
 
 /* Scrolling for tall areas */
-.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container  {
+.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container, .notes-editor  {
 	height: 100%;
 	overflow-x: auto;
 }
@@ -465,13 +475,25 @@ h4:hover .object-id {
 }
 
 
-/* Sharing View */
+/* Deletable Lists */
 
 
-.author-row .remove {
+.list-group-item .remove {
 	visibility: hidden;
 	cursor: pointer;
 }
-.author-row:hover .remove {
+.list-group-item:hover .remove {
 	visibility: inherit;
+}
+
+
+/* Notes View */
+.notes-editor {
+	.thumbnail {
+		margin: 0;
+		margin-right: 10px;
+	}
+	.list-group-item {
+		padding: 10px;
+	}
 }

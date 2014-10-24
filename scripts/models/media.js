@@ -37,7 +37,8 @@ define([
 
 
 		defaults: {
-			"name": ""
+			"name": "",
+			"file_name": ""
 		},
 
 
@@ -64,6 +65,10 @@ define([
 			else {
 				return this.get("thumb_url");
 			}
+		},
+
+		content: function() {
+			return this.get("url");
 		}
 	});
 });

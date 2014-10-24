@@ -2,7 +2,7 @@
 
 	<div class="row">
 		<!-- Tab attributes -->
-		<div class="col-xs-12 col-sm-8 padded">
+		<div class="col-sm-8 padded">
 			<div class="form-group">
 				<button type="button" class="btn btn-block btn-warning edit-requirements">
 					<span class="glyphicon glyphicon-lock"></span>
@@ -35,7 +35,7 @@
 
 
 		<!-- Appearance -->
-		<div class="col-xs-12 col-sm-4 padded">
+		<div class="col-sm-4 padded">
 			<div class="form-group">
 				<div class="thumbnail small change-icon">
 					<img src=<%= icon_thumbnail_url %>>
