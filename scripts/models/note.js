@@ -25,6 +25,9 @@ define(function(require) {
 			media_id: "0"
 		},
 
+
+		/* Associations */
+
 		user: function() {
 			return storage.users.retrieve(this.get('user'));
 		},

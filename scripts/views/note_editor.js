@@ -14,9 +14,13 @@ define(function(require)
 
 		templateHelpers: function() {
 			return {
-				is_new: this.model.isNew(),
+				is_new:       this.model.isNew(),
+		   		has_media:    this.media.id !== "0",
+		   		has_comments: this.collection.length > 0,
 
-				url:  this.media.content()
+				url:       this.media.content(),
+				tag_name:  this.model.tag  ().get("tag"),
+				user_name: this.model.user ().get("display_name")
 			};
 		},
 
@@ -29,6 +33,12 @@ define(function(require)
 
 		events: {
 			"click .delete": "onClickDelete"
+		},
+
+		// NOTE trying to hide header based on collection size bug work around.
+		collectionEvents: {
+			"add": function() { this.$el.find(".comments-header").show() },
+			"remove": function(model, collection) { if(collection.length === 0) { this.$el.find(".comments-header").hide() } }
 		},
 
 		initialize: function(options) {

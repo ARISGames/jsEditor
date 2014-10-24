@@ -4,37 +4,40 @@
 	</h4>
 
 	<!-- Note attributes -->
-	<div class="form-group">
-		<label for="name">Name</label>
-		<input type="text" disabled class="form-control" id="name" placeholder="Name" value="<%= name %>">
-	</div>
 
-	<div class="form-group">
-		<label for="description">Description</label>
-		<input type="text" disabled class="form-control" id="description" placeholder="Description" value="<%= description %>">
-	</div>
+	<blockquote>
+		<p>
+			<%= description %>
+		</p>
+		<footer>
+			<%= user_name %>
+		</footer>
+	</blockquote>
 
-	<div class="form-group">
-		<label>Preview</label>
-		<div class="audio-preview media-previewer" style="display: none;">
-			<audio controls class="upload-preview">
-				<source src="<%= url %>"/>
-				Audio Format Unsupported in this Browser. Link to file: <a target="_blank" href="<%= url %>"><%= url %></a>
-			</audio>
+
+	<% if(has_media) { %>
+		<div class="form-group">
+			<div class="audio-preview media-previewer" style="display: none;">
+				<audio controls class="upload-preview">
+					<source src="<%= url %>"/>
+					Audio Format Unsupported in this Browser. Link to file: <a target="_blank" href="<%= url %>"><%= url %></a>
+				</audio>
+			</div>
+
+			<div class="video-preview media-previewer" style="display: none;">
+				<video controls class="upload-preview">
+					<source src="<%= url %>"/>
+					Video Format Unsupported in this Browser. Link to file: <a target="_blank" href="<%= url %>"><%= url %></a>
+				</video>
+			</div>
+
+			<div class="image-preview media-previewer" style="display: none;">
+				<img class="upload-preview img-thumbnail" src="<%= url %>">
+			</div>
 		</div>
+	<% } %>
 
-		<div class="video-preview media-previewer" style="display: none;">
-			<video controls class="upload-preview">
-				<source src="<%= url %>"/>
-				Video Format Unsupported in this Browser. Link to file: <a target="_blank" href="<%= url %>"><%= url %></a>
-			</video>
-		</div>
-
-		<div class="image-preview media-previewer" style="display: none;">
-			<img class="upload-preview" src="<%= url %>">
-		</div>
-	</div>
-
+	<h5 class="comments-header" style="display:none;">Comments</h5>
 	<div class="list-group note_comments">
 	</div>
 

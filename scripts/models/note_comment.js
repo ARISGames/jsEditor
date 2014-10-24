@@ -1,6 +1,7 @@
 define(function(require)
 {
 	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
 
 
 	return JsonBaseModel.extend({
@@ -19,7 +20,11 @@ define(function(require)
 		],
 
 		defaults: {
-		}
+		},
+
+		user: function() {
+			return storage.users.retrieve(this.get('user'));
+		},
 	});
 });
 

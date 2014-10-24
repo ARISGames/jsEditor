@@ -424,12 +424,12 @@ h4:hover .object-id {
 .published-toggle label.active {
   opacity: 1.0;
 }
-/* Sharing View */
-.author-row .remove {
+/* Deletable Lists */
+.list-group-item .remove {
   visibility: hidden;
   cursor: pointer;
 }
-.author-row:hover .remove {
+.list-group-item:hover .remove {
   visibility: inherit;
 }
 /* Notes View */
