@@ -185,9 +185,8 @@ nav,
   z-index: 2;
 }
 .empty_scene {
-  border: 2px dotted #c8c8c8;
-  background: #fafafa;
-  padding: 0.5em;
+  padding: 0 0.5em;
+  text-align: center;
 }
 /* Side editor */
 /* Hidden ID on editor heading */
