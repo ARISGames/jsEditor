@@ -1,13 +1,16 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/game_editor.tpl',
-	'collections/media',
-	'views/media_chooser',
-	'models/game',
-	'vent'
-], function(_, $, Backbone, Template, MediaCollection, MediaChooserView, Game, vent) {
+define(function(require)
+{
+	var _        = require('underscore');
+	var $        = require('jquery');
+	var Backbone = require('backbone');
+	var Template = require('text!templates/game_editor.tpl');
+
+	var MediaCollection  = require('collections/media');
+	var MediaChooserView = require('views/media_chooser');
+	var AlertDialog      = require('views/alert_dialog');
+
+	var Game = require('models/game');
+	var vent = require('vent');
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -62,6 +65,7 @@ define([
 			"change input[name=game-published]": "onChangePublished",
 			"click .save": "onClickSave",
 			"click .cancel": "onClickCancel",
+			"click .delete": "onClickDelete",
 			"click .change-icon": "onClickIcon",
 			"click .change-media": "onClickMedia"
 		},
@@ -175,6 +179,27 @@ define([
 
 		onClickCancel: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
+		},
+
+		onClickDelete: function() {
+			var view = this;
+
+			var alert_dialog = new AlertDialog({text: "Are you sure you want to delete this game? All data will be lost.", danger_button: true, cancel_button: true});
+
+			alert_dialog.on("danger", function() {
+				view.model.destroy({
+					success: function() {
+						Backbone.history.navigate("#games", {trigger: true});
+					}
+				});
+				vent.trigger("application:popup:hide");
+			});
+
+			alert_dialog.on("cancel", function() {
+				vent.trigger("application:popup:hide");
+			});
+
+			vent.trigger("application:popup:show", alert_dialog, "Delete Game?");
 		}
 
 	});

@@ -9,13 +9,15 @@ define([
 	'models/web_page',
 	'models/media',
 	'models/scene',
+	'models/factory',
 	'views/dialog_trigger_editor',
 	'views/plaque_trigger_editor',
 	'views/item_trigger_editor',
 	'views/web_page_trigger_editor',
 	'views/scene_trigger_editor',
+	'views/factory_trigger_editor',
 	'vent'
-], function(_, Backbone, Template, Instance, Dialog, Plaque, Item, WebPage, Media, Scene, DialogTriggerEditorView, PlaqueTriggerEditorView, ItemTriggerEditorView, WebPageTriggerEditorView, SceneTriggerEditorView, vent) {
+], function(_, Backbone, Template, Instance, Dialog, Plaque, Item, WebPage, Media, Scene, Factory, DialogTriggerEditorView, PlaqueTriggerEditorView, ItemTriggerEditorView, WebPageTriggerEditorView, SceneTriggerEditorView, FactoryTriggerEditorView, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -81,11 +83,12 @@ define([
 							view.object_name = view.game_object.get("name");
 
 							var type = view.instance.get("object_type");
-							if(type === "DIALOG")   { view.object_icon = "comment";  }
+							if(type === "DIALOG")   { view.object_icon = "comment"; }
 							if(type === "PLAQUE")   { view.object_icon = "align-justify"; }
 							if(type === "ITEM")     { view.object_icon = "stop";    }
-							if(type === "WEB_PAGE") { view.object_icon = "globe";    }
-							if(type === "SCENE")    { view.object_icon = "film";     }
+							if(type === "WEB_PAGE") { view.object_icon = "globe";   }
+							if(type === "SCENE")    { view.object_icon = "film";    }
+							if(type === "FACTORY")  { view.object_icon = "home";    }
 
 							view.render();
 						});
@@ -154,6 +157,11 @@ define([
 					if(view.game_object instanceof Scene) {
 
 						trigger_editor = new SceneTriggerEditorView({parent_scene: view.scene, icon: icon, scene: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+					}
+
+					if(view.game_object instanceof Factory) {
+
+						trigger_editor = new FactoryTriggerEditorView({scene: view.scene, icon: icon, factory: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
 					if(trigger_editor === null) {

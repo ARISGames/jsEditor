@@ -1,24 +1,28 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/scene_trigger_type_chooser.tpl',
-	'views/scene_instance_trigger',
-	'views/dialog_chooser',
-	'views/item_chooser',
-	'views/plaque_chooser',
-	'views/web_page_chooser',
-	'views/scene_chooser',
-	'collections/dialogs',
-	'collections/items',
-	'collections/plaques',
-	'collections/web_pages',
-	'collections/scenes',
-	'vent'
-], function(_, Backbone, Template,
-	SceneInstanceTriggerView,
-	DialogChooserView, ItemChooserView, PlaqueChooserView, WebPageChooserView, SceneChooserView,
-	DialogsCollection, ItemsCollection, PlaquesCollection, WebPagesCollection, ScenesCollection,
-	vent) {
+define(function(require)
+{
+	var _        = require('underscore');
+	var Backbone = require('backbone');
+	var Template = require('text!templates/scene_trigger_type_chooser.tpl');
+
+	var SceneInstanceTriggerView = require('views/scene_instance_trigger');
+
+	var DialogChooserView  = require('views/dialog_chooser');
+	var ItemChooserView    = require('views/item_chooser');
+	var PlaqueChooserView  = require('views/plaque_chooser');
+	var WebPageChooserView = require('views/web_page_chooser');
+	var SceneChooserView   = require('views/scene_chooser');
+	var FactoryChooserView = require('views/factory_chooser');
+
+	var DialogsCollection   = require('collections/dialogs');
+	var ItemsCollection     = require('collections/items');
+	var PlaquesCollection   = require('collections/plaques');
+	var WebPagesCollection  = require('collections/web_pages');
+	var ScenesCollection    = require('collections/scenes');
+	var FactoriesCollection = require('collections/factories');
+
+	var vent = require('vent');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -27,7 +31,8 @@ define([
 			"click .add-plaque":   "onClickAddPlaque",
 			"click .add-web-page": "onClickAddWebPage",
 			"click .add-item":     "onClickAddItem",
-			"click .add-scene":    "onClickAddScene"
+			"click .add-scene":    "onClickAddScene",
+			"click .add-factory":  "onClickAddFactory"
 		},
 
 		initialize: function(options) {
@@ -93,8 +98,25 @@ define([
 
 			scenes.fetch({
 				success: function() {
+
+					// Remove current scene from list
+					scenes.remove(scene);
+
 					var scene_chooser = new SceneChooserView({collection: scenes, parent: scene});
 					vent.trigger("application:popup:show", scene_chooser, "Add Scene Switch to Scene");
+				}
+			});
+		},
+
+		onClickAddFactory: function() {
+			var scene = this.model;
+
+			var factories = new FactoriesCollection([], {parent: this.game});
+
+			factories.fetch({
+				success: function() {
+					var factory_chooser = new FactoryChooserView({collection: factories, parent: scene});
+					vent.trigger("application:popup:show", factory_chooser, "Add Factory to Scene");
 				}
 			});
 		}

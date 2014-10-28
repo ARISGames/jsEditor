@@ -32,16 +32,16 @@
 	<div class="form-group">
 	<br>
 		<label for="game-intro_scene_id">Visibility To ARIS Client</label>
-		<div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong style='color: green'>Published</strong> your game will be listed as playable on the ARIS client. If not, your game will not be playable unless the <strong>Show games in development</strong> switch is flipped in the ARIS client settings.">
+		<div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong class='text-success'>Published</strong> your game will be listed as playable on the ARIS client to everyone. If <strong class='text-info'>Private</strong> it will appear under the 'mine' tab for all editors of the game.">
 			<label class="btn btn-success">
 				<input type="radio" name="game-published" value="1" <%= radio_selected(published === "1") %>>
 				<span class="glyphicon glyphicon-saved"></span>
 				Published
 			</label>
-			<label class="btn btn-warning">
+			<label class="btn btn-info">
 				<input type="radio" name="game-published" value="0" <%= radio_selected(published === "0") %>>
-				<span class="glyphicon glyphicon-pencil"></span>
-				In Development
+				<span class="glyphicon glyphicon-eye-close"></span>
+				Private
 			</label>
 
 		</div>
@@ -230,6 +230,7 @@
 			Save
 		</button>
 		<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
+		<button type="button" class="btn btn-danger delete pull-right">Delete</button>
 	</div>
 	</form>
 </div>

@@ -14,6 +14,9 @@
 	<a class="list-group-item add-scene">
 		<span class="glyphicon glyphicon-film"></span>&nbsp; Switch Scene
 	</a>
+	<a class="list-group-item add-factory">
+		<span class="glyphicon glyphicon-home"></span>&nbsp; Run Factory
+	</a>
 </div>
 
 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
