@@ -1,3 +1,3 @@
 <div class="empty_scene text-muted">
-	Add game content!
+	&nbsp;
 </div>
