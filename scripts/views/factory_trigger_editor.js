@@ -400,6 +400,16 @@ define([
 			});
 
 
+			var drag_marker = new google.maps.Marker({
+				position: location_position,
+				title: this.model.get("title"),
+				map: map,
+				draggable: true
+			})
+
+			circle_marker.bindTo('center', drag_marker, 'position');
+
+
 			var center_on = function(circle) {
 				// Add circle radius to map boundary
 				boundary = circle.getBounds();
@@ -408,6 +418,7 @@ define([
 				map.setCenter(boundary.getCenter());
 				map.fitBounds(boundary);
 			}
+
 
 			// Initial view
 			//setTimeout(function() {console.log("centering"); center_on(circle_marker);}, 300);
@@ -420,6 +431,7 @@ define([
 				center_on(circle_marker);
 			});
 
+
 			google.maps.event.addListener(circle_marker, 'dragend', function(event) {
 				var center = circle_marker.getCenter();
 
@@ -429,7 +441,14 @@ define([
 				center_on(circle_marker);
 			});
 
+			google.maps.event.addListener(drag_marker, 'dragend', function(event) {
+				var center = circle_marker.getCenter();
 
+				view.model.set("latitude",  center.lat());
+				view.model.set("longitude", center.lng());
+
+				center_on(circle_marker);
+			});
 
 		}
 	});
