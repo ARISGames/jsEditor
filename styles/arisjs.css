@@ -135,7 +135,11 @@ nav,
 }
 .scene-panel:hover .panel-heading {
   color: #428bca;
-  background: #f0f0f0;
+  background: #ddd !important;
+}
+.scene-panel:hover .new-trigger {
+  color: #428bca;
+  background: #ddd !important;
 }
 .scenes-overlay {
   /* Disabled for demo */
