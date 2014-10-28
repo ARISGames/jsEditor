@@ -148,11 +148,10 @@ nav,
   pointer-events: none;
 }
 .scene-panel {
-  max-width: 475px;
+  max-width: 100%;
   float: left;
 }
 .scene-panel .scene-title {
-  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   font-size: 125%;
@@ -184,6 +183,11 @@ nav,
 .new-scene-button {
   float: right;
   z-index: 2;
+}
+.empty_scene {
+  border: 2px dotted #c8c8c8;
+  background: #fafafa;
+  padding: 0.5em;
 }
 /* Side editor */
 /* Hidden ID on editor heading */

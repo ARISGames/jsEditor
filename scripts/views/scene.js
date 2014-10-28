@@ -5,9 +5,10 @@ define([
 	'views/scene_editor',
 	'views/scene_instance_trigger',
 	'views/scene_trigger_type_chooser',
+	'views/empty_scene',
 	'collections/triggers',
 	'vent'
-], function(_, Backbone, Template, SceneEditorView, SceneInstanceTriggerView, SceneTriggerTypeChooserView,TriggerCollection, vent) {
+], function(_, Backbone, Template, SceneEditorView, SceneInstanceTriggerView, SceneTriggerTypeChooserView, EmptySceneView, TriggerCollection, vent) {
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -15,6 +16,7 @@ define([
 
 		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-triggers",
+		emptyView: EmptySceneView,
 
 		initialize: function(options) {
 			var view = this;
