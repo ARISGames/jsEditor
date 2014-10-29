@@ -155,8 +155,10 @@ nav,
   max-width: 100%;
   float: left;
   margin: 0.5em;
+  color: #555;
 }
 .scene-panel .scene-title {
+  color: #777;
   white-space: nowrap;
   overflow: hidden;
   font-size: 125%;
