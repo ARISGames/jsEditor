@@ -81,7 +81,7 @@
 		</label>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group title-container">
 		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
 	</div>
 

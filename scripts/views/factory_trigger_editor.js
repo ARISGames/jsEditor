@@ -9,6 +9,7 @@ define(function(require)
 	var vent     = require('vent');
 
 	var FactoryEditorView       = require('views/factory_editor');
+
 	var RequirementsEditorView  = require('views/requirements');
 	var MediaChooserView        = require('views/media_chooser');
 
@@ -98,7 +99,8 @@ define(function(require)
 			"wiggle": "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden": "#trigger-hidden",
-			"code": "#trigger-code"
+			"code": "#trigger-code",
+			"title_container": ".title-container"
 		},
 
 
@@ -275,11 +277,11 @@ define(function(require)
 		onChangeShowTitle: function() {
 			if(this.ui.show_title.is(":checked"))
 			{
-				this.ui.title.show();
+				this.ui.title_container.show();
 			}
 			else
 			{
-				this.ui.title.hide();
+				this.ui.title_container.hide();
 			}
 		},
 
