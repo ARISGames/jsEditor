@@ -262,10 +262,12 @@ define(function(require)
 		onChangeInfinity: function() {
 			if(this.ui.infinite.is(":checked"))
 			{
+				this.drag_marker.setIcon("images/marker-green.png");
 				this.range_marker.setVisible(false);
 			}
 			else
 			{
+				this.drag_marker.setIcon();
 				this.range_marker.setVisible(true);
 			}
 		},
@@ -433,21 +435,22 @@ define(function(require)
 				strokeColor: '#428bca'
 			});
 
-
-			this.range_marker = circle_marker;
-
-			if(this.ui.infinite.is(":checked"))
-			{
-				circle_marker.setVisible(false);
-			}
-
-
 			var drag_marker = new google.maps.Marker({
 				position: location_position,
 				title: this.model.get("title"),
 				map: map,
 				draggable: true
-			})
+			});
+
+
+			this.range_marker = circle_marker;
+			this.drag_marker  = drag_marker;
+
+			if(this.ui.infinite.is(":checked"))
+			{
+				drag_marker.setIcon("images/marker-green.png");
+				circle_marker.setVisible(false);
+			}
 
 			circle_marker.bindTo('center', drag_marker, 'position');
 
