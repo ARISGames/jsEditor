@@ -50,8 +50,7 @@ define(function(require)
 				if(game_object.id === view.dialog.id && game_object.idAttribute === view.dialog.idAttribute) {
 					view.dialog = game_object;
 					view.render();
-					view.onChangeType();
-					view.onChangeTriggerEnter();
+					view.setVisibleFields();
 				}
 			});
 
@@ -96,6 +95,8 @@ define(function(require)
 			"latitude": "#trigger-latitude",
 			"longitude": "#trigger-longitude",
 			"distance": "#trigger-distance",
+			"infinite": "#trigger-infinite",
+			"title_container": ".title-container",
 			"wiggle": "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden": "#trigger-hidden",
@@ -108,6 +109,8 @@ define(function(require)
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
 			"click .change-icon":  "onClickChangeIcon",
+			"change @ui.infinite": "onChangeInfinity",
+			"change @ui.show_title": "onChangeShowTitle",
 			"change input[name='trigger-type']": "onChangeType",
 			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
 			"click .edit-dialog": "onClickEditDialog",
@@ -187,9 +190,10 @@ define(function(require)
 								trigger.set("title",       view.ui.title.val());
 								trigger.set("qr_code",        view.ui.code.val());
 
-								trigger.set("wiggle",      view.ui.wiggle.is    (":checked") ? "1" : "0");
-								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
-								trigger.set("hidden",      view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
+								trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
+								trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
 
 								trigger.set("type",             view.$el.find("input[name=trigger-type]:checked").val());
 								trigger.set("trigger_on_enter", view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
@@ -238,8 +242,7 @@ define(function(require)
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.render();
-						view.onChangeType();
-						view.onChangeTriggerEnter();
+						view.setVisibleFields();
 						vent.trigger("application:popup:hide");
 					});
 
@@ -248,6 +251,30 @@ define(function(require)
 					});
 				}
 			});
+		},
+
+		onChangeInfinity: function() {
+			if(this.ui.infinite.is(":checked"))
+			{
+				this.drag_marker.setIcon("images/marker-green.png");
+				this.range_marker.setVisible(false);
+			}
+			else
+			{
+				this.drag_marker.setIcon();
+				this.range_marker.setVisible(true);
+			}
+		},
+
+		onChangeShowTitle: function() {
+			if(this.ui.show_title.is(":checked"))
+			{
+				this.ui.title_container.show();
+			}
+			else
+			{
+				this.ui.title_container.hide();
+			}
 		},
 
 		onChangeType: function() {
@@ -293,10 +320,15 @@ define(function(require)
 		},
 
 		onShow: function() {
-			this.onChangeType();
-			this.onChangeTriggerEnter();
+			this.setVisibleFields();
 
 			this.$el.find('input[autofocus]').focus();
+		},
+
+		setVisibleFields: function() {
+			this.onChangeType();
+			this.onChangeTriggerEnter();
+			this.onChangeShowTitle();
 		},
 
 		onClickEditRequirements: function() {
@@ -402,7 +434,17 @@ define(function(require)
 				title: this.model.get("title"),
 				map: map,
 				draggable: true
-			})
+			});
+
+
+			this.range_marker = circle_marker;
+			this.drag_marker  = drag_marker;
+
+			if(this.ui.infinite.is(":checked"))
+			{
+				drag_marker.setIcon("images/marker-green.png");
+				circle_marker.setVisible(false);
+			}
 
 			circle_marker.bindTo('center', drag_marker, 'position');
 

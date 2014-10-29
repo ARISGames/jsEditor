@@ -96,11 +96,11 @@ define(function(require)
 			"longitude": "#trigger-longitude",
 			"distance": "#trigger-distance",
 			"infinite": "#trigger-infinite",
+			"title_container": ".title-container",
 			"wiggle": "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden": "#trigger-hidden",
-			"code": "#trigger-code",
-			"title_container": ".title-container"
+			"code": "#trigger-code"
 		},
 
 
@@ -352,14 +352,14 @@ define(function(require)
 				plaques:        new PlaquesCollection       ([], {parent: game}),
 				dialogs:        new DialogsCollection       ([], {parent: game}),
 				dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
-				factories:      new FactorysCollection      ([], {parent: game}),
+				web_pages:      new WebPagesCollection      ([], {parent: game}),
 				quests:         new QuestsCollection        ([], {parent: game}),
 				hooks:          new WebHooksCollection      ([], {parent: game})
 			};
 
 			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.factories.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
