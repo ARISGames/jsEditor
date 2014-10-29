@@ -1,30 +1,36 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'qrcode',
-	'text!templates/item_trigger_editor.tpl',
-	'views/item_editor',
-	'views/requirements',
-	'views/media_chooser',
-	'models/requirement_package',
-	'models/media',
-	'models/game',
-	'models/instance',
-	'models/trigger',
-	'collections/media',
-	'collections/and_packages',
-	'collections/atoms',
-	'collections/items',
-	'collections/tags',
-	'collections/plaques',
-	'collections/dialogs',
-	'collections/game_dialog_scripts',
-	'collections/web_pages',
-	'collections/quests',
-	'collections/web_hooks',
-	'vent'
-], function(_, $, Backbone, QRCode, Template, ItemEditorView, RequirementsEditorView, MediaChooserView, RequirementPackage, Media, Game, Instance, Trigger, MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection, vent) {
+define(function(require)
+{
+	var _        = require('underscore');
+	var $        = require('jquery');
+	var Backbone = require('backbone');
+	var Template = require('text!templates/item_trigger_editor.tpl');
+
+	var QRCode   = require('qrcode');
+	var vent     = require('vent');
+
+	var ItemEditorView        = require('views/item_editor');
+
+	var RequirementsEditorView  = require('views/requirements');
+	var MediaChooserView        = require('views/media_chooser');
+
+	var RequirementPackage      = require('models/requirement_package');
+	var Media                   = require('models/media');
+	var Game                    = require('models/game');
+	var Instance                = require('models/instance');
+	var Trigger                 = require('models/trigger');
+
+	var MediaCollection         = require('collections/media');
+	var AndPackagesCollection   = require('collections/and_packages');
+	var AtomsCollection         = require('collections/atoms');
+	var ItemsCollection         = require('collections/items');
+	var TagsCollection          = require('collections/tags');
+	var PlaquesCollection       = require('collections/plaques');
+	var DialogsCollection       = require('collections/dialogs');
+	var DialogScriptsCollection = require('collections/game_dialog_scripts');
+	var FactorysCollection      = require('collections/factories');
+	var QuestsCollection        = require('collections/quests');
+	var WebHooksCollection      = require('collections/web_hooks');
+	var WebPagesCollection      = require('collections/web_pages');
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -89,6 +95,8 @@ define([
 			"latitude": "#trigger-latitude",
 			"longitude": "#trigger-longitude",
 			"distance": "#trigger-distance",
+			"infinite": "#trigger-infinite",
+			"title_container": ".title-container",
 			"wiggle": "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden": "#trigger-hidden",
@@ -101,6 +109,8 @@ define([
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
 			"click .change-icon":  "onClickChangeIcon",
+			"change @ui.infinite": "onChangeInfinity",
+			"change @ui.show_title": "onChangeShowTitle",
 			"change input[name='trigger-type']": "onChangeType",
 			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
 			"click .edit-item": "onClickEditItem",
@@ -179,9 +189,10 @@ define([
 								trigger.set("title",       view.ui.title.val());
 								trigger.set("qr_code",        view.ui.code.val());
 
-								trigger.set("wiggle",      view.ui.wiggle.is    (":checked") ? "1" : "0");
-								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
-								trigger.set("hidden",      view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
+								trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
+								trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
 
 								trigger.set("type",             view.$el.find("input[name=trigger-type]:checked").val());
 								trigger.set("trigger_on_enter", view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
@@ -239,6 +250,30 @@ define([
 					});
 				}
 			});
+		},
+
+		onChangeInfinity: function() {
+			if(this.ui.infinite.is(":checked"))
+			{
+				this.drag_marker.setIcon("images/marker-green.png");
+				this.range_marker.setVisible(false);
+			}
+			else
+			{
+				this.drag_marker.setIcon();
+				this.range_marker.setVisible(true);
+			}
+		},
+
+		onChangeShowTitle: function() {
+			if(this.ui.show_title.is(":checked"))
+			{
+				this.ui.title_container.show();
+			}
+			else
+			{
+				this.ui.title_container.hide();
+			}
 		},
 
 		onChangeType: function() {
@@ -388,6 +423,25 @@ define([
 				strokeColor: '#428bca'
 			});
 
+			var drag_marker = new google.maps.Marker({
+				position: location_position,
+				title: this.model.get("title"),
+				map: map,
+				draggable: true
+			});
+
+
+			this.range_marker = circle_marker;
+			this.drag_marker  = drag_marker;
+
+			if(this.ui.infinite.is(":checked"))
+			{
+				drag_marker.setIcon("images/marker-green.png");
+				circle_marker.setVisible(false);
+			}
+
+			circle_marker.bindTo('center', drag_marker, 'position');
+
 
 			var center_on = function(circle) {
 				// Add circle radius to map boundary
@@ -418,7 +472,14 @@ define([
 				center_on(circle_marker);
 			});
 
+			google.maps.event.addListener(drag_marker, 'dragend', function(event) {
+				var center = circle_marker.getCenter();
 
+				view.model.set("latitude",  center.lat());
+				view.model.set("longitude", center.lng());
+
+				center_on(circle_marker);
+			});
 
 		}
 	});

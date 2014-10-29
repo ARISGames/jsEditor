@@ -23,22 +23,28 @@
 		<input type="text" class="form-control" id="trigger-longitude" placeholder="Longitude" value="<%= longitude %>">
 	</div>
 
-	<div class="form-group">
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" id="trigger-infinite" <%= is_checked(infinite_distance) %>>
+			Infinite Range
+		</label>
+	</div>
+
+	<div class="form-group range-container">
 		<label for="trigger-distance">Range in Meters</label>
 		<input type="number" class="form-control" id="trigger-distance" placeholder="Range" value="<%= distance %>">
 	</div>
 
-
-	<div class="form-group">
-		<label for="trigger-title">Map Title</label>
-		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
-	</div>
 
 	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
 			Show Title
 		</label>
+	</div>
+
+	<div class="form-group">
+		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
 	</div>
 
 	<!-- Icon Selector -->

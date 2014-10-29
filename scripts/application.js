@@ -8,9 +8,8 @@ define([
 	'models/session',
 	'vent',
 	'router',
-	'views/user_nav_menu',
-	'views/alert'
-], function($, _, Backbone, Marionette, session, vent, Router, UserNavMenuView, AlertView) {
+	'views/user_nav_menu'
+], function($, _, Backbone, Marionette, session, vent, Router, UserNavMenuView) {
 
 	var application = new Backbone.Marionette.Application();
 
@@ -80,6 +79,11 @@ define([
 		application.list_region.reset();
 	});
 
+	vent.on("application:info:current_view", function(callback) {
+		// return current view to event
+		callback.call(application, application.info_region.currentView);
+	});
+
 	vent.on("application:info:show", function(view) {
 		application.info_region.show(view);
 	});
@@ -142,7 +146,6 @@ define([
 		$('.alert button').on('click', function() {
 			$('.alert').hide();
 		});
-		//vent.trigger("application:popup:show", new AlertView({text: options.text}));
 	});
 
 	vent.on("application:alert:hide", function() {

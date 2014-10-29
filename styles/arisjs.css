@@ -135,7 +135,11 @@ nav,
 }
 .scene-panel:hover .panel-heading {
   color: #428bca;
-  background: #f0f0f0;
+  background: #ddd !important;
+}
+.scene-panel:hover .new-trigger {
+  color: #428bca;
+  background: #ddd !important;
 }
 .scenes-overlay {
   /* Disabled for demo */
@@ -148,18 +152,26 @@ nav,
   pointer-events: none;
 }
 .scene-panel {
-  max-width: 475px;
+  max-width: 100%;
   float: left;
+  margin: 0.5em;
+  color: #555;
 }
 .scene-panel .scene-title {
-  max-width: 200px;
-  white-space: nowrap;
+  color: #777;
+  white-space: pre;
   overflow: hidden;
   font-size: 125%;
   margin-right: 0.5em;
+  padding-right: 1em;
 }
 .scene-panel .new-trigger {
-  padding-top: 0.25em;
+  position: absolute;
+  right: 0;
+  top: 0px;
+  margin: 0.5em;
+  padding: 0.5em;
+  background: #f5f5f5;
 }
 .scene-triggers {
   margin-bottom: 0;
@@ -184,6 +196,10 @@ nav,
 .new-scene-button {
   float: right;
   z-index: 2;
+}
+.empty_scene {
+  padding: 0 0.5em;
+  text-align: center;
 }
 /* Side editor */
 /* Hidden ID on editor heading */

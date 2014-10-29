@@ -1,29 +1,29 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/trigger_location_editor.tpl',
-	'views/requirements',
-	'views/media_chooser',
-	'collections/media',
-	'collections/and_packages',
-	'collections/atoms',
-	'collections/items',
-	'collections/tags',
-	'collections/plaques',
-	'collections/dialogs',
-	'collections/game_dialog_scripts',
-	'collections/web_pages',
-	'collections/quests',
-	'collections/web_hooks',
-	'models/game',
-	'models/requirement_package',
-	'vent'
-], function(_, $, Backbone, Template,
-	RequirementsEditorView, MediaChooserView,
-	MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection,
-	Game, RequirementPackage,
-	vent) {
+define(function(require)
+{
+	var _        = require('underscore');
+	var $        = require('jquery');
+	var Backbone = require('backbone');
+	var Template = require('text!templates/trigger_location_editor.tpl');
+	var vent     = require('vent');
+
+	var RequirementsEditorView  = require('views/requirements');
+	var MediaChooserView        = require('views/media_chooser');
+
+	var MediaCollection         = require('collections/media');
+	var AndPackagesCollection   = require('collections/and_packages');
+	var AtomsCollection         = require('collections/atoms');
+	var ItemsCollection         = require('collections/items');
+	var TagsCollection          = require('collections/tags');
+	var PlaquesCollection       = require('collections/plaques');
+	var DialogsCollection       = require('collections/dialogs');
+	var DialogScriptsCollection = require('collections/game_dialog_scripts');
+	var WebPagesCollection      = require('collections/web_pages');
+	var QuestsCollection        = require('collections/quests');
+	var WebHooksCollection      = require('collections/web_hooks');
+
+	var Game                    = require('models/game');
+	var RequirementPackage      = require('models/requirement_package');
+
 
 	// FIXME this view can be simplified with a library that either does model binding every field, OR only re-drawing elements of changed fields
 	// else it just ends up overwriting text areas when you draw the map
@@ -54,9 +54,11 @@ define([
 			"latitude":   "#trigger-latitude",
 			"longitude":  "#trigger-longitude",
 			"distance":   "#trigger-distance",
+			"infinite":   "#trigger-infinite",
 			"wiggle":     "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
-			"hidden": "#trigger-hidden"
+			"hidden":     "#trigger-hidden",
+			"range_container":".range-container"
 		},
 
 		events: {
@@ -64,19 +66,20 @@ define([
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
 
+			"change @ui.infinite": "onChangeInfinity",
+			"change @ui.show_title": "onChangeShowTitle",
+
 			"click .change-icon":  "onClickChangeIcon",
 			"click .edit-requirements": "onClickEditRequirements",
 
 			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter"
 		},
 
+		// Update the view from the map marker while allowing 'cancel' to undo all other attributes.
 		modelEvents: {
-			// NOTE this is on set not save.
-			"change": "modelChanged"
-		},
-
-		modelChanged: function() {
-			this.render();
+			"change:latitude":  "syncLatitude",
+			"change:longitude": "syncLongitude",
+			"change:distance":  "syncDistance",
 		},
 
 		onShow: function() {
@@ -85,6 +88,8 @@ define([
 
 		onRender: function() {
 			this.renderTriggerRadio();
+			this.onChangeInfinity();
+			this.onChangeShowTitle();
 		},
 
 		onClickDelete: function() {
@@ -92,35 +97,82 @@ define([
 
 			this.model.destroy({
 				success: function() {
-					// FIXME hack events
-					view.model.trigger("delete_map");
+					view.model.trigger("remove_marker");
 					view.close();
 				}
 			});
 		},
 
+		onClose: function()
+		{
+			this.model.trigger("update_map");
+		},
+
 		onClickCancel: function() {
-			// FIXME undo all model attributes since view (minute lat/long)
+			// FIXME undo all model attributes since view (minus lat/long).
+			// currently avoiding setting attributes on model until save.
+			// See dialog option editor for example of 'undo' with cleaner rendering.
 			this.close();
 		},
 
 		onClickSave: function() {
-			var view = this;
-			var trigger  = this.model;
+			var view    = this;
+			var trigger = this.model;
 
 			// FIXME all change events.
-			trigger.set("title",      view.ui.title.val());
-			trigger.set("latitude",   view.ui.latitude.val());
-			trigger.set("longitude",  view.ui.longitude.val());
-			trigger.set("distance",   view.ui.distance.val());
-			trigger.set("wiggle",     view.ui.wiggle.is(":checked") ? "1" : "0");
-			trigger.set("show_title", view.ui.show_title.is(":checked") ? "1" : "0");
-			trigger.set("hidden",     view.ui.hidden.is    (":checked") ? "1" : "0");
+			trigger.set("title",     view.ui.title.val());
+			trigger.set("latitude",  view.ui.latitude.val());
+			trigger.set("longitude", view.ui.longitude.val());
+			trigger.set("distance",  String(view.ui.distance.val()));
+
+			trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
+			trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
+			trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
+			trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
+
+			trigger.set("icon_media_id", view.icon.get("media_id"));
 
 			trigger.trigger("update_map");
 			trigger.save();
 		},
 
+
+		onChangeInfinity: function() {
+			if(this.ui.infinite.is(":checked"))
+			{
+
+				this.model.trigger("hide_range");
+				this.ui.range_container.hide();
+			}
+			else
+			{
+				this.model.trigger("show_range");
+				this.ui.range_container.show();
+			}
+		},
+
+		onChangeShowTitle: function() {
+			if(this.ui.show_title.is(":checked"))
+			{
+				this.ui.title.show();
+			}
+			else
+			{
+				this.ui.title.hide();
+			}
+		},
+
+		syncLatitude: function(model, value) {
+			this.ui.latitude.val(value);
+		},
+
+		syncLongitude: function(model, value) {
+			this.ui.longitude.val(value);
+		},
+
+		syncDistance: function(model, value) {
+			this.ui.distance.val(value);
+		},
 
 		/* Trigger Radio Button */
 
@@ -171,7 +223,8 @@ define([
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
-						view.model.set("icon_media_id", view.icon.get("media_id"));
+
+						view.$el.find(".change-icon img").attr("src", media.thumbnail());
 						vent.trigger("application:popup:hide");
 					});
 

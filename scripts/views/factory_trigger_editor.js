@@ -1,31 +1,37 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'qrcode',
-	'text!templates/factory_trigger_editor.tpl',
-	'views/factory_editor',
-	'views/requirements',
-	'views/media_chooser',
-	'models/requirement_package',
-	'models/media',
-	'models/game',
-	'models/instance',
-	'models/trigger',
-	'collections/media',
-	'collections/and_packages',
-	'collections/atoms',
-	'collections/items',
-	'collections/tags',
-	'collections/plaques',
-	'collections/dialogs',
-	'collections/game_dialog_scripts',
-	'collections/factories',
-	'collections/quests',
-	'collections/web_hooks',
-	'collections/web_pages',
-	'vent'
-], function(_, $, Backbone, QRCode, Template, FactoryEditorView, RequirementsEditorView, MediaChooserView, RequirementPackage, Media, Game, Instance, Trigger, MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, FactorysCollection, QuestsCollection, WebHooksCollection, WebPagesCollection, vent) {
+define(function(require)
+{
+	var _        = require('underscore');
+	var $        = require('jquery');
+	var Backbone = require('backbone');
+	var Template = require('text!templates/factory_trigger_editor.tpl');
+
+	var QRCode   = require('qrcode');
+	var vent     = require('vent');
+
+	var FactoryEditorView       = require('views/factory_editor');
+
+	var RequirementsEditorView  = require('views/requirements');
+	var MediaChooserView        = require('views/media_chooser');
+
+	var RequirementPackage      = require('models/requirement_package');
+	var Media                   = require('models/media');
+	var Game                    = require('models/game');
+	var Instance                = require('models/instance');
+	var Trigger                 = require('models/trigger');
+
+	var MediaCollection         = require('collections/media');
+	var AndPackagesCollection   = require('collections/and_packages');
+	var AtomsCollection         = require('collections/atoms');
+	var ItemsCollection         = require('collections/items');
+	var TagsCollection          = require('collections/tags');
+	var PlaquesCollection       = require('collections/plaques');
+	var DialogsCollection       = require('collections/dialogs');
+	var DialogScriptsCollection = require('collections/game_dialog_scripts');
+	var FactorysCollection      = require('collections/factories');
+	var QuestsCollection        = require('collections/quests');
+	var WebHooksCollection      = require('collections/web_hooks');
+	var WebPagesCollection      = require('collections/web_pages');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -34,7 +40,7 @@ define([
 		initialize: function(options) {
 			this.scene    = options.scene;
 			this.icon     = options.icon;
-			this.factory = options.factory;
+			this.factory  = options.factory;
 			this.instance = options.instance;
 			this.visible_fields  = options.visible_fields;
 
@@ -44,8 +50,7 @@ define([
 				if(game_object.id === view.factory.id && game_object.idAttribute === view.factory.idAttribute) {
 					view.factory = game_object;
 					view.render();
-					view.onChangeType();
-					view.onChangeTriggerEnter();
+					view.setVisibleFields();
 				}
 			});
 
@@ -90,6 +95,8 @@ define([
 			"latitude": "#trigger-latitude",
 			"longitude": "#trigger-longitude",
 			"distance": "#trigger-distance",
+			"infinite": "#trigger-infinite",
+			"title_container": ".title-container",
 			"wiggle": "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden": "#trigger-hidden",
@@ -102,6 +109,8 @@ define([
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
 			"click .change-icon":  "onClickChangeIcon",
+			"change @ui.infinite": "onChangeInfinity",
+			"change @ui.show_title": "onChangeShowTitle",
 			"change input[name='trigger-type']": "onChangeType",
 			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
 			"click .edit-factory": "onClickEditFactory",
@@ -189,9 +198,10 @@ define([
 								trigger.set("title",       view.ui.title.val());
 								trigger.set("qr_code",        view.ui.code.val());
 
-								trigger.set("wiggle",      view.ui.wiggle.is    (":checked") ? "1" : "0");
-								trigger.set("show_title",  view.ui.show_title.is(":checked") ? "1" : "0");
-								trigger.set("hidden",      view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
+								trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
+								trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
 
 								trigger.set("type",             view.$el.find("input[name=trigger-type]:checked").val());
 								trigger.set("trigger_on_enter", view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
@@ -240,8 +250,7 @@ define([
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.render();
-						view.onChangeType();
-						view.onChangeTriggerEnter();
+						view.setVisibleFields();
 						vent.trigger("application:popup:hide");
 					});
 
@@ -250,6 +259,30 @@ define([
 					});
 				}
 			});
+		},
+
+		onChangeInfinity: function() {
+			if(this.ui.infinite.is(":checked"))
+			{
+				this.drag_marker.setIcon("images/marker-green.png");
+				this.range_marker.setVisible(false);
+			}
+			else
+			{
+				this.drag_marker.setIcon();
+				this.range_marker.setVisible(true);
+			}
+		},
+
+		onChangeShowTitle: function() {
+			if(this.ui.show_title.is(":checked"))
+			{
+				this.ui.title_container.show();
+			}
+			else
+			{
+				this.ui.title_container.hide();
+			}
 		},
 
 		onChangeType: function() {
@@ -295,10 +328,15 @@ define([
 		},
 
 		onShow: function() {
-			this.onChangeType();
-			this.onChangeTriggerEnter();
+			this.setVisibleFields();
 
 			this.$el.find('input[autofocus]').focus();
+		},
+
+		setVisibleFields: function() {
+			this.onChangeType();
+			this.onChangeTriggerEnter();
+			this.onChangeShowTitle();
 		},
 
 		onClickEditRequirements: function() {
@@ -314,14 +352,14 @@ define([
 				plaques:        new PlaquesCollection       ([], {parent: game}),
 				dialogs:        new DialogsCollection       ([], {parent: game}),
 				dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
-				factories:      new FactorysCollection      ([], {parent: game}),
+				web_pages:      new WebPagesCollection      ([], {parent: game}),
 				quests:         new QuestsCollection        ([], {parent: game}),
 				hooks:          new WebHooksCollection      ([], {parent: game})
 			};
 
 			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.factories.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
@@ -399,6 +437,25 @@ define([
 				strokeColor: '#428bca'
 			});
 
+			var drag_marker = new google.maps.Marker({
+				position: location_position,
+				title: this.model.get("title"),
+				map: map,
+				draggable: true
+			});
+
+
+			this.range_marker = circle_marker;
+			this.drag_marker  = drag_marker;
+
+			if(this.ui.infinite.is(":checked"))
+			{
+				drag_marker.setIcon("images/marker-green.png");
+				circle_marker.setVisible(false);
+			}
+
+			circle_marker.bindTo('center', drag_marker, 'position');
+
 
 			var center_on = function(circle) {
 				// Add circle radius to map boundary
@@ -408,6 +465,7 @@ define([
 				map.setCenter(boundary.getCenter());
 				map.fitBounds(boundary);
 			}
+
 
 			// Initial view
 			//setTimeout(function() {console.log("centering"); center_on(circle_marker);}, 300);
@@ -420,6 +478,7 @@ define([
 				center_on(circle_marker);
 			});
 
+
 			google.maps.event.addListener(circle_marker, 'dragend', function(event) {
 				var center = circle_marker.getCenter();
 
@@ -429,7 +488,14 @@ define([
 				center_on(circle_marker);
 			});
 
+			google.maps.event.addListener(drag_marker, 'dragend', function(event) {
+				var center = circle_marker.getCenter();
 
+				view.model.set("latitude",  center.lat());
+				view.model.set("longitude", center.lng());
+
+				center_on(circle_marker);
+			});
 
 		}
 	});

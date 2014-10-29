@@ -66,16 +66,23 @@
 
 	<br>
 
-	<div class="form-group">
-		<label for="trigger-title">Map Title</label>
-		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" id="trigger-infinite" <%= is_checked(infinite_distance) %>>
+			Infinite Range
+		</label>
 	</div>
+
 
 	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
 			Show Title
 		</label>
+	</div>
+
+	<div class="form-group title-container">
+		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
 	</div>
 
 	<div class="checkbox">

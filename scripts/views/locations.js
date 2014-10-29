@@ -59,6 +59,16 @@ define([
 
 				circle_marker.bindTo('center', drag_marker, 'position');
 
+
+				// Hide radius when range is infinite
+				if(trigger.get("infinite_distance") == "1")
+				{
+					drag_marker.setIcon("images/marker-green.png");
+					circle_marker.setVisible(false);
+				}
+
+				// TODO option to show overlapping ranges?
+
 				// Map Boundaries
 
 				var extend_map = function(circle) {
@@ -78,16 +88,15 @@ define([
 				// Track drag and resize
 
 				google.maps.event.addListener(circle_marker, 'radius_changed', function() {
-					trigger.set("distance", circle_marker.getRadius());
-					trigger.save();
+					// Quick Save to allow the cancel button to work.
+					trigger.save({"distance": String(circle_marker.getRadius())}, {patch: true});
 				});
 
 				google.maps.event.addListener(drag_marker, 'dragend', function() {
 					var center = circle_marker.getCenter();
 
-					trigger.set("latitude",  center.lat());
-					trigger.set("longitude", center.lng());
-					trigger.save();
+					// Quick Save to allow the cancel button to work.
+					trigger.save({"latitude": String(center.lat()), "longitude": String(center.lng())}, {patch: true});
 				});
 
 
@@ -96,16 +105,30 @@ define([
 				google.maps.event.addListener(circle_marker, 'mousedown', function() {
 					var icon = new Media({media_id: trigger.get("icon_media_id")});
 
-					$.when(icon.fetch()).done(function () {
-						vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
+					// Don't re-open on drag
+					vent.trigger("application:info:current_view", function(current_view)
+					{
+						if(!current_view || current_view.model !== trigger)
+						{
+							$.when(icon.fetch()).done(function () {
+								vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
+							});
+						}
 					});
 				});
 
 				google.maps.event.addListener(drag_marker, 'mousedown', function() {
 					var icon = new Media({media_id: trigger.get("icon_media_id")});
 
-					$.when(icon.fetch()).done(function () {
-						vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
+					// Don't re-open on drag
+					vent.trigger("application:info:current_view", function(current_view)
+					{
+						if(!current_view || current_view.model !== trigger)
+						{
+							$.when(icon.fetch()).done(function () {
+								vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
+							});
+						}
 					});
 				});
 
@@ -125,9 +148,29 @@ define([
 
 				// Events triggered by other views
 
+				trigger.on("show_range", function() {
+					drag_marker.setIcon();
+					circle_marker.setVisible(true);
+				});
+
+				trigger.on("hide_range", function() {
+					drag_marker.setIcon("images/marker-green.png");
+					circle_marker.setVisible(false);
+				});
+
 				trigger.on("update_map", function() {
 					circle_marker.setCenter(new google.maps.LatLng(trigger.get("latitude"), trigger.get("longitude")));
 					circle_marker.setRadius(parseFloat(trigger.get("distance")));
+
+					if(trigger.get("infinite_distance") == "1")
+					{
+						drag_marker.setIcon("images/marker-green.png");
+						circle_marker.setVisible(false);
+					}
+					else {
+						drag_marker.setIcon();
+						circle_marker.setVisible(true);
+					}
 				});
 
 				trigger.on("center_map", function() {
@@ -135,7 +178,7 @@ define([
 					map.fitBounds(circle_marker.getBounds());
 				});
 
-				trigger.on("delete_map", function() {
+				trigger.on("remove_marker", function() {
 					circle_marker.setMap (null);
 					drag_marker.setMap   (null);
 

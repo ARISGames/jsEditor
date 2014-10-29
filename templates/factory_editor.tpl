@@ -168,8 +168,8 @@
 
 
 					<div class="form-group">
-						<label for="factory-trigger-distance">Distance</label>
-						<input type="text" class="form-control" id="factory-trigger-distance" placeholder="Distance" value="<%= trigger_distance %>">
+						<label for="factory-trigger-distance">Range in Meters</label>
+						<input type="text" class="form-control" id="factory-trigger-distance" placeholder="Range" value="<%= trigger_distance %>">
 					</div>
 
 					<div class="thumbnail change-icon">
