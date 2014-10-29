@@ -159,10 +159,11 @@ nav,
 }
 .scene-panel .scene-title {
   color: #777;
-  white-space: nowrap;
+  white-space: pre;
   overflow: hidden;
   font-size: 125%;
   margin-right: 0.5em;
+  padding-right: 1em;
 }
 .scene-panel .new-trigger {
   position: absolute;
