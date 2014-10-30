@@ -456,3 +456,7 @@ h4:hover .object-id {
 .notes-editor .list-group-item {
   padding: 10px;
 }
+/* Helpers */
+.addon-bg-info {
+  background: #d9edf7;
+}
