@@ -32,6 +32,9 @@ define([
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
+			// Scenes can only be immediate for now.
+			trigger.set("type", "IMMEDIATE");
+
 			// Do not need fetches since we are 'new'
 			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
 
