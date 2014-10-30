@@ -2,7 +2,7 @@
 	<!-- Factory attributes -->
 
 	<div class="row">
-		<div class="col-xs-6 padded">
+		<div class="col-sm-8 col-xs-12 padded">
 			<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
 				<span class="object-id text-muted"><%= is_new ? "" : factory_id %></span>
 			</h4>
@@ -25,9 +25,7 @@
 					<option value="ITEM"     <%= option_selected(object_type === "ITEM")     %>>Item</option>
 					<option value="WEB_PAGE" <%= option_selected(object_type === "WEB_PAGE") %>>Web Page</option>
 				</select>
-			</div>
 
-			<div class="form-group">
 				<select class="form-control content" id="factory-object_id">
 					<option value="0" selected disabled>- Select One -</option>
 
@@ -123,24 +121,9 @@
 			</div>
 
 
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary save">
-					Save
-				</button>
-
-				<% if(!is_new) { %>
-					<button type="button" class="btn btn-danger delete">
-						Delete
-					</button>
-				<% } %>
-
-				<button type="button" class="btn btn-default" data-dismiss="modal">
-					Cancel
-				</button>
-			</div>
 		</div>
 
-		<div class="col-xs-6 padded">
+		<div class="col-sm-4 col-xs-12 padded">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					Trigger placed in Scene
@@ -218,6 +201,25 @@
 
 				</div> <!-- panel body -->
 			</div> <!-- panel -->
+		</div>
+	</div> <!-- row -->
+	<div class="row">
+		<div class="col-xs-12 padded">
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary save">
+					Save
+				</button>
+
+				<% if(!is_new) { %>
+					<button type="button" class="btn btn-danger delete">
+						Delete
+					</button>
+				<% } %>
+
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Cancel
+				</button>
+			</div>
 		</div>
 	</div>
 </form>

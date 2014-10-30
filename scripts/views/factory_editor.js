@@ -300,11 +300,11 @@ define([
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.model.set("trigger_icon_media_id", media.id);
-						vent.trigger("application:popup:show", view, "Edit Factory");
+						vent.trigger("application:popup:show", view, "Edit Factory", true);
 					});
 
 					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Factory");
+						vent.trigger("application:popup:show", view, "Edit Factory", true);
 					});
 
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
