@@ -33,11 +33,39 @@
 	<div class="form-group range-container">
 		<label for="trigger-distance">Within Range</label>
 		<div class="input-group">
-		<input type="number" class="form-control" id="trigger-distance" placeholder="Range" value="<%= distance %>">
-		<span class="input-group-addon addon-bg-info">Meters</span>
+			<input type="number" class="form-control" id="trigger-distance" placeholder="Range" value="<%= distance %>">
+			<span class="input-group-addon addon-bg-info">Meters</span>
 		</div>
 	</div>
 
+	<div class="form-group">
+		<label>
+			When in range, trigger:
+		</label>
+		<div class="btn-group btn-group-sm btn-group-justified trigger-trigger_on_enter">
+			<label class="btn btn-info">
+				<input type="radio" name="trigger-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
+				<span class="glyphicon glyphicon-flash"></span>
+				Immediately
+			</label>
+			<label class="btn btn-info">
+				<input type="radio" name="trigger-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
+				<span class="glyphicon glyphicon-hand-up"></span>
+				By Touch
+			</label>
+		</div>
+	</div>
+
+	<div id="trigger-1-fields" class="enter-trigger-tab">
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
+				Hidden from Map on Client
+			</label>
+		</div>
+	</div>
+
+	<hr>
 
 	<div class="checkbox">
 		<label>
@@ -68,33 +96,6 @@
 			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
 			Animate Icon on Map
 		</label>
-	</div>
-
-	<div class="form-group">
-		<label>
-			When in range, trigger:
-		</label>
-		<div class="btn-group btn-group-sm btn-group-justified trigger-trigger_on_enter">
-			<label class="btn btn-info">
-				<input type="radio" name="trigger-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
-				<span class="glyphicon glyphicon-flash"></span>
-				Immediately
-			</label>
-			<label class="btn btn-info">
-				<input type="radio" name="trigger-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
-				<span class="glyphicon glyphicon-hand-up"></span>
-				By Touch
-			</label>
-		</div>
-	</div>
-
-	<div id="1-fields" class="enter-trigger-tab">
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
-				Hidden from Map on Client
-			</label>
-		</div>
 	</div>
 </div>
 

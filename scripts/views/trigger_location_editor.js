@@ -84,9 +84,7 @@ define(function(require)
 
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
-		},
 
-		onRender: function() {
 			this.renderTriggerRadio();
 			this.onChangeInfinity();
 			this.onChangeShowTitle();
@@ -191,7 +189,7 @@ define(function(require)
 			//
 			this.$el.find('.enter-trigger-tab').hide();
 
-			var display_tab = "#" + selected_radio.val() + "-fields";
+			var display_tab = "#trigger-" + selected_radio.val() + "-fields";
 			$(display_tab).show();
 		},
 
@@ -203,6 +201,8 @@ define(function(require)
 			var selected_radio = this.$el.find("input[name=trigger-trigger_on_enter]:checked");
 
 			view.model.set("trigger_on_enter", selected_radio.val());
+
+			this.renderTriggerRadio();
 		},
 
 
