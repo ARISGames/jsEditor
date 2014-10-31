@@ -85,12 +85,17 @@ define([
 
 			"trigger_show_title": "#factory-trigger-show_title",
 			"trigger_wiggle": "#factory-trigger-wiggle",
-			"trigger_hidden": "#factory-trigger-hidden"
+			"trigger_hidden": "#factory-trigger-hidden",
+			"trigger_infinite": "#factory-trigger-infinite",
+			"title_container": ".title-container",
+			"range_container": ".range-container"
 		},
 
 		onShow: function() {
 			this.onChangeTriggerEnter();
 			this.onChangeLocationBoundType();
+			this.onChangeTriggerShowTitle();
+			this.onChangeTriggerInfinite();
 
 			this.$el.find('input[autofocus]').focus();
 		},
@@ -128,6 +133,7 @@ define([
 			"change @ui.trigger_distance":   "onChangeTriggerDistance",
 
 			"change @ui.trigger_show_title": "onChangeTriggerShowTitle",
+			"change @ui.trigger_infinite":   "onChangeTriggerInfinite",
 			"change @ui.trigger_hidden":     "onChangeTriggerHidden",
 			"change @ui.trigger_wiggle":     "onChangeTriggerWiggle",
 
@@ -233,8 +239,31 @@ define([
 
 
 		onChangeTriggerShowTitle: function() {
-			this.model.set("trigger_show_title", this.ui.trigger_show_title.is(":checked") ? "1" : "0");
+			var value = this.ui.trigger_show_title.is(":checked")
+			if(value)
+			{
+				this.ui.title_container.show()
+			}
+			else {
+				this.ui.title_container.hide()
+			}
+
+			this.model.set("trigger_show_title", value ? "1" : "0");
 		},
+
+		onChangeTriggerInfinite: function() {
+			var value = this.ui.trigger_infinite.is(":checked")
+			if(value)
+			{
+				this.ui.range_container.hide()
+			}
+			else {
+				this.ui.range_container.show()
+			}
+
+			this.model.set("trigger_infinite_distance", value ? "1" : "0");
+		},
+
 
 		onChangeTriggerHidden: function() {
 			this.model.set("trigger_hidden", this.ui.trigger_hidden.is(":checked") ? "1" : "0");
@@ -300,11 +329,11 @@ define([
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.model.set("trigger_icon_media_id", media.id);
-						vent.trigger("application:popup:show", view, "Edit Factory");
+						vent.trigger("application:popup:show", view, "Edit Factory", true);
 					});
 
 					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Factory");
+						vent.trigger("application:popup:show", view, "Edit Factory", true);
 					});
 
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");

@@ -40,16 +40,6 @@
 
 <div class="btn-group btn-group-sm btn-group-justified trigger-types">
 	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="LOCATION"  <%= radio_selected(type === "LOCATION") %>>
-		<span class="glyphicon glyphicon-map-marker"></span>
-		Location
-	</label>
-	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="QR"        <%= radio_selected(type === "QR") %>>
-		<span class="glyphicon glyphicon-qrcode"></span>
-		QR Code
-	</label>
-	<label class="btn btn-info">
 		<input type="radio" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
 		<span class="glyphicon glyphicon-link"></span>
 		Sequence
@@ -69,7 +59,7 @@
 	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-infinite" <%= is_checked(infinite_distance) %>>
-			Infinite Range
+			Available Anywhere
 		</label>
 	</div>
 

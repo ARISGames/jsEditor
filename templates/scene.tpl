@@ -1,4 +1,4 @@
-<div class="panel-heading clearfix">
+<div class="panel-heading">
 	<div class="scene-title name"><%= name || "Scene " + scene_id %></div>
 
 	<a class="new-trigger">

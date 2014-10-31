@@ -69,7 +69,7 @@
 	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-infinite" <%= is_checked(infinite_distance) %>>
-			Infinite Range
+			Available Anywhere
 		</label>
 	</div>
 

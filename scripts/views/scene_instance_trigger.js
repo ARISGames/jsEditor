@@ -29,7 +29,8 @@ define([
 			return {
 				object_name: this.object_name,
 				object_icon: this.object_icon,
-				type_icon:   this.type_icon
+				type_icon:   this.type_icon,
+				type_color:  this.type_color
 			}
 		},
 
@@ -47,6 +48,9 @@ define([
 					if(type === "QR")        { view.type_icon = "qrcode";     }
 					if(type === "LOCATION")  { view.type_icon = "map-marker"; }
 					if(type === "IMMEDIATE") { view.type_icon = "link"; }
+
+					view.type_color  = "text-primary";
+					if(trigger.get("infinite_distance") === "1") { view.type_color = "text-success"; }
 
 					view.render();
 				}
@@ -68,6 +72,9 @@ define([
 			if(type === "QR")        { view.type_icon = "qrcode";     }
 			if(type === "LOCATION")  { view.type_icon = "map-marker"; }
 			if(type === "IMMEDIATE") { view.type_icon = "link"; }
+
+			view.type_color  = "text-primary";
+			if(view.model.get("infinite_distance") === "1") { view.type_color = "text-success"; }
 
 			view.instance = new Instance({instance_id: view.model.get("instance_id")});
 			view.instance.fetch({

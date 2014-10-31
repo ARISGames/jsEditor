@@ -13,7 +13,7 @@ define([
 			}
 		},
 
-		className: "col-xs-3 padded-small",
+		className: "col-md-3 col-sm-4 col-xs-6 padded-small",
 
 		events: {
 			"click .choose": "onClickChoose",

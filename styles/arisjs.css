@@ -17,6 +17,9 @@ a {
 .table-hover td {
   padding-left: 1em !important;
 }
+.table-hover > tbody > tr:hover {
+  background-color: #dddddd !important;
+}
 .table-hover .active td {
   /*background: #d8d8d8 !important;*/
 }
@@ -28,6 +31,16 @@ table td {
 }
 table th {
   cursor: default;
+}
+table.organizer thead th {
+  position: relative;
+  padding-right: 1.75em;
+}
+table.organizer .new {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
 }
 /* Long unbreakable names */
 .media-organizer {
@@ -135,11 +148,9 @@ nav,
 }
 .scene-panel:hover .panel-heading {
   color: #428bca;
-  background: #ddd !important;
 }
 .scene-panel:hover .new-trigger {
   color: #428bca;
-  background: #ddd !important;
 }
 .scenes-overlay {
   /* Disabled for demo */
@@ -162,8 +173,7 @@ nav,
   white-space: pre;
   overflow: hidden;
   font-size: 125%;
-  margin-right: 0.5em;
-  padding-right: 1em;
+  margin-right: 1em;
 }
 .scene-panel .new-trigger {
   position: absolute;
@@ -326,11 +336,6 @@ h4:hover .object-id {
   background: #eee;
 }
 /* Event Editor */
-.events-editor .padded,
-.quest-editor .padded,
-.media-editor .padded,
-.object-editor .padded,
-.games-list-container .padded,
 .events-editor .event-table-header div,
 .quest-editor .event-table-header div,
 .media-editor .event-table-header div,
@@ -344,11 +349,11 @@ h4:hover .object-id {
   padding-right: 15px;
   padding-left: 15px;
 }
-.events-editor .padded-small,
-.quest-editor .padded-small,
-.media-editor .padded-small,
-.object-editor .padded-small,
-.games-list-container .padded-small {
+.padded {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.padded-small {
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -455,4 +460,15 @@ h4:hover .object-id {
 }
 .notes-editor .list-group-item {
   padding: 10px;
+}
+/* Helpers */
+.addon-bg-info {
+  background: #d9edf7;
+}
+.well {
+  background: #e8e8e8;
+}
+.form-inline {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

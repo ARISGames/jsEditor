@@ -25,6 +25,9 @@ define([
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 			var scene   = this.model;
 
+			// Scenes can only be immediate for now.
+			trigger.set("type", "IMMEDIATE");
+
 			// Save directly and insert into scene/show sidebar
 			instance.set("object_id",   scene.id);
 			instance.set("object_type", Instance.type_for(scene));

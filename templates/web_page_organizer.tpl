@@ -1,13 +1,11 @@
-<table class="table table-hover">
+<table class="table table-hover organizer">
 	<thead>
 		<th class="text-muted"><span class="glyphicon glyphicon-globe"></span>
 			Web Pages
 
-			<div class="pull-right">
-				<a class="new">
-					<span class="glyphicon glyphicon-plus-sign"></span>
-				</a>
-			</div>
+			<a class="new">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+			</a>
 		</th>
 	</thead>
 	<tbody class="web_pages">
