@@ -17,6 +17,9 @@ a {
 .table-hover td {
   padding-left: 1em !important;
 }
+.table-hover > tbody > tr:hover {
+  background-color: #dddddd !important;
+}
 .table-hover .active td {
   /*background: #d8d8d8 !important;*/
 }
@@ -135,11 +138,11 @@ nav,
 }
 .scene-panel:hover .panel-heading {
   color: #428bca;
-  background: #ddd !important;
+  background: #dddddd !important;
 }
 .scene-panel:hover .new-trigger {
   color: #428bca;
-  background: #ddd !important;
+  background: #dddddd !important;
 }
 .scenes-overlay {
   /* Disabled for demo */
