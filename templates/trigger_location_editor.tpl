@@ -31,7 +31,7 @@
 	</div>
 
 	<div class="form-group range-container">
-		<label for="trigger-distance">Within Range</label>
+		<label for="trigger-distance">Availability Range</label>
 		<div class="input-group">
 			<input type="number" class="form-control" id="trigger-distance" placeholder="Range" value="<%= distance %>">
 			<span class="input-group-addon addon-bg-info">Meters</span>

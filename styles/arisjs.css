@@ -468,3 +468,7 @@ h4:hover .object-id {
 .well {
   background: #e8e8e8;
 }
+.form-inline {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
