@@ -49,8 +49,7 @@ define(function(require)
 				if(game_object.id === view.item.id && game_object.idAttribute === view.item.idAttribute) {
 					view.item = game_object;
 					view.render();
-					view.onChangeType();
-					view.onChangeTriggerEnter();
+					view.setVisibleFields();
 				}
 			});
 
@@ -240,8 +239,7 @@ define(function(require)
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
 						view.render();
-						view.onChangeType();
-						view.onChangeTriggerEnter();
+						view.setVisibleFields();
 						vent.trigger("application:popup:hide");
 					});
 
@@ -319,10 +317,15 @@ define(function(require)
 		},
 
 		onShow: function() {
-			this.onChangeType();
-			this.onChangeTriggerEnter();
+			this.setVisibleFields();
 
 			this.$el.find('input[autofocus]').focus();
+		},
+
+		setVisibleFields: function() {
+			this.onChangeType();
+			this.onChangeTriggerEnter();
+			this.onChangeShowTitle();
 		},
 
 		onClickEditRequirements: function() {
@@ -401,7 +404,8 @@ define(function(require)
 			var default_location = new google.maps.LatLng(43.073, -89.4012);
 			var map_options = {
 				zoom: 8,
-				center: default_location
+				center: default_location,
+				scrollwheel: false
 			};
 			var map = new google.maps.Map(element, map_options);
 			var boundary = new google.maps.LatLngBounds();

@@ -407,7 +407,8 @@ define(function(require)
 			var default_location = new google.maps.LatLng(43.073, -89.4012);
 			var map_options = {
 				zoom: 8,
-				center: default_location
+				center: default_location,
+				scrollwheel: false
 			};
 			var map = new google.maps.Map(element, map_options);
 			var boundary = new google.maps.LatLngBounds();
