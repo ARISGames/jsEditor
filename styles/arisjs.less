@@ -36,6 +36,21 @@ table th {
  cursor: default;
 }
 
+table.organizer {
+	thead {
+		th {
+			position: relative;
+			padding-right: 1.75em;
+		}
+	}
+	.new {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 0.5em;
+	}
+}
+
 
 /* Long unbreakable names */
 
@@ -156,11 +171,9 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 .scene-panel:hover {
 	.panel-heading {
 		color: #428bca;
-		background: @navbar-default-toggle-hover-bg !important;
 	}
 	.new-trigger {
 		color: #428bca;
-		background: @navbar-default-toggle-hover-bg !important;
 	}
 }
 
@@ -183,8 +196,7 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 		white-space: pre;
 		overflow: hidden;
 		font-size: 125%;
-		margin-right: 0.5em;
-		padding-right: 1em;
+		margin-right: 1em;
 	}
 
 	.new-trigger {
@@ -530,4 +542,8 @@ h4:hover .object-id {
 
 .addon-bg-info {
 	background: @state-info-bg;
+}
+
+.well {
+	background: darken(@well-bg, 5%);
 }

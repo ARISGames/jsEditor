@@ -32,6 +32,16 @@ table td {
 table th {
   cursor: default;
 }
+table.organizer thead th {
+  position: relative;
+  padding-right: 1.75em;
+}
+table.organizer .new {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+}
 /* Long unbreakable names */
 .media-organizer {
   overflow-x: hidden;
@@ -138,11 +148,9 @@ nav,
 }
 .scene-panel:hover .panel-heading {
   color: #428bca;
-  background: #dddddd !important;
 }
 .scene-panel:hover .new-trigger {
   color: #428bca;
-  background: #dddddd !important;
 }
 .scenes-overlay {
   /* Disabled for demo */
@@ -165,8 +173,7 @@ nav,
   white-space: pre;
   overflow: hidden;
   font-size: 125%;
-  margin-right: 0.5em;
-  padding-right: 1em;
+  margin-right: 1em;
 }
 .scene-panel .new-trigger {
   position: absolute;
@@ -457,4 +464,7 @@ h4:hover .object-id {
 /* Helpers */
 .addon-bg-info {
   background: #d9edf7;
+}
+.well {
+  background: #e8e8e8;
 }
