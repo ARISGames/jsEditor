@@ -326,11 +326,6 @@ h4:hover .object-id {
   background: #eee;
 }
 /* Event Editor */
-.events-editor .padded,
-.quest-editor .padded,
-.media-editor .padded,
-.object-editor .padded,
-.games-list-container .padded,
 .events-editor .event-table-header div,
 .quest-editor .event-table-header div,
 .media-editor .event-table-header div,
@@ -344,11 +339,11 @@ h4:hover .object-id {
   padding-right: 15px;
   padding-left: 15px;
 }
-.events-editor .padded-small,
-.quest-editor .padded-small,
-.media-editor .padded-small,
-.object-editor .padded-small,
-.games-list-container .padded-small {
+.padded {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.padded-small {
   padding-right: 5px;
   padding-left: 5px;
 }
