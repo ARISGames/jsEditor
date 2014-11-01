@@ -48,7 +48,7 @@ define([
 
 			$.when(icon.fetch(), contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function() {
 				var factory_editor = new FactoryEditorView({model: factory, icon: icon, contents: contents});
-				vent.trigger("application:popup:show", factory_editor, "Create Factory");
+				vent.trigger("application:popup:show", factory_editor, "Create Factory", true);
 			});
 		}
 	});

@@ -58,7 +58,8 @@ define([
 			trigger_latitude: "0.0",
 			trigger_longitude: "0.0",
 
-			trigger_distance: "3",
+			trigger_distance: "25",
+			trigger_infinite_distance: "0",
 			trigger_on_enter: "0",
 			trigger_hidden: "0",
 			trigger_wiggle: "0",

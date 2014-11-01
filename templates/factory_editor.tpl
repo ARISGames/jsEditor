@@ -19,8 +19,8 @@
 
 			<!-- Object -->
 
-			<div class="form-group">
-				<label for="factory-object_type">Game Object to Produce</label>
+			<div>
+				<label for="factory-object_type">What to Produce</label>
 			</div>
 
 			<div class="col-sm-6">
@@ -83,7 +83,7 @@
 
 			<!-- Limits -->
 
-			<div class="form-group">
+			<div>
 				<label>Maximum in game at any time</label>
 			</div>
 
@@ -105,8 +105,8 @@
 
 			<!-- Rate/Probability -->
 
-			<div class="form-group">
-				<label>Speed and Success</label>
+			<div>
+				<label>Success rate and speed</label>
 			</div>
 
 			<div class="col-sm-6">
@@ -127,11 +127,11 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label>Location</label>
+			<div>
+				<label>Locations on map between</label>
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-md-4 col-sm-6">
 				<div class="form-group">
 					<div class="input-group">
 						<input type="number" class="form-control" id="factory-min_production_distance" placeholder="Near Distance" min=0 value="<%= min_production_distance %>">
@@ -139,7 +139,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4">
+			<div class="col-md-4 col-sm-6">
 				<div class="form-group">
 					<div class="input-group">
 						<input type="number" class="form-control" id="factory-max_production_distance" placeholder="Far Distance" min=0 value="<%= max_production_distance %>">
@@ -147,7 +147,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4">
+			<div class="col-md-4 col-sm-12">
 				<div class="form-group">
 					<select class="form-control content" id="factory-location_bound_type">
 						<option value="PLAYER"   <%= option_selected(location_bound_type === "PLAYER")   %>>Near Player</option>
@@ -173,7 +173,7 @@
 			</div>
 
 			<div class="form-group">
-				<label>Objects expire</label>
+				<label>Objects expire after</label>
 
 				<div class="input-group">
 					<input type="number" class="form-control" id="factory-produce_expiration_time" placeholder="Expiration Time" min=0 value="<%= produce_expiration_time %>">
