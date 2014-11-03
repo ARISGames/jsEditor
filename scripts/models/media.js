@@ -1,9 +1,17 @@
-define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'models/json_base'
-], function($, _, Backbone, JsonBaseModel) {
+define(function(require)
+{
+	var $             = require('jquery');
+	var _             = require('underscore');
+	var Backbone      = require('backbone');
+	var JsonBaseModel = require('models/json_base');
+
+	var Dialog  = require('models/dialog');
+	var Item    = require('models/item');
+	var Plaque  = require('models/plaque');
+	var WebPage = require('models/web_page');
+	var Scene   = require('models/scene');
+	var Factory = require('models/factory');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'media_id',
@@ -37,7 +45,7 @@ define([
 
 
 		defaults: {
-			"name": "",
+			"name": "Default",
 			"file_name": ""
 		},
 
@@ -64,6 +72,25 @@ define([
 			}
 			else {
 				return this.get("thumb_url");
+			}
+		},
+
+
+		icon_thumbnail_for: function(object) {
+			if(this.id === "0")
+			{
+				var icon_name = "default";
+
+				if(object instanceof Dialog)  { icon_name = "conversation" }
+				if(object instanceof Item)    { icon_name = "item"         }
+				if(object instanceof Plaque)  { icon_name = "plaque"       }
+				if(object instanceof WebPage) { icon_name = "webpage"      }
+
+				return "images/"+icon_name+"_icon_120.png"
+			}
+			else
+			{
+				return this.thumbnail();
 			}
 		},
 

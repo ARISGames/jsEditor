@@ -20,12 +20,13 @@ define([
 	'views/media_chooser',
 	'views/conversation_editor',
 	'views/character_organizer',
-	'vent'
+	'vent',
+	'storage'
 ], function(_, $, Backbone, Template,
 	CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection,
 	Media, Game, Character, DialogScript, DialogOption,
 	MediaChooserView, ConversationEditorView, CharactersOrganizerView,
-	vent) {
+	vent, storage) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -33,7 +34,7 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url: this.icon.thumbnail()
+				icon_thumbnail_url: this.icon.icon_thumbnail_for(this.model)
 			}
 		},
 
@@ -102,8 +103,12 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					var default_media = storage.media.retrieve("0");
+					media.unshift(default_media);
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;

@@ -1,4 +1,4 @@
-<div class="thumbnail choose">
+<div class="thumbnail choose <%= is_selected ? "selected" : "" %>">
 	<img src="<%= thumb_url %>">
 
 	<div class="caption">

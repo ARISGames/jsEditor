@@ -9,9 +9,16 @@ define([
 
 		templateHelpers: function() {
 			return {
-				thumb_url: this.model.thumbnail()
+				is_selected: this.options.is_selected,
+				thumb_url: this.thumbnail_url()
 			}
 		},
+
+		thumbnail_url: function()
+		{
+			return this.model.icon_thumbnail_for(this.options.context)
+		},
+
 
 		className: "col-md-3 col-sm-4 col-xs-6 padded-small",
 

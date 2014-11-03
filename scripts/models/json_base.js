@@ -57,6 +57,12 @@ define([
 		},
 
 
+		// This helps compare two instances of a model
+		// app.storage will make this mostly redundant once its in place everywhere.
+		is: function(model) {
+			return this.id === model.id && this.idAttribute === model.idAttribute;
+		},
+
 		// Callback on create and update
 		save: function(attrs, options) {
 			options || (options = {});
