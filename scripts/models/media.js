@@ -5,14 +5,6 @@ define(function(require)
 	var Backbone      = require('backbone');
 	var JsonBaseModel = require('models/json_base');
 
-	var Dialog  = require('models/dialog');
-	var Item    = require('models/item');
-	var Plaque  = require('models/plaque');
-	var WebPage = require('models/web_page');
-	var Scene   = require('models/scene');
-	var Factory = require('models/factory');
-
-
 	return JsonBaseModel.extend({
 		idAttribute: 'media_id',
 
@@ -81,10 +73,11 @@ define(function(require)
 			{
 				var icon_name = "default";
 
-				if(object instanceof Dialog)  { icon_name = "conversation" }
-				if(object instanceof Item)    { icon_name = "item"         }
-				if(object instanceof Plaque)  { icon_name = "plaque"       }
-				if(object instanceof WebPage) { icon_name = "webpage"      }
+				// NOTE using this instead of instance of to remove possible require.js cycle reference
+				if(object.idAttribute === "dialog_id")   { icon_name = "conversation" }
+				if(object.idAttribute === "item_id")     { icon_name = "item"         }
+				if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
+				if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
 
 				return "images/"+icon_name+"_icon_120.png"
 			}
