@@ -99,6 +99,8 @@ define([
 
 		showSceneEditor: function(game_id) {
 			var game = new Game({game_id: game_id});
+			storage.for(game);
+
 			game.fetch({
 				success: function() {
 

@@ -25,6 +25,11 @@ define([
 			"object_type"
         ],
 
+		defaults: {
+			"quantity": "0",
+			"infinite_qty": "1"
+		},
+
 		// For loading the right class from the instance
 		object_class: function() {
 			var type = this.get("object_type");
