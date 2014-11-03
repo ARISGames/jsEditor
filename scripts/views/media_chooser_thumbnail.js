@@ -10,13 +10,29 @@ define([
 		templateHelpers: function() {
 			return {
 				is_selected: this.options.is_selected,
-				thumb_url: this.thumbnail_url()
+				thumb_url: this.thumbnail_url(),
+				thumb_name: this.thumbnail_name(),
 			}
 		},
 
+		/* Helpers for default media name and icon */
 		thumbnail_url: function()
 		{
 			return this.model.icon_thumbnail_for(this.options.context)
+		},
+
+		thumbnail_name: function()
+		{
+			// Return the models name unless its the default for non icons.
+			if(this.model.id === "0" && !this.options.context)
+			{
+				return "No Media";
+			}
+			else
+			{
+				return this.model.get("name");
+			}
+
 		},
 
 

@@ -3,7 +3,7 @@
 
 	<div class="caption">
 		<div>
-			<%= name ||  "&nbsp;" %>
+			<%= thumb_name ||  "&nbsp;" %>
 		</div>
 	</div>
 </div>

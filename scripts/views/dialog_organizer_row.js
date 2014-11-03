@@ -27,15 +27,8 @@ define([
 		tagName: 'tr',
 
 		onClickEditDialog: function() {
-			var view = this;
-			var icon = new Media({media_id: this.model.get("icon_media_id")});
-
-			icon.fetch({
-				success: function() {
-					var dialog_editor = new DialogEditorView({model: view.model, icon: icon});
-					vent.trigger("application:popup:show", dialog_editor, "Edit Conversation");
-				}
-			});
+			var dialog_editor = new DialogEditorView({model: this.model});
+			vent.trigger("application:popup:show", dialog_editor, "Edit Conversation");
 		}
 	});
 });
