@@ -472,3 +472,6 @@ h4:hover .object-id {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+#user.navbar-right {
+  margin-right: 0;
+}
