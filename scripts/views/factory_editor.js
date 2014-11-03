@@ -380,13 +380,13 @@ define([
 
 				requirements_editor.on("cancel", function()
 				{
-					vent.trigger("application:popup:show", view, "Edit Factory");
+					vent.trigger("application:popup:show", view, "Edit Factory", true);
 				});
 
 				requirements_editor.on("requirement_package:save", function(requirement_package)
 				{
 					view.model.set("trigger_requirement_root_package_id", requirement_package.id);
-					vent.trigger("application:popup:show", view, "Edit Factory");
+					vent.trigger("application:popup:show", view, "Edit Factory", true);
 				});
 
 				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
