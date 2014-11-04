@@ -240,6 +240,9 @@ h4:hover .object-id {
   margin-top: 2em;
 }
 /* Media */
+.thumbnail {
+  border: 1px solid rgba(0, 0, 0, 0);
+}
 .thumbnail .caption {
   padding-top: 0;
   padding-bottom: 0;
