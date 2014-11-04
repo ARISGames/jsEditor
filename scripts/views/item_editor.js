@@ -12,12 +12,14 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
+		/* View */
+
 		templateHelpers: function()
 		{
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail(),
-				media_thumbnail_url: this.media.thumbnail(),
+				icon_thumbnail_url:  this.model.icon_thumbnail(),
+				media_thumbnail_url: this.model.media_thumbnail(),
 
 				is_checked: function(value)
 				{
@@ -33,18 +35,39 @@ define([
 
 		ui:
 		{
-			"name":         "#item-name",
-			"description":  "#item-description",
-			"url":          "#item-url",
-			"droppable":    "#item-droppable",
-			"destroyable":  "#item-destroyable",
-			"weight":       "#item-weight",
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
 
-			"iconchooser":  "#icon-chooser-container",
-			"mediachooser": "#media-chooser-container",
+			"change_icon":  ".change-icon",
+			"change_media": ".change-media",
+
+			"name":        "#item-name",
+			"description": "#item-description",
+			"url":         "#item-url",
+			"droppable":   "#item-droppable",
+			"destroyable": "#item-destroyable",
+			"weight":      "#item-weight",
 
 			"max_qty_in_inventory": "#item-max_qty_in_inventory"
 		},
+
+
+		/* Constructor */
+
+		initialize: function() {
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("click:cancel", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function()
 		{
@@ -56,27 +79,25 @@ define([
 
 		events:
 		{
-			"click .save": "onClickSave",
-			"click .delete": "onClickDelete",
-			"click .change-icon":  "onClickChangeIcon",
-			"click .change-media": "onClickChangeMedia",
+			"click @ui.save":        "onClickSave",
+			"click @ui.delete":      "onClickDelete",
+			"click @ui.cancel":      "onClickCancel",
+
+			"click @ui.change_icon":  "onClickChangeIcon",
+			"click @ui.change_media": "onClickChangeMedia",
+
 			"change input[name='item-type']": "onChangeType"
 		},
 
-		initialize: function(options)
-		{
-			this.icon  = options.icon;
-			this.media = options.media;
-		},
+
+		/* Crud */
 
 		onClickSave: function()
 		{
-			var view   = this;
+			var view = this;
 			var item = this.model;
 
 			// Save Object
-			item.set("icon_media_id", view.icon.get("media_id"));
-			item.set("media_id",      view.media.get("media_id"));
 			item.set("name",          view.ui.name.val());
 			item.set("description",   view.ui.description.val());
 			item.set("url",           view.ui.url.val());
@@ -95,11 +116,17 @@ define([
 
 				update: function()
 				{
+					view.storePreviousAttributes();
+
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", item);
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -138,6 +165,23 @@ define([
 		},
 
 
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+			this.stopListening(this.model.media());
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(),  'change', this.render);
+			this.listenTo(this.model.media(), 'change', this.render);
+		},
+
+
 		/* Media Selectors */
 
 		onClickChangeIcon: function() {
@@ -148,12 +192,16 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 
@@ -174,13 +222,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Media */
-					var media_chooser = new MediaChooserView({collection: media});
+					var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
 					vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
 					media_chooser.on("media:choose", function(media) {
-						view.media = media;
+						view.unbindAssociations();
 						view.model.set("media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 

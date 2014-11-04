@@ -68,16 +68,19 @@ define(function(require)
 		},
 
 
-		icon_thumbnail_for: function(object) {
+		thumbnail_for: function(object) {
 			if(this.id === "0")
 			{
 				var icon_name = "default";
 
-				// NOTE using this instead of instance of to remove possible require.js cycle reference
-				if(object.idAttribute === "dialog_id")   { icon_name = "conversation" }
-				if(object.idAttribute === "item_id")     { icon_name = "item"         }
-				if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
-				if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
+				if(object)
+				{
+					// NOTE using this instead of instance of to remove possible require.js cycle reference
+					if(object.idAttribute === "dialog_id")   { icon_name = "conversation" }
+					if(object.idAttribute === "item_id")     { icon_name = "item"         }
+					if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
+					if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
+				}
 
 				return "images/"+icon_name+"_icon_120.png"
 			}

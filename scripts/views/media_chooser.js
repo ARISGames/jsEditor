@@ -16,7 +16,7 @@ define([
 		itemViewOptions: function(model, index)
 		{
 			return {
-				is_selected: this.options.selected.is(model),
+				is_selected: this.options.selected ? this.options.selected.is(model) : false,
 				context:  this.options.context
 			}
 		},

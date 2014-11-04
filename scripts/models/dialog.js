@@ -1,7 +1,7 @@
-define([
-	'models/json_base',
-	'storage'
-], function(JsonBaseModel, storage) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'dialog_id',
@@ -39,6 +39,12 @@ define([
 		default_icon: function() {
 			return storage.media.retrieve('0');
 		},
+
+		/* Helpers */
+
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
+		}
 
 	});
 });

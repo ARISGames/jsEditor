@@ -117,7 +117,6 @@ define([
 		$('.modal').off("hidden.bs.modal");
 
 		$('.modal').on("hidden.bs.modal", function(event) {
-			console.log("hi");
 			view.trigger("click:cancel");
 			application.dialog_region.reset();
 		});

@@ -35,7 +35,7 @@ define(function(require)
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url: this.model.icon().icon_thumbnail_for(this.model)
+				icon_thumbnail_url: this.model.icon_thumbnail()
 			}
 		},
 
@@ -48,7 +48,7 @@ define(function(require)
 			"change_icon": ".change-icon",
 			"edit_script": ".edit-script",
 
-			"name": "#dialog-name",
+			"name":        "#dialog-name",
 			"description": "#dialog-description"
 		},
 
@@ -62,7 +62,7 @@ define(function(require)
 			// Listen to association events on media
 			this.bindAssociations();
 
-			// Handel cancel from modal X or dark area
+			// Handle cancel from modal X or dark area
 			this.on("click:cancel", this.onClickCancel);
 		},
 
@@ -138,8 +138,11 @@ define(function(require)
 			this.previous_attributes = _.clone(this.model.attributes)
 		},
 
-		bindAssociations: function() {
+		unbindAssociations: function() {
 			this.stopListening(this.model.icon());
+		},
+
+		bindAssociations: function() {
 			this.listenTo(this.model.icon(), 'change', this.render);
 		},
 
@@ -155,13 +158,13 @@ define(function(require)
 			media.fetch({
 				success: function() {
 					/* Add default */
-					var default_media = view.model.default_icon()
-					media.unshift(default_media);
+					media.unshift(view.model.default_icon());
 
 					/* Icon */
 					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
 						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Conversation");

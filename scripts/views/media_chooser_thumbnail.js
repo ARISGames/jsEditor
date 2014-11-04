@@ -10,15 +10,15 @@ define([
 		templateHelpers: function() {
 			return {
 				is_selected: this.options.is_selected,
-				thumb_url: this.thumbnail_url(),
-				thumb_name: this.thumbnail_name(),
+				thumb_url:   this.thumbnail_url(),
+				thumb_name:  this.thumbnail_name(),
 			}
 		},
 
 		/* Helpers for default media name and icon */
 		thumbnail_url: function()
 		{
-			return this.model.icon_thumbnail_for(this.options.context)
+			return this.model.thumbnail_for(this.options.context)
 		},
 
 		thumbnail_name: function()

@@ -32,13 +32,8 @@ define([
 		onClickNew: function() {
 			var item  = new Item({game_id: this.model.get("game_id")});
 
-			var icon  = new Media({media_id: item.get("icon_media_id")});
-			var media = new Media({media_id: item.get("media_id")});
-
-			$.when(icon.fetch(), media.fetch()).done(function () {
-				var item_editor = new ItemEditorView({model: item, icon: icon, media: media});
-				vent.trigger("application:popup:show", item_editor, "Create Item");
-			});
+			var item_editor = new ItemEditorView({model: item});
+			vent.trigger("application:popup:show", item_editor, "Create Item");
 		}
 	});
 });
