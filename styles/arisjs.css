@@ -197,10 +197,11 @@ nav,
   white-space: nowrap;
   padding-top: 5px;
 }
+.scene-triggers .scene-trigger .trigger-label {
+  overflow: hidden;
+}
 .scene-triggers .scene-trigger:hover {
   color: #428bca;
-  background: #eeeeee;
-  border-radius: 4px;
 }
 .new-scene-button {
   float: right;
