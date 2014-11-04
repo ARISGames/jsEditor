@@ -12,7 +12,16 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		className: "panel panel-default scene-panel",
+		className: function() {
+			var panel_color = "default";
+
+			if(this.options.is_intro_scene)
+			{
+				panel_color = "info";
+			}
+
+			return "panel panel-"+panel_color+" scene-panel"
+		},
 
 		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-triggers",

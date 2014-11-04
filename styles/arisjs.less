@@ -168,18 +168,17 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
 }
 
-.scene-panel:hover {
+.scene-panel.panel-default:hover {
 	.panel-heading {
-		background: @navbar-default-toggle-hover-bg !important;
-
-		.scene-title {
-			color: @brand-primary;
-		}
+		background: darken(@panel-default-heading-bg, 5%) !important;
 	}
+}
 
-	.new-trigger {
-		color: @brand-primary;
+.scene-panel.panel-info:hover {
+	.panel-heading {
+		background: darken(@panel-info-heading-bg, 5%) !important;
 	}
+	border-color: darken(@panel-info-border, 5%) !important;
 }
 
 .scenes-overlay {
@@ -189,20 +188,32 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	pointer-events: none;
 }
 
+.scene-panel.panel-default {
+	.scene-title {
+		color: @gray-light;
+
+		.intro_icon {
+			top: 3px; // Center it
+		}
+	}
+}
+
 .scene-panel {
 	max-width: 100%;
 	float: left;
 	margin: 0.5em;
 
-	color: @gray;
+	.panel-body {
+		color: @gray;
+	}
 
 	.scene-title {
-		color: @gray-light;
-		white-space: pre;
+		white-space: nowrap;
 		overflow: hidden;
 		font-size: 125%;
 		margin-right: 1em;
 	}
+
 
 	.new-trigger {
 		position: absolute;

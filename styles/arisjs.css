@@ -146,14 +146,14 @@ nav,
   background: rgba(175, 175, 175, 0.5);
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-.scene-panel:hover .panel-heading {
-  background: #dddddd !important;
+.scene-panel.panel-default:hover .panel-heading {
+  background: #e8e8e8 !important;
 }
-.scene-panel:hover .panel-heading .scene-title {
-  color: #428bca;
+.scene-panel.panel-info:hover {
+  border-color: #a6e1ec !important;
 }
-.scene-panel:hover .new-trigger {
-  color: #428bca;
+.scene-panel.panel-info:hover .panel-heading {
+  background: #c4e3f3 !important;
 }
 .scenes-overlay {
   /* Disabled for demo */
@@ -165,15 +165,22 @@ nav,
   z-index: 20;
   pointer-events: none;
 }
+.scene-panel.panel-default .scene-title {
+  color: #777777;
+}
+.scene-panel.panel-default .scene-title .intro_icon {
+  top: 3px;
+}
 .scene-panel {
   max-width: 100%;
   float: left;
   margin: 0.5em;
+}
+.scene-panel .panel-body {
   color: #555555;
 }
 .scene-panel .scene-title {
-  color: #777777;
-  white-space: pre;
+  white-space: nowrap;
   overflow: hidden;
   font-size: 125%;
   margin-right: 1em;
