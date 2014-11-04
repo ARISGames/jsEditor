@@ -16,8 +16,11 @@ define([
 		itemView: SceneView,
 		itemViewContainer: ".scenes",
 
-		itemViewOptions: function(model, index) {
-			return { game: this.model }
+		itemViewOptions: function(scene, index) {
+			return {
+				game: this.model,
+				is_intro_scene: scene.is(this.intro_scene)
+			}
 		},
 
 		className: 'full-height',
@@ -26,8 +29,10 @@ define([
 			"click .new-scene": "onClickNewScene"
 		},
 
-		initialize: function() {
+		initialize: function(options) {
 			var view = this;
+
+			this.intro_scene = options.intro_scene;
 
 			vent.on("scenes:add", function(scene) {
 				view.collection.add(scene);

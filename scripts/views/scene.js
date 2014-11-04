@@ -18,10 +18,17 @@ define([
 		itemViewContainer: ".scene-triggers",
 		emptyView: EmptySceneView,
 
+		templateHelpers: function() {
+			return {
+				is_intro_scene: this.is_intro_scene
+			}
+		},
+
 		initialize: function(options) {
 			var view = this;
 
 			this.game = options.game;
+			this.is_intro_scene = options.is_intro_scene;
 
 			this.collection = new TriggerCollection([], {parent: this.model});
 			this.collection.fetch();

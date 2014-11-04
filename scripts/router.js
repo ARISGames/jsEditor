@@ -114,7 +114,11 @@ define([
 					// TODO catch errors if any fail (since its a non-standard failure)
 					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch(), factories.fetch()).done(function()
 					{
-						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
+						// TODO make game a promise and store it so we can access the same game instance in other tabs.
+						// then 'intro scene' test can just be if this.model.is(game.intro_scene())
+						var intro_scene = scenes.get(game.get("intro_scene_id"));
+
+						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes, intro_scene: intro_scene}));
 						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
 						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages, factories: factories}));
 						vent.trigger("application:info:hide");
