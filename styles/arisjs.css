@@ -12,7 +12,7 @@ a {
 }
 /* Left Organizer */
 .organizer-section-header {
-  color: #777;
+  color: #777777;
 }
 .table-hover td {
   padding-left: 1em !important;
@@ -147,6 +147,9 @@ nav,
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .scene-panel:hover .panel-heading {
+  background: #dddddd !important;
+}
+.scene-panel:hover .panel-heading .scene-title {
   color: #428bca;
 }
 .scene-panel:hover .new-trigger {
@@ -166,10 +169,10 @@ nav,
   max-width: 100%;
   float: left;
   margin: 0.5em;
-  color: #555;
+  color: #555555;
 }
 .scene-panel .scene-title {
-  color: #777;
+  color: #777777;
   white-space: pre;
   overflow: hidden;
   font-size: 125%;
@@ -181,16 +184,9 @@ nav,
   top: 0px;
   margin: 0.5em;
   padding: 0.5em;
-  background: #f5f5f5;
 }
 .scene-triggers {
   margin-bottom: 0;
-}
-.scene-triggers .item-icon {
-  text-align: center;
-}
-.scene-triggers .item-label {
-  margin: 0;
 }
 .scene-triggers .scene-trigger {
   position: relative;
@@ -199,9 +195,12 @@ nav,
   overflow: hidden;
   text-align: center;
   white-space: nowrap;
+  padding-top: 5px;
 }
 .scene-triggers .scene-trigger:hover {
   color: #428bca;
+  background: #eeeeee;
+  border-radius: 4px;
 }
 .new-scene-button {
   float: right;
@@ -305,10 +304,10 @@ h4:hover .object-id {
 }
 /* Media Selector */
 .thumbnail.choose.selected {
-  background: #5bc0de;
+  background: #d9edf7;
 }
 .thumbnail.choose.selected .caption {
-  color: #fff ;
+  color: #31708f;
 }
 .thumbnail {
   cursor: pointer;
@@ -319,7 +318,7 @@ h4:hover .object-id {
   width: 128px;
 }
 .thumbnail:hover {
-  background: #eee;
+  background: #eeeeee;
 }
 /* Event Editor */
 .events-editor .event-table-header div,
@@ -377,7 +376,7 @@ h4:hover .object-id {
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 .conversation-button {
-  color: #333;
+  color: #333333;
 }
 .conversation-button:hover {
   color: #428bca;

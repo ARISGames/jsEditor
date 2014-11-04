@@ -14,7 +14,7 @@ a {
 /* Left Organizer */
 
 .organizer-section-header {
-	color: #777;
+	color: @gray-light;
 }
 .table-hover td {
 	padding-left: 1em !important;
@@ -101,8 +101,8 @@ table.organizer {
 /* Active bootstrap list item as a button */
 
 a.list-group-item.active:hover {
-  background-color: #3276b1;
-  border-color: #285e8e;
+  background-color: darken(@list-group-active-bg, 8%);
+  border-color: darken(@list-group-active-bg, 17%);
 }
 
 .nowrap {
@@ -135,7 +135,7 @@ html, body, .full-height {
 
 body {
 	padding-top: 50px;
-	background: #f6f6f6;
+	background:  darken(@body-bg, 3.5%);
 }
 
 
@@ -170,10 +170,15 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 
 .scene-panel:hover {
 	.panel-heading {
-		color: #428bca;
+		background: @navbar-default-toggle-hover-bg !important;
+
+		.scene-title {
+			color: @brand-primary;
+		}
 	}
+
 	.new-trigger {
-		color: #428bca;
+		color: @brand-primary;
 	}
 }
 
@@ -189,10 +194,10 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	float: left;
 	margin: 0.5em;
 
-	color: #555;
+	color: @gray;
 
 	.scene-title {
-		color: #777;
+		color: @gray-light;
 		white-space: pre;
 		overflow: hidden;
 		font-size: 125%;
@@ -205,20 +210,11 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 		top: 0px;
 		margin: 0.5em;
 		padding: 0.5em;
-		background: @panel-default-heading-bg;
 	}
 }
 
 .scene-triggers {
 	margin-bottom: 0;
-
-	.item-icon {
-		text-align: center;
-	}
-
-	.item-label {
-		margin: 0;
-	}
 
 	.scene-trigger {
 		position: relative;
@@ -228,9 +224,13 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 		overflow: hidden;
 		text-align: center;
 		white-space: nowrap;
+		padding-top: 5px;
 	}
+
 	.scene-trigger:hover {
-		color: #428bca;
+		color: @brand-primary;
+		background: @gray-lighter;
+		border-radius: @border-radius-base;
 	}
 }
 
@@ -357,10 +357,10 @@ h4:hover .object-id {
 /* Media Selector */
 
 .thumbnail.choose.selected {
-	background: @brand-info;
+	background: @panel-info-heading-bg;
 
 	.caption {
-		color: #fff ;
+		color: @panel-info-text;
 	}
 }
 
@@ -369,13 +369,13 @@ h4:hover .object-id {
 }
 
 .thumbnail img {
-	border-radius: 3px;
+	border-radius: @border-radius-small;
 	height: 128px;
 	width: 128px;
 }
 
 .thumbnail:hover {
-	background: #eee;
+	background: @gray-lighter;
 }
 
 /* Event Editor */
@@ -429,11 +429,11 @@ h4:hover .object-id {
 
 // FIXME use bootstrap buttons
 .conversation-button {
-	color: #333;
+	color: @gray-dark;
 }
 
 .conversation-button:hover {
-	color: #428bca;
+	color: @brand-primary;
 }
 
 /* Jquery pan/zoom */
