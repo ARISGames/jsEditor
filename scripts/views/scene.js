@@ -1,14 +1,16 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/scene.tpl',
-	'views/scene_editor',
-	'views/scene_instance_trigger',
-	'views/scene_trigger_type_chooser',
-	'views/empty_scene',
-	'collections/triggers',
-	'vent'
-], function(_, Backbone, Template, SceneEditorView, SceneInstanceTriggerView, SceneTriggerTypeChooserView, EmptySceneView, TriggerCollection, vent) {
+define(function(require)
+{
+	var _                           = require('underscore');
+	var Backbone                    = require('backbone');
+	var Template                    = require('text!templates/scene.tpl');
+	var SceneEditorView             = require('views/scene_editor');
+	var SceneInstanceTriggerView    = require('views/scene_instance_trigger');
+	var SceneTriggerTypeChooserView = require('views/scene_trigger_type_chooser');
+	var EmptySceneView              = require('views/empty_scene');
+	var TriggerCollection           = require('collections/triggers');
+	var vent                        = require('vent');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
