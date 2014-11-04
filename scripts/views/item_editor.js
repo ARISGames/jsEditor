@@ -119,6 +119,8 @@ define(function(require)
 
 			item.save({}, {
 				create: function() {
+					view.storePreviousAttributes();
+
 					vent.trigger("item:add", item);
 					vent.trigger("application:popup:hide");
 				},

@@ -96,6 +96,8 @@ define(function(require)
 
 			dialog.save({}, {
 				create: function() {
+					view.storePreviousAttributes();
+
 					vent.trigger("dialog:add", dialog);
 					vent.trigger("application:popup:hide");
 				},
