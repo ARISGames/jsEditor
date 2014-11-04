@@ -1,13 +1,14 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/item_editor.tpl',
-	'collections/media',
-	'models/game',
-	'views/media_chooser',
-	'vent'
-], function(_, $, Backbone, Template, MediaCollection, Game, MediaChooserView, vent) {
+define(function(require)
+{
+	var _                = require('underscore');
+	var $                = require('jquery');
+	var Backbone         = require('backbone');
+	var Template         = require('text!templates/item_editor.tpl');
+	var MediaCollection  = require('collections/media');
+	var Game             = require('models/game');
+	var MediaChooserView = require('views/media_chooser');
+	var vent             = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
