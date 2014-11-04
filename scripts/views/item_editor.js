@@ -29,6 +29,14 @@ define([
 				radio_selected: function(boolean_statement) {
 					return boolean_statement ? "checked" : "";
 				},
+
+				tab_selected: function(boolean_statement) {
+					return boolean_statement ? "active" : "";
+				},
+
+				tab_visible: function(boolean_statement) {
+					return boolean_statement ? "" : "style='display: none;'";
+				}
 			}
 		},
 
@@ -48,8 +56,9 @@ define([
 			"droppable":   "#item-droppable",
 			"destroyable": "#item-destroyable",
 			"weight":      "#item-weight",
-
-			"max_qty_in_inventory": "#item-max_qty_in_inventory"
+			"max_qty":     "#item-max_qty_in_inventory",
+			"item_types":  ".item-type",
+			"type_tabs":   ".type-tab"
 		},
 
 
@@ -63,7 +72,7 @@ define([
 			this.bindAssociations();
 
 			// Handle cancel from modal X or dark area
-			this.on("click:cancel", this.onClickCancel);
+			this.on("popup:hide", this.onClickCancel);
 		},
 
 
@@ -71,8 +80,6 @@ define([
 
 		onShow: function()
 		{
-			this.onChangeType();
-
 			this.$el.find('input[autofocus]').focus();
 		},
 
@@ -86,7 +93,17 @@ define([
 			"click @ui.change_icon":  "onClickChangeIcon",
 			"click @ui.change_media": "onClickChangeMedia",
 
-			"change input[name='item-type']": "onChangeType"
+
+			// Field events
+			"change @ui.name":        "onChangeName",
+			"change @ui.description": "onChangeDescription",
+			"change @ui.url":         "onChangeUrl",
+			"change @ui.weight":      "onChangeWeight",
+			"change @ui.droppable":   "onChangeDroppable",
+			"change @ui.destroyable": "onChangeDestroyable",
+			"change @ui.max_qty":     "onChangeMaxQuantity",
+
+			"change @ui.item_types":   "onChangeType"
 		},
 
 
@@ -98,15 +115,6 @@ define([
 			var item = this.model;
 
 			// Save Object
-			item.set("name",          view.ui.name.val());
-			item.set("description",   view.ui.description.val());
-			item.set("url",           view.ui.url.val());
-			item.set("weight",        view.ui.weight.val());
-			item.set("droppable",     view.ui.droppable.is(":checked") ? "1" : "0");
-			item.set("destroyable",   view.ui.destroyable.is(":checked") ? "1" : "0");
-			item.set("type",          view.$el.find("input[name=item-type]:checked").val());
-
-			item.set("max_qty_in_inventory", view.ui.max_qty_in_inventory.val());
 
 			item.save({}, {
 				create: function() {
@@ -139,29 +147,40 @@ define([
 			});
 		},
 
+
+		/* Field Changes */
+
+		onChangeName:        function() { this.model.set("name",        this.ui.name.val()); },
+		onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
+		onChangeUrl:         function() { this.model.set("url",         this.ui.url.val()); },
+		onChangeWeight:      function() { this.model.set("weight",      this.ui.weight.val()); },
+
+		onChangeDroppable:   function() { this.model.set("droppable",   this.ui.droppable.is(":checked") ? "1" : "0");   },
+		onChangeDestroyable: function() { this.model.set("destroyable", this.ui.destroyable.is(":checked") ? "1" : "0"); },
+
+		onChangeMaxQuantity: function() { this.model.set("max_qty_in_inventory", this.ui.max_qty.val()); },
+
+
 		/* Radio Button field logic */
 
 		onChangeType: function()
 		{
-			var view = this;
+			var selected_radio = this.$el.find(".item-type:checked");
+
+			this.model.set("type", selected_radio.val());
 
 			// Hide radio buttons and add bootstrap classes
 			//
-			var selected_radio = this.$el.find("input[name=item-type]:checked");
-
-			this.$el.find("input[name=item-type]").parent().removeClass("active");
+			this.ui.item_types.parent().removeClass("active");
 			selected_radio.parent().addClass("active");
 
 
 			// Hide all and open selected tab
 			//
-			this.$el.find('.trigger-tab').hide();
+			this.ui.type_tabs.hide();
 
 			var display_tab = "." + selected_radio.val() + "-fields";
 			$(display_tab).show();
-
-			// Assign value in-case view is re-rendered
-			this.model.set("type", selected_radio.val());
 		},
 
 

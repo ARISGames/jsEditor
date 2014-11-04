@@ -45,18 +45,18 @@
 		<label for="item-type">Type</label>
 
 		<div class="btn-group btn-group-sm btn-group-justified item-types">
-			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="NORMAL" <%= radio_selected(type === "NORMAL") %>>
+			<label class="btn btn-info  <%= tab_selected(type === "NORMAL") %>">
+				<input type="radio" class="item-type" name="item-type" value="NORMAL" <%= radio_selected(type === "NORMAL") %>>
 				<span class="glyphicon glyphicon-stop"></span>
 				&nbsp;Normal
 			</label>
-			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="ATTRIB" <%= radio_selected(type === "ATTRIB") %>>
+			<label class="btn btn-info <%= tab_selected(type === "ATTRIB") %>">
+				<input type="radio" class="item-type" name="item-type" value="ATTRIB" <%= radio_selected(type === "ATTRIB") %>>
 				<span class="glyphicon glyphicon-stats"></span>
 				&nbsp;Attribute
 			</label>
-			<label class="btn btn-info">
-				<input type="radio" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
+			<label class="btn btn-info <%= tab_selected(type === "URL") %>">
+				<input type="radio" class="item-type" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
 				<span class="glyphicon glyphicon-globe"></span>
 				&nbsp;Web URL
 			</label>
@@ -77,7 +77,7 @@
 		</div>
 
 		<div class="col-xs-6 padded">
-			<div class="trigger-tab NORMAL-fields ATTRIB-fields">
+			<div class="type-tab NORMAL-fields ATTRIB-fields" <%= tab_visible(type === "ATTRIB" || type === "NORMAL") %>>
 				<div class="thumbnail change-media">
 					<img src=<%= media_thumbnail_url %>>
 					<div class="caption">
@@ -88,7 +88,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="trigger-tab URL-fields">
+			<div class="type-tab URL-fields" <%= tab_visible(type === "URL") %>>
 				<label for="item-url">URL</label>
 				<input type="text" class="form-control" id="item-url" placeholder="URL" value="<%= url %>">
 			</div>
@@ -107,7 +107,7 @@
 		</button>
 	<% } %>
 
-	<button type="button" class="btn btn-default" data-dismiss="modal">
+	<button type="button" class="btn btn-default cancel" data-dismiss="modal">
 		Cancel
 	</button>
 </form>

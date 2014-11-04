@@ -63,7 +63,7 @@ define(function(require)
 			this.bindAssociations();
 
 			// Handle cancel from modal X or dark area
-			this.on("click:cancel", this.onClickCancel);
+			this.on("popup:hide", this.onClickCancel);
 		},
 
 

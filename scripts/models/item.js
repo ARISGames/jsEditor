@@ -62,7 +62,7 @@ define(function(require) {
 			return this.icon().thumbnail_for(this);
 		},
 
-		icon_thumbnail: function() {
+		media_thumbnail: function() {
 			return this.media().thumbnail_for();
 		}
 	});
