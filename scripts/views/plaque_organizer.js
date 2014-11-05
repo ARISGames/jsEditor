@@ -31,13 +31,8 @@ define([
 		onClickNew: function() {
 			var plaque  = new Plaque({game_id: this.model.get("game_id")});
 
-			var icon  = new Media({media_id: plaque.get("icon_media_id")});
-			var media = new Media({media_id: plaque.get("media_id")});
-
-			$.when(icon.fetch(), media.fetch()).done(function () {
-				var plaque_editor = new PlaqueEditorView({model: plaque, icon: icon, media: media});
-				vent.trigger("application:popup:show", plaque_editor, "Create Plaque");
-			});
+			var plaque_editor = new PlaqueEditorView({model: plaque});
+			vent.trigger("application:popup:show", plaque_editor, "Create Plaque");
 		}
 	});
 });

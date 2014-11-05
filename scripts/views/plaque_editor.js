@@ -16,21 +16,46 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
+		/* View */
+
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail(),
-				media_thumbnail_url: this.media.thumbnail()
+				icon_thumbnail_url:  this.model.icon_thumbnail(),
+				media_thumbnail_url: this.model.media_thumbnail()
 			}
 		},
 
 
 		ui: {
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon":  ".change-icon",
+			"change_media": ".change-media",
+			"edit_events":  ".edit-events",
+
 			"name": "#plaque-name",
-			"description":  "#plaque-description",
-			"iconchooser":  "#icon-chooser-container",
-			"mediachooser": "#media-chooser-container"
+			"description":  "#plaque-description"
 		},
+
+
+		/* Constructor */
+
+		initialize: function() {
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
@@ -38,36 +63,48 @@ define([
 
 
 		events: {
-			"click .save": "onClickSave",
-			"click .delete": "onClickDelete",
-			"click .change-icon":  "onClickChangeIcon",
-			"click .change-media": "onClickChangeMedia",
-			"click .edit-events": "onClickEditEvents",
+			"click @ui.save":   "onClickSave",
+			"click @ui.delete": "onClickDelete",
+			"click @ui.cancel": "onClickCancel",
+
+			"click @ui.change_icon":  "onClickChangeIcon",
+			"click @ui.change_media": "onClickChangeMedia",
+			"click @ui.edit_events":  "onClickEditEvents",
+
+			// Field events
 			"change @ui.name": "onChangeName",
 			"change @ui.description": "onChangeDescription",
 		},
 
-		initialize: function(options) {
-			this.icon  = options.icon;
-			this.media = options.media;
-		},
+
+		/* Crud */
 
 		onClickSave: function() {
+			var view = this;
 			var plaque = this.model;
 
 			plaque.save({}, {
 				create: function() {
+					view.storePreviousAttributes();
+
 					vent.trigger("plaque:add", plaque);
 					vent.trigger("application:popup:hide");
 				},
 
 				update: function()
 				{
+					view.storePreviousAttributes();
+
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", plaque);
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			delete this.previous_attributes.event_package_id;
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -80,9 +117,28 @@ define([
 			});
 		},
 
+
+		/* Field Changes */
+
 		onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
 		onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
 
+
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+			this.stopListening(this.model.media());
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(),  'change', this.render);
+			this.listenTo(this.model.media(), 'change', this.render);
+		},
 
 		/* Media Selectors */
 
@@ -94,12 +150,16 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Plaque");
 					});
 
@@ -120,13 +180,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Media */
-					var media_chooser = new MediaChooserView({collection: media});
+					var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
 					vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
 					media_chooser.on("media:choose", function(media) {
-						view.media = media;
+						view.unbindAssociations();
 						view.model.set("media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Plaque");
 					});
 

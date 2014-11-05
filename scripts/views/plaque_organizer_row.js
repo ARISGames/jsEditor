@@ -29,14 +29,9 @@ define([
 
 		onClickEdit: function() {
 			var view  = this;
-			var icon  = new Media({media_id: this.model.get("icon_media_id")});
-			var media = new Media({media_id: this.model.get("media_id"     )});
 
-			$.when(icon.fetch(), media.fetch()).done(function() {
-				var plaque_editor = new PlaqueEditorView({model: view.model, media: media, icon: icon});
-				vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
-			});
-
+			var plaque_editor = new PlaqueEditorView({model: view.model});
+			vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
 		}
 	});
 });

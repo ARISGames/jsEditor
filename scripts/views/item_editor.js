@@ -87,9 +87,9 @@ define(function(require)
 
 		events:
 		{
-			"click @ui.save":        "onClickSave",
-			"click @ui.delete":      "onClickDelete",
-			"click @ui.cancel":      "onClickCancel",
+			"click @ui.save":   "onClickSave",
+			"click @ui.delete": "onClickDelete",
+			"click @ui.cancel": "onClickCancel",
 
 			"click @ui.change_icon":  "onClickChangeIcon",
 			"click @ui.change_media": "onClickChangeMedia",
