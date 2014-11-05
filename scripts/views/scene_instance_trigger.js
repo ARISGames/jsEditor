@@ -105,7 +105,8 @@ define([
 
 								// FIXME need global instance
 								vent.on("game_object:update", function(game_object) {
-									if(game_object.id === view.game_object.id && game_object.idAttribute === view.game_object.idAttribute) {
+									if(game_object.is(view.game_object))
+									{
 										view.game_object = game_object;
 										view.object_name = game_object.get("name");
 										view.render();
@@ -113,7 +114,8 @@ define([
 								});
 
 								vent.on("game_object:delete", function(game_object) {
-									if(game_object.id === view.game_object.id && game_object.idAttribute === view.game_object.idAttribute) {
+									if(game_object.is(view.game_object))
+									{
 										view.trigger("trigger:remove", view.model);
 									}
 								});
@@ -121,15 +123,11 @@ define([
 						});
 					} // try load game object
 					catch(error) {
-						console.error(error);
+						console.error("Scene Trigger Fetch Error", error);
 					}
 				}
 			});
 
-		},
-
-		onRender: function() {
-			$(this.$el).draggable({ containment: "parent" });
 		},
 
 		events: {

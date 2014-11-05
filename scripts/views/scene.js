@@ -17,7 +17,7 @@ define(function(require)
 		className: function() {
 			var panel_color = "default";
 
-			if(this.options.is_intro_scene)
+			if(this.is_intro_scene())
 			{
 				panel_color = "info";
 			}
@@ -31,15 +31,12 @@ define(function(require)
 
 		templateHelpers: function() {
 			return {
-				is_intro_scene: this.is_intro_scene
+				is_intro_scene: this.is_intro_scene()
 			}
 		},
 
 		initialize: function(options) {
 			var view = this;
-
-			this.game = options.game;
-			this.is_intro_scene = options.is_intro_scene;
 
 			this.collection = new TriggerCollection([], {parent: this.model});
 			this.collection.fetch();
@@ -53,12 +50,37 @@ define(function(require)
 			});
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+				if(game_object.is(view.model))
+				{
 					view.model = game_object;
 					view.render();
 				}
 			});
 
+			// Track scene deletes to adjust intro scene
+			this.model.game().on("sync", function() { console.log("sync!", arguments)});
+			this.model.game().on("change", function() { console.log("change!", arguments)});
+			this.model.game().on("change:intro_scene_id", this.onChangeIntroScene.bind(this));
+		},
+
+		is_intro_scene: function() {
+			// FIXME can just compare models if we load all scenes into storage.
+			return this.model.id === this.model.game().get("intro_scene_id");
+		},
+
+		onChangeIntroScene: function() {
+			console.log("change:isci", arguments);
+
+			this.render();
+
+			if(this.is_intro_scene())
+			{
+				this.$el.removeClass("panel-default").addClass("panel-info");
+			}
+			else
+			{
+				this.$el.removeClass("panel-info").addClass("panel-default");
+			}
 		},
 
 		onItemviewTriggerRemove: function(item_view, trigger) {
@@ -88,7 +110,7 @@ define(function(require)
 		},
 
 		onClickNewTrigger: function() {
-			vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model: this.model, game: this.game}), "Add Trigger to Scene");
+			vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model: this.model, game: this.model.game()}), "Add Trigger to Scene");
 		},
 
 	});

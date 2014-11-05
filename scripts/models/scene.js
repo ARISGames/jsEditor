@@ -1,6 +1,7 @@
-define([
-	'models/json_base'
-], function(JsonBaseModel) {
+define(function(require)
+{
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
 
 	return JsonBaseModel.extend({
 		idAttribute: 'scene_id',
@@ -20,8 +21,14 @@ define([
 
 		defaults: {
 			name: ""
-		}
+		},
 
+
+		/* Associations */
+
+		game: function() {
+			return storage.games.retrieve(this.get('game_id'));
+		}
 	});
 });
 

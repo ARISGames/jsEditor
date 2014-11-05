@@ -98,7 +98,8 @@ define([
 
 
 		showSceneEditor: function(game_id) {
-			var game = new Game({game_id: game_id});
+			// FIXME ability to promise so we don't fetch twice? or guarentee a new fetch.
+			var game = storage.games.retrieve(game_id);
 			storage.for(game);
 
 			game.fetch({
@@ -129,7 +130,9 @@ define([
 
 
 		editGame: function(game_id) {
-			var game = new Game({game_id: game_id});
+			var game = storage.games.retrieve(game_id);
+			storage.for(game);
+
 			game.fetch({
 				success: function() {
 

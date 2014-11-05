@@ -11,12 +11,19 @@ define([
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				in_modal: this.options.in_modal
+				in_modal: this.options.in_modal,
+				is_intro_scene: this.is_intro_scene(),
+
+				is_checked: function(value)
+				{
+					return value === "1" ? "checked" : "";
+				}
 			};
 		},
 
 		ui: {
-			name: '#scene-name'
+			name:        '#scene-name',
+			intro_scene: '#scene-intro'
 		},
 
 		onShow: function() {
@@ -26,12 +33,17 @@ define([
 		events: {
 			"click .save-scene":   "onClickSave",
 			"click .cancel":       "onClickCancel",
-			"click .delete-scene": "onClickDelete"
+			"click .delete-scene": "onClickDelete",
 		},
 
 		// FIXME why do we need this vs other views?
 		modelEvents: {
 			"change": "render"
+		},
+
+		is_intro_scene: function() {
+			// FIXME can just compare models if we load all scenes into storage.
+			return this.model.id === this.model.game().get("intro_scene_id");
 		},
 
 		onClickSave: function() {
@@ -46,6 +58,12 @@ define([
 						vent.trigger("application:popup:hide");
 					}
 			});
+
+
+			if(this.ui.intro_scene.is(":checked"))
+			{
+				this.model.game().save({"intro_scene_id": this.model.id}, {patch: true});
+			}
 		},
 
 

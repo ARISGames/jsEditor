@@ -16,13 +16,6 @@ define([
 		itemView: SceneView,
 		itemViewContainer: ".scenes",
 
-		itemViewOptions: function(scene, index) {
-			return {
-				game: this.model,
-				is_intro_scene: scene.is(this.intro_scene)
-			}
-		},
-
 		className: 'full-height',
 
 		events: {
@@ -36,10 +29,14 @@ define([
 
 			vent.on("scenes:add", function(scene) {
 				view.collection.add(scene);
+				view.model.fetch();
+			});
+
+			vent.on("scenes:remove", function(scene) {
+				view.model.fetch();
 			});
 		},
 
-		//this.collection.add(scene);
 
 		onClickNewScene: function() {
 			var scene = new Scene({game_id: this.model.id});
