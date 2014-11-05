@@ -36,11 +36,6 @@ define([
 			"click .delete-scene": "onClickDelete",
 		},
 
-		// FIXME why do we need this vs other views?
-		modelEvents: {
-			"change": "render"
-		},
-
 		is_intro_scene: function() {
 			// FIXME can just compare models if we load all scenes into storage.
 			return this.model.id === this.model.game().get("intro_scene_id");
@@ -48,22 +43,26 @@ define([
 
 		onClickSave: function() {
 			var view = this;
+
+			var set_intro = view.ui.intro_scene.is(":checked");
 			this.model.set('name', this.ui.name.val());
+
 			this.model.save({}, {
 					create: function() {
 						vent.trigger("scenes:add", view.model);
 					},
 					success: function() {
+
+						if(set_intro)
+						{
+							view.model.game().save({"intro_scene_id": view.model.id}, {patch: true});
+						}
+
 						vent.trigger("game_object:update", view.model);
 						vent.trigger("application:popup:hide");
 					}
 			});
 
-
-			if(this.ui.intro_scene.is(":checked"))
-			{
-				this.model.game().save({"intro_scene_id": this.model.id}, {patch: true});
-			}
 		},
 
 

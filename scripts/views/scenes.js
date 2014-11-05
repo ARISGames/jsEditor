@@ -29,7 +29,6 @@ define([
 
 			vent.on("scenes:add", function(scene) {
 				view.collection.add(scene);
-				view.model.fetch();
 			});
 
 			vent.on("scenes:remove", function(scene) {

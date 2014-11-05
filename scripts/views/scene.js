@@ -58,8 +58,6 @@ define(function(require)
 			});
 
 			// Track scene deletes to adjust intro scene
-			this.model.game().on("sync", function() { console.log("sync!", arguments)});
-			this.model.game().on("change", function() { console.log("change!", arguments)});
 			this.model.game().on("change:intro_scene_id", this.onChangeIntroScene.bind(this));
 		},
 
@@ -69,8 +67,6 @@ define(function(require)
 		},
 
 		onChangeIntroScene: function() {
-			console.log("change:isci", arguments);
-
 			this.render();
 
 			if(this.is_intro_scene())
