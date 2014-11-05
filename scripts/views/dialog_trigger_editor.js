@@ -47,15 +47,16 @@ define(function(require)
 			var view = this;
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.dialog.id && game_object.idAttribute === view.dialog.idAttribute) {
+				if(game_object.is(view.dialog))
+				{
 					view.dialog = game_object;
-					view.render();
-					view.setVisibleFields();
+					view.$el.find('.name-container').html(view.dialog.get('name'));
 				}
 			});
 
 			vent.on("game_object:delete", function(game_object) {
-				if(game_object.id === view.dialog.id && game_object.idAttribute === view.dialog.idAttribute) {
+				if(game_object.is(view.dialog))
+				{
 					view.close();
 				}
 			});
@@ -241,8 +242,7 @@ define(function(require)
 
 					icon_chooser.on("media:choose", function(media) {
 						view.icon = media;
-						view.render();
-						view.setVisibleFields();
+						view.set_icon(media);
 						vent.trigger("application:popup:hide");
 					});
 
@@ -251,6 +251,10 @@ define(function(require)
 					});
 				}
 			});
+		},
+
+		set_icon: function(media) {
+			this.$el.find(".change-icon img").attr("src", media.thumbnail());
 		},
 
 		onChangeInfinity: function() {

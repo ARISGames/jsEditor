@@ -1,6 +1,6 @@
 <% if(!in_modal) { %>
 	<h4>Conversation Trigger <span class="object-id text-muted"><%= is_new ? "" : dialog_id %></span></h4>
-	<h5><%= name %></h5>
+	<h5 class="name-container"><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
