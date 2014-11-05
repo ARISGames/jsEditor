@@ -12,19 +12,43 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
+		/* View */
+
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail()
+				icon_thumbnail_url: this.model.icon_thumbnail()
 			}
 		},
 
 
 		ui: {
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon": ".change-icon",
+
 			"name": "#web_page-name",
-			"url":  "#web_page-url",
-			"iconchooser": "#icon-chooser-container"
+			"url":  "#web_page-url"
 		},
+
+
+		/* Constructor */
+
+		initialize: function() {
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
@@ -32,38 +56,45 @@ define([
 
 
 		events: {
-			"click .save": "onClickSave",
-			"click .delete": "onClickDelete",
-			"click .change-icon": "onClickChangeIcon"
+			"click @ui.save":   "onClickSave",
+			"click @ui.delete": "onClickDelete",
+			"click @ui.cancel": "onClickCancel",
+
+			"click @ui.change_icon": "onClickChangeIcon",
+
+			// Field events
+			"change @ui.name":  "onChangeName",
+			"change @ui.url":   "onChangeUrl"
 		},
 
 		initialize: function(options) {
-			this.icon  = options.icon;
 		},
 
 		onClickSave: function() {
 			var view   = this;
 			var web_page = this.model;
 
-			// Save Object
-			web_page.set("icon_media_id", view.icon.get( "media_id"));
-
-			web_page.set("name", view.ui.name.val());
-			web_page.set("url",  view.ui.url.val());
-
 			web_page.save({}, {
 				create: function() {
+					view.storePreviousAttributes();
+
 					vent.trigger("web_page:add", web_page);
 					vent.trigger("application:popup:hide");
 				},
 
 				update: function()
 				{
+					view.storePreviousAttributes();
+
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", web_page);
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -76,6 +107,16 @@ define([
 			});
 		},
 
+
+
+		/* Field Changes */
+
+		onChangeName: function() { this.model.set("name", this.ui.name.val()); },
+		onChangeUrl:  function() { this.model.set("url",  this.ui.url.val());  },
+
+
+		/* Media Selector */
+
 		onClickChangeIcon: function() {
 			var view = this;
 
@@ -84,22 +125,26 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
-						vent.trigger("application:popup:show", view, "Edit Web Page");
+						view.bindAssociations();
+						vent.trigger("application:popup:show", view, "Edit Conversation");
 					});
 
 					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Web Page");
+						vent.trigger("application:popup:show", view, "Edit Conversation");
 					});
 
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 				}
 			});
-		}
+		},
 	});
 });

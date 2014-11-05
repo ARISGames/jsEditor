@@ -24,6 +24,23 @@ define([
 			name: "",
 			url: "",
 			icon_media_id: "0"
+		},
+
+
+		/* Associations */
+
+		icon: function() {
+			return storage.media.retrieve(this.get('icon_media_id'));
+		},
+
+		default_icon: function() {
+			return storage.media.retrieve('0');
+		},
+
+		/* Helpers */
+
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
 		}
 
 	});

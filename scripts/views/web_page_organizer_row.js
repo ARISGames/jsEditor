@@ -18,7 +18,8 @@ define([
 			var view = this;
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+				if(game_object.is(view.model))
+				{
 					view.model = game_object;
 					view.render();
 				}
@@ -29,13 +30,9 @@ define([
 
 		onClickEdit: function() {
 			var view  = this;
-			var icon  = new Media({media_id: this.model.get("icon_media_id")});
 
-			$.when(icon.fetch()).done(function() {
-				var web_page_editor = new WebPageEditorView({model: view.model, icon: icon});
-				vent.trigger("application:popup:show", web_page_editor, "Edit Web Page");
-			});
-
+			var web_page_editor = new WebPageEditorView({model: view.model});
+			vent.trigger("application:popup:show", web_page_editor, "Edit Web Page");
 		}
 	});
 });

@@ -31,12 +31,8 @@ define([
 		onClickNew: function() {
 			var web_page  = new WebPage({game_id: this.model.get("game_id")});
 
-			var icon  = new Media({media_id: web_page.get("icon_media_id")});
-
-			$.when(icon.fetch()).done(function () {
-				var web_page_editor = new WebPageEditorView({model: web_page, icon: icon});
-				vent.trigger("application:popup:show", web_page_editor, "Create Web Page");
-			});
+			var web_page_editor = new WebPageEditorView({model: web_page});
+			vent.trigger("application:popup:show", web_page_editor, "Create Web Page");
 		}
    });
 });

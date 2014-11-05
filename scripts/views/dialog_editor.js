@@ -83,7 +83,7 @@ define(function(require)
 
 			// Field events
 			"change @ui.name":        "onChangeName",
-			"change @ui.description": "onChangeDescription",
+			"change @ui.description": "onChangeDescription"
 		},
 
 
