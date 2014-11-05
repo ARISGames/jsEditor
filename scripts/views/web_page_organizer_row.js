@@ -1,11 +1,12 @@
-define([
-	'jquery',
-	'backbone',
-	'text!templates/web_page_organizer_row.tpl',
-	'views/web_page_editor',
-	'models/media',
-	'vent'
-], function($, Backbone, Template, WebPageEditorView, Media, vent) {
+define(function(require)
+{
+	var $                 = require('jquery');
+	var Backbone          = require('backbone');
+	var Template          = require('text!templates/web_page_organizer_row.tpl');
+	var WebPageEditorView = require('views/web_page_editor');
+	var Media             = require('models/media');
+	var vent              = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),

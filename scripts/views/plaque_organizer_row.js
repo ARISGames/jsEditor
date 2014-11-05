@@ -1,11 +1,12 @@
-define([
-	'jquery',
-	'backbone',
-	'text!templates/plaque_organizer_row.tpl',
-	'views/plaque_editor',
-	'models/media',
-	'vent'
-], function($, Backbone, Template, PlaqueEditorView, Media, vent) {
+define(function(require)
+{
+	var $                = require('jquery');
+	var Backbone         = require('backbone');
+	var Template         = require('text!templates/plaque_organizer_row.tpl');
+	var PlaqueEditorView = require('views/plaque_editor');
+	var Media            = require('models/media');
+	var vent             = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -18,7 +19,8 @@ define([
 			var view = this;
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+				if(game_object.is(view.model))
+				{
 					view.model = game_object;
 					view.render();
 				}
