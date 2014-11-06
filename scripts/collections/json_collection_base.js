@@ -61,10 +61,10 @@ define([
 				vent.trigger("application:working:hide");
 
 				if(data.faultCode) {
-					throw "amf Collection Fault: "+data.faultString;
+					throw "amf Collection Fault: "+data.faultString+" for "+options.url;
 				}
 				else if(data.returnCode != 0) {
-					throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription;
+					throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription+" for "+options.url;
 				}
 				else {
 					// Call original callback

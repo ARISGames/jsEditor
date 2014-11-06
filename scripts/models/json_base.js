@@ -191,14 +191,14 @@ define([
 				vent.trigger("application:working:hide");
 
 				if(data.faultCode) {
-					throw "amf Model Fault: "+data.faultString;
+					throw "amf Model Fault: "+data.faultString+" for "+options.url;
 				}
 				else if(data.returnCode != 0) {
 					if(options.amf_error) {
 						options.amf_error.apply(this, [data.returnCode, data.returnCodeDescription]);
 					}
 					else {
-						throw "Model returnCode "+data.returnCode+": "+data.returnCodeDescription;
+						throw "Model returnCode "+data.returnCode+": "+data.returnCodeDescription+" for "+options.url;
 					}
 				}
 				else {
