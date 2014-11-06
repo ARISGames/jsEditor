@@ -62,7 +62,7 @@ define(function(require)
 
 			"title_container": ".title-container",
 
-			"object_name": "#game_object-name",
+			"object_name": ".game_object-name",
 
 			"qr_image":   ".qr_image",
 			"map_canvas": ".map-canvas",
@@ -114,8 +114,9 @@ define(function(require)
 		},
 
 		set_name: function(game_object) {
-			this.ui.object_name.html(game_object.get('name'));
-			this.ui.title.attr('placeholder', game_object.get('name'));
+			var name = game_object.get("name");
+			this.ui.object_name.text(name);
+			this.ui.title.attr('placeholder', name);
 		},
 
 
@@ -131,7 +132,8 @@ define(function(require)
 
 			var view = this;
 
-			vent.on("game_object:update", function(game_object) {
+			this.listenTo(vent, "game_object:update", function(game_object)
+			{
 				if(game_object.is(view.game_object))
 				{
 					view.game_object = game_object;
@@ -139,7 +141,8 @@ define(function(require)
 				}
 			});
 
-			vent.on("game_object:delete", function(game_object) {
+			this.listenTo(vent, "game_object:delete", function(game_object)
+			{
 				if(game_object.is(view.game_object))
 				{
 					view.close();
@@ -148,14 +151,7 @@ define(function(require)
 		},
 
 		onShow: function() {
-			//this.setVisibleFields();
 			this.ui.autofocus.focus();
-		},
-
-		setVisibleFields: function() {
-			this.onChangeType();
-			this.onChangeTriggerEnter();
-			this.onChangeShowTitle();
 		},
 
 		onRender: function() {
@@ -165,7 +161,6 @@ define(function(require)
 				setTimeout(function() {view.renderMap()}, 300);
 				this.initializeQR();
 			}
-
 		},
 
 
@@ -505,7 +500,6 @@ define(function(require)
 			}
 
 			// Initial view
-			//setTimeout(function() {console.log("centering"); center_on(circle_marker);}, 300);
 			center_on(circle_marker);
 
 			// Track drag and resize

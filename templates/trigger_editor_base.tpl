@@ -1,6 +1,6 @@
 <% if(!in_modal) { %>
 	<h4><%= parent_label %> Trigger <span class="object-id text-muted"><%= is_new ? "" : game_object_id %></span></h4>
-	<h5 id="game_object-name"><%= name %></h5>
+	<h5 class="game_object-name"><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
