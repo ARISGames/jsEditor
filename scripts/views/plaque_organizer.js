@@ -17,8 +17,11 @@ define([
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("plaque:add", function(plaque) {
-				view.collection.add(plaque);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof Plaque)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
 

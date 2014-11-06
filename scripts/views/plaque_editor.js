@@ -87,7 +87,7 @@ define([
 				create: function() {
 					view.storePreviousAttributes();
 
-					vent.trigger("plaque:add", plaque);
+					vent.trigger("game_object:add", plaque);
 					vent.trigger("application:popup:hide");
 				},
 
