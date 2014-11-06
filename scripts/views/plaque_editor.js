@@ -1,17 +1,17 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/plaque_editor.tpl',
-	'collections/media',
-	'collections/events',
-	'collections/items',
-	'models/game',
-	'models/event_package',
-	'views/media_chooser',
-	'views/events',
-	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, MediaChooserView, EventsEditorView, vent) {
+define(function(require)
+{
+	var _                = require('underscore');
+	var $                = require('jquery');
+	var Backbone         = require('backbone');
+	var Template         = require('text!templates/plaque_editor.tpl');
+	var MediaCollection  = require('collections/media');
+	var EventsCollection = require('collections/events');
+	var ItemsCollection  = require('collections/items');
+	var Game             = require('models/game');
+	var EventPackage     = require('models/event_package');
+	var MediaChooserView = require('views/media_chooser');
+	var EventsEditorView = require('views/events');
+	var vent             = require('vent');
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),

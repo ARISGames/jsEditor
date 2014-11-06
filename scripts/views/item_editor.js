@@ -121,7 +121,7 @@ define(function(require)
 				create: function() {
 					view.storePreviousAttributes();
 
-					vent.trigger("item:add", item);
+					vent.trigger("game_object:add", item);
 					vent.trigger("application:popup:hide");
 				},
 
