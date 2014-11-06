@@ -1,7 +1,5 @@
 define(function(require)
 {
-	var _        = require('underscore');
-	var Template = require('text!templates/dialog_trigger_editor.tpl');
 	var vent     = require('vent');
 
 	var TriggerEditorBaseView = require('views/trigger_editor_base');
@@ -9,7 +7,6 @@ define(function(require)
 
 
 	return TriggerEditorBaseView.extend({
-		template: _.template(Template),
 
 		onClickEditGameObject: function() {
 			// TODO catch media change? to update trigger if its using parent.

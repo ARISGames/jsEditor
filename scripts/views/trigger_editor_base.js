@@ -4,6 +4,7 @@ define(function(require)
 	var $        = require('jquery');
 	var Backbone = require('backbone');
 	var vent     = require('vent');
+	var Template = require('text!templates/trigger_editor_base.tpl');
 
 	var QRCode   = require('qrcode');
 
@@ -29,6 +30,8 @@ define(function(require)
 	return Backbone.Marionette.CompositeView.extend({
 
 		/* View */
+
+		template: _.template(Template),
 
 		ui: {
 			"save":   ".save",
