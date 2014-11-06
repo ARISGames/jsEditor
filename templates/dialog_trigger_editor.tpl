@@ -1,6 +1,6 @@
 <% if(!in_modal) { %>
 	<h4>Conversation Trigger <span class="object-id text-muted"><%= is_new ? "" : game_object_id %></span></h4>
-	<h5 class="name-container"><%= name %></h5>
+	<h5 id="game_object-name"><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
@@ -82,7 +82,7 @@
 	</div>
 
 	<div class="form-group title-container">
-		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
+		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
 	</div>
 
 	<div class="checkbox">

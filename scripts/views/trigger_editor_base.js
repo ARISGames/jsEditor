@@ -43,7 +43,9 @@ define(function(require)
 			"hidden":      "#trigger-hidden",
 			"code":        "#trigger-code",
 
-			"title_container": ".title-container"
+			"title_container": ".title-container",
+
+			"object_name": "#game_object-name"
 		},
 
 		templateHelpers: function() {
@@ -76,7 +78,8 @@ define(function(require)
 		},
 
 		set_name: function(game_object) {
-			this.$el.find('.name-container').html(game_object.get('name'));
+			this.ui.object_name.html(game_object.get('name'));
+			this.ui.title.attr('placeholder', game_object.get('name'));
 		},
 
 
