@@ -116,6 +116,20 @@ define(function(require)
 		onChangeUrl:  function() { this.model.set("url",  this.ui.url.val());  },
 
 
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(), 'change', this.render);
+		},
+
 		/* Media Selector */
 
 		onClickChangeIcon: function() {
