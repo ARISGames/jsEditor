@@ -46,6 +46,28 @@ define(function(require)
 			"title_container": ".title-container"
 		},
 
+		templateHelpers: function() {
+			return {
+				is_new: this.model.isNew(),
+				in_modal: this.options.in_modal,
+				visible_fields: this.visible_fields,
+
+				icon_thumbnail_url:  this.icon.thumbnail(),
+
+				is_checked: function(value) {
+					return value === "1" ? "checked" : "";
+				},
+
+				radio_selected: function(boolean_statement) {
+					return boolean_statement ? "checked" : "";
+				},
+
+				// Dialog Attributes
+				game_object_id: this.game_object.id,
+				name: this.game_object.get('name')
+			}
+		},
+
 
 		/* Dom manipulation */
 
@@ -59,6 +81,32 @@ define(function(require)
 
 
 		/* Initialization and Rendering */
+
+		initialize: function(options) {
+			this.scene       = options.scene;
+			this.icon        = options.icon;
+			this.game_object = options.game_object;
+			this.instance    = options.instance;
+
+			this.visible_fields = options.visible_fields;
+
+			var view = this;
+
+			vent.on("game_object:update", function(game_object) {
+				if(game_object.is(view.game_object))
+				{
+					view.game_object = game_object;
+					view.set_name(view.game_object);
+				}
+			});
+
+			vent.on("game_object:delete", function(game_object) {
+				if(game_object.is(view.game_object))
+				{
+					view.close();
+				}
+			});
+		},
 
 		onShow: function() {
 			this.setVisibleFields();
@@ -83,7 +131,92 @@ define(function(require)
 		},
 
 
+		/* View Events */
+
+		events: {
+			"click .save":   "onClickSave",
+			"click .delete": "onClickDelete",
+			"click .cancel": "onClickCancel",
+
+			"click .change-icon":       "onClickChangeIcon",
+			"click .edit-game_object":  "onClickEditGameObject",
+			"click .edit-requirements": "onClickEditRequirements",
+
+			"change @ui.infinite":   "onChangeInfinity",
+			"change @ui.show_title": "onChangeShowTitle",
+			"change input[name='trigger-type']": "onChangeType",
+			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
+			"change #trigger-code": "onChangeCode",
+			"keyup #trigger-code":  "onChangeCode"
+		},
+
+
 		/* Crud */
+
+		onClickSave: function() {
+			var view = this;
+			var instance    = this.instance;
+			var game_object = this.game_object;
+			var trigger     = this.model;
+
+			// FIXME temporary fix to grab fields only when visible
+			if(view.options.visible_fields === "create_game_object_with_trigger" ) {
+				game_object.set("name", view.ui.name.val());
+			}
+
+			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
+			game_object.save({}, {
+				create: function() {
+					vent.trigger("game_object:add", game_object);
+				},
+				success: function() {
+					// Save Instance
+
+					instance.set("object_id",   game_object.id);
+					instance.set("object_type", instance.type_for(game_object));
+
+					instance.save({}, {
+						success: function() {
+							// Save Trigger
+							trigger.set("instance_id", instance.id);
+
+							// FIXME temporary fix to grab fields only when visible
+							if(view.options.visible_fields === "trigger") {
+								trigger.set("title",             view.ui.title.val());
+								trigger.set("qr_code",           view.ui.code.val());
+
+								trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
+								trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
+								trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
+								trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
+
+								trigger.set("type",              view.$el.find("input[name=trigger-type]:checked").val());
+								trigger.set("trigger_on_enter",  view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
+
+								trigger.set("icon_media_id", view.icon.get("media_id"));
+							}
+
+							// Otherwise Initial Fields are all default.
+
+							trigger.save({},
+							{
+								create: function()
+								{
+									// FIXME better way to handle this?
+									vent.trigger("scene:add_trigger", trigger);
+									vent.trigger("application:popup:hide");
+								},
+								success: function()
+								{
+									vent.trigger("trigger:update", trigger);
+								}
+
+							}); /* Trigger save */
+						}
+					}); /* Instance save */
+				}
+			}); /* Game Object save */
+		},
 
 		onClickDelete: function() {
 			var view = this;

@@ -17,8 +17,11 @@ define([
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("dialog:add", function(dialog) {
-				view.collection.add(dialog);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof Dialog)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
 

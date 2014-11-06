@@ -144,7 +144,7 @@ define([
 
 					// launch based on type
 					if(view.game_object instanceof Dialog) {
-						trigger_editor = new DialogTriggerEditorView({scene: view.scene, icon: icon, dialog: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+						trigger_editor = new DialogTriggerEditorView({scene: view.scene, icon: icon, game_object: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
 					if(view.game_object instanceof Item) {

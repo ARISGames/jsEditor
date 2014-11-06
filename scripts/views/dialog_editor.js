@@ -98,7 +98,7 @@ define(function(require)
 				create: function() {
 					view.storePreviousAttributes();
 
-					vent.trigger("dialog:add", dialog);
+					vent.trigger("game_object:add", dialog);
 					vent.trigger("application:popup:hide");
 				},
 

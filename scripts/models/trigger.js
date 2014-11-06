@@ -1,6 +1,7 @@
-define([
-	'models/json_base',
-], function(JsonBaseModel) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'trigger_id',
