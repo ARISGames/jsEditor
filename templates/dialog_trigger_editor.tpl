@@ -9,8 +9,8 @@
 <!-- Conversation attributes -->
 
 <div class="form-group">
-	<label class="sr-only" for="dialog-name">Conversation Name</label>
-	<input type="text" autofocus class="form-control" id="dialog-name" placeholder="Enter Name" value="<%= name %>">
+	<label class="sr-only" for="object-name">Conversation Name</label>
+	<input type="text" autofocus class="form-control" id="object-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 
 <% } %>
@@ -77,7 +77,7 @@
 	<div class="checkbox">
 		<label>
 			<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
-			Show Title
+			Show Map Title
 		</label>
 	</div>
 
