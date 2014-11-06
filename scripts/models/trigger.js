@@ -34,7 +34,7 @@ define([
 
 		defaults: function() {
 			return {
-				title: "triggerTitle",
+				title: "",
 				type: "LOCATION",
 				latitude: "43.073",
 				longitude: "-89.4012",
@@ -48,13 +48,13 @@ define([
 				requirement_root_package_id: "0",
 				icon_media_id: "0"
 			}
-		}
+		},
 
 		/* Associations */
 
 		game: function() {
 			return storage.games.retrieve(this.get('game_id'));
-		},
+		}
 
 		// icon
 

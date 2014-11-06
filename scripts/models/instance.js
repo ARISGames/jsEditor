@@ -41,6 +41,18 @@ define([
 			if(type === "SCENE")    { return Scene   }
 			if(type === "FACTORY")  { return Factory }
 			else { throw "cant determine class of: " + type }
+		},
+
+		// For creating new instances.
+		type_for: function(object) {
+			if(object instanceof Dialog)  { return "DIALOG"   }
+			if(object instanceof Item)    { return "ITEM"     }
+			if(object instanceof Plaque)  { return "PLAQUE"   }
+			if(object instanceof WebPage) { return "WEB_PAGE" }
+			if(object instanceof Scene)   { return "SCENE"    }
+			if(object instanceof Factory) { return "FACTORY"  }
+
+			else { throw "cant determine type of " + object.idAttribute + ": " + object.id; }
 		}
 	},
 	// Static methods

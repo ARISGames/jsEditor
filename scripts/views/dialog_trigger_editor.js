@@ -10,11 +10,6 @@ define(function(require)
 	var DialogEditorView        = require('views/dialog_editor');
 
 
-	// FIXME remove references by refactoring static methods
-	var Instance                = require('models/instance');
-	var Trigger                 = require('models/trigger');
-
-
 	return TriggerEditorBaseView.extend({
 		template: _.template(Template),
 
@@ -116,7 +111,7 @@ define(function(require)
 					// Save Instance
 
 					instance.set("object_id",   dialog.id);
-					instance.set("object_type", Instance.type_for(dialog));
+					instance.set("object_type", instance.type_for(dialog));
 
 					instance.save({}, {
 						success: function() {
@@ -146,10 +141,8 @@ define(function(require)
 
 								trigger.set("icon_media_id", view.icon.get("media_id"));
 							}
-							// Initial Title
-							else {
-								trigger.set("title", Trigger.title_for(dialog));
-							}
+
+							// Otherwise Initial Fields are all default.
 
 							trigger.save({},
 							{
