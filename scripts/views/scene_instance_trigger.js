@@ -50,7 +50,7 @@ define([
 					if(type === "IMMEDIATE") { view.type_icon = "link"; }
 
 					view.type_color  = "text-primary";
-					if(trigger.get("infinite_distance") === "1") { view.type_color = "text-success"; }
+					if(trigger.get("infinite_distance") === "1" && type === "LOCATION") { view.type_color = "text-success"; }
 
 					view.render();
 				}
@@ -74,7 +74,7 @@ define([
 			if(type === "IMMEDIATE") { view.type_icon = "link"; }
 
 			view.type_color  = "text-primary";
-			if(view.model.get("infinite_distance") === "1") { view.type_color = "text-success"; }
+			if(view.model.get("infinite_distance") === "1" && type === "LOCATION") { view.type_color = "text-success"; }
 
 			view.instance = new Instance({instance_id: view.model.get("instance_id")});
 			view.instance.fetch({
