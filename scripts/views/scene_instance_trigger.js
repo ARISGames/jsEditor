@@ -156,7 +156,7 @@ define([
 
 					if(view.game_object instanceof WebPage) {
 
-						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, web_page: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, game_object: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 					}
 
 					if(view.game_object instanceof Scene) {
