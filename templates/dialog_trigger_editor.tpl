@@ -1,12 +1,12 @@
 <% if(!in_modal) { %>
-	<h4>Conversation Trigger <span class="object-id text-muted"><%= is_new ? "" : game_object_id %></span></h4>
+	<h4><%= parent_label %> Trigger <span class="object-id text-muted"><%= is_new ? "" : game_object_id %></span></h4>
 	<h5 id="game_object-name"><%= name %></h5>
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
 <% if(visible_fields === "create_game_object_with_trigger" ) { %>
 
-<!-- Conversation attributes -->
+<!-- Game Object attributes -->
 
 <div class="form-group">
 	<label class="sr-only" for="object-name">Conversation Name</label>
@@ -22,8 +22,8 @@
 
 <div class="form-group">
 	<button type="button" class="btn btn-primary btn-block edit-game_object">
-		<span class="glyphicon glyphicon-comment"></span>
-		Edit Conversation
+		<span class="glyphicon glyphicon-<%= parent_icon %>"></span>
+		Edit <%= parent_label %>
 	</button>
 </div>
 

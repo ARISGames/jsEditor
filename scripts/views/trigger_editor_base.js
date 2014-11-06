@@ -95,7 +95,11 @@ define(function(require)
 
 				// Game Object Attributes
 				game_object_id: this.game_object.id,
-				name: this.game_object.get('name')
+				name: this.game_object.get('name'),
+
+				// Virtual, defined in sub classes
+				parent_label: this.parent_label,
+				parent_icon:  this.parent_icon
 			}
 		},
 
