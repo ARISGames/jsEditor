@@ -39,18 +39,18 @@
 <!-- Trigger Attributes -->
 
 <div class="btn-group btn-group-sm btn-group-justified trigger-types">
-	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="LOCATION"  <%= radio_selected(type === "LOCATION") %>>
+	<label class="btn btn-info <%= tab_selected(type === "LOCATION") %>">
+		<input type="radio" class="trigger-type" name="trigger-type" value="LOCATION"  <%= radio_selected(type === "LOCATION") %>>
 		<span class="glyphicon glyphicon-map-marker"></span>
 		Location
 	</label>
-	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="QR"        <%= radio_selected(type === "QR") %>>
+	<label class="btn btn-info <%= tab_selected(type === "QR") %>">
+		<input type="radio" class="trigger-type" name="trigger-type" value="QR"        <%= radio_selected(type === "QR") %>>
 		<span class="glyphicon glyphicon-qrcode"></span>
 		QR Code
 	</label>
-	<label class="btn btn-info">
-		<input type="radio" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
+	<label class="btn btn-info  <%= tab_selected(type === "IMMEDIATE") %>">
+		<input type="radio" class="trigger-type" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
 		<span class="glyphicon glyphicon-link"></span>
 		Sequence
 	</label>
@@ -60,7 +60,7 @@
 
 <!-- Trigger by Location Attributes -->
 
-<div id="LOCATION-fields" class="type-trigger-tab">
+<div id="LOCATION-fields" class="type-trigger-tab" <%= tab_visible(type === "LOCATION") %>>
 
 	<div class="map-canvas" style="height: 150px; width: 100%"></div>
 
@@ -81,7 +81,7 @@
 		</label>
 	</div>
 
-	<div class="form-group title-container">
+	<div class="form-group title-container"  <%= tab_visible(show_title === "1") %>>
 		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
 	</div>
 
@@ -110,20 +110,20 @@
 			When in range, trigger:
 		</label>
 		<div class="btn-group btn-group-sm btn-group-justified trigger-trigger_on_enter">
-			<label class="btn btn-info">
-				<input type="radio" name="trigger-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
+			<label class="btn btn-info <%= tab_selected(trigger_on_enter === "1") %>">
+				<input type="radio" class="trigger-enter" name="trigger-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
 				<span class="glyphicon glyphicon-flash"></span>
 				Immediately
 			</label>
-			<label class="btn btn-info">
-				<input type="radio" name="trigger-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
+			<label class="btn btn-info <%= tab_selected(trigger_on_enter === "0") %>">
+				<input type="radio" class="trigger-enter" name="trigger-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
 				<span class="glyphicon glyphicon-hand-up"></span>
 				By Touch
 			</label>
 		</div>
 	</div>
 
-	<div id="1-fields" class="enter-trigger-tab">
+	<div id="1-fields" class="enter-trigger-tab" <%= tab_visible(trigger_on_enter === "1") %>>
 		<div class="checkbox">
 			<label>
 				<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
@@ -136,7 +136,7 @@
 
 <!-- Trigger by Code Attributes -->
 
-<div id="QR-fields" class="type-trigger-tab">
+<div id="QR-fields" class="type-trigger-tab" <%= tab_visible(type === "QR") %>>
 	<div class="form-group">
 		<label for="trigger-code">QR Code</label>
 		<input type="text" class="form-control" id="trigger-code" placeholder="QR Code" value="<%= qr_code %>">
@@ -147,7 +147,7 @@
 
 <!-- Trigger Immediate Attributes -->
 
-<div id="IMMEDIATE-fields" class="type-trigger-tab">
+<div id="IMMEDIATE-fields" class="type-trigger-tab" <%= tab_visible(type === "IMMEDIATE") %>>
 	<div class="alert alert-info">
 		<span class="glyphicon glyphicon-info-sign"></span>
 		Will be triggered as soon as all locks are satisfied.

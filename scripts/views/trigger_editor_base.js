@@ -31,6 +31,14 @@ define(function(require)
 		/* View */
 
 		ui: {
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon":       ".change-icon",
+			"edit_game_object":  ".edit-game_object",
+			"edit_requirements": ".edit-requirements",
+
 			"name":        "#object-name",
 
 			"title":       "#trigger-title",
@@ -43,9 +51,21 @@ define(function(require)
 			"hidden":      "#trigger-hidden",
 			"code":        "#trigger-code",
 
+			"trigger_types": ".trigger-type",
+			"trigger_enter": ".trigger-enter",
+
+			"trigger_type_tabs":  ".type-trigger-tab",
+			"trigger_enter_tabs": ".enter-trigger-tab",
+
 			"title_container": ".title-container",
 
-			"object_name": "#game_object-name"
+			"object_name": "#game_object-name",
+
+			"qr_image":   ".qr_image",
+			"map_canvas": ".map-canvas",
+			"icon":       ".change-icon img",
+
+			"autofocus":  "input[autofocus]"
 		},
 
 		templateHelpers: function() {
@@ -56,6 +76,7 @@ define(function(require)
 
 				icon_thumbnail_url:  this.icon.thumbnail(),
 
+				// Field logic
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
 				},
@@ -64,7 +85,15 @@ define(function(require)
 					return boolean_statement ? "checked" : "";
 				},
 
-				// Dialog Attributes
+				tab_selected: function(boolean_statement) {
+					return boolean_statement ? "active" : "";
+				},
+
+				tab_visible: function(boolean_statement) {
+					return boolean_statement ? "" : "style='display: none;'";
+				},
+
+				// Game Object Attributes
 				game_object_id: this.game_object.id,
 				name: this.game_object.get('name')
 			}
@@ -74,7 +103,7 @@ define(function(require)
 		/* Dom manipulation */
 
 		set_icon: function(media) {
-			this.$el.find(".change-icon img").attr("src", media.thumbnail());
+			this.ui.icon.attr("src", media.thumbnail());
 		},
 
 		set_name: function(game_object) {
@@ -112,9 +141,8 @@ define(function(require)
 		},
 
 		onShow: function() {
-			this.setVisibleFields();
-
-			this.$el.find('input[autofocus]').focus();
+			//this.setVisibleFields();
+			this.ui.autofocus.focus();
 		},
 
 		setVisibleFields: function() {
@@ -137,20 +165,21 @@ define(function(require)
 		/* View Events */
 
 		events: {
-			"click .save":   "onClickSave",
-			"click .delete": "onClickDelete",
-			"click .cancel": "onClickCancel",
+			"click @ui.save":   "onClickSave",
+			"click @ui.delete": "onClickDelete",
+			"click @ui.cancel": "onClickCancel",
 
-			"click .change-icon":       "onClickChangeIcon",
-			"click .edit-game_object":  "onClickEditGameObject",
-			"click .edit-requirements": "onClickEditRequirements",
+			"click @ui.change_icon":       "onClickChangeIcon",
+			"click @ui.edit_game_object":  "onClickEditGameObject",
+			"click @ui.edit_requirements": "onClickEditRequirements",
 
-			"change @ui.infinite":   "onChangeInfinity",
-			"change @ui.show_title": "onChangeShowTitle",
-			"change input[name='trigger-type']": "onChangeType",
-			"change input[name='trigger-trigger_on_enter']": "onChangeTriggerEnter",
-			"change #trigger-code": "onChangeCode",
-			"keyup #trigger-code":  "onChangeCode"
+			"change @ui.infinite":      "onChangeInfinity",
+			"change @ui.show_title":    "onChangeShowTitle",
+			"change @ui.trigger_types": "onChangeType",
+			"change @ui.trigger_enter": "onChangeTriggerEnter",
+
+			"change @ui.code": "onChangeCode",
+			"keyup  @ui.code": "onChangeCode"
 		},
 
 
@@ -193,8 +222,8 @@ define(function(require)
 								trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
 								trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
 
-								trigger.set("type",              view.$el.find("input[name=trigger-type]:checked").val());
-								trigger.set("trigger_on_enter",  view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
+								trigger.set("type",              view.$el.find(".trigger-type:checked").val());
+								trigger.set("trigger_on_enter",  view.$el.find(".trigger-enter:checked").val());
 
 								trigger.set("icon_media_id", view.icon.get("media_id"));
 							}
@@ -244,18 +273,18 @@ define(function(require)
 
 			// Hide radio buttons and add bootstrap classes
 			//
-			var selected_radio = this.$el.find("input[name=trigger-type]:checked");
+			var selected_radio = this.$el.find(".trigger-type:checked");
 
-			this.$el.find("input[name=trigger-type]").parent().removeClass("active");
+			this.ui.trigger_types.parent().removeClass("active");
 			selected_radio.parent().addClass("active");
 
 
 			// Hide all and open selected tab
 			//
-			this.$el.find('.type-trigger-tab').hide();
+			this.ui.trigger_type_tabs.hide();
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
-			$(display_tab).show();
+			this.$el.find(display_tab).show();
 
 			// Hidden maps have rendering issues.
 			setTimeout(function() {view.renderMap()}, 300);
@@ -266,18 +295,18 @@ define(function(require)
 
 			// Hide radio buttons and add bootstrap classes
 			//
-			var selected_radio = this.$el.find("input[name=trigger-trigger_on_enter]:checked");
+			var selected_radio = this.$el.find(".trigger-enter:checked");
 
-			this.$el.find("input[name=trigger-trigger_on_enter]").parent().removeClass("active");
+			this.ui.trigger_enter.parent().removeClass("active");
 			selected_radio.parent().addClass("active");
 
 
 			// Hide all and open selected tab
 			//
-			this.$el.find('.enter-trigger-tab').hide();
+			this.ui.trigger_enter_tabs.hide();
 
 			var display_tab = "#" + selected_radio.val() + "-fields";
-			$(display_tab).show();
+			this.$el.find(display_tab).show();
 		},
 
 
@@ -398,7 +427,7 @@ define(function(require)
 
 		/* QR */
 		initializeQR: function() {
-			this.qr_code = new QRCode(this.$el.find('.qr_image').get(0), this.model.get("qr_code"));
+			this.qr_code = new QRCode(this.ui.qr_image.get(0), this.model.get("qr_code"));
 		},
 
 		onChangeCode: function() {
@@ -411,7 +440,7 @@ define(function(require)
 			var view = this;
 
 			// Render Map
-			var element = this.$el.find('.map-canvas').get(0);
+			var element = this.ui.map_canvas.get(0);
 
 			var default_location = new google.maps.LatLng(43.073, -89.4012);
 			var map_options = {
