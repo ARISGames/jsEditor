@@ -35,7 +35,7 @@ define([
 			// Do not need fetches since we are 'new'
 			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
 
-			var trigger_editor = new ItemTriggerEditorView({scene: this.options.parent, icon: icon, item: item, instance: instance, model: trigger, visible_fields: "create_item_with_trigger"});
+			var trigger_editor = new ItemTriggerEditorView({scene: this.options.parent, icon: icon, game_object: item, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Item to Scene");
 		},
 

@@ -1,9 +1,10 @@
 define(function(require)
 {
-	var vent     = require('vent');
+	var vent = require('vent');
 
 	var TriggerEditorBaseView = require('views/trigger_editor_base');
 	var PlaqueEditorView      = require('views/plaque_editor');
+
 
 	return TriggerEditorBaseView.extend({
 
