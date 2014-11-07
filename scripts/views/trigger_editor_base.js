@@ -265,10 +265,12 @@ define(function(require)
 
 		unbindIconAssociation: function() {
 			this.stopListening(this.icon);
+			this.stopListening(this.game_object.icon());
 		},
 
 		bindIconAssociation: function() {
-			this.listenTo(this.icon, 'change', this.set_icon);
+			this.listenTo(this.icon,               'change', this.set_icon);
+			this.listenTo(this.game_object.icon(), 'change', this.set_icon);
 		},
 
 		bindGameObjectAssociation: function() {
