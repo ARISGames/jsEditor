@@ -1,6 +1,7 @@
-define([
-	'models/json_base'
-], function(JsonBaseModel) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'quest_id',
@@ -55,6 +56,47 @@ define([
 			complete_function: "NONE",
 			complete_event_package_id: "0",
 			complete_requirement_root_package_id: "0"
+		},
+
+		/* Associations */
+
+		active_icon: function() {
+			return storage.media.retrieve(this.get('active_icon_media_id'));
+		},
+
+		active_media: function() {
+			return storage.media.retrieve(this.get('active_media_id'));
+		},
+
+		complete_icon: function() {
+			return storage.media.retrieve(this.get('complete_icon_media_id'));
+		},
+
+		complete_media: function() {
+			return storage.media.retrieve(this.get('complete_media_id'));
+		},
+
+		default_icon: function() {
+			return storage.media.retrieve('0');
+		},
+
+
+		/* Helpers */
+
+		active_icon_thumbnail: function() {
+			return this.active_icon().thumbnail_for(this);
+		},
+
+		active_media_thumbnail: function() {
+			return this.active_media().thumbnail_for();
+		},
+
+		complete_icon_thumbnail: function() {
+			return this.complete_icon().thumbnail_for(this);
+		},
+
+		complete_media_thumbnail: function() {
+			return this.complete_media().thumbnail_for();
 		}
 
 	},

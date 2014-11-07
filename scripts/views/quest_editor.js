@@ -30,14 +30,16 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
+		/* View */
+
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
 
-				active_icon_thumbnail_url:    this.active_icon.thumbnail(),
-				active_media_thumbnail_url:   this.active_media.thumbnail(),
-				complete_icon_thumbnail_url:  this.complete_icon.thumbnail(),
-				complete_media_thumbnail_url: this.complete_media.thumbnail(),
+				active_icon_thumbnail_url:    this.model.active_icon_thumbnail(),
+				active_media_thumbnail_url:   this.model.active_media_thumbnail(),
+				complete_icon_thumbnail_url:  this.model.complete_icon_thumbnail(),
+				complete_media_thumbnail_url: this.model.complete_media_thumbnail(),
 
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
@@ -46,8 +48,6 @@ define([
 				function_types: Quest.function_types
 			};
 		},
-
-
 
 		ui: {
 			"name": "#name",
@@ -62,6 +62,23 @@ define([
 			"complete_function":"#complete-function",
 		},
 
+
+		/* Constructor */
+
+		initialize: function() {
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
+
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
 		},
@@ -69,6 +86,7 @@ define([
 		events: {
 			"click .save": "onClickSave",
 			"click .delete": "onClickDelete",
+			"click .cancel": "onClickCancel",
 
 			"click .change-active-icon":    "onClickActiveIcon",
 			"click .change-active-media":   "onClickActiveMedia",
@@ -93,25 +111,33 @@ define([
 			"change @ui.complete_function":          "onChangeCompleteFunction"
 		},
 
-		initialize: function(options) {
-			this.active_icon    = options.active_icon;
-			this.active_media   = options.active_media;
-			this.complete_icon  = options.complete_icon;
-			this.complete_media = options.complete_media;
-		},
+
+		/* Crud */
 
 		onClickSave: function() {
 			var view  = this;
 
 			view.model.save({}, {
 				create: function() {
+					view.storePreviousAttributes();
+
 					view.trigger("quest:add", view.model);
 				},
 
 				success: function() {
+					view.storePreviousAttributes();
+
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			delete this.previous_attributes.active_requirement_root_package_id;
+			delete this.previous_attributes.complete_requirement_root_package_id;
+			delete this.previous_attributes.active_event_package_id;
+			delete this.previous_attributes.complete_event_package_id;
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -137,6 +163,28 @@ define([
 		onChangeActiveFunction:   function() { this.model.set("active_function",   this.ui.active_function.find("option:selected").val()) },
 		onChangeCompleteFunction: function() { this.model.set("complete_function", this.ui.complete_function.find("option:selected").val()) },
 
+
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.active_icon());
+			this.stopListening(this.model.active_media());
+			this.stopListening(this.model.complete_icon());
+			this.stopListening(this.model.complete_media());
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.active_icon(),    'change', this.render);
+			this.listenTo(this.model.active_media(),   'change', this.render);
+			this.listenTo(this.model.complete_icon(),  'change', this.render);
+			this.listenTo(this.model.complete_media(), 'change', this.render);
+		},
+
+
 		/* Media Selection */
 
 		onClickActiveIcon: function() {
@@ -148,13 +196,18 @@ define([
 
 			media.fetch({
 				success: function() {
+
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, back_view: view});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.active_icon(), context: view.model, back_view: view});
 					vent.trigger("application:popup:show", icon_chooser, "Start Quest Icon");
 
 					icon_chooser.on("media:choose", function(media) {
-						view.active_icon = media;
+						view.unbindAssociations();
 						view.model.set("active_icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
 
@@ -174,13 +227,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.active_media(), context: view.model, back_view: view});
 					vent.trigger("application:popup:show", icon_chooser, "Start Quest Media");
 
 					icon_chooser.on("media:choose", function(media) {
-						view.active_media = media;
+						view.unbindAssociations();
 						view.model.set("active_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
 
@@ -201,13 +258,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, back_view: view});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.complete_icon(), context: view.model, back_view: view});
 					vent.trigger("application:popup:show", icon_chooser, "Complete Quest Icon");
 
 					icon_chooser.on("media:choose", function(media) {
-						view.complete_icon = media;
+						view.unbindAssociations();
 						view.model.set("complete_icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
 
@@ -227,13 +288,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.complete_media(), context: view.model, back_view: view});
 					vent.trigger("application:popup:show", icon_chooser, "Complete Quest Media");
 
 					icon_chooser.on("media:choose", function(media) {
-						view.complete_media = media;
+						view.unbindAssociations();
 						view.model.set("complete_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Quest");
 					});
 
