@@ -371,7 +371,11 @@ define(function(require)
 			media.fetch({
 				success: function()
 				{
-					var icon_chooser = new MediaChooserView({collection: media});
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 
 					icon_chooser.on("media:choose", function(media) {
