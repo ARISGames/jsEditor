@@ -6,6 +6,8 @@ define(function(require) {
 	return JsonBaseModel.extend({
 		idAttribute: 'dialog_id',
 
+		type_name: 'Dialog',
+
 		amfphp_url_templates: {
 			read:   "dialogs.getDialog",
 			update: "dialogs.updateDialog",

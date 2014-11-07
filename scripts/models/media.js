@@ -1,8 +1,6 @@
 define(function(require)
 {
-	var $             = require('jquery');
 	var _             = require('underscore');
-	var Backbone      = require('backbone');
 	var JsonBaseModel = require('models/json_base');
 
 	return JsonBaseModel.extend({
@@ -80,6 +78,10 @@ define(function(require)
 					if(object.idAttribute === "item_id")     { icon_name = "item"         }
 					if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
 					if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
+					if(object.idAttribute === "trigger_id")  {
+						// NOTE this only works in scene triggers until storage is fixed.
+						return object.game_object().icon_thumbnail();
+					}
 				}
 
 				return "images/"+icon_name+"_icon_120.png"
@@ -87,6 +89,17 @@ define(function(require)
 			else
 			{
 				return this.thumbnail();
+			}
+		},
+
+		name_for: function(object) {
+			if(object && object.idAttribute === "trigger_id" && this.id === "0")
+			{
+				return object.game_object().type_name;
+			}
+			else
+			{
+				return this.get("name");
 			}
 		},
 

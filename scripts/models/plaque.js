@@ -6,6 +6,8 @@ define(function(require) {
 	return JsonBaseModel.extend({
 		idAttribute: 'plaque_id',
 
+		type_name: 'Plaque',
+
 		amfphp_url_templates: {
 			read:   "plaques.getPlaque",
 			update: "plaques.updatePlaque",

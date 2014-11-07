@@ -6,6 +6,8 @@ define(function(require) {
 	return JsonBaseModel.extend({
 		idAttribute: 'item_id',
 
+		type_name: 'Item',
+
 		amfphp_url_templates: {
 			read:   "items.getItem",
 			update: "items.updateItem",

@@ -30,7 +30,7 @@ define([
 			}
 			else
 			{
-				return this.model.get("name");
+				return this.model.name_for(this.options.context);
 			}
 
 		},

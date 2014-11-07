@@ -53,6 +53,15 @@ define(function(require) {
 
 		/* Associations */
 
+		game_object: function(object) {
+			if(object)
+			{
+				this.game_object_model = object;
+			}
+
+			return this.game_object_model;
+		},
+
 		game: function() {
 			return storage.games.retrieve(this.get('game_id'));
 		},

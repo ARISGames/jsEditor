@@ -6,6 +6,8 @@ define(function(require) {
 	return JsonBaseModel.extend({
 		idAttribute: 'web_page_id',
 
+		type_name: 'Web Page',
+
 		amfphp_url_templates: {
 			read:   "web_pages.getWebPage",
 			update: "web_pages.updateWebPage",

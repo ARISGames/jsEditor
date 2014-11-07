@@ -129,6 +129,10 @@ define(function(require)
 			this.game_object = options.game_object;
 			this.instance    = options.instance;
 
+			// FIXME trying to avoid circular bug with storage
+			this.model.game_object(this.game_object);
+
+			// TODO refactor visible fields into separate view for 'quick create'
 			this.visible_fields = options.visible_fields;
 
 			var view = this;
