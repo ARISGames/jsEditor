@@ -1,6 +1,7 @@
 define(function(require)
 {
 	var _             = require('underscore');
+	var _S            = require('underscore.string');
 	var JsonBaseModel = require('models/json_base');
 
 	return JsonBaseModel.extend({
@@ -95,7 +96,8 @@ define(function(require)
 		name_for: function(object) {
 			if(object && object.idAttribute === "trigger_id" && this.id === "0")
 			{
-				return object.game_object().type_name;
+				var name = object.game_object().get('name') || 'Parent'
+				return _.str.truncate(name, 7) + "'s Icon"
 			}
 			else
 			{
