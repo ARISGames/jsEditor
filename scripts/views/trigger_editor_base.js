@@ -279,6 +279,7 @@ define(function(require)
 				{
 					view.game_object = game_object;
 					view.set_name(view.game_object);
+					view.set_icon(view.icon);
 				}
 			});
 
