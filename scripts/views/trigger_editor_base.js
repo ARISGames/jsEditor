@@ -77,7 +77,7 @@ define(function(require)
 				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
 
-				icon_thumbnail_url:  this.icon.thumbnail(),
+				icon_thumbnail_url:  this.icon.thumbnail_for(this.model),
 
 				// Field logic
 				is_checked: function(value) {
@@ -110,7 +110,7 @@ define(function(require)
 		/* Dom manipulation */
 
 		set_icon: function(media) {
-			this.ui.icon.attr("src", media.thumbnail());
+			this.ui.icon.attr("src", media.thumbnail_for(this.model));
 		},
 
 		set_name: function(game_object) {
@@ -123,8 +123,9 @@ define(function(require)
 		/* Initialization and Rendering */
 
 		initialize: function(options) {
+			this.icon        = this.model.icon();
+
 			this.scene       = options.scene;
-			this.icon        = options.icon;
 			this.game_object = options.game_object;
 			this.instance    = options.instance;
 
@@ -132,22 +133,10 @@ define(function(require)
 
 			var view = this;
 
-			this.listenTo(vent, "game_object:update", function(game_object)
-			{
-				if(game_object.is(view.game_object))
-				{
-					view.game_object = game_object;
-					view.set_name(view.game_object);
-				}
-			});
+			/* Game object and Icon media change events */
 
-			this.listenTo(vent, "game_object:delete", function(game_object)
-			{
-				if(game_object.is(view.game_object))
-				{
-					view.close();
-				}
-			});
+			this.bindIconAssociation();
+			this.bindGameObjectAssociation();
 		},
 
 		onShow: function() {
@@ -268,6 +257,37 @@ define(function(require)
 		},
 
 
+		/* Association Binding */
+
+		unbindIconAssociation: function() {
+			this.stopListening(this.icon);
+		},
+
+		bindIconAssociation: function() {
+			this.listenTo(this.icon, 'change', this.set_icon);
+		},
+
+		bindGameObjectAssociation: function() {
+			var view = this;
+			this.listenTo(vent, "game_object:update", function(game_object)
+			{
+				if(game_object.is(view.game_object))
+				{
+					view.game_object = game_object;
+					view.set_name(view.game_object);
+				}
+			});
+
+			this.listenTo(vent, "game_object:delete", function(game_object)
+			{
+				if(game_object.is(view.game_object))
+				{
+					view.close();
+				}
+			});
+		},
+
+
 		/* Radio Logic */
 
 		onChangeType: function() {
@@ -355,7 +375,9 @@ define(function(require)
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 
 					icon_chooser.on("media:choose", function(media) {
+						view.unbindIconAssociation();
 						view.icon = media;
+						view.bindIconAssociation();
 						view.set_icon(media);
 						vent.trigger("application:popup:hide");
 					});

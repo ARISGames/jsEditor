@@ -136,47 +136,38 @@ define([
 
 		onClickShow: function() {
 			var view = this;
+			var trigger_editor = null;
 
-			var icon = new Media({media_id: this.model.get("icon_media_id")});
-			icon.fetch({
-				success: function() {
-					var trigger_editor = null;
+			var options = {
+				scene: view.scene,
+				game_object: view.game_object,
+				instance: view.instance,
+				model: view.model,
+				visible_fields: "trigger"
+			};
 
-					// launch based on type
-					if(view.game_object instanceof Dialog) {
-						trigger_editor = new DialogTriggerEditorView({scene: view.scene, icon: icon, game_object: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-					}
+			// launch based on type
+			if(view.game_object instanceof Dialog ) { trigger_editor = new DialogTriggerEditorView(options);  }
+			if(view.game_object instanceof Item   ) { trigger_editor = new ItemTriggerEditorView(options);    }
+			if(view.game_object instanceof Plaque ) { trigger_editor = new PlaqueTriggerEditorView(options);  }
+			if(view.game_object instanceof WebPage) { trigger_editor = new WebPageTriggerEditorView(options); }
 
-					if(view.game_object instanceof Item) {
-						trigger_editor = new ItemTriggerEditorView({scene: view.scene, icon: icon, game_object: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-					}
-					if(view.game_object instanceof Plaque) {
-						trigger_editor = new PlaqueTriggerEditorView({scene: view.scene, icon: icon, game_object: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-					}
+			if(view.game_object instanceof Scene)
+			{
+				trigger_editor = new SceneTriggerEditorView({parent_scene: view.scene, scene: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+			}
 
-					if(view.game_object instanceof WebPage) {
+			if(view.game_object instanceof Factory)
+			{
+				trigger_editor = new FactoryTriggerEditorView({scene: view.scene, factory: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
+			}
 
-						trigger_editor = new WebPageTriggerEditorView({scene: view.scene, icon: icon, game_object: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-					}
-
-					if(view.game_object instanceof Scene) {
-
-						trigger_editor = new SceneTriggerEditorView({parent_scene: view.scene, icon: icon, scene: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-					}
-
-					if(view.game_object instanceof Factory) {
-
-						trigger_editor = new FactoryTriggerEditorView({scene: view.scene, icon: icon, factory: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-					}
-
-					if(trigger_editor === null) {
-						throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;
-					}
-					else {
-						vent.trigger("application:info:show", trigger_editor);
-					}
-				}
-			});
+			if(trigger_editor === null) {
+				throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;
+			}
+			else {
+				vent.trigger("application:info:show", trigger_editor);
+			}
 		}
 
 	});

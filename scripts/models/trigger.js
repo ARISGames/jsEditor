@@ -55,9 +55,11 @@ define(function(require) {
 
 		game: function() {
 			return storage.games.retrieve(this.get('game_id'));
-		}
+		},
 
-		// icon
+		icon: function() {
+			return storage.media.retrieve(this.get('icon_media_id'));
+		}
 
 	},
 	// Static methods
