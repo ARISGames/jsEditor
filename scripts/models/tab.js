@@ -2,7 +2,7 @@ define(function(require) {
 	var JsonBaseModel = require('models/json_base');
 	var storage       = require('storage');
 
-	return JsonBaseModel.extend({
+	var Tab = JsonBaseModel.extend({
 		idAttribute: 'tab_id',
 
 		amfphp_url_templates: {
@@ -61,6 +61,10 @@ define(function(require) {
 
 		icon_thumbnail: function() {
 			return this.icon().thumbnail_for(this);
+		},
+
+		tab_type_name: function() {
+			return Tab.tab_types[this.get("type")];
 		}
 	},
 	// Static
@@ -81,5 +85,7 @@ define(function(require) {
 			'WEB_PAGE':  'Web Page'
 		}
 	});
+
+	return Tab;
 });
 

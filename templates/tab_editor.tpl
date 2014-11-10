@@ -14,6 +14,8 @@
 				<label for="type">Destination</label>
 
 				<select class="form-control" id="type">
+					<option value="0" selected disabled>- Select One -</option>
+
 					<% _.each(tab_types, function(tab_name, tab_value) { %>
 						<option value="<%= tab_value %>" <%= option_selected(type === tab_value) %>><%= tab_name %></option>
 					<% }); %>
