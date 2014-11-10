@@ -80,9 +80,22 @@ define(function(require)
 					if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
 					if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
 					if(object.idAttribute === "game_id")     { icon_name = "aris"         }
+
 					if(object.idAttribute === "trigger_id")  {
 						// NOTE this only works in scene triggers until storage is fixed.
 						return object.game_object().icon_thumbnail();
+					}
+
+					if(object.idAttribute === "tab_id") {
+						if(object.get("type") === "QUESTS")    { icon_name = "quests"    }
+						if(object.get("type") === "MAP")       { icon_name = "map"       }
+						if(object.get("type") === "INVENTORY") { icon_name = "inventory" }
+						if(object.get("type") === "SCANNER")   { icon_name = "scanner"   }
+						if(object.get("type") === "DECODER")   { icon_name = "scanner"   }
+						if(object.get("type") === "PLAYER")    { icon_name = "player"    }
+						if(object.get("type") === "NOTEBOOK")  { icon_name = "notebook"  }
+
+						// else use game object?
 					}
 				}
 

@@ -29,7 +29,7 @@ define([
 
 		templateHelpers: function() {
 			return {
-				display_type: this.model.get("name") !== Tab.tab_types[this.model.get("type")],
+				display_type: this.model.get("name") !== "" && this.model.get("name") !== Tab.tab_types[this.model.get("type")],
 				tab_type: Tab.tab_types[this.model.get("type")]
 			}
 		},
@@ -37,8 +37,7 @@ define([
 		onClickEdit: function() {
 			var view = this;
 
-			var game = new Game({game_id: this.model.get("game_id")});
-			var icon = new Media({media_id: this.model.get("icon_media_id")});
+			var game = this.model.game();
 
 			var contents = {
 				plaques:    new PlaquesCollection  ([], {parent: game}),
@@ -47,9 +46,9 @@ define([
 				dialogs:    new DialogsCollection  ([], {parent: game}),
 			};
 
-			$.when(icon.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch()).done(function()
+			$.when(contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch()).done(function()
 			{
-				var tab_editor = new TabEditorView({model: view.model, icon: icon, contents: contents});
+				var tab_editor = new TabEditorView({model: view.model, contents: contents});
 				vent.trigger("application:popup:show", tab_editor, "Edit Tab");
 			});
 		}

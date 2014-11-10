@@ -50,7 +50,7 @@
 
 			<div class="form-group">
 				<label for="name">Title</label>
-				<input type="text" autofocus class="form-control" id="name" placeholder="Name" value="<%= name %>">
+				<input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
 			</div>
 		</div>
 	</div>

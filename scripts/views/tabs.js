@@ -28,10 +28,8 @@ define([
 		onClickNew: function() {
 			var view = this;
 
-			var tab = new Tab({game_id: this.model.get("game_id")});
-
-			var game = new Game({game_id: this.model.get("game_id")});
-			var icon = new Media({media_id: tab.get("icon_media_id")});
+			var game = this.model;
+			var tab  = new Tab({game_id: game.id});
 
 			var contents = {
 				plaques:    new PlaquesCollection  ([], {parent: game}),
@@ -40,9 +38,9 @@ define([
 				dialogs:    new DialogsCollection  ([], {parent: game}),
 			};
 
-			$.when(icon.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch()).done(function()
+			$.when(contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch()).done(function()
 			{
-				var tab_editor = new TabEditorView({model: tab, icon: icon, contents: contents});
+				var tab_editor = new TabEditorView({model: tab, contents: contents});
 
 				tab_editor.on("tab:add", function(tab) {
 					view.collection.add(tab);
