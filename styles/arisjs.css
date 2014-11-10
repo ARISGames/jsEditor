@@ -363,7 +363,8 @@ h4:hover .object-id {
 .conversation-editor,
 .conversations-editor,
 .games-list-container,
-.notes-editor {
+.notes-editor,
+.tabs-editor {
   height: 100%;
   overflow-x: auto;
 }

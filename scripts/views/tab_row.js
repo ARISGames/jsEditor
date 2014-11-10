@@ -39,7 +39,7 @@ define(function(require)
 
 		templateHelpers: function() {
 			return {
-				display_type: this.model.get("name") !== "" && this.model.get("name") !== this.model.tab_type_name(),
+				display_type: (this.model.get("name") || this.model.get("content_id") !== "0") && this.model.get("name") !== this.model.tab_type_name(),
 				tab_type: this.model.tab_type_name(),
 				tab_name: this.tab_name()
 			}
