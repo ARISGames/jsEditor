@@ -1,7 +1,5 @@
 define(function(require) {
 	var JsonBaseModel = require('models/json_base');
-	var storage       = require('storage');
-
 
 	return JsonBaseModel.extend({
 		idAttribute: 'game_id',
@@ -58,27 +56,6 @@ define(function(require) {
 
 
 		/* Associations */
-
-		icon: function() {
-			return storage.media.retrieve(this.get('icon_media_id'));
-		},
-
-		media: function() {
-			return storage.media.retrieve(this.get('media_id'));
-		},
-
-		default_icon: function() {
-			return storage.media.retrieve('0');
-		},
-
-		/* Helpers */
-
-		icon_thumbnail: function() {
-			return this.icon().thumbnail_for(this);
-		},
-
-		media_thumbnail: function() {
-			return this.media().thumbnail_for();
-		}
+		// NOTE no associations, this model is just a temporary fix to a requirejs circular dependency reference.
 	});
 });

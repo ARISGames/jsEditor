@@ -39,6 +39,7 @@ define([
 	'collections/notes',
 
 	'models/game',
+	'models/game_list_game',
 	'models/item',
 	'models/media',
 
@@ -48,7 +49,7 @@ define([
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView, NotesView,
 	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection, NotesCollection,
-	Game, Item, Media,
+	Game, GameListGame, Item, Media,
 	vent, session, storage) {
 	return Backbone.Router.extend({
 
@@ -130,22 +131,19 @@ define([
 
 
 		editGame: function(game_id) {
+			// FIXME this is the only view that references game without storage until the circular reference can be fixed.
 			var game = storage.games.retrieve(game_id);
 			storage.for(game);
 
+			game = new Game({game_id: game_id});
+
 			game.fetch({
 				success: function() {
-
-					var icons = {
-						icon:  new Media({media_id: game.get("icon_media_id")}),
-						media: new Media({media_id: game.get("media_id"     )})
-					};
-
 					var scenes = new SceneCollection([], {parent: game});
 
-					$.when(icons.icon.fetch(), icons.media.fetch(), scenes.fetch()).done(function()
+					$.when(scenes.fetch()).done(function()
 					{
-						vent.trigger("application.show",     new GameEditorView (_.extend({model: game, scenes: scenes}, icons)));
+						vent.trigger("application.show",     new GameEditorView ({model: game, scenes: scenes}));
 						vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".game"}));
 						vent.trigger("application:info:hide");
 						vent.trigger("application:list:hide");

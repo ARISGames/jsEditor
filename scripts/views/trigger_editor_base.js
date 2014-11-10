@@ -135,8 +135,6 @@ define(function(require)
 			// TODO refactor visible fields into separate view for 'quick create'
 			this.visible_fields = options.visible_fields;
 
-			var view = this;
-
 			/* Game object and Icon media change events */
 
 			this.bindIconAssociation();

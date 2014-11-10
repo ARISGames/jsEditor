@@ -79,6 +79,7 @@ define(function(require)
 					if(object.idAttribute === "item_id")     { icon_name = "item"         }
 					if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
 					if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
+					if(object.idAttribute === "game_id")     { icon_name = "aris"         }
 					if(object.idAttribute === "trigger_id")  {
 						// NOTE this only works in scene triggers until storage is fixed.
 						return object.game_object().icon_thumbnail();

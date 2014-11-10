@@ -8,7 +8,7 @@ define(function(require, exports, module)
 	var UsersCollection = require("collections/users");
 	var TagsCollection  = require("collections/tags" );
 	var MediaCollection = require("collections/media");
-	var GamesCollection = require("collections/games");
+	var GamesListCollection = require("collections/games_list");
 
 	var Storage = Marionette.Controller.extend(
 	{
@@ -17,7 +17,7 @@ define(function(require, exports, module)
 			this.users = new UsersCollection ();
 			this.tags  = new TagsCollection  ();
 			this.media = new MediaCollection ();
-			this.games = new GamesCollection ();
+			this.games = new GamesListCollection ();
 		},
 
 		for: function(game)
