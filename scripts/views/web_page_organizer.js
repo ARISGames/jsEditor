@@ -17,8 +17,11 @@ define([
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("web_page:add", function(web_page) {
-				view.collection.add(web_page);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof WebPage)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
 

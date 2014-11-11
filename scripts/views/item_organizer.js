@@ -18,8 +18,11 @@ define([
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("item:add", function(item) {
-				view.collection.add(item);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof Item)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
 
