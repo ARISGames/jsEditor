@@ -1,10 +1,8 @@
 define(function(require)
 {
-	var $                 = require('jquery');
 	var Backbone          = require('backbone');
 	var Template          = require('text!templates/web_page_organizer_row.tpl');
 	var WebPageEditorView = require('views/web_page_editor');
-	var Media             = require('models/media');
 	var vent              = require('vent');
 
 

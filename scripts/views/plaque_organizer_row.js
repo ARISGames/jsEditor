@@ -1,10 +1,8 @@
 define(function(require)
 {
-	var $                = require('jquery');
 	var Backbone         = require('backbone');
 	var Template         = require('text!templates/plaque_organizer_row.tpl');
 	var PlaqueEditorView = require('views/plaque_editor');
-	var Media            = require('models/media');
 	var vent             = require('vent');
 
 

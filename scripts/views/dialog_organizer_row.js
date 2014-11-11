@@ -3,7 +3,6 @@ define(function(require)
 	var Backbone         = require('backbone');
 	var Template         = require('text!templates/dialog_organizer_row.tpl');
 	var DialogEditorView = require('views/dialog_editor');
-	var Media            = require('models/media');
 	var vent             = require('vent');
 
 
