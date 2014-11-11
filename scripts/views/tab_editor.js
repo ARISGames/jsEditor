@@ -53,6 +53,13 @@ define([
 
 
 		ui: {
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon":       ".change-icon",
+			"edit_requirements": ".edit-requirements",
+
 			"name": "#name",
 			"info": "#info",
 			"type_select":    "#type",
@@ -89,11 +96,12 @@ define([
 		},
 
 		events: {
-			"click .save":   "onClickSave",
-			"click .delete": "onClickDelete",
+			"click @ui.save":   "onClickSave",
+			"click @ui.cancel": "onClickSave",
+			"click @ui.delete": "onClickDelete",
 
-			"click .change-icon":       "onClickIcon",
-			"click .edit-requirements": "onClickRequirements",
+			"click @ui.change_icon":       "onClickIcon",
+			"click @ui.edit_requirements": "onClickRequirements",
 
 			// Field events
 			"change @ui.name": "onChangeName",
@@ -167,6 +175,18 @@ define([
 			}
 		},
 
+		parent_name: function() {
+
+			if(this.model.get("content_id") === "0")
+			{
+				return this.model.tab_type_name();
+			}
+			else
+			{
+				return this.model.game_object().get("name");
+			}
+		},
+
 		/* Field Changes */
 
 		onChangeName: function() { this.model.set("name", this.ui.name.val()); },
@@ -177,9 +197,6 @@ define([
 			var type = this.ui.type_select.val();
 			this.model.set("type", type)
 
-			// Change name to avoid confusion.
-			this.model.set("name", this.tab_types[type]);
-
 			// Reset Game Object Dropdown.
 			this.model.set("content_id", "0");
 
@@ -189,8 +206,19 @@ define([
 		onChangeContent:   function() {
 			this.model.set("content_id", this.ui.content_select.val())
 
-			// Change name to avoid confusion.
-			this.model.set("name", this.ui.content_select.find("option:selected").text());
+			var content_collections = {
+				"DIALOG":   this.dialogs,
+				"ITEM":     this.items,
+				"PLAQUE":   this.plaques,
+				"WEB_PAGE": this.web_pages
+			}
+
+			var collection = content_collections[this.model.get("type")];
+			var game_object = collection.get(this.model.get("content_id"));
+
+			this.unbindAssociations();
+			this.model.game_object(game_object);
+			this.bindAssociations();
 
 			this.render();
 		},
@@ -204,10 +232,20 @@ define([
 
 		unbindAssociations: function() {
 			this.stopListening(this.model.icon());
+
+			if(this.model.game_object())
+			{
+				this.stopListening(this.model.game_object().icon());
+			}
 		},
 
 		bindAssociations: function() {
 			this.listenTo(this.model.icon(), 'change', this.set_icon);
+
+			if(this.model.game_object())
+			{
+				this.listenTo(this.model.game_object().icon(), 'change', this.set_icon);
+			}
 		},
 
 

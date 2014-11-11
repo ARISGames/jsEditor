@@ -39,7 +39,7 @@ define(function(require)
 
 		templateHelpers: function() {
 			return {
-				display_type: (this.model.get("name") || this.model.get("content_id") !== "0") && this.model.get("name") !== this.model.tab_type_name(),
+				display_type: this.should_display_type(),
 				tab_type: this.model.tab_type_name(),
 				tab_name: this.tab_name()
 			}
@@ -47,6 +47,10 @@ define(function(require)
 
 
 		/* Name display logic */
+
+		should_display_type: function() {
+			return (this.model.get("name") || this.model.get("content_id") !== "0") && this.model.get("name") !== this.model.tab_type_name();
+		},
 
 		tab_name: function()
 		{
@@ -60,7 +64,12 @@ define(function(require)
 				return this.model.tab_type_name() || "(no type set)";
 			}
 
-			return this.game_object.get("name") || "(unnamed object)";
+			if(this.model.game_object())
+			{
+				return this.model.game_object().get("name") || "(unnamed object)";
+			}
+
+			return "(n/a)";
 		},
 
 
@@ -101,9 +110,9 @@ define(function(require)
 			this.unbindAssociation();
 
 			var content_class = {
-				"DIALOG": Dialog,
-				"ITEM": Item,
-				"PLAQUE": Plaque,
+				"DIALOG":   Dialog,
+				"ITEM":     Item,
+				"PLAQUE":   Plaque,
 				"WEB_PAGE": WebPage
 			}
 
@@ -112,21 +121,21 @@ define(function(require)
 
 			if(object_class && object_id)
 			{
-				this.game_object = new object_class({game_id: this.model.game().id});
-				this.game_object.set(this.game_object.idAttribute, object_id);
+				this.model.game_object(new object_class({game_id: this.model.game().id}));
+				this.model.game_object().set(this.model.game_object().idAttribute, object_id);
 				this.bindAssociation();
-				this.game_object.fetch();
+				this.model.game_object().fetch();
 			}
 		},
 
 		unbindAssociation: function() {
-			this.stopListening(this.game_object);
+			this.stopListening(this.model.game_object());
 		},
 
 		bindAssociation: function() {
-			if(this.game_object)
+			if(this.model.game_object())
 			{
-				this.listenTo(this.game_object, 'change', this.render);// function() { console.log("got it", arguments) ;});
+				this.listenTo(this.model.game_object(), 'change', this.render);// function() { console.log("got it", arguments) ;});
 			}
 			this.listenTo(this.model, 'change:content_id', this.loadAssociation);
 		},

@@ -95,7 +95,10 @@ define(function(require)
 						if(object.get("type") === "PLAYER")    { icon_name = "player"    }
 						if(object.get("type") === "NOTEBOOK")  { icon_name = "notebook"  }
 
-						// else use game object?
+						if(object.game_object())
+						{
+							return object.game_object().icon_thumbnail();
+						}
 					}
 				}
 
