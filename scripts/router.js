@@ -39,7 +39,6 @@ define([
 	'collections/notes',
 
 	'models/game',
-	'models/game_list_game',
 	'models/item',
 	'models/media',
 
@@ -49,7 +48,7 @@ define([
 ], function($, _, Backbone,
 	LoginView, GamesView, ScenesView, GameNavMenu, LocationsView, QuestsView, MediaEditorView, EditJsonModelView, GameEditorView, EditorSharingView, GameObjectsOrganizerView, LocationsOrganizerView, MediaOrganizerView, ConversationsView, TabsView, TagsView, NotesView,
 	GameCollection, EditorsCollection, GameTriggersCollection, InstancesCollection, DialogsCollection, ItemCollection, PlaqueCollection, WebPagesCollection, MediaCollection, SceneCollection, QuestsCollection, CharactersCollection, FactoriesCollection, TabsCollection, TagsCollection, NotesCollection,
-	Game, GameListGame, Item, Media,
+	Game, Item, Media,
 	vent, session, storage) {
 	return Backbone.Router.extend({
 
@@ -131,11 +130,8 @@ define([
 
 
 		editGame: function(game_id) {
-			// FIXME this is the only view that references game without storage until the circular reference can be fixed.
 			var game = storage.games.retrieve(game_id);
 			storage.for(game);
-
-			game = new Game({game_id: game_id});
 
 			game.fetch({
 				success: function() {
