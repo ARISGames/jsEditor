@@ -1,18 +1,19 @@
-define([
-       'backbone',
-       'text!templates/plaque_organizer.tpl',
-       'views/plaque_organizer_row',
-	   'views/plaque_editor',
-	   'models/plaque',
-	   'models/media',
-       'vent'
-], function(Backbone, Template, PlaqueOrganizerRowView, PlaqueEditorView, Plaque, Media, vent) {
+define(function(require)
+{
+	var Backbone               = require('backbone');
+	var Template               = require('text!templates/plaque_organizer.tpl');
+	var PlaqueOrganizerRowView = require('views/plaque_organizer_row');
+	var PlaqueEditorView       = require('views/plaque_editor');
+	var Plaque                 = require('models/plaque');
+	var vent                   = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: PlaqueOrganizerRowView,
 		itemViewContainer: ".plaques",
+
 
 		initialize: function(options) {
 			var view = this;

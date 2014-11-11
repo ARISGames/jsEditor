@@ -1,18 +1,19 @@
-define([
-       'backbone',
-       'text!templates/dialog_organizer.tpl',
-       'views/dialog_organizer_row',
-       'views/dialog_editor',
-	   'models/dialog',
-	   'models/media',
-       'vent'
-], function(Backbone, Template, DialogsOrganizerRowView, DialogEditorView, Dialog, Media, vent) {
+define(function(require)
+{
+	var Backbone                = require('backbone');
+	var Template                = require('text!templates/dialog_organizer.tpl');
+	var DialogsOrganizerRowView = require('views/dialog_organizer_row');
+	var DialogEditorView        = require('views/dialog_editor');
+	var Dialog                  = require('models/dialog');
+	var vent                    = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: DialogsOrganizerRowView,
 		itemViewContainer: ".dialogs",
+
 
 		initialize: function(options) {
 			var view = this;
@@ -24,6 +25,7 @@ define([
 				}
 			});
 		},
+
 
 		events: {
 			"click .new": "onClickNew"
