@@ -21,19 +21,19 @@ define(function(require)
 	var QuestsCollection        = require('collections/quests');
 	var WebHooksCollection      = require('collections/web_hooks');
 
-	var Game                    = require('models/game');
 	var RequirementPackage      = require('models/requirement_package');
 
 
-	// FIXME this view can be simplified with a library that either does model binding every field, OR only re-drawing elements of changed fields
-	// else it just ends up overwriting text areas when you draw the map
-
 	return Backbone.Marionette.CompositeView.extend({
+
+		/* View */
+
 		template: _.template(Template),
 
 		templateHelpers: function() {
 			return {
-				icon_thumbnail_url:  this.icon.thumbnail(),
+				// Using views icon since we are not directly changing the model until save.
+				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
 
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
@@ -41,12 +41,13 @@ define(function(require)
 
 				radio_selected: function(boolean_statement) {
 					return boolean_statement ? "checked" : "";
-				}
-			};
-		},
+				},
 
-		initialize: function(options) {
-			this.icon     = options.icon;
+
+				// Game Object Attributes
+				game_object_id: this.game_object.id,
+				name: this.game_object.get('name')
+			};
 		},
 
 		ui: {
@@ -58,8 +59,57 @@ define(function(require)
 			"wiggle":     "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden":     "#trigger-hidden",
-			"range_container":".range-container"
+			"range_container":".range-container",
+
+			"icon":       ".change-icon img"
 		},
+
+
+		/* Dom manipulation */
+
+		set_icon: function(media) {
+			this.ui.icon.attr("src", media.thumbnail_for(this.model));
+		},
+
+		syncLatitude: function(model, value) {
+			this.ui.latitude.val(value);
+		},
+
+		syncLongitude: function(model, value) {
+			this.ui.longitude.val(value);
+		},
+
+		syncDistance: function(model, value) {
+			this.ui.distance.val(value);
+		},
+
+
+		/* Initialization and Rendering */
+
+		initialize: function(options) {
+			this.game_object = this.model.game_object();
+			this.icon        = this.model.icon();
+
+			/* Game object and Icon media change events */
+
+			this.bindIconAssociation();
+		},
+
+		onShow: function() {
+			this.$el.find('input[autofocus]').focus();
+
+			this.renderTriggerRadio();
+			this.onChangeInfinity();
+			this.onChangeShowTitle();
+		},
+
+		onClose: function()
+		{
+			this.model.trigger("update_map");
+		},
+
+
+		/* View/Model Events */
 
 		events: {
 			"click .save":   "onClickSave",
@@ -82,13 +132,8 @@ define(function(require)
 			"change:distance":  "syncDistance",
 		},
 
-		onShow: function() {
-			this.$el.find('input[autofocus]').focus();
 
-			this.renderTriggerRadio();
-			this.onChangeInfinity();
-			this.onChangeShowTitle();
-		},
+		/* Crud */
 
 		onClickDelete: function() {
 			var view = this;
@@ -99,11 +144,6 @@ define(function(require)
 					view.close();
 				}
 			});
-		},
-
-		onClose: function()
-		{
-			this.model.trigger("update_map");
 		},
 
 		onClickCancel: function() {
@@ -135,6 +175,21 @@ define(function(require)
 		},
 
 
+		/* Association Binding */
+
+		unbindIconAssociation: function() {
+			this.stopListening(this.icon);
+			this.stopListening(this.game_object.icon());
+		},
+
+		bindIconAssociation: function() {
+			this.listenTo(this.icon,               'change', this.set_icon);
+			this.listenTo(this.game_object.icon(), 'change', this.set_icon);
+		},
+
+
+		/* Radio Logic */
+
 		onChangeInfinity: function() {
 			if(this.ui.infinite.is(":checked"))
 			{
@@ -159,20 +214,6 @@ define(function(require)
 				this.ui.title.hide();
 			}
 		},
-
-		syncLatitude: function(model, value) {
-			this.ui.latitude.val(value);
-		},
-
-		syncLongitude: function(model, value) {
-			this.ui.longitude.val(value);
-		},
-
-		syncDistance: function(model, value) {
-			this.ui.distance.val(value);
-		},
-
-		/* Trigger Radio Button */
 
 		renderTriggerRadio: function() {
 			var view = this;
@@ -212,19 +253,24 @@ define(function(require)
 		{
 			var view = this;
 
-			var game  = new Game({game_id: this.model.get("game_id")});
+			var game  = this.model.game();
 			var media = new MediaCollection([], {parent: game});
 
 			media.fetch({
 				success: function()
 				{
-					var icon_chooser = new MediaChooserView({collection: media});
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
 					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 
 					icon_chooser.on("media:choose", function(media) {
+						view.unbindIconAssociation();
 						view.icon = media;
-
-						view.$el.find(".change-icon img").attr("src", media.thumbnail());
+						view.bindIconAssociation();
+						view.set_icon(media);
 						vent.trigger("application:popup:hide");
 					});
 
@@ -243,7 +289,7 @@ define(function(require)
 
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-			var game = new Game({game_id: view.model.get("game_id")});
+			var game = view.model.game();
 
 			var contents = {
 				items:          new ItemsCollection         ([], {parent: game}),
@@ -292,7 +338,6 @@ define(function(require)
 
 				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
 			});
-		},
-
+		}
 	});
 });

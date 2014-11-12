@@ -223,6 +223,7 @@ nav,
 .object-id {
   visibility: hidden;
 }
+h5:hover .object-id,
 h4:hover .object-id {
   visibility: visible;
 }

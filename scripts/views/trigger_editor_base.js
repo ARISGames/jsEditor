@@ -77,7 +77,8 @@ define(function(require)
 				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
 
-				icon_thumbnail_url:  this.icon.thumbnail_for(this.model),
+				// Using views icon since we are not directly changing the model until save.
+				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
 
 				// Field logic
 				is_checked: function(value) {

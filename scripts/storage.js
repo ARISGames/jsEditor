@@ -15,6 +15,14 @@ define(function(require, exports, module)
 			this.tags.parent  = game;
 			this.media.parent = game;
 
+			this.instances.parent = game;
+			this.triggers.parent  = game;
+
+			this.web_pages.parent = game;
+			this.dialogs.parent   = game;
+			this.plaques.parent   = game;
+			this.items.parent     = game;
+
 			this.games.add(game);
 		}
 	});

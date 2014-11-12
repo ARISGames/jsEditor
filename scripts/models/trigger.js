@@ -54,12 +54,17 @@ define(function(require) {
 		/* Associations */
 
 		game_object: function(object) {
+			// FIXME remove local object storage used by scene editor
 			if(object)
 			{
 				this.game_object_model = object;
 			}
 
-			return this.game_object_model;
+			return this.game_object_model || this.instance().game_object();
+		},
+
+		instance: function() {
+			return storage.instances.retrieve(this.get('instance_id'));
 		},
 
 		game: function() {
@@ -72,6 +77,11 @@ define(function(require) {
 
 		default_icon: function() {
 			return storage.media.retrieve('0');
+		},
+
+		/* Helpers */
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
 		}
 
 	},

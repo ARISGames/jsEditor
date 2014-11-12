@@ -212,12 +212,18 @@ define([
 		/* List Routes ************************/
 
 		listLocations: function(game_id) {
-			var game = new Game({game_id: game_id});
+			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var triggers  = new GameTriggersCollection([], {parent: game});
-			var instances = new InstancesCollection   ([], {parent: game});
+			var instances = storage.instances;
+			var triggers  = storage.triggers;
 
-			$.when(triggers.fetch(), instances.fetch()).done(function()
+			var web_pages = storage.web_pages;
+			var plaques   = storage.plaques;
+			var dialogs   = storage.dialogs;
+			var items     = storage.items;
+
+			$.when(triggers.fetch(), instances.fetch(), web_pages.fetch(), plaques.fetch(), dialogs.fetch(), items.fetch()).done(function()
 			{
 				// Just give location triggers to view
 				var location_selection = triggers.where({type: "LOCATION"});

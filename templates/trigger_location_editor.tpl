@@ -1,4 +1,5 @@
-<h4>Location <span class="object-id text-muted"><%= trigger_id %></span></h4>
+<h4>Location Trigger <span class="object-id text-muted"><%= trigger_id %></span></h4>
+<h5 class="game_object-name"><%= name %> <span class="object-id text-muted"><%= game_object_id %></span></h5>
 
 <form class="form" role="form" onsubmit="return false;">
 
