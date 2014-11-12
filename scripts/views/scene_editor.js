@@ -57,6 +57,10 @@ define([
 						{
 							view.model.game().save({"intro_scene_id": view.model.id}, {patch: true});
 						}
+						else
+						{
+							view.model.game().fetch();
+						}
 
 						vent.trigger("game_object:update", view.model);
 						vent.trigger("application:popup:hide");
