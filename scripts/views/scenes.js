@@ -34,6 +34,8 @@ define([
 			vent.on("scenes:remove", function(scene) {
 				view.model.fetch();
 			});
+
+			this.listenTo(this.model, "change:intro_scene_id", this.render);
 		},
 
 
