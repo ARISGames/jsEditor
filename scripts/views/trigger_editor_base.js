@@ -278,6 +278,7 @@ define(function(require)
 			{
 				if(game_object.is(view.game_object))
 				{
+					// FIXME probably a bug to not set model.game_object here too. Will be fixed when storage is used to reference all objects.
 					view.game_object = game_object;
 					view.set_name(view.game_object);
 					view.set_icon(view.icon);

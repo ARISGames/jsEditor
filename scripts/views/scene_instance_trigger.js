@@ -157,10 +157,7 @@ define([
 				trigger_editor = new SceneTriggerEditorView({parent_scene: view.scene, scene: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
 			}
 
-			if(view.game_object instanceof Factory)
-			{
-				trigger_editor = new FactoryTriggerEditorView({scene: view.scene, factory: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-			}
+			if(view.game_object instanceof Factory) { trigger_editor = new FactoryTriggerEditorView(options); }
 
 			if(trigger_editor === null) {
 				throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;

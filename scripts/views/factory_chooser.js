@@ -31,12 +31,11 @@ define([
 			var factory  = new Factory  ({game_id: this.options.parent.get("game_id")});
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
-			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
 
 			// Scenes can only be immediate for now.
 			trigger.set("type", "IMMEDIATE");
 
-			var trigger_editor = new FactoryTriggerEditorView({scene: this.options.parent, icon: icon, factory: factory, instance: instance, model: trigger, visible_fields: "create_factory_with_trigger"});
+			var trigger_editor = new FactoryTriggerEditorView({scene: this.options.parent, game_object: factory, instance: instance, model: trigger, visible_fields: "create_factory_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Web Page to Scene");
 		},
 
