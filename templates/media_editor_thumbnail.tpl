@@ -1,4 +1,4 @@
-<div class="show thumbnail">
+<div class="show thumbnail editor">
 	<img src="<%= thumb_url %>">
 
 	<div class="caption">

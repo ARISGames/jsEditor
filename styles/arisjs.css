@@ -325,7 +325,10 @@ h4:hover .object-id {
   height: 128px;
   width: 128px;
 }
-.thumbnail:hover {
+.thumbnail.editor:hover,
+.thumbnail.choose:hover,
+.thumbnail.change-icon:hover,
+.thumbnail.change-media:hover {
   background: #eeeeee;
 }
 /* Event Editor */

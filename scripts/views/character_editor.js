@@ -132,7 +132,9 @@ define(function(require)
 					var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
 
 					media_chooser.on("media:choose", function(media) {
+						view.unbindAssociations();
 						view.model.set("media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Character");
 					});
 

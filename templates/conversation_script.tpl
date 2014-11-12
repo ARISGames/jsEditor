@@ -16,7 +16,7 @@
 	<div class="script-panel panel panel-default clearfix edit-script" style="display: inline-block; width: 300px; margin-bottom:0px;">
 		<div class="panel-body" style="padding:0.5em;">
 			<div class="thumbnail change-active-icon pull-left" style="width: 25%; margin-bottom: 0px;">
-				<img style="height: auto; width: 100%" src="<%= character.get("media").thumbnail() %>">
+				<img style="height: auto; width: 100%" src="<%= character.media_thumbnail() %>">
 			</div>
 
 			<div class="script-text pull-left" style="width: 70%; white-space: normal; text-align: left; padding-left: 0.5em;">
