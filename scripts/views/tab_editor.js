@@ -213,6 +213,7 @@ define([
 				"WEB_PAGE": this.web_pages
 			}
 
+			// FIXME replace with set game_object_id and storage.
 			var collection = content_collections[this.model.get("type")];
 			var game_object = collection.get(this.model.get("content_id"));
 

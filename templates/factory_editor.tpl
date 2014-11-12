@@ -212,7 +212,7 @@
 					</div>
 
 					<div class="form-group title-container">
-						<input type="text" class="form-control" id="factory-trigger-title" placeholder="Title" value="<%= trigger_title %>">
+						<input type="text" class="form-control" id="factory-trigger-title" placeholder="<%= game_object_name %>" value="<%= trigger_title %>">
 					</div>
 
 

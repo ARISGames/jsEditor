@@ -57,6 +57,7 @@ define([
 		},
 
 		/* Associations */
+
 		game_object: function()
 		{
 			var type = this.get("object_type");

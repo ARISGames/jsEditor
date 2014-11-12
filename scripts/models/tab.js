@@ -36,6 +36,7 @@ define(function(require) {
 
 		/* Associations */
 
+		// FIXME use storage
 		game_object: function(object) {
 			if(object)
 			{

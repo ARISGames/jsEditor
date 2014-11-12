@@ -4,14 +4,13 @@ define([
 	'views/factory_organizer_row',
 	'views/factory_editor',
 	'models/factory',
-	'models/media',
-	'models/game',
 	'collections/items',
 	'collections/plaques',
 	'collections/dialogs',
 	'collections/web_pages',
-	'vent'
-], function(Backbone, Template, FactoryOrganizerRowView, FactoryEditorView, Factory, Media, Game, ItemsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, vent) {
+	'vent',
+	'storage'
+], function(Backbone, Template, FactoryOrganizerRowView, FactoryEditorView, Factory, ItemsCollection, PlaquesCollection, DialogsCollection, WebPagesCollection, vent, storage) {
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -35,19 +34,17 @@ define([
 
 
 		onClickNew: function() {
-			var factory = new Factory({game_id: this.model.get("game_id")});
-			var game    = new Game   ({game_id: this.model.get("game_id")});
-			var icon    = new Media  ({media_id: factory.get("trigger_icon_media_id")});
+			var factory = new Factory({game_id: this.model.id});
 
 			var contents = {
-				items:      new ItemsCollection    ([], {parent: game}),
-				plaques:    new PlaquesCollection  ([], {parent: game}),
-				dialogs:    new DialogsCollection  ([], {parent: game}),
-				web_pages:  new WebPagesCollection ([], {parent: game})
+				items:     storage.items,
+				plaques:   storage.plaques,
+				dialogs:   storage.dialogs,
+				web_pages: storage.web_pages
 			};
 
-			$.when(icon.fetch(), contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function() {
-				var factory_editor = new FactoryEditorView({model: factory, icon: icon, contents: contents});
+			$.when(contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function() {
+				var factory_editor = new FactoryEditorView({model: factory, contents: contents});
 				vent.trigger("application:popup:show", factory_editor, "Create Factory", true);
 			});
 		}

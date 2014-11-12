@@ -100,6 +100,13 @@ define(function(require)
 							return object.game_object().icon_thumbnail();
 						}
 					}
+
+					if(object.idAttribute === "factory_id") {
+						if(object.game_object())
+						{
+							return object.game_object().icon_thumbnail();
+						}
+					}
 				}
 
 				return "images/"+icon_name+"_icon_120.png"

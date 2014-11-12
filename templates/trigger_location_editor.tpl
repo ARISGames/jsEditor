@@ -76,7 +76,7 @@
 	</div>
 
 	<div class="form-group">
-		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
+		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
 	</div>
 
 	<!-- Icon Selector -->

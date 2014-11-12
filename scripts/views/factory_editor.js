@@ -14,24 +14,26 @@ define([
 	'collections/web_pages',
 	'collections/quests',
 	'collections/web_hooks',
-	'models/game',
 	'models/requirement_package',
 	'views/media_chooser',
 	'views/requirements',
 	'vent'
 ], function(_, $, Backbone, Template,
 	MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection,
-	Game, RequirementPackage,
+	RequirementPackage,
 	MediaChooserView, RequirementsEditorView,
 	vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
+
+		/* View */
+
 		template: _.template(Template),
 
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail(),
+				icon_thumbnail_url:  this.model.icon_thumbnail(),
 
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
@@ -54,9 +56,10 @@ define([
 				plaques:   this.plaques,
 				dialogs:   this.dialogs,
 				web_pages: this.web_pages,
+
+				game_object_name: this.model.game_object() ? this.model.game_object().get("name") : ""
 			}
 		},
-
 
 		ui: {
 			/* Factory */
@@ -88,8 +91,32 @@ define([
 			"trigger_hidden": "#factory-trigger-hidden",
 			"trigger_infinite": "#factory-trigger-infinite",
 			"title_container": ".title-container",
-			"range_container": ".range-container"
+			"range_container": ".range-container",
+
+			"icon":  ".change-icon img"
 		},
+
+
+		/* Constructor */
+
+		initialize: function(options) {
+			this.items     = options.contents.items;
+			this.plaques   = options.contents.plaques;
+			this.dialogs   = options.contents.dialogs;
+			this.web_pages = options.contents.web_pages;
+
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function() {
 			this.onChangeTriggerEnter();
@@ -99,7 +126,6 @@ define([
 
 			this.$el.find('input[autofocus]').focus();
 		},
-
 
 		events: {
 			"click .save": "onClickSave",
@@ -140,14 +166,15 @@ define([
 			"change input[name='factory-trigger_on_enter']": "onChangeTriggerEnter"
 		},
 
-		initialize: function(options) {
-			this.icon      = options.icon;
 
-			this.items     = options.contents.items;
-			this.plaques   = options.contents.plaques;
-			this.dialogs   = options.contents.dialogs;
-			this.web_pages = options.contents.web_pages;
+		/* Dom manipulation */
+
+		set_icon: function(media) {
+			this.ui.icon.attr("src", media.thumbnail_for(this.model));
 		},
+
+
+		/* Crud */
 
 		onClickSave: function() {
 			var view    = this;
@@ -177,6 +204,7 @@ define([
 				}
 			});
 		},
+
 
 		/* Field changes */
 
@@ -208,8 +236,14 @@ define([
 		},
 
 		onChangeObject: function() {
-			var value = this.ui.object_id.find("option:selected").val();
-			this.model.set("object_id", value);
+			var object_id = this.ui.object_id.find("option:selected").val();
+
+			this.unbindAssociations();
+			this.model.set("object_id", object_id);
+			this.bindAssociations();
+
+			this.render();
+			this.onShow();
 		},
 
 		onChangeProductionBoundType: function() {
@@ -273,6 +307,7 @@ define([
 			this.model.set("trigger_wiggle", this.ui.trigger_wiggle.is(":checked") ? "1" : "0");
 		},
 
+
 		/* Radio Fields */
 
 		onChangeTriggerEnter: function() {
@@ -313,22 +348,51 @@ define([
 			return this.model.get("object_type") === "WEB_PAGE";
 		},
 
+
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+
+			if(this.model.game_object())
+			{
+				this.stopListening(this.model.game_object().icon());
+			}
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(), 'change', this.set_icon);
+
+			if(this.model.game_object())
+			{
+				this.listenTo(this.model.game_object().icon(), 'change', this.set_icon);
+			}
+		},
+
+
 		/* Icon Selection */
 
 		onClickChangeIcon: function() {
 			var view = this;
 
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
+			var media = new MediaCollection([], {parent: this.model.game()});
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("trigger_icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Factory", true);
 					});
 
@@ -349,7 +413,7 @@ define([
 
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("trigger_requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-			var game = new Game({game_id: view.model.get("game_id")});
+			var game = this.model.game();
 
 			var contents = {
 				items:          new ItemsCollection         ([], {parent: game}),

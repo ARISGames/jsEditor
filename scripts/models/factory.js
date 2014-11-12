@@ -1,6 +1,7 @@
-define([
-	'models/json_base'
-], function(JsonBaseModel) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'factory_id',
@@ -67,7 +68,46 @@ define([
 			trigger_icon_media_id: "0",
 			trigger_show_title: "1",
 			trigger_requirement_root_package_id: "0"
-		}
+		},
+
+
+		/* Associations */
+
+		game_object: function()
+		{
+			if(this.get("object_id") === "0") {
+				return null;
+			}
+
+			var type = this.get("object_type");
+			var id   = this.get("object_id");
+
+			if(type === "DIALOG")   { return storage.dialogs.retrieve(id)   }
+			if(type === "PLAQUE")   { return storage.plaques.retrieve(id)   }
+			if(type === "ITEM")     { return storage.items.retrieve(id)     }
+			if(type === "WEB_PAGE") { return storage.web_pages.retrieve(id) }
+
+			else { throw "cant fetch game object of type: " + type }
+		},
+
+		game: function() {
+			return storage.games.retrieve(this.get('game_id'));
+		},
+
+		icon: function() {
+			return storage.media.retrieve(this.get('trigger_icon_media_id'));
+		},
+
+		default_icon: function() {
+			return storage.media.retrieve('0');
+		},
+
+
+		/* Helpers */
+
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
+		},
 
 	});
 });
