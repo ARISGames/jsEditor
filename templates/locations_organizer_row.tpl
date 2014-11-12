@@ -1,3 +1,3 @@
 <td>
-	<div class="edit"><%= title || trigger_id %></div>
+	<div class="edit"><%= title || name || "(unnamed)" %></div>
 </td>

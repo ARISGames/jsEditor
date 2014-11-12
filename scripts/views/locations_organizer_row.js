@@ -8,6 +8,12 @@ define([
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
+		templateHelpers: function() {
+			return {
+				name: this.model.game_object().get('name')
+			}
+		},
+
 		events: {
 			"click .edit": "onClickEdit"
 		},
