@@ -25,7 +25,6 @@ define(function(require)
 
 
 		/* Associations */
-
 		game: function() {
 			return storage.games.retrieve(this.get('game_id'));
 		}

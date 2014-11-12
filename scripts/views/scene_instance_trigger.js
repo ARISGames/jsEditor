@@ -151,12 +151,7 @@ define([
 			if(view.game_object instanceof Item   ) { trigger_editor = new ItemTriggerEditorView(options);    }
 			if(view.game_object instanceof Plaque ) { trigger_editor = new PlaqueTriggerEditorView(options);  }
 			if(view.game_object instanceof WebPage) { trigger_editor = new WebPageTriggerEditorView(options); }
-
-			if(view.game_object instanceof Scene)
-			{
-				trigger_editor = new SceneTriggerEditorView({parent_scene: view.scene, scene: view.game_object, instance: view.instance, model: view.model, visible_fields: "trigger"});
-			}
-
+			if(view.game_object instanceof Scene  ) { trigger_editor = new SceneTriggerEditorView(options);   }
 			if(view.game_object instanceof Factory) { trigger_editor = new FactoryTriggerEditorView(options); }
 
 			if(trigger_editor === null) {

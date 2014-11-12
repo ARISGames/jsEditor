@@ -32,22 +32,27 @@ define(function(require)
 	var WebHooksCollection      = require('collections/web_hooks');
 	var WebPagesCollection      = require('collections/web_pages');
 
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 
 		initialize: function(options) {
-			this.parent_scene = options.parent_scene;
-			this.icon     = options.icon;
-			this.scene    = options.scene;
 			this.instance = options.instance;
-			this.visible_fields  = options.visible_fields;
+
+			this.game_object = options.game_object;
+
+			// FIXME trying to avoid circular bug with storage
+			this.model.game_object(this.game_object);
+
+			this.visible_fields = options.visible_fields;
 
 			var view = this;
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.scene.id && game_object.idAttribute === view.scene.idAttribute) {
-					view.scene = game_object;
+				if(game_object.is(view.game_object))
+				{
+					view.game_object = game_object;
 					view.render();
 					view.onChangeType();
 					view.onChangeTriggerEnter();
@@ -55,7 +60,8 @@ define(function(require)
 			});
 
 			vent.on("game_object:delete", function(game_object) {
-				if(game_object.id === view.scene.id && game_object.idAttribute === view.scene.idAttribute) {
+				if(game_object.is(view.game_object))
+				{
 					view.close();
 				}
 			});
@@ -71,8 +77,6 @@ define(function(require)
 				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
 
-				icon_thumbnail_url:  this.icon.thumbnail(),
-
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
 				},
@@ -82,8 +86,8 @@ define(function(require)
 				},
 
 				// Scene Attributes
-				scene_id: this.scene.get('scene_id'),
-				name: this.scene.get('name')
+				scene_id: this.game_object.id,
+				name: this.game_object.get('name')
 			}
 		},
 
@@ -108,7 +112,6 @@ define(function(require)
 			"click .save": "onClickSave",
 			"click .delete": "onClickDelete",
 			"click .cancel": "onClickCancel",
-			"click .change-icon":  "onClickChangeIcon",
 			"change @ui.infinite": "onChangeInfinity",
 			"change @ui.show_title": "onChangeShowTitle",
 			"change input[name='trigger-type']": "onChangeType",
@@ -125,13 +128,9 @@ define(function(require)
 
 		onClickEditScene: function() {
 			var view = this;
-			var icon  = new Media({media_id: this.scene.get("icon_media_id")});
-			var media = new Media({media_id: this.scene.get("media_id")});
 
-			$.when(icon.fetch(), media.fetch()).done(function () {
-				var scene_editor = new SceneEditorView({model: view.scene, icon: icon, media: media});
-				vent.trigger("application:popup:show", scene_editor, "Edit Scene");
-			});
+			var scene_editor = new SceneEditorView({model: view.game_object});
+			vent.trigger("application:popup:show", scene_editor, "Edit Scene");
 		},
 
 		onClickDelete: function() {
@@ -152,7 +151,7 @@ define(function(require)
 		onClickSave: function() {
 			var view = this;
 			var instance = this.instance;
-			var scene    = this.scene;
+			var scene    = this.game_object;
 			var trigger  = this.model;
 
 			// FIXME temporary fix to grab fields only when visible
@@ -196,8 +195,6 @@ define(function(require)
 
 								trigger.set("type",             view.$el.find("input[name=trigger-type]:checked").val());
 								trigger.set("trigger_on_enter", view.$el.find("input[name=trigger-trigger_on_enter]:checked").val());
-
-								trigger.set("icon_media_id", view.icon.get("media_id"));
 							}
 							// Initial Title
 							else {
@@ -220,34 +217,6 @@ define(function(require)
 						}
 					});
 
-				}
-			});
-		},
-
-		onClickChangeIcon: function()
-		{
-			var view = this;
-
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
-
-			media.fetch({
-				success: function()
-				{
-					var icon_chooser = new MediaChooserView({collection: media});
-					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
-
-					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
-						view.render();
-						view.onChangeType();
-						view.onChangeTriggerEnter();
-						vent.trigger("application:popup:hide");
-					});
-
-					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:hide");
-					});
 				}
 			});
 		},
