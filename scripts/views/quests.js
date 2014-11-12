@@ -1,13 +1,14 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/quests.tpl',
-	'views/quest_row',
-	'views/quest_editor',
-	'models/quest',
-	'models/media',
-	'vent'
-], function(_, Backbone, Template, QuestRowView, QuestEditorView, Quest, Media, vent) {
+define(function(require)
+{
+	var _               = require('underscore');
+	var Backbone        = require('backbone');
+	var Template        = require('text!templates/quests.tpl');
+	var QuestRowView    = require('views/quest_row');
+	var QuestEditorView = require('views/quest_editor');
+	var Quest           = require('models/quest');
+	var vent            = require('vent');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -25,23 +26,13 @@ define([
 
 			var quest = new Quest({game_id: this.model.get("game_id")});
 
-			var icons = {
-				active_icon:    new Media({media_id: quest.get("active_icon_media_id"  )}),
-				active_media:   new Media({media_id: quest.get("active_media_id"       )}),
-				complete_icon:  new Media({media_id: quest.get("complete_icon_media_id")}),
-				complete_media: new Media({media_id: quest.get("complete_media_id"     )})
-			};
+			var quest_editor = new QuestEditorView({model: quest});
 
-			$.when(icons.active_icon.fetch(), icons.active_media.fetch(), icons.complete_icon.fetch(), icons.complete_media.fetch()).done(function()
-			{
-				var quest_editor = new QuestEditorView(_.extend({model: quest}, icons));
-
-				quest_editor.on("quest:add", function(quest) {
-					view.collection.add(quest);
-				});
-
-				vent.trigger("application:popup:show", quest_editor, "Create Quest");
+			quest_editor.on("quest:add", function(quest) {
+				view.collection.add(quest);
 			});
+
+			vent.trigger("application:popup:show", quest_editor, "Create Quest");
 		},
 
 

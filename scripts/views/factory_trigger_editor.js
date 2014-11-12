@@ -7,6 +7,7 @@ define(function(require)
 
 	var QRCode   = require('qrcode');
 	var vent     = require('vent');
+	var storage  = require('storage');
 
 	var FactoryEditorView       = require('views/factory_editor');
 
@@ -38,24 +39,30 @@ define(function(require)
 
 
 		initialize: function(options) {
-			this.scene    = options.scene;
-			this.icon     = options.icon;
-			this.factory  = options.factory;
+			this.icon     = this.model.icon();
 			this.instance = options.instance;
-			this.visible_fields  = options.visible_fields;
+
+			this.game_object = options.game_object;
+
+			// FIXME trying to avoid circular bug with storage
+			this.model.game_object(this.game_object);
+
+			this.visible_fields = options.visible_fields;
 
 			var view = this;
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.factory.id && game_object.idAttribute === view.factory.idAttribute) {
-					view.factory = game_object;
+				if(game_object.is(view.game_object))
+				{
+					view.game_object = game_object;
 					view.render();
 					view.setVisibleFields();
 				}
 			});
 
 			vent.on("game_object:delete", function(game_object) {
-				if(game_object.id === view.factory.id && game_object.idAttribute === view.factory.idAttribute) {
+				if(game_object.is(view.game_object))
+				{
 					view.close();
 				}
 			});
@@ -71,7 +78,7 @@ define(function(require)
 				in_modal: this.options.in_modal,
 				visible_fields: this.visible_fields,
 
-				icon_thumbnail_url:  this.icon.thumbnail(),
+				icon_thumbnail_url:  this.icon.thumbnail_for(this.model),
 
 				is_checked: function(value) {
 					return value === "1" ? "checked" : "";
@@ -82,8 +89,8 @@ define(function(require)
 				},
 
 				// Factory Attributes
-				factory_id: this.factory.get('factory_id'),
-				name: this.factory.get('name')
+				factory_id: this.game_object.id,
+				name: this.game_object.get('name')
 			}
 		},
 
@@ -126,20 +133,16 @@ define(function(require)
 		onClickEditFactory: function() {
 			var view = this;
 
-			var game = new Game ({game_id:  this.factory.get("game_id")});
-			var icon = new Media({media_id: this.factory.get("trigger_icon_media_id")});
-
-			// FIXME switch to app cache lazy fetch
 			var contents = {
-				items:      new ItemsCollection    ([], {parent: game}),
-				plaques:    new PlaquesCollection  ([], {parent: game}),
-				dialogs:    new DialogsCollection  ([], {parent: game}),
-				web_pages:  new WebPagesCollection ([], {parent: game})
+				items:     storage.items,
+				plaques:   storage.plaques,
+				dialogs:   storage.dialogs,
+				web_pages: storage.web_pages
 			};
 
-			$.when(icon.fetch(), contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function() {
-				var factory_editor = new FactoryEditorView({model: view.factory, icon: icon, contents: contents});
-				vent.trigger("application:popup:show", factory_editor, "Edit Factory");
+			$.when(contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function() {
+				var factory_editor = new FactoryEditorView({model: view.game_object, contents: contents});
+				vent.trigger("application:popup:show", factory_editor, "Edit Factory", true);
 			});
 		},
 
@@ -161,7 +164,7 @@ define(function(require)
 		onClickSave: function() {
 			var view = this;
 			var instance = this.instance;
-			var factory   = this.factory;
+			var factory  = this.game_object;
 			var trigger  = this.model;
 
 			// FIXME temporary fix to grab fields only when visible
@@ -344,7 +347,7 @@ define(function(require)
 
 			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-			var game = new Game({game_id: view.model.get("game_id")});
+			var game = this.model.game();
 
 			var contents = {
 				items:          new ItemsCollection         ([], {parent: game}),

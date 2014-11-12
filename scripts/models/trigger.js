@@ -1,6 +1,7 @@
-define([
-	'models/json_base',
-], function(JsonBaseModel) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'trigger_id',
@@ -34,7 +35,7 @@ define([
 
 		defaults: function() {
 			return {
-				title: "triggerTitle",
+				title: "",
 				type: "LOCATION",
 				latitude: "43.073",
 				longitude: "-89.4012",
@@ -48,6 +49,39 @@ define([
 				requirement_root_package_id: "0",
 				icon_media_id: "0"
 			}
+		},
+
+		/* Associations */
+
+		game_object: function(object) {
+			// FIXME remove local object storage used by scene editor
+			if(object)
+			{
+				this.game_object_model = object;
+			}
+
+			return this.game_object_model || this.instance().game_object();
+		},
+
+		instance: function() {
+			return storage.instances.retrieve(this.get('instance_id'));
+		},
+
+		game: function() {
+			return storage.games.retrieve(this.get('game_id'));
+		},
+
+		icon: function() {
+			return storage.media.retrieve(this.get('icon_media_id'));
+		},
+
+		default_icon: function() {
+			return storage.media.retrieve('0');
+		},
+
+		/* Helpers */
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
 		}
 
 	},

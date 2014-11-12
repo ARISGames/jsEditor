@@ -98,7 +98,10 @@ define([
 
 
 		showSceneEditor: function(game_id) {
-			var game = new Game({game_id: game_id});
+			// FIXME ability to promise so we don't fetch twice? or guarentee a new fetch.
+			var game = storage.games.retrieve(game_id);
+			storage.for(game);
+
 			game.fetch({
 				success: function() {
 
@@ -112,7 +115,11 @@ define([
 					// TODO catch errors if any fail (since its a non-standard failure)
 					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch(), factories.fetch()).done(function()
 					{
-						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes}));
+						// TODO make game a promise and store it so we can access the same game instance in other tabs.
+						// then 'intro scene' test can just be if this.model.is(game.intro_scene())
+						var intro_scene = scenes.get(game.get("intro_scene_id"));
+
+						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes, intro_scene: intro_scene}));
 						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
 						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages, factories: factories}));
 						vent.trigger("application:info:hide");
@@ -123,20 +130,16 @@ define([
 
 
 		editGame: function(game_id) {
-			var game = new Game({game_id: game_id});
+			var game = storage.games.retrieve(game_id);
+			storage.for(game);
+
 			game.fetch({
 				success: function() {
-
-					var icons = {
-						icon:  new Media({media_id: game.get("icon_media_id")}),
-						media: new Media({media_id: game.get("media_id"     )})
-					};
-
 					var scenes = new SceneCollection([], {parent: game});
 
-					$.when(icons.icon.fetch(), icons.media.fetch(), scenes.fetch()).done(function()
+					$.when(scenes.fetch()).done(function()
 					{
-						vent.trigger("application.show",     new GameEditorView (_.extend({model: game, scenes: scenes}, icons)));
+						vent.trigger("application.show",     new GameEditorView ({model: game, scenes: scenes}));
 						vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".game"}));
 						vent.trigger("application:info:hide");
 						vent.trigger("application:list:hide");
@@ -209,12 +212,18 @@ define([
 		/* List Routes ************************/
 
 		listLocations: function(game_id) {
-			var game = new Game({game_id: game_id});
+			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var triggers  = new GameTriggersCollection([], {parent: game});
-			var instances = new InstancesCollection   ([], {parent: game});
+			var instances = storage.instances;
+			var triggers  = storage.triggers;
 
-			$.when(triggers.fetch(), instances.fetch()).done(function()
+			var web_pages = storage.web_pages;
+			var plaques   = storage.plaques;
+			var dialogs   = storage.dialogs;
+			var items     = storage.items;
+
+			$.when(triggers.fetch(), instances.fetch(), web_pages.fetch(), plaques.fetch(), dialogs.fetch(), items.fetch()).done(function()
 			{
 				// Just give location triggers to view
 				var location_selection = triggers.where({type: "LOCATION"});

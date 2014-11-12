@@ -1,13 +1,14 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/tags.tpl',
-	'views/tag_row',
-	'views/tag_editor',
-	'models/tag',
-	'models/media',
-	'vent'
-], function(_, Backbone, Template, TagRowView, TagEditorView, Tag, Media, vent) {
+define(function(require)
+{
+	var _             = require('underscore');
+	var Backbone      = require('backbone');
+	var Template      = require('text!templates/tags.tpl');
+	var TagRowView    = require('views/tag_row');
+	var TagEditorView = require('views/tag_editor');
+	var Tag           = require('models/tag');
+	var vent          = require('vent');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
@@ -25,18 +26,13 @@ define([
 
 			var tag = new Tag({game_id: this.model.get("game_id")});
 
-			var media = new Media({media_id: tag.get("media_id")});
+			var tag_editor = new TagEditorView({model: tag});
 
-			$.when(media.fetch()).done(function()
-			{
-				var tag_editor = new TagEditorView({model: tag, media: media});
-
-				tag_editor.on("tag:add", function(tag) {
-					view.collection.add(tag);
-				});
-
-				vent.trigger("application:popup:show", tag_editor, "Create Tag");
+			tag_editor.on("tag:add", function(tag) {
+				view.collection.add(tag);
 			});
+
+			vent.trigger("application:popup:show", tag_editor, "Create Tag");
 		},
 
 

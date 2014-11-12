@@ -13,6 +13,14 @@ define([
 		itemView: MediaChooserThumbnailView,
 		itemViewContainer: '.itemViewContainer',
 
+		itemViewOptions: function(model, index)
+		{
+			return {
+				is_selected: this.options.selected ? this.options.selected.is(model) : false,
+				context:  this.options.context
+			}
+		},
+
 		triggers: {
 			"click .cancel-chooser": "cancel"
 		},

@@ -27,7 +27,7 @@
 					</button>
 				<% } %>
 
-				<button type="button" class="btn btn-default" data-dismiss="modal">
+				<button type="button" class="btn btn-default cancel" data-dismiss="modal">
 					Cancel
 				</button>
 			</div>

@@ -1,12 +1,12 @@
-define([
-       'backbone',
-       'text!templates/dialog_organizer.tpl',
-       'views/dialog_organizer_row',
-       'views/dialog_editor',
-	   'models/dialog',
-	   'models/media',
-       'vent'
-], function(Backbone, Template, DialogsOrganizerRowView, DialogEditorView, Dialog, Media, vent) {
+define(function(require)
+{
+	var Backbone                = require('backbone');
+	var Template                = require('text!templates/dialog_organizer.tpl');
+	var DialogsOrganizerRowView = require('views/dialog_organizer_row');
+	var DialogEditorView        = require('views/dialog_editor');
+	var Dialog                  = require('models/dialog');
+	var vent                    = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -14,13 +14,18 @@ define([
 		itemView: DialogsOrganizerRowView,
 		itemViewContainer: ".dialogs",
 
+
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("dialog:add", function(dialog) {
-				view.collection.add(dialog);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof Dialog)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
+
 
 		events: {
 			"click .new": "onClickNew"
@@ -30,12 +35,8 @@ define([
 		onClickNew: function() {
 			var dialog = new Dialog({game_id: this.model.get("game_id")});
 
-			var icon   = new Media({media_id: dialog.get("icon_media_id")});
-
-			$.when(icon.fetch()).done(function () {
-				var dialog_editor = new DialogEditorView({model: dialog, icon: icon});
-				vent.trigger("application:popup:show", dialog_editor, "Create Conversation");
-			});
+			var dialog_editor = new DialogEditorView({model: dialog});
+			vent.trigger("application:popup:show", dialog_editor, "Create Conversation");
 		}
 	});
 });

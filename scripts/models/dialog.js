@@ -1,9 +1,12 @@
-define([
-	'models/json_base'
-], function(JsonBaseModel) {
+define(function(require) {
+	var JsonBaseModel = require('models/json_base');
+	var storage       = require('storage');
+
 
 	return JsonBaseModel.extend({
 		idAttribute: 'dialog_id',
+
+		type_name: 'Dialog',
 
 		amfphp_url_templates: {
 			read:   "dialogs.getDialog",
@@ -26,6 +29,23 @@ define([
 			description: "",
 			icon_media_id: "0",
 			intro_dialog_script_id: "0"
+		},
+
+
+		/* Associations */
+
+		icon: function() {
+			return storage.media.retrieve(this.get('icon_media_id'));
+		},
+
+		default_icon: function() {
+			return storage.media.retrieve('0');
+		},
+
+		/* Helpers */
+
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
 		}
 
 	});

@@ -3,9 +3,8 @@ define([
 	'backbone',
 	'text!templates/locations.tpl',
 	'views/trigger_location_editor',
-	'models/media',
 	'vent'
-], function(_, Backbone, Template, TriggerLocationEditorView, Media, vent) {
+], function(_, Backbone, Template, TriggerLocationEditorView, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 		className: 'full-height',
@@ -103,31 +102,25 @@ define([
 				// Edit side bar
 
 				google.maps.event.addListener(circle_marker, 'mousedown', function() {
-					var icon = new Media({media_id: trigger.get("icon_media_id")});
 
 					// Don't re-open on drag
 					vent.trigger("application:info:current_view", function(current_view)
 					{
 						if(!current_view || current_view.model !== trigger)
 						{
-							$.when(icon.fetch()).done(function () {
-								vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
-							});
+							vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger}));
 						}
 					});
 				});
 
 				google.maps.event.addListener(drag_marker, 'mousedown', function() {
-					var icon = new Media({media_id: trigger.get("icon_media_id")});
 
 					// Don't re-open on drag
 					vent.trigger("application:info:current_view", function(current_view)
 					{
 						if(!current_view || current_view.model !== trigger)
 						{
-							$.when(icon.fetch()).done(function () {
-								vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger, icon: icon}));
-							});
+							vent.trigger("application:info:show", new TriggerLocationEditorView({model: trigger}));
 						}
 					});
 				});

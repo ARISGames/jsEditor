@@ -1,10 +1,10 @@
-define([
-	'backbone',
-	'text!templates/item_organizer_row.tpl',
-	'views/item_editor',
-	'models/media',
-	'vent'
-], function(Backbone, Template, ItemEditorView, Media, vent) {
+define(function(require)
+{
+	var Backbone       = require('backbone');
+	var Template       = require('text!templates/item_organizer_row.tpl');
+	var ItemEditorView = require('views/item_editor');
+	var vent           = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -17,7 +17,8 @@ define([
 			var view = this;
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+				if(game_object.is(view.model))
+				{
 					view.model = game_object;
 					view.render();
 				}
@@ -28,14 +29,9 @@ define([
 
 		onClickEdit: function() {
 			var view  = this;
-			var icon  = new Media({media_id: this.model.get("icon_media_id")});
-			var media = new Media({media_id: this.model.get("media_id"     )});
 
-			$.when(icon.fetch(), media.fetch()).done(function() {
-				var item_editor = new ItemEditorView({model: view.model, media: media, icon: icon});
-				vent.trigger("application:popup:show", item_editor, "Edit Item");
-			});
-
+			var item_editor = new ItemEditorView({model: view.model});
+			vent.trigger("application:popup:show", item_editor, "Edit Item");
 		}
 	});
 });

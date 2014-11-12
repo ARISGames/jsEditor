@@ -5,8 +5,9 @@ define([
 	'models/item',
 	'models/web_page',
 	'models/scene',
-	'models/factory'
-], function(JsonBaseModel, Dialog, Plaque, Item, WebPage, Scene, Factory) {
+	'models/factory',
+	'storage'
+], function(JsonBaseModel, Dialog, Plaque, Item, WebPage, Scene, Factory, storage) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'instance_id',
@@ -25,6 +26,11 @@ define([
 			"object_type"
         ],
 
+		defaults: {
+			"quantity": "0",
+			"infinite_qty": "1"
+		},
+
 		// For loading the right class from the instance
 		object_class: function() {
 			var type = this.get("object_type");
@@ -36,6 +42,36 @@ define([
 			if(type === "SCENE")    { return Scene   }
 			if(type === "FACTORY")  { return Factory }
 			else { throw "cant determine class of: " + type }
+		},
+
+		// For creating new instances.
+		type_for: function(object) {
+			if(object instanceof Dialog)  { return "DIALOG"   }
+			if(object instanceof Item)    { return "ITEM"     }
+			if(object instanceof Plaque)  { return "PLAQUE"   }
+			if(object instanceof WebPage) { return "WEB_PAGE" }
+			if(object instanceof Scene)   { return "SCENE"    }
+			if(object instanceof Factory) { return "FACTORY"  }
+
+			else { throw "cant determine type of " + object.idAttribute + ": " + object.id; }
+		},
+
+		/* Associations */
+
+		game_object: function()
+		{
+			var type = this.get("object_type");
+			var id   = this.get("object_id");
+
+			if(type === "DIALOG")   { return storage.dialogs.retrieve(id)   }
+			if(type === "PLAQUE")   { return storage.plaques.retrieve(id)   }
+			if(type === "ITEM")     { return storage.items.retrieve(id)     }
+			if(type === "WEB_PAGE") { return storage.web_pages.retrieve(id) }
+
+			//if(type === "SCENE")    { return Scene   }
+			//if(type === "FACTORY")  { return Factory }
+
+			else { throw "cant fetch game object of type: " + type }
 		}
 	},
 	// Static methods

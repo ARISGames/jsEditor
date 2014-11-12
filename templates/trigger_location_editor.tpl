@@ -1,4 +1,5 @@
-<h4>Location <span class="object-id text-muted"><%= trigger_id %></span></h4>
+<h4>Location Trigger <span class="object-id text-muted"><%= trigger_id %></span></h4>
+<h5 class="game_object-name"><%= name %> <span class="object-id text-muted"><%= game_object_id %></span></h5>
 
 <form class="form" role="form" onsubmit="return false;">
 
@@ -75,7 +76,7 @@
 	</div>
 
 	<div class="form-group">
-		<input type="text" class="form-control" id="trigger-title" placeholder="Title" value="<%= title %>">
+		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
 	</div>
 
 	<!-- Icon Selector -->

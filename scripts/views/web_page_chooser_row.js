@@ -35,8 +35,6 @@ define([
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
 
-					trigger.set("title", Trigger.title_for(web_page));
-
 					trigger.save({},
 					{
 						create: function()

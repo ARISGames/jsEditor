@@ -1,25 +1,33 @@
 <div class="object-editor container-fluid">
 	<form class="form" role="form">
-		<div class="row form-group">
+		<div class="row">
 
 			<!-- Boolean Operator -->
 
-			<div class="col-xs-4 padded-small">
+			<div class="col-sm-4 padded-small">
+				<div class="form-group">
 				<select class="form-control boolean-operator">
-					<option value="1" <%= option_selected(bool_operator === "1") %>>Has</option>
-					<option value="0" <%= option_selected(bool_operator === "0") %>>Hasn't</option>
+					<option data-set="item_list" value="1" <%= option_selected(bool_operator === "1" && item_list_selection)  %>>Player has at least</option>
+					<option data-set="item_list" value="0" <%= option_selected(bool_operator === "0" && item_list_selection)  %>>Player has less than</option>
+					<option data-set="events"    value="1" <%= option_selected(bool_operator === "1" && !item_list_selection) %>>Player has already</option>
+					<option data-set="events"    value="0" <%= option_selected(bool_operator === "0" && !item_list_selection) %>>Player has not yet</option>
 				</select>
+				</div>
 			</div>
 
 			<!-- Requirement Type -->
 
-			<div class="col-xs-8 padded-small">
+			<div class="col-sm-8 padded-small">
+				<div class="form-group">
 				<select class="form-control requirement">
+					<% if(item_list_selection) { %>
 					<optgroup label="Player Inventory/Attributes">
-						<option value="PLAYER_HAS_ITEM" <%= option_selected(requirement === "PLAYER_HAS_ITEM") %>>At least # of Item/Attribute</option>
-						<option value="PLAYER_HAS_TAGGED_ITEM" <%= option_selected(requirement === "PLAYER_HAS_TAGGED_ITEM") %>>At least # of Items/Attributes with Tag</option>
+						<option value="PLAYER_HAS_ITEM"        <%= option_selected(requirement === "PLAYER_HAS_ITEM")        %>># of Item/Attribute</option>
+						<option value="PLAYER_HAS_TAGGED_ITEM" <%= option_selected(requirement === "PLAYER_HAS_TAGGED_ITEM") %>># of Items/Attributes with Tag</option>
 					</optgroup>
+					<% } %>
 
+					<% if(!item_list_selection) { %>
 					<optgroup label="Game Object Interactions">
 						<option value="PLAYER_VIEWED_DIALOG"        <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG")        %>>Exited Conversation</option>
 						<option value="PLAYER_VIEWED_DIALOG_SCRIPT" <%= option_selected(requirement === "PLAYER_VIEWED_DIALOG_SCRIPT") %>>Seen Conversation Line</option>
@@ -50,23 +58,31 @@
 					<optgroup label="External">
 						<option value="PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK" <%= option_selected(requirement === "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK") %>>Received Incoming Web Hook</option>
 					</optgroup>
+					<% } %>
 				</select>
+				</div>
 			</div>
 		</div>
 
 
-		<div class="row form-group">
+		<div class="row">
 
-			<div class="col-xs-4 padded-small">
+			<div class="col-sm-4 padded-small">
+				<div class="form-group">
 				<% if(quantity_visible) { %>
-					<input type="number" class="form-control quantity" value="<%= qty %>" min="0">
+					<div class="input-group">
+						<span class="input-group-addon addon-bg-info">#</span>
+						<input type="number" class="form-control quantity" value="<%= qty %>" min="0">
+					</div>
 				<% } %>
+				</div>
 			</div>
 
 			<!-- Content Lists -->
 
 			<% if(content_visible) { %>
-				<div class="col-xs-6 padded-small">
+				<div class="col-sm-6 padded-small">
+					<div class="form-group">
 					<select class="form-control content">
 						<option value="0" selected disabled>- Select One -</option>
 
@@ -167,31 +183,38 @@
 						<% } %>
 
 					</select>
+					</div>
 				</div>
 			<% } /* End Content visible */ %>
 
 			<!-- Values for requirement type -->
 
 			<% if(location_visible) { %>
-				<div class="col-xs-2 padded-small">
-					<input type="number" class="form-control latitude" value="<%= latitude %>" min="0">
+				<div class="col-sm-2 padded-small">
+					<div class="form-group">
+						<input type="number" class="form-control latitude" value="<%= latitude %>" min="0">
+					</div>
 				</div>
 
-				<div class="col-xs-2 padded-small">
-					<input type="number" class="form-control longitude" value="<%= longitude %>" min="0">
+				<div class="col-sm-2 padded-small">
+					<div class="form-group">
+						<input type="number" class="form-control longitude" value="<%= longitude %>" min="0">
+					</div>
 				</div>
-				<div class="col-xs-2 padded-small">
-					<input type="number" class="form-control distance" value="<%= distance %>" min="0">
+				<div class="col-sm-2 padded-small">
+					<div class="form-group">
+						<input type="number" class="form-control distance" value="<%= distance %>" min="0">
+					</div>
 				</div>
 			<% } %>
 
 			<% if(!location_visible && !content_visible) { %>
-				<div class="col-xs-6 padded-small">
+				<div class="col-sm-6 padded-small">
 					&nbsp;
 				</div>
 			<% } %>
 
-			<div class="col-xs-2 padded-small">
+			<div class="col-sm-2 padded-small">
 				<button type="button" class="btn btn-link delete-atom">Remove</button>
 			</div>
 		</div>

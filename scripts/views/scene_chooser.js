@@ -35,10 +35,7 @@ define([
 			// Scenes can only be immediate for now.
 			trigger.set("type", "IMMEDIATE");
 
-			// Do not need fetches since we are 'new'
-			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
-
-			var trigger_editor = new SceneTriggerEditorView({parent_scene: this.options.parent, icon: icon, scene: scene, instance: instance, model: trigger, visible_fields: "create_scene_with_trigger"});
+			var trigger_editor = new SceneTriggerEditorView({game_object: scene, instance: instance, model: trigger, visible_fields: "create_scene_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Scene to Scene");
 		},
 

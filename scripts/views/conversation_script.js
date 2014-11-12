@@ -39,11 +39,29 @@ define([
 
 			// FIXME keep track of this in a parent view or controller/app
 			this.model.set("rendered", true);
+
+			this.change_media();
+			this.listenTo(this.model.get("character"), "change:media_id", this.change_media);
+		},
+
+		change_media: function() {
+			if(this.character_media) {
+				this.stopListening(this.character_media);
+			}
+
+			this.character_media = this.model.get("character").media();
+
+			this.set_media(this.character_media);
+			this.listenTo(this.character_media, "change", this.set_media);
 		},
 
 		events: {
 			"click .edit-script": "onClickEdit",
 			"click .add-option": "onClickAdd",
+		},
+
+		set_media: function() {
+			this.$el.find('.thumbnail img').attr('src', this.model.get("character").media_thumbnail());
 		},
 
 		onClickEdit: function() {

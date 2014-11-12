@@ -33,13 +33,13 @@
 	<br>
 		<label for="game-intro_scene_id">Visibility To ARIS Client</label>
 		<div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong class='text-success'>Published</strong> your game will be listed as playable on the ARIS client to everyone. If <strong class='text-info'>Private</strong> it will appear under the 'mine' tab for all editors of the game.">
-			<label class="btn btn-success">
-				<input type="radio" name="game-published" value="1" <%= radio_selected(published === "1") %>>
+			<label class="btn btn-success <%= tab_selected(published === "1") %>">
+				<input type="radio" class="game-published" name="game-published" value="1" <%= radio_selected(published === "1") %>>
 				<span class="glyphicon glyphicon-saved"></span>
 				Published
 			</label>
-			<label class="btn btn-info">
-				<input type="radio" name="game-published" value="0" <%= radio_selected(published === "0") %>>
+			<label class="btn btn-info <%= tab_selected(published === "0") %>">
+				<input type="radio" class="game-published" name="game-published" value="0" <%= radio_selected(published === "0") %>>
 				<span class="glyphicon glyphicon-eye-close"></span>
 				Private
 			</label>
@@ -190,17 +190,6 @@
 						<input type="checkbox" id="game-notebook_allow_likes" <%= is_checked(notebook_allow_likes) %>>
 						Likes Allowed
 					</label>
-				</div>
-
-				<div class="form-group">
-					<label>
-						<input type="checkbox" id="game-notebook_allow_player_tags" <%= is_checked(notebook_allow_player_tags) %>>
-						Player Created Tags Allowed
-					</label>
-					<div class="alert alert-info">
-						<span class="glyphicon glyphicon-info-sign"></span>
-						If checked, allows players to define their own labels for notes.
-					</div>
 				</div>
 			</div>
 		</div> <!-- /notebook -->

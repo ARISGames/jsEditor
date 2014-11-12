@@ -1,41 +1,36 @@
-define([
-       'backbone',
-       'text!templates/character_organizer.tpl',
-       'views/character_organizer_row',
-	   'views/character_editor',
-	   'models/character',
-	   'models/media',
-       'vent'
-], function(Backbone, Template, CharactersOrganizerRowView, CharacterEditorView, Character, Media, vent) {
+define(function(require)
+{
+	var Backbone                   = require('backbone');
+	var Template                   = require('text!templates/character_organizer.tpl');
+	var CharactersOrganizerRowView = require('views/character_organizer_row');
+	var CharacterEditorView        = require('views/character_editor');
+	var Character                  = require('models/character');
+	var vent                       = require('vent');
 
-       return Backbone.Marionette.CompositeView.extend({
-			template: _.template(Template),
 
-			itemView: CharactersOrganizerRowView,
-			itemViewContainer: ".characters",
+	return Backbone.Marionette.CompositeView.extend({
+		template: _.template(Template),
 
-			events: {
-				"click .new": "onClickNew"
-			},
+		itemView: CharactersOrganizerRowView,
+		itemViewContainer: ".characters",
 
-	   		initialize: function(options) {
-				var view = this;
+		events: {
+			"click .new": "onClickNew"
+		},
 
-				vent.on("character:add", function(character) {
-					view.collection.add(character);
-				});
-			},
+		initialize: function(options) {
+			var view = this;
 
-			onClickNew: function() {
-				var character = new Character({game_id: this.model.get("game_id")});
+			vent.on("character:add", function(character) {
+				view.collection.add(character);
+			});
+		},
 
-				var media = new Media({media_id: character.get("media_id")});
+		onClickNew: function() {
+			var character = new Character({game_id: this.model.get("game_id")});
 
-				$.when(media.fetch()).done(function()
-				{
-					var character_editor = new CharacterEditorView({model: character, media: media});
-					vent.trigger("application:popup:show", character_editor, "Create Character");
-				});
-			}
-       });
+			var character_editor = new CharacterEditorView({model: character});
+			vent.trigger("application:popup:show", character_editor, "Create Character");
+		}
+	});
 });

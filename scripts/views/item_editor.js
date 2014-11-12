@@ -1,23 +1,26 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/item_editor.tpl',
-	'collections/media',
-	'models/game',
-	'views/media_chooser',
-	'vent'
-], function(_, $, Backbone, Template, MediaCollection, Game, MediaChooserView, vent) {
+define(function(require)
+{
+	var _                = require('underscore');
+	var $                = require('jquery');
+	var Backbone         = require('backbone');
+	var Template         = require('text!templates/item_editor.tpl');
+	var MediaCollection  = require('collections/media');
+	var Game             = require('models/game');
+	var MediaChooserView = require('views/media_chooser');
+	var vent             = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
+
+		/* View */
 
 		templateHelpers: function()
 		{
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail(),
-				media_thumbnail_url: this.media.thumbnail(),
+				icon_thumbnail_url:  this.model.icon_thumbnail(),
+				media_thumbnail_url: this.model.media_thumbnail(),
 
 				is_checked: function(value)
 				{
@@ -27,79 +30,114 @@ define([
 				radio_selected: function(boolean_statement) {
 					return boolean_statement ? "checked" : "";
 				},
+
+				tab_selected: function(boolean_statement) {
+					return boolean_statement ? "active" : "";
+				},
+
+				tab_visible: function(boolean_statement) {
+					return boolean_statement ? "" : "style='display: none;'";
+				}
 			}
 		},
 
 
 		ui:
 		{
-			"name":         "#item-name",
-			"description":  "#item-description",
-			"url":          "#item-url",
-			"droppable":    "#item-droppable",
-			"destroyable":  "#item-destroyable",
-			"weight":       "#item-weight",
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
 
-			"iconchooser":  "#icon-chooser-container",
-			"mediachooser": "#media-chooser-container",
+			"change_icon":  ".change-icon",
+			"change_media": ".change-media",
 
-			"max_qty_in_inventory": "#item-max_qty_in_inventory"
+			"name":        "#item-name",
+			"description": "#item-description",
+			"url":         "#item-url",
+			"droppable":   "#item-droppable",
+			"destroyable": "#item-destroyable",
+			"weight":      "#item-weight",
+			"max_qty":     "#item-max_qty_in_inventory",
+			"item_types":  ".item-type",
+			"type_tabs":   ".type-tab"
 		},
+
+
+		/* Constructor */
+
+		initialize: function() {
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function()
 		{
-			this.onChangeType();
-
 			this.$el.find('input[autofocus]').focus();
 		},
 
 
 		events:
 		{
-			"click .save": "onClickSave",
-			"click .delete": "onClickDelete",
-			"click .change-icon":  "onClickChangeIcon",
-			"click .change-media": "onClickChangeMedia",
-			"change input[name='item-type']": "onChangeType"
+			"click @ui.save":   "onClickSave",
+			"click @ui.delete": "onClickDelete",
+			"click @ui.cancel": "onClickCancel",
+
+			"click @ui.change_icon":  "onClickChangeIcon",
+			"click @ui.change_media": "onClickChangeMedia",
+
+
+			// Field events
+			"change @ui.name":        "onChangeName",
+			"change @ui.description": "onChangeDescription",
+			"change @ui.url":         "onChangeUrl",
+			"change @ui.weight":      "onChangeWeight",
+			"change @ui.droppable":   "onChangeDroppable",
+			"change @ui.destroyable": "onChangeDestroyable",
+			"change @ui.max_qty":     "onChangeMaxQuantity",
+
+			"change @ui.item_types":   "onChangeType"
 		},
 
-		initialize: function(options)
-		{
-			this.icon  = options.icon;
-			this.media = options.media;
-		},
+
+		/* Crud */
 
 		onClickSave: function()
 		{
-			var view   = this;
+			var view = this;
 			var item = this.model;
 
 			// Save Object
-			item.set("icon_media_id", view.icon.get("media_id"));
-			item.set("media_id",      view.media.get("media_id"));
-			item.set("name",          view.ui.name.val());
-			item.set("description",   view.ui.description.val());
-			item.set("url",           view.ui.url.val());
-			item.set("weight",        view.ui.weight.val());
-			item.set("droppable",     view.ui.droppable.is(":checked") ? "1" : "0");
-			item.set("destroyable",   view.ui.destroyable.is(":checked") ? "1" : "0");
-			item.set("type",          view.$el.find("input[name=item-type]:checked").val());
-
-			item.set("max_qty_in_inventory", view.ui.max_qty_in_inventory.val());
 
 			item.save({}, {
 				create: function() {
-					vent.trigger("item:add", item);
+					view.storePreviousAttributes();
+
+					vent.trigger("game_object:add", item);
 					vent.trigger("application:popup:hide");
 				},
 
 				update: function()
 				{
+					view.storePreviousAttributes();
+
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", item);
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -112,29 +150,57 @@ define([
 			});
 		},
 
+
+		/* Field Changes */
+
+		onChangeName:        function() { this.model.set("name",        this.ui.name.val()); },
+		onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
+		onChangeUrl:         function() { this.model.set("url",         this.ui.url.val()); },
+		onChangeWeight:      function() { this.model.set("weight",      this.ui.weight.val()); },
+
+		onChangeDroppable:   function() { this.model.set("droppable",   this.ui.droppable.is(":checked") ? "1" : "0");   },
+		onChangeDestroyable: function() { this.model.set("destroyable", this.ui.destroyable.is(":checked") ? "1" : "0"); },
+
+		onChangeMaxQuantity: function() { this.model.set("max_qty_in_inventory", this.ui.max_qty.val()); },
+
+
 		/* Radio Button field logic */
 
 		onChangeType: function()
 		{
-			var view = this;
+			var selected_radio = this.$el.find(".item-type:checked");
+
+			this.model.set("type", selected_radio.val());
 
 			// Hide radio buttons and add bootstrap classes
 			//
-			var selected_radio = this.$el.find("input[name=item-type]:checked");
-
-			this.$el.find("input[name=item-type]").parent().removeClass("active");
+			this.ui.item_types.parent().removeClass("active");
 			selected_radio.parent().addClass("active");
 
 
 			// Hide all and open selected tab
 			//
-			this.$el.find('.trigger-tab').hide();
+			this.ui.type_tabs.hide();
 
 			var display_tab = "." + selected_radio.val() + "-fields";
 			$(display_tab).show();
+		},
 
-			// Assign value in-case view is re-rendered
-			this.model.set("type", selected_radio.val());
+
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+			this.stopListening(this.model.media());
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(),  'change', this.render);
+			this.listenTo(this.model.media(), 'change', this.render);
 		},
 
 
@@ -148,12 +214,16 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 
@@ -174,13 +244,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Media */
-					var media_chooser = new MediaChooserView({collection: media});
+					var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
 					vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
 					media_chooser.on("media:choose", function(media) {
-						view.media = media;
+						view.unbindAssociations();
 						view.model.set("media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Item");
 					});
 

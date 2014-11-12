@@ -1,87 +1,120 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/dialog_editor.tpl',
-	'collections/characters',
-	'collections/media',
-	'collections/dialog_scripts',
-	'collections/dialog_options',
-	'collections/plaques',
-	'collections/items',
-	'collections/web_pages',
-	'collections/dialogs',
-	'collections/tabs',
-	'models/media',
-	'models/game',
-	'models/character',
-	'models/dialog_script',
-	'models/dialog_option',
-	'views/media_chooser',
-	'views/conversation_editor',
-	'views/character_organizer',
-	'vent'
-], function(_, $, Backbone, Template,
-	CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection,
-	Media, Game, Character, DialogScript, DialogOption,
-	MediaChooserView, ConversationEditorView, CharactersOrganizerView,
-	vent) {
+define(function(require)
+{
+	var _                       = require('underscore');
+	var $                       = require('jquery');
+	var Backbone                = require('backbone');
+	var Template                = require('text!templates/dialog_editor.tpl');
+	var vent                    = require('vent');
+
+	var CharactersCollection    = require('collections/characters');
+	var MediaCollection         = require('collections/media');
+	var DialogScriptsCollection = require('collections/dialog_scripts');
+	var DialogOptionsCollection = require('collections/dialog_options');
+	var PlaquesCollection       = require('collections/plaques');
+	var ItemsCollection         = require('collections/items');
+	var WebPagesCollection      = require('collections/web_pages');
+	var DialogsCollection       = require('collections/dialogs');
+	var TabsCollection          = require('collections/tabs');
+
+	var Media                   = require('models/media');
+	var Game                    = require('models/game');
+	var Character               = require('models/character');
+	var DialogScript            = require('models/dialog_script');
+	var DialogOption            = require('models/dialog_option');
+
+	var MediaChooserView        = require('views/media_chooser');
+	var ConversationEditorView  = require('views/conversation_editor');
+	var CharactersOrganizerView = require('views/character_organizer');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
+		/* View */
+
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
-				icon_thumbnail_url: this.icon.thumbnail()
+				icon_thumbnail_url: this.model.icon_thumbnail()
 			}
 		},
 
 
 		ui: {
-			"name": "#dialog-name",
-			"description": "#dialog-description",
-			"iconchooser": "#icon-chooser-container"
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon": ".change-icon",
+			"edit_script": ".edit-script",
+
+			"name":        "#dialog-name",
+			"description": "#dialog-description"
 		},
+
+
+		/* Constructor */
+
+		initialize: function() {
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
 		},
 
-
 		events: {
-			"click .save": "onClickSave",
-			"click .delete": "onClickDelete",
-			"click .change-icon": "onClickChangeIcon",
-			"click .edit-script": "onClickEditConversation"
+			"click @ui.save":        "onClickSave",
+			"click @ui.delete":      "onClickDelete",
+			"click @ui.cancel":      "onClickCancel",
+
+			"click @ui.change_icon": "onClickChangeIcon",
+			"click @ui.edit_script": "onClickEditConversation",
+
+			// Field events
+			"change @ui.name":        "onChangeName",
+			"change @ui.description": "onChangeDescription"
 		},
 
-		initialize: function(options) {
-			this.icon = options.icon;
-		},
+
+
+		/* Crud */
 
 		onClickSave: function() {
 			var view   = this;
 			var dialog = this.model;
 
-			// Save Object
-			dialog.set("icon_media_id", view.icon.get("media_id"));
-			dialog.set("name",          view.ui.name.val());
-			dialog.set("description",   view.ui.description.val());
-
 			dialog.save({}, {
 				create: function() {
-					vent.trigger("dialog:add", dialog);
+					view.storePreviousAttributes();
+
+					vent.trigger("game_object:add", dialog);
 					vent.trigger("application:popup:hide");
 				},
 
 				update: function()
 				{
+					view.storePreviousAttributes();
+
 					// FIXME get rid of global update broadcasts for models
 					vent.trigger("game_object:update", dialog);
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -94,6 +127,30 @@ define([
 			});
 		},
 
+
+		/* Field Changes */
+
+		onChangeName:        function() { this.model.set("name",        this.ui.name.val()); },
+		onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
+
+
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(), 'change', this.render);
+		},
+
+
+		/* Media Selector */
+
 		onClickChangeIcon: function() {
 			var view = this;
 
@@ -102,12 +159,16 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Conversation");
 					});
 
@@ -119,6 +180,9 @@ define([
 				}
 			});
 		},
+
+
+		/* Conversation Editor */
 
 		onClickEditConversation: function() {
 			var game = new Game({game_id: this.model.get("game_id")});

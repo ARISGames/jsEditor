@@ -72,9 +72,6 @@ define([
 
 				var character = view.incoming_options.characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
 				script.set("character", character);
-
-				var character_media = view.incoming_options.media.findWhere({media_id: character.get("media_id")});
-				character.set("media", character_media);
 			});
 
 			if(this.model) {

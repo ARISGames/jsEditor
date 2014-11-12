@@ -14,6 +14,8 @@
 				<label for="type">Destination</label>
 
 				<select class="form-control" id="type">
+					<option value="0" selected disabled>- Select One -</option>
+
 					<% _.each(tab_types, function(tab_name, tab_value) { %>
 						<option value="<%= tab_value %>" <%= option_selected(type === tab_value) %>><%= tab_name %></option>
 					<% }); %>
@@ -50,7 +52,7 @@
 
 			<div class="form-group">
 				<label for="name">Title</label>
-				<input type="text" autofocus class="form-control" id="name" placeholder="Name" value="<%= name %>">
+				<input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
 			</div>
 		</div>
 	</div>
@@ -74,7 +76,7 @@
 			</button>
 		<% } %>
 
-		<button type="button" class="btn btn-default" data-dismiss="modal">
+		<button type="button" class="btn btn-default cancel" data-dismiss="modal">
 			Cancel
 		</button>
 	</div>

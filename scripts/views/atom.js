@@ -12,6 +12,8 @@ define([
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
 				},
+				item_list_selection: this.hasItemListSelection(),
+
 				quantity_visible: this.isQuantityVisible(),
 				content_visible:  this.isContentVisible (),
 				location_visible: this.isLocationVisible(),
@@ -77,7 +79,31 @@ define([
 
 		onChangeBooleanOperator: function() {
 			var value = this.ui.operator.find("option:selected").val();
+			var type  = this.ui.operator.find("option:selected").data("set");
+
+			// Change requirement to one from proper dropdown
+			if(type === "item_list")
+			{
+				// Switch to value from first list.
+				if(!this.hasItemListSelection())
+				{
+					this.model.set("requirement", "PLAYER_HAS_ITEM");
+					this.model.set("content_id", "0");
+				}
+
+			}
+			else {
+				// Switch to value from second list.
+				if(this.hasItemListSelection())
+				{
+					this.model.set("requirement", "PLAYER_VIEWED_DIALOG");
+					this.model.set("content_id", "0");
+				}
+			}
+
 			this.model.set("bool_operator", value);
+
+			this.render();
 		},
 
 		onChangeRequirement: function() {
@@ -104,6 +130,16 @@ define([
 		},
 
 		/* Visibility Logic */
+
+		hasItemListSelection: function() {
+			switch(this.model.get("requirement")) {
+				case "PLAYER_HAS_ITEM":
+				case "PLAYER_HAS_TAGGED_ITEM":
+					return true;
+				default:
+					return false;
+			}
+		},
 
 		isQuantityVisible: function() {
 			switch(this.model.get("requirement")) {

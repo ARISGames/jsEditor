@@ -1,12 +1,12 @@
-define([
-       'backbone',
-       'text!templates/item_organizer.tpl',
-       'views/item_organizer_row',
-	   'views/item_editor',
-	   'models/item',
-	   'models/media',
-       'vent'
-], function(Backbone, Template, ItemOrganizerRowView, ItemEditorView, Item, Media, vent) {
+define(function(require)
+{
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/item_organizer.tpl');
+	var ItemOrganizerRowView = require('views/item_organizer_row');
+	var ItemEditorView       = require('views/item_editor');
+	var Item                 = require('models/item');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -18,8 +18,11 @@ define([
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("item:add", function(item) {
-				view.collection.add(item);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof Item)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
 
@@ -32,13 +35,8 @@ define([
 		onClickNew: function() {
 			var item  = new Item({game_id: this.model.get("game_id")});
 
-			var icon  = new Media({media_id: item.get("icon_media_id")});
-			var media = new Media({media_id: item.get("media_id")});
-
-			$.when(icon.fetch(), media.fetch()).done(function () {
-				var item_editor = new ItemEditorView({model: item, icon: icon, media: media});
-				vent.trigger("application:popup:show", item_editor, "Create Item");
-			});
+			var item_editor = new ItemEditorView({model: item});
+			vent.trigger("application:popup:show", item_editor, "Create Item");
 		}
 	});
 });

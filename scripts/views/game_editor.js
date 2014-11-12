@@ -13,6 +13,9 @@ define(function(require)
 	var vent = require('vent');
 
 	return Backbone.Marionette.CompositeView.extend({
+
+		/* View */
+
 		template: _.template(Template),
 
 		className: "games-list-container",
@@ -20,8 +23,8 @@ define(function(require)
 		templateHelpers: function() {
 			return {
 				is_new : this.model.isNew(),
-				icon_thumbnail_url:  this.icon.thumbnail(),
-				media_thumbnail_url: this.media.thumbnail(),
+				icon_thumbnail_url:  this.icon.thumbnail_for(this.model),
+				media_thumbnail_url: this.media.thumbnail_for(),
 
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
@@ -35,127 +38,112 @@ define(function(require)
 					return boolean_statement ? "checked" : "";
 				},
 
+				tab_selected: function(boolean_statement) {
+					return boolean_statement ? "active" : "";
+				},
+
+				tab_visible: function(boolean_statement) {
+					return boolean_statement ? "" : "style='display: none;'";
+				},
+
 				scenes: this.scenes
 			};
 		},
 
 		ui: {
-			"name": "#game-name",
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon":  ".change-icon",
+			"change_media": ".change-media",
+			"game_published": ".game-published",
+
+			"name":        "#game-name",
 			"description": "#game-description",
-			"type":"#game-type",
-			"intro_scene":"#game-intro_scene_id",
-			"map_type":"#game-map_type",
-			"map_latitude":"#game-map_latitude",
-			"map_longitude":"#game-map_longitude",
-			"map_zoom_level":"#game-map_zoom_level",
-			"map_show_player":"#game-map_show_player",
-			"map_show_players":"#game-map_show_players",
-			"map_offsite_mode":"#game-map_offsite_mode",
-			"notebook_allow_comments":"#game-notebook_allow_comments",
-			"notebook_allow_likes":"#game-notebook_allow_likes",
-			"notebook_allow_player_tags":"#game-notebook_allow_player_tags",
-			"inventory_weight_cap":"#game-inventory_weight_cap"
+			"type":        "#game-type",
+			"intro_scene": "#game-intro_scene_id",
+
+			"map_type":         "#game-map_type",
+			"map_latitude":     "#game-map_latitude",
+			"map_longitude":    "#game-map_longitude",
+			"map_zoom_level":   "#game-map_zoom_level",
+			"map_show_player":  "#game-map_show_player",
+			"map_show_players": "#game-map_show_players",
+			"map_offsite_mode": "#game-map_offsite_mode",
+
+			"notebook_allow_comments":    "#game-notebook_allow_comments",
+			"notebook_allow_likes":       "#game-notebook_allow_likes",
+
+			"inventory_weight_cap": "#game-inventory_weight_cap",
+
+			"icon":  ".change-icon img",
+			"media": ".change-media img",
+
+			"autofocus":  "input[autofocus]"
+		},
+
+
+		/* Dom manipulation */
+
+		set_icon: function(media) {
+			this.ui.icon.attr("src", media.thumbnail_for(this.model));
+		},
+
+		set_media: function(media) {
+			this.ui.media.attr("src", media.thumbnail_for());
 		},
 
 		onShow: function() {
-			this.$el.find('input[autofocus]').focus();
+			this.ui.autofocus.focus();
 		},
 
-		events: {
-			"change input[name=game-published]": "onChangePublished",
-			"click .save": "onClickSave",
-			"click .cancel": "onClickCancel",
-			"click .delete": "onClickDelete",
-			"click .change-icon": "onClickIcon",
-			"click .change-media": "onClickMedia"
-		},
+
+		/* Initialization and Rendering */
 
 		initialize: function(options) {
-			this.icon   = options.icon;
-			this.media  = options.media;
+			this.icon   = this.model.icon();
+			this.media  = this.model.media();
 			this.scenes = options.scenes;
+
+			/* Icon media change events */
+
+			this.bindIconAssociation();
 		},
 
 		onRender: function() {
-			this.onChangePublished();
 			this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
 		},
 
-		onChangePublished: function() {
-			var view = this;
 
-			// Hide radio buttons and add bootstrap classes
-			//
-			var selected_radio = this.$el.find("input[name=game-published]:checked");
+		/* View Events */
 
-			this.$el.find("input[name=game-published]").parent().removeClass("active");
-			selected_radio.parent().addClass("active");
+		events: {
+			"click @ui.save":   "onClickSave",
+			"click @ui.cancel": "onClickCancel",
+			"click @ui.delete": "onClickDelete",
+
+			"click @ui.change_icon":  "onClickIcon",
+			"click @ui.change_media": "onClickMedia",
+
+			"change @ui.game_published": "onChangePublished"
 		},
 
-		onClickIcon: function() {
-			var view = this;
-			event.preventDefault();
 
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
-
-			media.fetch({
-				success: function() {
-					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, back_view: view});
-					vent.trigger("application:popup:show", icon_chooser, "Game Icon");
-
-					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
-						view.model.set("icon_media_id", media.id);
-						view.$el.find(".change-icon img").attr("src", media.thumbnail());
-						vent.trigger("application:popup:hide");
-					});
-
-					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:hide");
-					});
-				}
-			});
-		},
-
-		onClickMedia: function() {
-			var view = this;
-			event.preventDefault();
-
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
-
-			media.fetch({
-				success: function() {
-					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media});
-					vent.trigger("application:popup:show", icon_chooser, "Game Media");
-
-					icon_chooser.on("media:choose", function(media) {
-						view.media = media;
-						view.model.set("media_id", media.id);
-						view.$el.find(".change-media img").attr("src", media.thumbnail());
-						vent.trigger("application:popup:hide");
-					});
-
-					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:hide");
-					});
-				}
-			});
-		},
-
+		/* Crud */
 
 		onClickSave: function() {
 			var view = this;
 
-			this.model.set("name",        this.ui.name.val());
-			this.model.set("description", this.ui.description.val());
-			this.model.set("published",   this.$el.find("input[name=game-published]:checked").val());
+			this.model.set("name",           this.ui.name.val());
+			this.model.set("description",    this.ui.description.val());
+			this.model.set("published",      this.$el.find(".game-published:checked").val());
 			this.model.set("intro_scene_id", this.ui.intro_scene.val());
 
 			this.model.set("type", this.ui.type.val());
+
+			this.model.set("icon_media_id", this.icon.id);
+			this.model.set("media_id",      this.media.id);
 
 			this.model.set("map_type",         this.ui.map_type.val());
 			this.model.set("map_latitude",     this.ui.map_latitude.val());
@@ -167,7 +155,6 @@ define(function(require)
 
 			this.model.set("notebook_allow_comments",    this.ui.notebook_allow_comments.is(":checked") ? "1" : "0");
 			this.model.set("notebook_allow_likes",       this.ui.notebook_allow_likes.is(":checked") ? "1" : "0");
-			this.model.set("notebook_allow_player_tags", this.ui.notebook_allow_player_tags.is(":checked") ? "1" : "0");
 			this.model.set("inventory_weight_cap",       this.ui.inventory_weight_cap.val());
 
 			this.model.save({}, {
@@ -200,6 +187,96 @@ define(function(require)
 			});
 
 			vent.trigger("application:popup:show", alert_dialog, "Delete Game?");
+		},
+
+		/* Association Binding */
+
+		unbindIconAssociation: function() {
+			this.stopListening(this.icon);
+			this.stopListening(this.media);
+		},
+
+		bindIconAssociation: function() {
+			this.listenTo(this.icon,  'change', this.set_icon);
+			this.listenTo(this.media, 'change', this.set_media);
+		},
+
+
+		/* Radio Logic */
+
+		onChangePublished: function() {
+			var view = this;
+
+			// Hide radio buttons and add bootstrap classes
+			//
+			var selected_radio = this.$el.find(".game-published:checked");
+
+			this.$el.find(".game-published").parent().removeClass("active");
+			selected_radio.parent().addClass("active");
+		},
+
+
+		/* Media Selectors */
+
+		onClickIcon: function() {
+			var view = this;
+			event.preventDefault();
+
+			var media = new MediaCollection([], {parent: this.model});
+
+			media.fetch({
+				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
+					vent.trigger("application:popup:show", icon_chooser, "Game Icon");
+
+					icon_chooser.on("media:choose", function(media) {
+						view.unbindIconAssociation();
+						view.icon = media;
+						view.bindIconAssociation();
+						view.set_icon(media);
+						vent.trigger("application:popup:hide");
+					});
+
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:hide");
+					});
+				}
+			});
+		},
+
+		onClickMedia: function() {
+			var view = this;
+			event.preventDefault();
+
+			var media = new MediaCollection([], {parent: this.model});
+
+			media.fetch({
+				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
+					/* Icon */
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.media});
+
+					vent.trigger("application:popup:show", icon_chooser, "Game Media");
+
+					icon_chooser.on("media:choose", function(media) {
+						view.unbindIconAssociation();
+						view.media = media;
+						view.bindIconAssociation();
+						view.set_media(media);
+						vent.trigger("application:popup:hide");
+					});
+
+					icon_chooser.on("cancel", function() {
+						vent.trigger("application:popup:hide");
+					});
+				}
+			});
 		}
 
 	});

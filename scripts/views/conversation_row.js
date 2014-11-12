@@ -1,30 +1,32 @@
-define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'text!templates/conversation_row.tpl',
-	'views/conversation_editor',
-	'views/character_organizer',
-	'models/media',
-	'models/game',
-	'models/character',
-	'models/dialog_script',
-	'models/dialog_option',
-	'collections/characters',
-	'collections/media',
-	'collections/dialog_scripts',
-	'collections/dialog_options',
-	'collections/plaques',
-	'collections/items',
-	'collections/web_pages',
-	'collections/dialogs',
-	'collections/tabs',
-	'vent'
-], function($, _, Backbone, Template,
-		ConversationEditorView, CharactersOrganizerView,
-		Media, Game, Character, DialogScript, DialogOption,
-		CharactersCollection, MediaCollection, DialogScriptsCollection, DialogOptionsCollection, PlaquesCollection, ItemsCollection, WebPagesCollection, DialogsCollection, TabsCollection,
-		vent) {
+define(function(require)
+{
+	var $                       = require('jquery');
+	var _                       = require('underscore');
+	var Backbone                = require('backbone');
+	var Template                = require('text!templates/conversation_row.tpl');
+	var vent                    = require('vent');
+	var storage                 = require('storage');
+
+	var ConversationEditorView  = require('views/conversation_editor');
+	var CharactersOrganizerView = require('views/character_organizer');
+
+	var Media                   = require('models/media');
+	var Game                    = require('models/game');
+	var Character               = require('models/character');
+	var DialogScript            = require('models/dialog_script');
+	var DialogOption            = require('models/dialog_option');
+
+	var CharactersCollection    = require('collections/characters');
+	var MediaCollection         = require('collections/media');
+	var DialogScriptsCollection = require('collections/dialog_scripts');
+	var DialogOptionsCollection = require('collections/dialog_options');
+	var PlaquesCollection       = require('collections/plaques');
+	var ItemsCollection         = require('collections/items');
+	var WebPagesCollection      = require('collections/web_pages');
+	var DialogsCollection       = require('collections/dialogs');
+	var TabsCollection          = require('collections/tabs');
+
+
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -72,12 +74,14 @@ define([
 				var character_media = new Media({media_id: "0"});
 				media.push(character_media);
 
+				// TODO remove once we preload all objects in a controller/router
+				storage.media.add(media.models);
+
 				var conversations_editor = new ConversationEditorView(
 					{
 						model: intro_script,
 						dialog: dialog,
 						characters: characters,
-						media: media,
 						scripts: scripts,
 						script_options: options,
 						contents: contents,

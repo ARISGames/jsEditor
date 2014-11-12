@@ -1,27 +1,42 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/scene.tpl',
-	'views/scene_editor',
-	'views/scene_instance_trigger',
-	'views/scene_trigger_type_chooser',
-	'views/empty_scene',
-	'collections/triggers',
-	'vent'
-], function(_, Backbone, Template, SceneEditorView, SceneInstanceTriggerView, SceneTriggerTypeChooserView, EmptySceneView, TriggerCollection, vent) {
+define(function(require)
+{
+	var _                           = require('underscore');
+	var Backbone                    = require('backbone');
+	var Template                    = require('text!templates/scene.tpl');
+	var SceneEditorView             = require('views/scene_editor');
+	var SceneInstanceTriggerView    = require('views/scene_instance_trigger');
+	var SceneTriggerTypeChooserView = require('views/scene_trigger_type_chooser');
+	var EmptySceneView              = require('views/empty_scene');
+	var TriggerCollection           = require('collections/triggers');
+	var vent                        = require('vent');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
-		className: "panel panel-default scene-panel",
+		className: function() {
+			var panel_color = "default";
+
+			if(this.is_intro_scene())
+			{
+				panel_color = "info";
+			}
+
+			return "panel panel-"+panel_color+" scene-panel"
+		},
 
 		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-triggers",
 		emptyView: EmptySceneView,
 
+		templateHelpers: function() {
+			return {
+				is_intro_scene: this.is_intro_scene()
+			}
+		},
+
 		initialize: function(options) {
 			var view = this;
-
-			this.game = options.game;
 
 			this.collection = new TriggerCollection([], {parent: this.model});
 			this.collection.fetch();
@@ -35,12 +50,33 @@ define([
 			});
 
 			vent.on("game_object:update", function(game_object) {
-				if(game_object.id === view.model.id && game_object.idAttribute === view.model.idAttribute) {
+				if(game_object.is(view.model))
+				{
 					view.model = game_object;
 					view.render();
 				}
 			});
 
+			// Track scene deletes to adjust intro scene
+			this.model.game().on("change:intro_scene_id", this.onChangeIntroScene.bind(this));
+		},
+
+		is_intro_scene: function() {
+			// FIXME can just compare models if we load all scenes into storage.
+			return this.model.id === this.model.game().get("intro_scene_id");
+		},
+
+		onChangeIntroScene: function() {
+			this.render();
+
+			if(this.is_intro_scene())
+			{
+				this.$el.removeClass("panel-default").addClass("panel-info");
+			}
+			else
+			{
+				this.$el.removeClass("panel-info").addClass("panel-default");
+			}
 		},
 
 		onItemviewTriggerRemove: function(item_view, trigger) {
@@ -70,7 +106,7 @@ define([
 		},
 
 		onClickNewTrigger: function() {
-			vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model: this.model, game: this.game}), "Add Trigger to Scene");
+			vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model: this.model, game: this.model.game()}), "Add Trigger to Scene");
 		},
 
 	});

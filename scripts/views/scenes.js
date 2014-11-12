@@ -16,25 +16,26 @@ define([
 		itemView: SceneView,
 		itemViewContainer: ".scenes",
 
-		itemViewOptions: function(model, index) {
-			return { game: this.model }
-		},
-
 		className: 'full-height',
 
 		events: {
 			"click .new-scene": "onClickNewScene"
 		},
 
-		initialize: function() {
+		initialize: function(options) {
 			var view = this;
+
+			this.intro_scene = options.intro_scene;
 
 			vent.on("scenes:add", function(scene) {
 				view.collection.add(scene);
 			});
+
+			vent.on("scenes:remove", function(scene) {
+				view.model.fetch();
+			});
 		},
 
-		//this.collection.add(scene);
 
 		onClickNewScene: function() {
 			var scene = new Scene({game_id: this.model.id});

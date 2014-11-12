@@ -1,12 +1,12 @@
-define([
-       'backbone',
-       'text!templates/plaque_organizer.tpl',
-       'views/plaque_organizer_row',
-	   'views/plaque_editor',
-	   'models/plaque',
-	   'models/media',
-       'vent'
-], function(Backbone, Template, PlaqueOrganizerRowView, PlaqueEditorView, Plaque, Media, vent) {
+define(function(require)
+{
+	var Backbone               = require('backbone');
+	var Template               = require('text!templates/plaque_organizer.tpl');
+	var PlaqueOrganizerRowView = require('views/plaque_organizer_row');
+	var PlaqueEditorView       = require('views/plaque_editor');
+	var Plaque                 = require('models/plaque');
+	var vent                   = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -14,11 +14,15 @@ define([
 		itemView: PlaqueOrganizerRowView,
 		itemViewContainer: ".plaques",
 
+
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("plaque:add", function(plaque) {
-				view.collection.add(plaque);
+			vent.on("game_object:add", function(game_object) {
+				if(game_object instanceof Plaque)
+				{
+					view.collection.add(game_object);
+				}
 			});
 		},
 
@@ -31,13 +35,8 @@ define([
 		onClickNew: function() {
 			var plaque  = new Plaque({game_id: this.model.get("game_id")});
 
-			var icon  = new Media({media_id: plaque.get("icon_media_id")});
-			var media = new Media({media_id: plaque.get("media_id")});
-
-			$.when(icon.fetch(), media.fetch()).done(function () {
-				var plaque_editor = new PlaqueEditorView({model: plaque, icon: icon, media: media});
-				vent.trigger("application:popup:show", plaque_editor, "Create Plaque");
-			});
+			var plaque_editor = new PlaqueEditorView({model: plaque});
+			vent.trigger("application:popup:show", plaque_editor, "Create Plaque");
 		}
 	});
 });

@@ -28,13 +28,18 @@ define([
 ], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, Tab, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, TabsCollection, WebHooksCollection, vent) {
 
 	return Backbone.Marionette.CompositeView.extend({
+
+		/* View */
+
 		template: _.template(Template),
 
 		templateHelpers: function() {
 			return {
 				is_new: this.model.isNew(),
 
-				icon_thumbnail_url:  this.icon.thumbnail(),
+				icon_thumbnail_url:  this.model.icon_thumbnail(),
+
+				parent_name: this.parent_name(),
 
 				tab_types: this.tab_types,
 				tab_options_visible: _.contains(["DIALOG", "ITEM", "PLAQUE", "WEB_PAGE"], this.model.get("type")),
@@ -47,24 +52,56 @@ define([
 		},
 
 
-
 		ui: {
+			"save":   ".save",
+			"delete": ".delete",
+			"cancel": ".cancel",
+
+			"change_icon":       ".change-icon",
+			"edit_requirements": ".edit-requirements",
+
 			"name": "#name",
 			"info": "#info",
 			"type_select":    "#type",
-			"content_select": "#content"
+			"content_select": "#content",
+
+			"icon":  ".change-icon img"
 		},
+
+
+		/* Constructor */
+
+		initialize: function(options) {
+			// Dropdown lists FIXME replace with storage.
+			this.plaques   = options.contents.plaques;
+			this.items     = options.contents.items;
+			this.web_pages = options.contents.web_pages;
+			this.dialogs   = options.contents.dialogs;
+
+			// Allow returning to original attributes
+			this.storePreviousAttributes();
+
+			// Listen to association events on media
+			this.bindAssociations();
+
+			// Handle cancel from modal X or dark area
+			this.on("popup:hide", this.onClickCancel);
+		},
+
+
+		/* View Events */
 
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
 		},
 
 		events: {
-			"click .save":   "onClickSave",
-			"click .delete": "onClickDelete",
+			"click @ui.save":   "onClickSave",
+			"click @ui.cancel": "onClickSave",
+			"click @ui.delete": "onClickDelete",
 
-			"click .change-icon":       "onClickIcon",
-			"click .edit-requirements": "onClickRequirements",
+			"click @ui.change_icon":       "onClickIcon",
+			"click @ui.edit_requirements": "onClickRequirements",
 
 			// Field events
 			"change @ui.name": "onChangeName",
@@ -73,26 +110,37 @@ define([
 			"change @ui.content_select": "onChangeContent"
 		},
 
-		initialize: function(options) {
-			this.icon      = options.icon;
-			this.plaques   = options.contents.plaques;
-			this.items     = options.contents.items;
-			this.web_pages = options.contents.web_pages;
-			this.dialogs   = options.contents.dialogs;
+
+		/* Dom manipulation */
+
+		set_icon: function(media) {
+			this.ui.icon.attr("src", media.thumbnail_for(this.model));
 		},
+
+
+		/* Crud */
 
 		onClickSave: function() {
 			var view  = this;
 
 			view.model.save({}, {
 				create: function() {
+					view.storePreviousAttributes();
+
 					view.trigger("tab:add", view.model);
 				},
 
 				success: function() {
+					view.storePreviousAttributes();
+
 					vent.trigger("application:popup:hide");
 				}
 			});
+		},
+
+		onClickCancel: function() {
+			delete this.previous_attributes.requirement_root_package_id;
+			this.model.set(this.previous_attributes);
 		},
 
 		onClickDelete: function() {
@@ -103,24 +151,39 @@ define([
 			});
 		},
 
+
+		/* Tab name logic */
+
 		tab_types: Tab.tab_types,
 
 		tab_content_options: function() {
 			// TODO add section headers
 			switch(this.model.get("type")) {
 				case "DIALOG":
-					return this.dialogs.map(function(model) { return {name: model.get("name"), value: model.id} });
+					return this.dialogs.map(function(model)   { return {name: model.get("name"), value: model.id} });
 
 				case "ITEM":
-					return this.items.map(function(model) { return {name: model.get("name"), value: model.id} });
+					return this.items.map(function(model)     { return {name: model.get("name"), value: model.id} });
 
 				case "PLAQUE":
-					return this.plaques.map(function(model) { return {name: model.get("name"), value: model.id} });
+					return this.plaques.map(function(model)   { return {name: model.get("name"), value: model.id} });
 
 				case "WEB_PAGE":
 					return this.web_pages.map(function(model) { return {name: model.get("name"), value: model.id} });
 				default:
 					return [];
+			}
+		},
+
+		parent_name: function() {
+
+			if(this.model.get("content_id") === "0")
+			{
+				return this.model.tab_type_name();
+			}
+			else
+			{
+				return this.model.game_object().get("name");
 			}
 		},
 
@@ -134,9 +197,6 @@ define([
 			var type = this.ui.type_select.val();
 			this.model.set("type", type)
 
-			// Change name to avoid confusion.
-			this.model.set("name", this.tab_types[type]);
-
 			// Reset Game Object Dropdown.
 			this.model.set("content_id", "0");
 
@@ -146,10 +206,47 @@ define([
 		onChangeContent:   function() {
 			this.model.set("content_id", this.ui.content_select.val())
 
-			// Change name to avoid confusion.
-			this.model.set("name", this.ui.content_select.find("option:selected").text());
+			var content_collections = {
+				"DIALOG":   this.dialogs,
+				"ITEM":     this.items,
+				"PLAQUE":   this.plaques,
+				"WEB_PAGE": this.web_pages
+			}
+
+			// FIXME replace with set game_object_id and storage.
+			var collection = content_collections[this.model.get("type")];
+			var game_object = collection.get(this.model.get("content_id"));
+
+			this.unbindAssociations();
+			this.model.game_object(game_object);
+			this.bindAssociations();
 
 			this.render();
+		},
+
+
+		/* Undo and Association Binding */
+
+		storePreviousAttributes: function() {
+			this.previous_attributes = _.clone(this.model.attributes)
+		},
+
+		unbindAssociations: function() {
+			this.stopListening(this.model.icon());
+
+			if(this.model.game_object())
+			{
+				this.stopListening(this.model.game_object().icon());
+			}
+		},
+
+		bindAssociations: function() {
+			this.listenTo(this.model.icon(), 'change', this.set_icon);
+
+			if(this.model.game_object())
+			{
+				this.listenTo(this.model.game_object().icon(), 'change', this.set_icon);
+			}
 		},
 
 
@@ -164,13 +261,17 @@ define([
 
 			media.fetch({
 				success: function() {
+					/* Add default */
+					media.unshift(view.model.default_icon());
+
 					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, back_view: view});
+					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model, back_view: view});
 					vent.trigger("application:popup:show", icon_chooser, "Tab Icon");
 
 					icon_chooser.on("media:choose", function(media) {
-						view.icon = media;
+						view.unbindAssociations();
 						view.model.set("icon_media_id", media.id);
+						view.bindAssociations();
 						vent.trigger("application:popup:show", view, "Edit Tab");
 					});
 

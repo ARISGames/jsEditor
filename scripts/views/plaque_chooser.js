@@ -32,10 +32,7 @@ define([
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			// Do not need fetches since we are 'new'
-			var icon     = new Media    ({media_id: trigger.get("icon_media_id")});
-
-			var trigger_editor = new PlaqueTriggerEditorView({scene: this.options.parent, icon: icon, plaque: plaque, instance: instance, model: trigger, visible_fields: "create_plaque_with_trigger"});
+			var trigger_editor = new PlaqueTriggerEditorView({scene: this.options.parent, game_object: plaque, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Plaque to Scene");
 		},
 

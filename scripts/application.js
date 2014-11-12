@@ -1,18 +1,19 @@
 /* Application */
 
-define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'marionette',
-	'models/session',
-	'vent',
-	'router',
-	'views/user_nav_menu'
-], function($, _, Backbone, Marionette, session, vent, Router, UserNavMenuView) {
+define(function(require)
+{
+	var $                  = require('jquery');
+	var Backbone           = require('backbone');
+	var Marionette         = require('marionette');
+	var session            = require('models/session');
+	var vent               = require('vent');
+	var Router             = require('router');
+	var UserNavMenuView    = require('views/user_nav_menu');
+	var storage            = require('storage');
+	var StorageCollections = require('storage_collections');
+
 
 	var application = new Backbone.Marionette.Application();
-
 
 	// Application Layout
 	//
@@ -29,6 +30,9 @@ define([
 	// Application Constructor
 	//
 	application.addInitializer(function () {
+		// Add all game object collections to application storage.
+		StorageCollections.inject(storage);
+
 		this.session = session;
 		this.router  = new Router;
 	});
@@ -113,7 +117,11 @@ define([
 		application.dialog_region.show(view);
 		$('.modal').modal('show');
 
-		$('.modal').on("hidden.bs.modal", function() {
+		// Clear event list
+		$('.modal').off("hidden.bs.modal");
+
+		$('.modal').on("hidden.bs.modal", function(event) {
+			view.trigger("popup:hide");
 			application.dialog_region.reset();
 		});
 
