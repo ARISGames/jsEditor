@@ -39,7 +39,7 @@ define([
 			this.collection.add(and_package);
 		},
 
-		onClickSaveAll: function() {
+		onClickSaveAll: function(event) {
 			var view = this;
 			event.preventDefault();
 

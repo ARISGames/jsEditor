@@ -252,7 +252,7 @@ define([
 
 		/* Media Selection */
 
-		onClickIcon: function() {
+		onClickIcon: function(event) {
 			var view = this;
 			event.preventDefault();
 

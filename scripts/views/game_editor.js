@@ -218,7 +218,7 @@ define(function(require)
 
 		/* Media Selectors */
 
-		onClickIcon: function() {
+		onClickIcon: function(event) {
 			var view = this;
 			event.preventDefault();
 
@@ -248,7 +248,7 @@ define(function(require)
 			});
 		},
 
-		onClickMedia: function() {
+		onClickMedia: function(event) {
 			var view = this;
 			event.preventDefault();
 
