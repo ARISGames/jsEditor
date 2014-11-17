@@ -1,12 +1,15 @@
-define([
-	'backbone',
-	'text!templates/conversation_script.tpl',
-	'models/dialog_option',
-	'models/dialog_script',
-	'views/conversation_option',
-	'views/dialog_script_editor',
-	'vent'
-], function(Backbone, Template, DialogOption, DialogScript, ConversationOptionView, DialogScriptEditorView, vent) {
+define(function(require)
+{
+	var $                      = require('jquery');
+	var Backbone               = require('backbone');
+	var Template               = require('text!templates/conversation_script.tpl');
+	var DialogOption           = require('models/dialog_option');
+	var DialogScript           = require('models/dialog_script');
+	var ConversationOptionView = require('views/conversation_option');
+	var DialogScriptEditorView = require('views/dialog_script_editor');
+	var vent                   = require('vent');
+
+
 	var ConversationScriptView = Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 		templateHelpers: function() {
@@ -61,7 +64,8 @@ define([
 		},
 
 		set_media: function() {
-			this.$el.find('.thumbnail img').attr('src', this.model.get("character").media_thumbnail());
+			var element = $(this.$el.find('.thumbnail img').get(0));
+			element.attr('src', this.model.get("character").media_thumbnail());
 		},
 
 		onClickEdit: function() {
