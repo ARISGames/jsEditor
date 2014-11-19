@@ -23,12 +23,14 @@ define([
 			"instance_id",
 			"game_id",
 			"object_id",
-			"object_type"
+			"object_type",
+			"qty",
+			"infinite_qty"
         ],
 
 		defaults: {
-			"quantity": "0",
-			"infinite_qty": "1"
+			"qty": "0",
+			"infinite_qty": "0"
 		},
 
 		// For loading the right class from the instance

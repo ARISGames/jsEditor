@@ -70,6 +70,10 @@ define([
 			return this.id === model.id && this.idAttribute === model.idAttribute;
 		},
 
+		is_a: function(instance_class) {
+			return this instanceof instance_class;
+		},
+
 		// Callback on create and update
 		save: function(attrs, options) {
 			options || (options = {});

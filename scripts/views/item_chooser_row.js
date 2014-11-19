@@ -29,6 +29,10 @@ define([
 			instance.set("object_id",   item.id);
 			instance.set("object_type", Instance.type_for(item));
 
+			// Quantity default for item.
+			instance.set("infinite_qty", "1");
+			instance.set("qty", "1");
+
 			instance.save({}, {
 				success: function() {
 
