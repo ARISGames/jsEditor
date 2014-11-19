@@ -9,7 +9,14 @@ define([
 
 	return Backbone.Model.extend({
 
-		parse: function(json) {
+		parse: function(json, options) {
+			options || (options = {});
+
+			// Ignore attributes returned by patch.
+			if(options.patch) {
+				return {};
+			}
+
 			// Remove the outer json attribute {data: ...} on CRUD operations
 			if(this.collection == undefined || json.data) {
 				return json.data;

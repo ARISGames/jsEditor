@@ -11,7 +11,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="plaque-description">Description</label>
+		<label for="plaque-description">Text</label>
 		<textarea class="form-control" id="plaque-description" rows=2 placeholder="Description"><%= description %></textarea>
 	</div>
 

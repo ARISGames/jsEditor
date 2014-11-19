@@ -124,7 +124,7 @@ define([
 
 		/* Media Selection */
 
-		onClickMedia: function() {
+		onClickMedia: function(event) {
 			var view = this;
 			event.preventDefault();
 

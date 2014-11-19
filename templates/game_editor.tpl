@@ -1,4 +1,4 @@
-<div class="shrink-center well well-lg game-settings" style="min-width: 430px; width: 75%;">
+<div class="shrink-center well well-lg game-settings" style="max-width: 100%;">
 	<form class="form" role="form" onsubmit="return false;">
 	<h4>
 		Edit Game <span class="object-id text-muted"><%= game_id %></span>

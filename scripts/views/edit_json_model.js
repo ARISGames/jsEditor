@@ -24,7 +24,7 @@ define([
 		},
 
 
-		onClickSave: function() {
+		onClickSave: function(event) {
 			var view = this;
 
 			// loop over attributes and set values from input ids.

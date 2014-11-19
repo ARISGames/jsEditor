@@ -43,7 +43,7 @@ define([
 
 
 		onClickUpload: function() {
-			var media = new Media({game_id: this.model.get("game_id")});
+			var media = new Media({game_id: this.model.get("game_id"), name: ""});
 			vent.trigger("application:popup:show", new MediaUploadView({model: media}), "Upload Media");
 		},
 

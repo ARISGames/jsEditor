@@ -33,7 +33,7 @@ define([
 			this.collection.add(event);
 		},
 
-		onClickSaveAll: function() {
+		onClickSaveAll: function(event) {
 			var view = this;
 			event.preventDefault();
 

@@ -187,7 +187,7 @@ define([
 
 		/* Media Selection */
 
-		onClickActiveIcon: function() {
+		onClickActiveIcon: function(event) {
 			var view = this;
 			event.preventDefault();
 
@@ -218,7 +218,7 @@ define([
 			});
 		},
 
-		onClickActiveMedia: function() {
+		onClickActiveMedia: function(event) {
 			var view = this;
 			event.preventDefault();
 
@@ -249,7 +249,7 @@ define([
 		},
 
 
-		onClickCompleteIcon: function() {
+		onClickCompleteIcon: function(event) {
 			var view = this;
 			event.preventDefault();
 
@@ -279,7 +279,7 @@ define([
 			});
 		},
 
-		onClickCompleteMedia: function() {
+		onClickCompleteMedia: function(event) {
 			var view = this;
 			event.preventDefault();
 

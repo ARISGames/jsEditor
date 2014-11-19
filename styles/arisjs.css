@@ -242,7 +242,7 @@ h4:hover .object-id {
 }
 /* Narrow editor panels */
 .shrink-center {
-  width: 430px;
+  max-width: 430px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 2em;

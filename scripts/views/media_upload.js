@@ -53,7 +53,7 @@ define([
 		},
 
 
-		onClickSave: function() {
+		onClickSave: function(event) {
 			var view = this;
 
 			this.model.set("name", this.ui.name.val());
