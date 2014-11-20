@@ -57,7 +57,11 @@ define(function(require)
 			"wiggle":     "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden":     "#trigger-hidden",
+			"quantity":   "#instance-infinite_quantity",
+			"quantity_amount": "#instance-quantity",
+
 			"range_container":".range-container",
+			"quantity_container": ".quantity-container",
 
 			"icon":       ".change-icon img"
 		},
@@ -97,6 +101,7 @@ define(function(require)
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
 
+			// FIXME remove
 			this.renderTriggerRadio();
 			this.onChangeInfinity();
 			this.onChangeShowTitle();
@@ -116,6 +121,7 @@ define(function(require)
 			"click .cancel": "onClickCancel",
 
 			"change @ui.infinite": "onChangeInfinity",
+			"change @ui.quantity": "onChangeQuantity",
 			"change @ui.show_title": "onChangeShowTitle",
 
 			"click .change-icon":  "onClickChangeIcon",
@@ -153,8 +159,9 @@ define(function(require)
 		},
 
 		onClickSave: function() {
-			var view    = this;
-			var trigger = this.model;
+			var view     = this;
+			var trigger  = this.model;
+			var instance = this.instance;
 
 			// FIXME all change events.
 			trigger.set("title",     view.ui.title.val());
@@ -170,6 +177,15 @@ define(function(require)
 			trigger.set("icon_media_id", view.icon.get("media_id"));
 
 			trigger.trigger("update_map");
+
+			if(this.game_object.is_a(Item))
+			{
+				instance.set("qty", view.ui.quantity_amount.val());
+				instance.set("infinite_qty", view.ui.quantity.is(":checked") ? "1" : "0");
+
+				instance.save();
+			}
+
 			trigger.save();
 		},
 
@@ -200,6 +216,17 @@ define(function(require)
 			{
 				this.model.trigger("show_range");
 				this.ui.range_container.show();
+			}
+		},
+
+		onChangeQuantity: function() {
+			if(this.ui.quantity.is(":checked"))
+			{
+				this.ui.quantity_container.hide();
+			}
+			else
+			{
+				this.ui.quantity_container.show();
 			}
 		},
 

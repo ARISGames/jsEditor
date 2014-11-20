@@ -194,7 +194,7 @@ define(function(require)
 					instance.set("object_id",   game_object.id);
 					instance.set("object_type", instance.type_for(game_object));
 
-					if(view.model.is_a(Item) && view.options.visible_fields === "trigger") {
+					if(game_object.is_a(Item) && view.options.visible_fields === "trigger") {
 						instance.set("qty", view.ui.quantity_amount.val());
 						instance.set("infinite_qty", view.ui.quantity.is(":checked") ? "1" : "0");
 					}
