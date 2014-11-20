@@ -9,8 +9,8 @@
 			</div>
 
 			<div class="checkbox">
-				<label>
-					<input type="checkbox" id="visible" <%= is_checked(visible) %>>
+				<input type="checkbox" id="visible" <%= is_checked(visible) %>>
+				<label for="visible">
 					Visible to Player
 				</label>
 			</div>

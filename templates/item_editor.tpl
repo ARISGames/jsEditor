@@ -28,15 +28,15 @@
 	</div>
 
 	<div class="checkbox">
-		<label>
-			<input type="checkbox" id="item-droppable" <%= is_checked(droppable) %>>
+		<input type="checkbox" id="item-droppable" <%= is_checked(droppable) %>>
+		<label for="item-droppable">
 			Droppable
 		</label>
 	</div>
 
 	<div class="checkbox">
-		<label>
-			<input type="checkbox" id="item-destroyable" <%= is_checked(destroyable) %>>
+		<input type="checkbox" id="item-destroyable" <%= is_checked(destroyable) %>>
+		<label for="item-destroyable">
 			Destroyable
 		</label>
 	</div>
