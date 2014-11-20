@@ -25,8 +25,8 @@
 	</div>
 
 	<div class="checkbox">
-		<label>
-			<input type="checkbox" id="trigger-infinite" <%= is_checked(infinite_distance) %>>
+		<input type="checkbox" id="trigger-infinite" <%= is_checked(infinite_distance) %>>
+		<label for="trigger-infinite">
 			Available Anywhere
 		</label>
 	</div>
@@ -59,8 +59,8 @@
 
 	<div id="trigger-1-fields" class="enter-trigger-tab">
 		<div class="checkbox">
-			<label>
-				<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
+			<input type="checkbox" id="trigger-hidden" <%= is_checked(hidden) %>>
+			<label for="trigger-hidden">
 				Hidden from Map on Client
 			</label>
 		</div>
@@ -69,8 +69,8 @@
 	<hr>
 
 	<div class="checkbox">
-		<label>
-			<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
+		<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
+		<label for="trigger-show_title">
 			Show Title
 		</label>
 	</div>
@@ -93,8 +93,8 @@
 	</div>
 
 	<div class="checkbox">
-		<label>
-			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
+		<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
+		<label for="trigger-wiggle">
 			Animate Icon on Map
 		</label>
 	</div>
@@ -105,8 +105,8 @@
 <% if(quantity_fields_visible) { %>
 	<label>Quantity Available</label>
 	<div class="checkbox" style="margin-top: 0">
-		<label style="font-weight: normal;">
-			<input type="checkbox" id="instance-infinite_quantity" <%= is_checked(instance_infinite_quantity) %>>
+		<input type="checkbox" id="instance-infinite_quantity" <%= is_checked(instance_infinite_quantity) %>>
+		<label style="font-weight: normal;" for="instance-infinite_quantity">
 			Unlimited
 		</label>
 	</div>

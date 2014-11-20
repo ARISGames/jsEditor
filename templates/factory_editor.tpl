@@ -181,8 +181,8 @@
 				</div>
 
 				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="factory-produce_expire_on_view" <%= is_checked(produce_expire_on_view) %>>
+					<input type="checkbox" id="factory-produce_expire_on_view" <%= is_checked(produce_expire_on_view) %>>
+					<label for="factory-produce_expire_on_view">
 						Expire when viewed
 					</label>
 				</div>
@@ -205,8 +205,8 @@
 
 
 					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="factory-trigger-show_title" <%= is_checked(trigger_show_title) %>>
+						<input type="checkbox" id="factory-trigger-show_title" <%= is_checked(trigger_show_title) %>>
+						<label for="factory-trigger-show_title">
 							Show Map Title
 						</label>
 					</div>
@@ -217,8 +217,8 @@
 
 
 					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="factory-trigger-infinite" <%= is_checked(trigger_infinite_distance) %>>
+						<input type="checkbox" id="factory-trigger-infinite" <%= is_checked(trigger_infinite_distance) %>>
+						<label for="factory-trigger-infinite">
 							Available Anywhere
 						</label>
 					</div>
@@ -243,8 +243,8 @@
 					</div>
 
 					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="factory-trigger-wiggle" <%= is_checked(trigger_wiggle) %>>
+						<input type="checkbox" id="factory-trigger-wiggle" <%= is_checked(trigger_wiggle) %>>
+						<label for="factory-trigger-wiggle">
 							Animate Icon on Map
 						</label>
 					</div>
@@ -269,8 +269,8 @@
 
 					<div id="1-fields" class="enter-factory-trigger-tab">
 						<div class="checkbox">
-							<label>
-								<input type="checkbox" id="factory-trigger-hidden" <%= is_checked(trigger_hidden) %>>
+							<input type="checkbox" id="factory-trigger-hidden" <%= is_checked(trigger_hidden) %>>
+							<label for="factory-trigger-hidden">
 								Hidden from Map on Client
 							</label>
 						</div>

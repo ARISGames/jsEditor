@@ -14,7 +14,7 @@
 
 	<div class="form-group">
 		<label for="game-description">Description</label>
-		<textarea class="form-control" id="game-description" placeholder="Description" rows=6><%= description %></textarea>
+		<textarea class="form-control" id="game-description" placeholder="Description" rows=5><%= description %></textarea>
 	</div>
 
 	<div class="form-group">
@@ -140,35 +140,29 @@
 					<input type="text" class="form-control" id="game-map_zoom_level" placeholder="0" value="<%= map_zoom_level %>">
 				</div>
 
-				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="game-map_show_player" <%= is_checked(map_show_player) %>>
-							Show Player Location Dot
-						</label>
-					</div>
+				<div class="checkbox">
+					<input type="checkbox" id="game-map_show_player" <%= is_checked(map_show_player) %>>
+					<label for="game-map_show_player">
+						Show Player Location Dot
+					</label>
 				</div>
 
-				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="game-map_show_players" <%= is_checked(map_show_players) %>>
-							Show Other Players' Locations
-						</label>
-					</div>
+				<div class="checkbox">
+					<input type="checkbox" id="game-map_show_players" <%= is_checked(map_show_players) %>>
+					<label for="game-map_show_players">
+						Show Other Players' Locations
+					</label>
 				</div>
 
-				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="game-map_offsite_mode" <%= is_checked(map_offsite_mode) %>>
-							Offsite Mode (All locations temporarily infinite range)
-						</label>
-					</div>
-					<div class="alert alert-info">
-						<span class="glyphicon glyphicon-info-sign"></span>
-						When checked, all locations will be accessible from anywhere on the map. Useful for off-site debugging.
-					</div>
+				<div class="checkbox">
+					<input type="checkbox" id="game-map_offsite_mode" <%= is_checked(map_offsite_mode) %>>
+					<label for="game-map_offsite_mode">
+						Offsite Mode (All locations temporarily infinite range)
+					</label>
+				</div>
+				<div class="alert alert-info">
+					<span class="glyphicon glyphicon-info-sign"></span>
+					When checked, all locations will be accessible from anywhere on the map. Useful for off-site debugging.
 				</div>
 			</div>
 		</div> <!-- /map -->
@@ -178,16 +172,16 @@
 				<h4>Notebook</h4>
 			</div>
 			<div class="panel-body">
-				<div class="form-group">
-					<label>
-						<input type="checkbox" id="game-notebook_allow_comments" <%= is_checked(notebook_allow_comments) %>>
+				<div class="checkbox">
+					<input type="checkbox" id="game-notebook_allow_comments" <%= is_checked(notebook_allow_comments) %>>
+					<label for="game-notebook_allow_comments">
 						Comments Allowed
 					</label>
 				</div>
 
-				<div class="form-group">
-					<label>
-						<input type="checkbox" id="game-notebook_allow_likes" <%= is_checked(notebook_allow_likes) %>>
+				<div class="checkbox">
+					<input type="checkbox" id="game-notebook_allow_likes" <%= is_checked(notebook_allow_likes) %>>
+					<label for="game-notebook_allow_likes">
 						Likes Allowed
 					</label>
 				</div>

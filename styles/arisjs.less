@@ -4,6 +4,14 @@
 
 @import "xray-debug";
 
+/* Global */
+
+body {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
 /* Cursor for anchors with no hrefs */
 
 a {
@@ -270,6 +278,56 @@ h5:hover .object-id, h4:hover .object-id {
 	visibility: visible;
 }
 
+
+/* Padded hover checks */
+
+.checkbox {
+	padding: 0.5em;
+	border-radius: @border-radius-base;
+	background: #eee;
+
+	label {
+		width: 100%;
+		padding-left: 0;
+		vertical-align: middle;
+	}
+
+	input {
+		display: none;
+	}
+}
+
+.checkbox input + label:before {
+	display: inline-block;
+	position: relative;
+	top: 1px;
+	padding: 0.25em;
+	margin-right: 0.25em;
+
+	color: #fff;
+	background: #fff;
+
+	border: 1px solid @input-border;
+	border-radius: @border-radius-base;
+
+	font-family: 'Glyphicons Halflings';
+	line-height: 1;
+
+	content: "\e013";
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.checkbox input:checked + label:before {
+	color: #fff;
+	background: @brand-info;
+	border-color: darken(@brand-info, 17%);
+}
+
+.checkbox:hover {
+	background: #ddd;
+}
 
 /* Hide radio inputs */
 
