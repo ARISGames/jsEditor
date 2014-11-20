@@ -71,39 +71,6 @@
 		</label>
 	</div>
 
-
-	<div class="checkbox">
-		<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
-		<label for="trigger-show_title">
-			Show Map Title
-		</label>
-	</div>
-
-	<div class="form-group title-container"  <%= tab_visible(show_title === "1") %>>
-		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
-	</div>
-
-
-	<!-- Icon Selector -->
-	<div class="form-group">
-		<div class="thumbnail change-icon">
-			<img src=<%= icon_thumbnail_url %>>
-			<div class="caption">
-				<button type="button" class="btn btn-link btn-info btn-block change-icon">
-					<span class="glyphicon glyphicon-picture"></span>
-					Icon
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<div class="checkbox">
-		<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
-		<label for="trigger-wiggle">
-			Animate Icon on Map
-		</label>
-	</div>
-
 	<div class="form-group">
 		<label>
 			When in range, trigger:
@@ -130,6 +97,41 @@
 			</label>
 		</div>
 	</div>
+
+	<hr>
+
+
+	<!-- Icon Selector -->
+	<div class="form-group">
+		<div class="thumbnail change-icon">
+			<img src=<%= icon_thumbnail_url %>>
+			<div class="caption">
+				<button type="button" class="btn btn-link btn-info btn-block change-icon">
+					<span class="glyphicon glyphicon-picture"></span>
+					Icon
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="checkbox">
+		<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
+		<label for="trigger-wiggle">
+			Animate Icon on Map
+		</label>
+	</div>
+
+	<div class="checkbox">
+		<input type="checkbox" id="trigger-show_title" <%= is_checked(show_title) %>>
+		<label for="trigger-show_title">
+			Show Map Title
+		</label>
+	</div>
+
+	<div class="form-group title-container"  <%= tab_visible(show_title === "1") %>>
+		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
+	</div>
+
 </div>
 
 
@@ -156,6 +158,8 @@
 
 <!-- Quantity of Instance -->
 <% if(quantity_fields_visible) { %>
+	<hr>
+
 	<label>Quantity Available</label>
 	<div class="checkbox" style="margin-top: 0">
 		<input type="checkbox" id="instance-infinite_quantity" <%= is_checked(instance_infinite_quantity) %>>
