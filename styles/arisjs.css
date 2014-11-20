@@ -6,6 +6,12 @@
 .x-ray-backbone-view .x-ray-view-template-name {
   color: red;
 }
+/* Global */
+body {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
 /* Cursor for anchors with no hrefs */
 a {
   cursor: pointer;
@@ -226,6 +232,44 @@ nav,
 h5:hover .object-id,
 h4:hover .object-id {
   visibility: visible;
+}
+/* Padded hover checks */
+.checkbox {
+  padding: 0.5em;
+  border-radius: 4px;
+  background: #eee;
+}
+.checkbox label {
+  width: 100%;
+  padding-left: 0;
+  vertical-align: middle;
+}
+.checkbox input {
+  display: none;
+}
+.checkbox input + label:before {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  padding: 0.25em;
+  margin-right: 0.25em;
+  color: #fff;
+  background: #fff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-family: 'Glyphicons Halflings';
+  line-height: 1;
+  content: "\e013";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.checkbox input:checked + label:before {
+  color: #fff;
+  background: #5bc0de;
+  border-color: #269abc;
+}
+.checkbox:hover {
+  background: #ddd;
 }
 /* Hide radio inputs */
 .trigger-types input,
