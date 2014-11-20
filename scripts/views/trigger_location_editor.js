@@ -1,10 +1,12 @@
 define(function(require)
 {
-	var _        = require('underscore');
-	var $        = require('jquery');
-	var Backbone = require('backbone');
-	var Template = require('text!templates/trigger_location_editor.tpl');
-	var vent     = require('vent');
+	var _          = require('underscore');
+	var $          = require('jquery');
+	var EditorView = require('views/editor_base');
+	var Template   = require('text!templates/trigger_location_editor.tpl');
+	var vent       = require('vent');
+
+	var Item = require('models/item');
 
 	var RequirementsEditorView  = require('views/requirements');
 	var MediaChooserView        = require('views/media_chooser');
@@ -24,7 +26,7 @@ define(function(require)
 	var RequirementPackage      = require('models/requirement_package');
 
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorView.extend({
 
 		/* View */
 
@@ -35,14 +37,10 @@ define(function(require)
 				// Using views icon since we are not directly changing the model until save.
 				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
 
-				is_checked: function(value) {
-					return value === "1" ? "checked" : "";
-				},
-
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
-
+				// Instance Attributes
+				quantity_fields_visible: this.game_object.is_a(Item),
+				instance_infinite_quantity: this.instance.get("infinite_qty"),
+				instance_quantity: this.instance.get("qty"),
 
 				// Game Object Attributes
 				game_object_id: this.game_object.id,
@@ -59,7 +57,11 @@ define(function(require)
 			"wiggle":     "#trigger-wiggle",
 			"show_title": "#trigger-show_title",
 			"hidden":     "#trigger-hidden",
+			"quantity":   "#instance-infinite_quantity",
+			"quantity_amount": "#instance-quantity",
+
 			"range_container":".range-container",
+			"quantity_container": ".quantity-container",
 
 			"icon":       ".change-icon img"
 		},
@@ -88,6 +90,7 @@ define(function(require)
 
 		initialize: function(options) {
 			this.game_object = this.model.game_object();
+			this.instance    = this.model.instance();
 			this.icon        = this.model.icon();
 
 			/* Game object and Icon media change events */
@@ -98,6 +101,7 @@ define(function(require)
 		onShow: function() {
 			this.$el.find('input[autofocus]').focus();
 
+			// FIXME remove
 			this.renderTriggerRadio();
 			this.onChangeInfinity();
 			this.onChangeShowTitle();
@@ -117,6 +121,7 @@ define(function(require)
 			"click .cancel": "onClickCancel",
 
 			"change @ui.infinite": "onChangeInfinity",
+			"change @ui.quantity": "onChangeQuantity",
 			"change @ui.show_title": "onChangeShowTitle",
 
 			"click .change-icon":  "onClickChangeIcon",
@@ -154,8 +159,9 @@ define(function(require)
 		},
 
 		onClickSave: function() {
-			var view    = this;
-			var trigger = this.model;
+			var view     = this;
+			var trigger  = this.model;
+			var instance = this.instance;
 
 			// FIXME all change events.
 			trigger.set("title",     view.ui.title.val());
@@ -171,6 +177,15 @@ define(function(require)
 			trigger.set("icon_media_id", view.icon.get("media_id"));
 
 			trigger.trigger("update_map");
+
+			if(this.game_object.is_a(Item))
+			{
+				instance.set("qty", view.ui.quantity_amount.val());
+				instance.set("infinite_qty", view.ui.quantity.is(":checked") ? "1" : "0");
+
+				instance.save();
+			}
+
 			trigger.save();
 		},
 
@@ -201,6 +216,17 @@ define(function(require)
 			{
 				this.model.trigger("show_range");
 				this.ui.range_container.show();
+			}
+		},
+
+		onChangeQuantity: function() {
+			if(this.ui.quantity.is(":checked"))
+			{
+				this.ui.quantity_container.hide();
+			}
+			else
+			{
+				this.ui.quantity_container.show();
 			}
 		},
 

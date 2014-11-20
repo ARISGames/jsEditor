@@ -1,12 +1,13 @@
 define(function(require)
 {
-	var _        = require('underscore');
-	var $        = require('jquery');
-	var Backbone = require('backbone');
-	var vent     = require('vent');
-	var Template = require('text!templates/trigger_editor_base.tpl');
+	var _          = require('underscore');
+	var $          = require('jquery');
+	var EditorView = require('views/editor_base');
+	var vent       = require('vent');
+	var Template   = require('text!templates/trigger_editor_base.tpl');
 
-	var QRCode   = require('qrcode');
+	var QRCode = require('qrcode');
+	var Item   = require('models/item');
 
 	/* Media Editor */
 	var MediaChooserView        = require('views/media_chooser');
@@ -27,7 +28,7 @@ define(function(require)
 	var QuestsCollection        = require('collections/quests');
 	var WebHooksCollection      = require('collections/web_hooks');
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorView.extend({
 
 		/* View */
 
@@ -53,6 +54,8 @@ define(function(require)
 			"show_title":  "#trigger-show_title",
 			"hidden":      "#trigger-hidden",
 			"code":        "#trigger-code",
+			"quantity":    "#instance-infinite_quantity",
+			"quantity_amount": "#instance-quantity",
 
 			"trigger_types": ".trigger-type",
 			"trigger_enter": ".trigger-enter",
@@ -60,7 +63,8 @@ define(function(require)
 			"trigger_type_tabs":  ".type-trigger-tab",
 			"trigger_enter_tabs": ".enter-trigger-tab",
 
-			"title_container": ".title-container",
+			"title_container":    ".title-container",
+			"quantity_container": ".quantity-container",
 
 			"object_name": ".game_object-name",
 
@@ -80,26 +84,14 @@ define(function(require)
 				// Using views icon since we are not directly changing the model until save.
 				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
 
-				// Field logic
-				is_checked: function(value) {
-					return value === "1" ? "checked" : "";
-				},
-
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
-
-				tab_selected: function(boolean_statement) {
-					return boolean_statement ? "active" : "";
-				},
-
-				tab_visible: function(boolean_statement) {
-					return boolean_statement ? "" : "style='display: none;'";
-				},
-
 				// Game Object Attributes
 				game_object_id: this.game_object.id,
 				name: this.game_object.get('name'),
+
+				// Instance Attributes
+				quantity_fields_visible: this.game_object.is_a(Item),
+				instance_infinite_quantity: this.instance.get("infinite_qty"),
+				instance_quantity: this.instance.get("qty"),
 
 				// Virtual, defined in sub classes
 				parent_label: this.parent_label,
@@ -167,6 +159,7 @@ define(function(require)
 			"click @ui.edit_game_object":  "onClickEditGameObject",
 			"click @ui.edit_requirements": "onClickEditRequirements",
 
+			"change @ui.quantity":      "onChangeQuantity",
 			"change @ui.infinite":      "onChangeInfinity",
 			"change @ui.show_title":    "onChangeShowTitle",
 			"change @ui.trigger_types": "onChangeType",
@@ -200,6 +193,11 @@ define(function(require)
 
 					instance.set("object_id",   game_object.id);
 					instance.set("object_type", instance.type_for(game_object));
+
+					if(game_object.is_a(Item) && view.options.visible_fields === "trigger") {
+						instance.set("qty", view.ui.quantity_amount.val());
+						instance.set("infinite_qty", view.ui.quantity.is(":checked") ? "1" : "0");
+					}
 
 					instance.save({}, {
 						success: function() {
@@ -354,6 +352,17 @@ define(function(require)
 			{
 				this.drag_marker.setIcon();
 				this.range_marker.setVisible(true);
+			}
+		},
+
+		onChangeQuantity: function() {
+			if(this.ui.quantity.is(":checked"))
+			{
+				this.ui.quantity_container.hide();
+			}
+			else
+			{
+				this.ui.quantity_container.show();
 			}
 		},
 

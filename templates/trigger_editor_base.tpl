@@ -85,12 +85,6 @@
 		<input type="text" class="form-control" id="trigger-title" placeholder="<%= name %>" value="<%= title %>">
 	</div>
 
-	<div class="checkbox">
-		<label>
-			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
-			Animate Icon on Map
-		</label>
-	</div>
 
 	<!-- Icon Selector -->
 	<div class="form-group">
@@ -103,6 +97,13 @@
 				</button>
 			</div>
 		</div>
+	</div>
+
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" id="trigger-wiggle" <%= is_checked(wiggle) %>>
+			Animate Icon on Map
+		</label>
 	</div>
 
 	<div class="form-group">
@@ -153,6 +154,22 @@
 		Will be triggered as soon as all locks are satisfied.
 	</div>
 </div>
+
+
+<!-- Quantity of Instance -->
+<% if(quantity_fields_visible) { %>
+	<label>Quantity Available</label>
+	<div class="checkbox" style="margin-top: 0">
+		<label style="font-weight: normal;">
+			<input type="checkbox" id="instance-infinite_quantity" <%= is_checked(instance_infinite_quantity) %>>
+			Unlimited
+		</label>
+	</div>
+
+	<div class="form-group quantity-container"  <%= tab_visible(instance_infinite_quantity === "0") %>>
+		<input type="number" class="form-control" id="instance-quantity" placeholder="Quantity" min="0" value="<%= instance_quantity %>">
+	</div>
+<% } %> <!-- quantity fields visible -->
 
 <% } %> <!-- if visible fields == trigger -->
 

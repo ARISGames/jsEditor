@@ -100,6 +100,23 @@
 	</div>
 </div>
 
+
+<!-- Quantity of Instance -->
+<% if(quantity_fields_visible) { %>
+	<label>Quantity Available</label>
+	<div class="checkbox" style="margin-top: 0">
+		<label style="font-weight: normal;">
+			<input type="checkbox" id="instance-infinite_quantity" <%= is_checked(instance_infinite_quantity) %>>
+			Unlimited
+		</label>
+	</div>
+
+	<div class="form-group quantity-container"  <%= tab_visible(instance_infinite_quantity === "0") %>>
+		<input type="number" class="form-control" id="instance-quantity" placeholder="Quantity" min="0" value="<%= instance_quantity %>">
+	</div>
+<% } %> <!-- quantity fields visible -->
+
+
 <hr>
 
 <div class="form-group">
