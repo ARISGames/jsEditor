@@ -1,14 +1,13 @@
 define(function(require)
 {
-	var _        = require('underscore');
-	var $        = require('jquery');
-	var Backbone = require('backbone');
-	var vent     = require('vent');
-	var Template = require('text!templates/trigger_editor_base.tpl');
+	var _          = require('underscore');
+	var $          = require('jquery');
+	var EditorView = require('views/editor_base');
+	var vent       = require('vent');
+	var Template   = require('text!templates/trigger_editor_base.tpl');
 
-	var QRCode   = require('qrcode');
-
-	var Item     = require('models/item');
+	var QRCode = require('qrcode');
+	var Item   = require('models/item');
 
 	/* Media Editor */
 	var MediaChooserView        = require('views/media_chooser');
@@ -29,7 +28,7 @@ define(function(require)
 	var QuestsCollection        = require('collections/quests');
 	var WebHooksCollection      = require('collections/web_hooks');
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorView.extend({
 
 		/* View */
 
@@ -84,23 +83,6 @@ define(function(require)
 
 				// Using views icon since we are not directly changing the model until save.
 				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
-
-				// Field logic
-				is_checked: function(value) {
-					return value === "1" ? "checked" : "";
-				},
-
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
-
-				tab_selected: function(boolean_statement) {
-					return boolean_statement ? "active" : "";
-				},
-
-				tab_visible: function(boolean_statement) {
-					return boolean_statement ? "" : "style='display: none;'";
-				},
 
 				// Game Object Attributes
 				game_object_id: this.game_object.id,

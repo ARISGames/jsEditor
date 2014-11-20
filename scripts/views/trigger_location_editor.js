@@ -1,10 +1,12 @@
 define(function(require)
 {
-	var _        = require('underscore');
-	var $        = require('jquery');
-	var Backbone = require('backbone');
-	var Template = require('text!templates/trigger_location_editor.tpl');
-	var vent     = require('vent');
+	var _          = require('underscore');
+	var $          = require('jquery');
+	var EditorView = require('views/editor_base');
+	var Template   = require('text!templates/trigger_location_editor.tpl');
+	var vent       = require('vent');
+
+	var Item = require('models/item');
 
 	var RequirementsEditorView  = require('views/requirements');
 	var MediaChooserView        = require('views/media_chooser');
@@ -24,7 +26,7 @@ define(function(require)
 	var RequirementPackage      = require('models/requirement_package');
 
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorView.extend({
 
 		/* View */
 
@@ -35,14 +37,10 @@ define(function(require)
 				// Using views icon since we are not directly changing the model until save.
 				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
 
-				is_checked: function(value) {
-					return value === "1" ? "checked" : "";
-				},
-
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
-
+				// Instance Attributes
+				quantity_fields_visible: this.game_object.is_a(Item),
+				instance_infinite_quantity: this.instance.get("infinite_qty"),
+				instance_quantity: this.instance.get("qty"),
 
 				// Game Object Attributes
 				game_object_id: this.game_object.id,
@@ -88,6 +86,7 @@ define(function(require)
 
 		initialize: function(options) {
 			this.game_object = this.model.game_object();
+			this.instance    = this.model.instance();
 			this.icon        = this.model.icon();
 
 			/* Game object and Icon media change events */
