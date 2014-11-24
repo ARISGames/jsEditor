@@ -469,7 +469,7 @@ h5:hover .object-id, h4:hover .object-id {
 }
 
 /* Requirements Editor */
-.games-list,.and-package-editor {
+.and-package-editor {
 	.list-group {
 		margin-bottom: 10px;
 	}
@@ -614,4 +614,49 @@ h5:hover .object-id, h4:hover .object-id {
 
 #user.navbar-right {
 	margin-right: 0; // Fix bootstrap 3.3 padding issue
+}
+
+
+/* List styling */
+
+.well {
+	.list-group {
+		margin-bottom: 0;
+	}
+
+	& > h4 {
+		margin-top: 0;
+		text-align: center;
+		color: @gray;
+	}
+
+	form {
+		margin: 0;
+	}
+
+	/* Line rendering */
+	& > h4 {
+		position: relative;
+		z-index: 1;
+		overflow: hidden;
+		line-height: 1.2;
+
+		span {
+			padding-left: 0.5em;
+			padding-right: 0.5em;
+		}
+	}
+	& > h4:before, & > h4:after {
+		position: absolute;
+		top: 51%;
+		overflow: hidden;
+		width: 50%;
+		height: 1px;
+		content: '\a0';
+		border-top: 2px solid #ddd;
+	}
+	& > h4:before {
+		margin-left: -50%;
+		text-align: right;
+	}
 }
