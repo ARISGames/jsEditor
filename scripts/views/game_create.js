@@ -41,6 +41,9 @@ define([
 		},
 
 		onClickCancel: function() {
+			if(window.location.hash === "#games") {
+				window.location.reload();
+			}
 			Backbone.history.navigate("#games", {trigger: true});
 		}
 

@@ -411,7 +411,8 @@ h4:hover .object-id {
 .conversations-editor,
 .games-list-container,
 .notes-editor,
-.tabs-editor {
+.tabs-editor,
+.scroll-area {
   height: 100%;
   overflow-x: auto;
 }
