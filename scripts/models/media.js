@@ -80,6 +80,7 @@ define(function(require)
 					if(object.idAttribute === "plaque_id")   { icon_name = "plaque"       }
 					if(object.idAttribute === "web_page_id") { icon_name = "webpage"      }
 					if(object.idAttribute === "game_id")     { icon_name = "aris"         }
+					if(object.idAttribute === "note_id")     { icon_name = "notebook"     }
 
 					if(object.idAttribute === "trigger_id")  {
 						// NOTE this only works in scene triggers until storage is fixed.
