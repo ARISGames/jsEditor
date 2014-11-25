@@ -28,7 +28,7 @@ define([
 			return {
 				tag_name:  this.model.tag  ().get("tag"),
 				user_name: this.model.user ().get("display_name"),
-				media_url: this.model.media().thumbnail()
+				media_url: this.model.media().thumbnail_for(this.model)
 			}
 		},
 
