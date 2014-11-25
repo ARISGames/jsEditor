@@ -204,17 +204,7 @@
 					</div>
 
 
-					<div class="checkbox">
-						<input type="checkbox" id="factory-trigger-show_title" <%= is_checked(trigger_show_title) %>>
-						<label for="factory-trigger-show_title">
-							Show Map Title
-						</label>
-					</div>
-
-					<div class="form-group title-container">
-						<input type="text" class="form-control" id="factory-trigger-title" placeholder="<%= game_object_name %>" value="<%= trigger_title %>">
-					</div>
-
+					<!-- Range -->
 
 					<div class="checkbox">
 						<input type="checkbox" id="factory-trigger-infinite" <%= is_checked(trigger_infinite_distance) %>>
@@ -229,24 +219,6 @@
 							<input type="number" class="form-control" id="factory-trigger-distance" placeholder="Range" value="<%= trigger_distance %>">
 							<span class="input-group-addon addon-bg-info">Meters</span>
 						</div>
-					</div>
-
-
-					<div class="thumbnail change-icon">
-						<img src=<%= icon_thumbnail_url %>>
-						<div class="caption">
-							<button type="button" class="btn btn-link btn-info btn-block change-icon">
-								<span class="glyphicon glyphicon-picture"></span>
-								Icon
-							</button>
-						</div>
-					</div>
-
-					<div class="checkbox">
-						<input type="checkbox" id="factory-trigger-wiggle" <%= is_checked(trigger_wiggle) %>>
-						<label for="factory-trigger-wiggle">
-							Animate Icon on Map
-						</label>
 					</div>
 
 					<div class="form-group">
@@ -275,6 +247,42 @@
 							</label>
 						</div>
 					</div>
+
+					<hr>
+
+					<!-- Icon -->
+
+					<div class="thumbnail change-icon">
+						<img src=<%= icon_thumbnail_url %>>
+						<div class="caption">
+							<button type="button" class="btn btn-link btn-info btn-block change-icon">
+								<span class="glyphicon glyphicon-picture"></span>
+								Icon
+							</button>
+						</div>
+					</div>
+
+					<div class="checkbox">
+						<input type="checkbox" id="factory-trigger-wiggle" <%= is_checked(trigger_wiggle) %>>
+						<label for="factory-trigger-wiggle">
+							Animate Icon on Map
+						</label>
+					</div>
+
+
+					<!-- Title -->
+
+					<div class="checkbox">
+						<input type="checkbox" id="factory-trigger-show_title" <%= is_checked(trigger_show_title) %>>
+						<label for="factory-trigger-show_title">
+							Show Map Title
+						</label>
+					</div>
+
+					<div class="form-group title-container">
+						<input type="text" class="form-control" id="factory-trigger-title" placeholder="<%= game_object_name %>" value="<%= trigger_title %>">
+					</div>
+
 
 				</div> <!-- panel body -->
 			</div> <!-- panel -->

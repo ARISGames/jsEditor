@@ -1,19 +1,22 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/tabs.tpl',
-	'views/tab_row',
-	'views/tab_editor',
-	'models/tab',
-	'models/media',
-	'models/game',
-	'collections/items',
-	'collections/plaques',
-	'collections/web_pages',
-	'collections/dialogs',
-	'vent'
-], function(_, Backbone, Template, TabRowView, TabEditorView, Tab, Media, Game, ItemsCollection, PlaquesCollection, WebPagesCollection, DialogsCollection, vent) {
-	return Backbone.Marionette.CompositeView.extend({
+define(function(require)
+{
+	var EditorCollectionView = require('views/editor_collection_base');
+
+	var _                  = require('underscore');
+	var Template           = require('text!templates/tabs.tpl');
+	var TabRowView         = require('views/tab_row');
+	var TabEditorView      = require('views/tab_editor');
+	var Tab                = require('models/tab');
+	var Media              = require('models/media');
+	var Game               = require('models/game');
+	var ItemsCollection    = require('collections/items');
+	var PlaquesCollection  = require('collections/plaques');
+	var WebPagesCollection = require('collections/web_pages');
+	var DialogsCollection  = require('collections/dialogs');
+	var vent               = require('vent');
+
+
+	return EditorCollectionView.extend({
 		template: _.template(Template),
 
 		itemView: TabRowView,
@@ -48,25 +51,6 @@ define([
 
 				vent.trigger("application:popup:show", tab_editor, "Create Tab");
 			});
-		},
-
-
-		// Marionette override
-		appendBuffer: function(compositeView, buffer) {
-			var $container = this.getItemViewContainer(compositeView);
-			$container.find(".foot").before(buffer);
-		},
-
-		appendHtml: function(compositeView, itemView, index){
-			if (compositeView.isBuffering) {
-			  compositeView.elBuffer.appendChild(itemView.el);
-			}
-			else {
-			  // If we've already rendered the main collection, just
-			  // append the new items directly into the element.
-			  var $container = this.getItemViewContainer(compositeView);
-			  $container.find(".foot").before(itemView.el);
-			}
 		}
 	});
 });

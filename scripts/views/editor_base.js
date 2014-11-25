@@ -4,6 +4,7 @@ define(function(require)
 	var Backbone   = require('backbone');
 	var Marionette = Backbone.Marionette;
 
+
 	return Backbone.Marionette.CompositeView.extend({
 
 		templateBaseHelpers:  {

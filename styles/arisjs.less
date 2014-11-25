@@ -282,13 +282,13 @@ h5:hover .object-id, h4:hover .object-id {
 /* Padded hover checks */
 
 .checkbox {
-	padding: 0.5em;
+	padding: 0;
 	border-radius: @border-radius-base;
 	background: #eee;
 
 	label {
+		padding: 0.5em;
 		width: 100%;
-		padding-left: 0;
 		vertical-align: middle;
 	}
 
@@ -469,14 +469,14 @@ h5:hover .object-id, h4:hover .object-id {
 }
 
 /* Requirements Editor */
-.games-list,.and-package-editor {
+.and-package-editor {
 	.list-group {
 		margin-bottom: 10px;
 	}
 }
 
 /* Scrolling for tall areas */
-.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container, .notes-editor, .tabs-editor {
+.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container, .notes-editor, .tabs-editor, .scroll-area {
 	height: 100%;
 	overflow-x: auto;
 }
@@ -614,4 +614,49 @@ h5:hover .object-id, h4:hover .object-id {
 
 #user.navbar-right {
 	margin-right: 0; // Fix bootstrap 3.3 padding issue
+}
+
+
+/* List styling */
+
+.well {
+	.list-group {
+		margin-bottom: 0;
+	}
+
+	& > h4 {
+		margin-top: 0;
+		text-align: center;
+		color: @gray;
+	}
+
+	form {
+		margin: 0;
+	}
+
+	/* Line rendering */
+	& > h4 {
+		position: relative;
+		z-index: 1;
+		overflow: hidden;
+		line-height: 1.2;
+
+		span {
+			padding-left: 0.5em;
+			padding-right: 0.5em;
+		}
+	}
+	& > h4:before, & > h4:after {
+		position: absolute;
+		top: 51%;
+		overflow: hidden;
+		width: 50%;
+		height: 1px;
+		content: '\a0';
+		border-top: 2px solid #ddd;
+	}
+	& > h4:before {
+		margin-left: -50%;
+		text-align: right;
+	}
 }

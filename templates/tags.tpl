@@ -1,5 +1,5 @@
 <div class="shrink-center well well-lg">
-	<h4>Tags</h4>
+	<h4><span>Tags</span></h4>
 
 	<div class="list-group tags">
 		<a class="list-group-item active foot new">

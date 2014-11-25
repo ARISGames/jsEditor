@@ -235,13 +235,13 @@ h4:hover .object-id {
 }
 /* Padded hover checks */
 .checkbox {
-  padding: 0.5em;
+  padding: 0;
   border-radius: 4px;
   background: #eee;
 }
 .checkbox label {
+  padding: 0.5em;
   width: 100%;
-  padding-left: 0;
   vertical-align: middle;
 }
 .checkbox input {
@@ -399,7 +399,6 @@ h4:hover .object-id {
   padding-left: 5px;
 }
 /* Requirements Editor */
-.games-list .list-group,
 .and-package-editor .list-group {
   margin-bottom: 10px;
 }
@@ -412,7 +411,8 @@ h4:hover .object-id {
 .conversations-editor,
 .games-list-container,
 .notes-editor,
-.tabs-editor {
+.tabs-editor,
+.scroll-area {
   height: 100%;
   overflow-x: auto;
 }
@@ -516,4 +516,43 @@ h4:hover .object-id {
 }
 #user.navbar-right {
   margin-right: 0;
+}
+/* List styling */
+.well {
+  /* Line rendering */
+}
+.well .list-group {
+  margin-bottom: 0;
+}
+.well > h4 {
+  margin-top: 0;
+  text-align: center;
+  color: #555555;
+}
+.well form {
+  margin: 0;
+}
+.well > h4 {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  line-height: 1.2;
+}
+.well > h4 span {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.well > h4:before,
+.well > h4:after {
+  position: absolute;
+  top: 51%;
+  overflow: hidden;
+  width: 50%;
+  height: 1px;
+  content: '\a0';
+  border-top: 2px solid #ddd;
+}
+.well > h4:before {
+  margin-left: -50%;
+  text-align: right;
 }

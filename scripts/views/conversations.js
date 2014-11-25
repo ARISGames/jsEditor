@@ -1,7 +1,8 @@
 define(function(require)
 {
+	var EditorCollectionView    = require('views/editor_collection_base');
+
 	var _                       = require('underscore');
-	var Backbone                = require('backbone');
 	var Template                = require('text!templates/conversations.tpl');
 	var vent                    = require('vent');
 	var storage                 = require('storage');
@@ -26,7 +27,7 @@ define(function(require)
 	var TabsCollection          = require('collections/tabs');
 
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorCollectionView.extend({
 		template: _.template(Template),
 
 		itemView: ConversationRowView,
@@ -100,25 +101,6 @@ define(function(require)
 				vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters, model: game}));
 
 			}.bind(this));
-		},
-
-
-		// Marionette override
-		appendBuffer: function(compositeView, buffer) {
-			var $container = this.getItemViewContainer(compositeView);
-			$container.find(".foot").before(buffer);
-		},
-
-		appendHtml: function(compositeView, itemView, index){
-			if (compositeView.isBuffering) {
-			  compositeView.elBuffer.appendChild(itemView.el);
-			}
-			else {
-			  // If we've already rendered the main collection, just
-			  // append the new items directly into the element.
-			  var $container = this.getItemViewContainer(compositeView);
-			  $container.find(".foot").before(itemView.el);
-			}
 		}
 	});
 });

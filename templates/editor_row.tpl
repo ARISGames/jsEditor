@@ -4,4 +4,6 @@
 		<div class="pull-right remove"><span class="text-danger glyphicon glyphicon-minus-sign"></span></div>
 	<% } %>
 </h4>
-<p class="list-group-item-text"><%= display_name %></p>
+<% if(user_name !== display_name) { %>
+	<p class="list-group-item-text"><%= display_name %></p>
+<% } %>
