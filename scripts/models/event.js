@@ -23,7 +23,7 @@ define([
 		defaults: {
 			"event": "GIVE_ITEM",
 		   	"content_id": "0",
-			"qty": "0"
+			"qty": "1"
 		}
 
 	});
