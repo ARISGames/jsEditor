@@ -105,21 +105,25 @@ define([
 			game.fetch({
 				success: function() {
 
-					var scenes    = new SceneCollection    ([], {parent: game});
-					var plaques   = new PlaqueCollection   ([], {parent: game});
-					var items     = new ItemCollection     ([], {parent: game});
-					var dialogs   = new DialogsCollection  ([], {parent: game});
-					var pages     = new WebPagesCollection ([], {parent: game});
-					var factories = new FactoriesCollection([], {parent: game});
+					var instances = storage.instances;
+					var triggers  = storage.triggers;
+
+					var pages     = storage.web_pages;
+					var plaques   = storage.plaques;
+					var dialogs   = storage.dialogs;
+					var items     = storage.items;
+
+					var scenes    = storage.scenes;
+					var factories = storage.factories;
 
 					// TODO catch errors if any fail (since its a non-standard failure)
-					$.when(scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch(), factories.fetch()).done(function()
+					$.when(instances.fetch(), triggers.fetch(), scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch(), factories.fetch()).done(function()
 					{
 						// TODO make game a promise and store it so we can access the same game instance in other tabs.
 						// then 'intro scene' test can just be if this.model.is(game.intro_scene())
 						var intro_scene = scenes.get(game.get("intro_scene_id"));
 
-						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes, intro_scene: intro_scene}));
+						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes, triggers: triggers, intro_scene: intro_scene}));
 						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
 						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages, factories: factories}));
 						vent.trigger("application:info:hide");
@@ -225,8 +229,12 @@ define([
 
 			$.when(triggers.fetch(), instances.fetch(), web_pages.fetch(), plaques.fetch(), dialogs.fetch(), items.fetch()).done(function()
 			{
-				// Just give location triggers to view
-				var location_selection = triggers.where({type: "LOCATION"});
+				// Just give non-note location triggers to view (until we filtering view is created)
+				var location_selection = triggers.filter(function(trigger)
+				{
+					return trigger.get("type") === "LOCATION" && trigger.instance().get("object_type") !== "NOTE";
+
+				});
 				var locations = new GameTriggersCollection(location_selection, {parent: game});
 
 				vent.trigger("application.show",      new LocationsView ({model: game, collection: locations}));

@@ -43,16 +43,7 @@ define([
 				if(trigger.id === view.model.id) {
 					view.model = trigger;
 
-					// FIXME refactor double logic
-					var type = view.model.get("type");
-					if(type === "QR")        { view.type_icon = "qrcode";     }
-					if(type === "LOCATION")  { view.type_icon = "map-marker"; }
-					if(type === "IMMEDIATE") { view.type_icon = "link"; }
-
-					view.type_color  = "text-primary";
-					if(trigger.get("infinite_distance") === "1" && type === "LOCATION") { view.type_color = "text-success"; }
-
-					view.render();
+					view.update_trigger_icon();
 				}
 			});
 
@@ -63,72 +54,75 @@ define([
 				}
 			});
 
-			// FIXME delegate to different views for each
-			view.object_name = "...";
-			view.object_icon = "refresh";
-			view.type_icon   = "question-sign";
+			// Assign icon and name from instance and game object
+			view.loading_icon();
+			view.update_icon ();
 
-			var type = view.model.get("type");
-			if(type === "QR")        { view.type_icon = "qrcode";     }
-			if(type === "LOCATION")  { view.type_icon = "map-marker"; }
-			if(type === "IMMEDIATE") { view.type_icon = "link"; }
+			// Listen to association events on on instance and game object
+			view.bindAssociations();
+		},
 
-			view.type_color  = "text-primary";
-			if(view.model.get("infinite_distance") === "1" && type === "LOCATION") { view.type_color = "text-success"; }
+		old_code: function() {
+			try {
+				var object_class = view.instance.object_class();
+				view.game_object = new object_class();
+				view.game_object.set(view.game_object.idAttribute, view.instance.get("object_id"));
 
-			view.instance = new Instance({instance_id: view.model.get("instance_id")});
-			view.instance.fetch({
-				success: function() {
+				// FIXME refer to global instance of object so change happens everywhere
+				view.game_object.on("change", function() {
+					view.object_name = view.game_object.get("name");
 
-					try {
-						var object_class = view.instance.object_class();
-						view.game_object = new object_class();
-						view.game_object.set(view.game_object.idAttribute, view.instance.get("object_id"));
+					var type = view.instance.get("object_type");
+					if(type === "DIALOG")   { view.object_icon = "comment"; }
+					if(type === "PLAQUE")   { view.object_icon = "align-justify"; }
+					if(type === "ITEM")     { view.object_icon = "stop";    }
+					if(type === "WEB_PAGE") { view.object_icon = "globe";   }
+					if(type === "SCENE")    { view.object_icon = "film";    }
+					if(type === "FACTORY")  { view.object_icon = "home";    }
 
-						// FIXME refer to global instance of object so change happens everywhere
-						view.game_object.on("change", function() {
-							view.object_name = view.game_object.get("name");
+					view.render();
+				});
 
-							var type = view.instance.get("object_type");
-							if(type === "DIALOG")   { view.object_icon = "comment"; }
-							if(type === "PLAQUE")   { view.object_icon = "align-justify"; }
-							if(type === "ITEM")     { view.object_icon = "stop";    }
-							if(type === "WEB_PAGE") { view.object_icon = "globe";   }
-							if(type === "SCENE")    { view.object_icon = "film";    }
-							if(type === "FACTORY")  { view.object_icon = "home";    }
+				view.game_object.fetch({
+					success: function() {
 
-							view.render();
-						});
-
-						view.game_object.fetch({
-							success: function() {
-
-								// FIXME need global instance
-								vent.on("game_object:update", function(game_object) {
-									if(game_object.is(view.game_object))
-									{
-										view.game_object = game_object;
-										view.object_name = game_object.get("name");
-										view.render();
-									}
-								});
-
-								vent.on("game_object:delete", function(game_object) {
-									if(game_object.is(view.game_object))
-									{
-										view.trigger("trigger:remove", view.model);
-									}
-								});
+						// FIXME need global instance
+						vent.on("game_object:update", function(game_object) {
+							if(game_object.is(view.game_object))
+							{
+								view.game_object = game_object;
+								view.object_name = game_object.get("name");
+								view.render();
 							}
 						});
-					} // try load game object
-					catch(error) {
-						console.error("Scene Trigger Fetch Error", error);
-					}
-				}
-			});
 
+						vent.on("game_object:delete", function(game_object) {
+							if(game_object.is(view.game_object))
+							{
+								view.trigger("trigger:remove", view.model);
+							}
+						});
+					}
+				});
+			} // try load game object
+			catch(error) {
+				console.error("Scene Trigger Fetch Error", error);
+			}
 		},
+
+
+		/* Association Binding */
+
+		unbindAssociations: function() {
+			//this.stopListening(this.dostuff);
+		},
+
+		bindAssociations: function() {
+			//this.listenTo(this.model.icon(), 'change', this.dostuff);
+		},
+
+
+		/* Events */
 
 		events: {
 			"click .show": "onClickShow"
@@ -147,11 +141,11 @@ define([
 			};
 
 			// launch based on type
-			if(view.game_object instanceof Dialog ) { trigger_editor = new DialogTriggerEditorView(options);  }
-			if(view.game_object instanceof Item   ) { trigger_editor = new ItemTriggerEditorView(options);    }
-			if(view.game_object instanceof Plaque ) { trigger_editor = new PlaqueTriggerEditorView(options);  }
+			if(view.game_object instanceof Dialog ) { trigger_editor = new  DialogTriggerEditorView(options); }
+			if(view.game_object instanceof Item   ) { trigger_editor = new    ItemTriggerEditorView(options); }
+			if(view.game_object instanceof Plaque ) { trigger_editor = new  PlaqueTriggerEditorView(options); }
 			if(view.game_object instanceof WebPage) { trigger_editor = new WebPageTriggerEditorView(options); }
-			if(view.game_object instanceof Scene  ) { trigger_editor = new SceneTriggerEditorView(options);   }
+			if(view.game_object instanceof Scene  ) { trigger_editor = new   SceneTriggerEditorView(options); }
 			if(view.game_object instanceof Factory) { trigger_editor = new FactoryTriggerEditorView(options); }
 
 			if(trigger_editor === null) {
@@ -160,6 +154,44 @@ define([
 			else {
 				vent.trigger("application:info:show", trigger_editor);
 			}
+		},
+
+
+		/* Dom Helpers */
+		loading_icon: function()
+		{
+			// FIXME delegate to different views for each object?
+			this.object_name = "...";
+			this.object_icon = "refresh";
+			this.type_icon   = "question-sign";
+			this.type_color  = "text-warning";
+
+			this.instance    = this.model.instance();
+			this.game_object = this.instance.game_object();
+		},
+
+
+		update_icon: function()
+		{
+			var type = this.model.get("type");
+			if(type === "QR")        { this.type_icon = "qrcode";     }
+			if(type === "LOCATION")  { this.type_icon = "map-marker"; }
+			if(type === "IMMEDIATE") { this.type_icon = "link"; }
+
+			this.type_color  = "text-primary";
+			if(this.model.get("infinite_distance") === "1" && type === "LOCATION") { this.type_color = "text-success"; }
+
+			type = this.instance.get("object_type");
+			if(type === "DIALOG")   { this.object_icon = "comment"; }
+			if(type === "PLAQUE")   { this.object_icon = "align-justify"; }
+			if(type === "ITEM")     { this.object_icon = "stop";    }
+			if(type === "WEB_PAGE") { this.object_icon = "globe";   }
+			if(type === "SCENE")    { this.object_icon = "film";    }
+			if(type === "FACTORY")  { this.object_icon = "home";    }
+
+			this.object_name = this.game_object.get("name");
+
+			this.render();
 		}
 
 	});
