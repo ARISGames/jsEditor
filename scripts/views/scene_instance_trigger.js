@@ -1,23 +1,26 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/scene_instance_trigger.tpl',
-	'models/instance',
-	'models/dialog',
-	'models/plaque',
-	'models/item',
-	'models/web_page',
-	'models/media',
-	'models/scene',
-	'models/factory',
-	'views/dialog_trigger_editor',
-	'views/plaque_trigger_editor',
-	'views/item_trigger_editor',
-	'views/web_page_trigger_editor',
-	'views/scene_trigger_editor',
-	'views/factory_trigger_editor',
-	'vent'
-], function(_, Backbone, Template, Instance, Dialog, Plaque, Item, WebPage, Media, Scene, Factory, DialogTriggerEditorView, PlaqueTriggerEditorView, ItemTriggerEditorView, WebPageTriggerEditorView, SceneTriggerEditorView, FactoryTriggerEditorView, vent) {
+define(function(require)
+{
+	var _                        = require('underscore');
+	var Backbone                 = require('backbone');
+	var Template                 = require('text!templates/scene_instance_trigger.tpl');
+	var vent                     = require('vent');
+
+	var Instance                 = require('models/instance');
+	var Dialog                   = require('models/dialog');
+	var Plaque                   = require('models/plaque');
+	var Item                     = require('models/item');
+	var WebPage                  = require('models/web_page');
+	var Media                    = require('models/media');
+	var Scene                    = require('models/scene');
+	var Factory                  = require('models/factory');
+
+	var DialogTriggerEditorView  = require('views/dialog_trigger_editor');
+	var PlaqueTriggerEditorView  = require('views/plaque_trigger_editor');
+	var ItemTriggerEditorView    = require('views/item_trigger_editor');
+	var WebPageTriggerEditorView = require('views/web_page_trigger_editor');
+	var SceneTriggerEditorView   = require('views/scene_trigger_editor');
+	var FactoryTriggerEditorView = require('views/factory_trigger_editor');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -53,8 +56,8 @@ define([
 		/* Association Binding */
 
 		bindAssociations: function() {
-			this.listenTo(this.model,       "update", this.update_icon);
-			this.listenTo(this.game_object, "update", this.update_icon);
+			this.listenTo(this.model,       "update",  this.update_icon);
+			this.listenTo(this.game_object, "update",  this.update_icon);
 			this.listenTo(this.game_object, "destroy", function() { view.trigger("trigger:remove", view.model); });
 		},
 
@@ -62,6 +65,7 @@ define([
 		/* Events */
 
 		events: {
+
 			"click .show": "onClickShow"
 		},
 
@@ -95,6 +99,7 @@ define([
 
 
 		/* Dom Helpers */
+
 		loading_icon: function()
 		{
 			// FIXME delegate to different views for each object?
@@ -104,7 +109,6 @@ define([
 			this.type_color  = "text-warning";
 
 		},
-
 
 		update_icon: function()
 		{
