@@ -69,9 +69,8 @@ define([
 			if(type === "PLAQUE")   { return storage.plaques.retrieve(id)   }
 			if(type === "ITEM")     { return storage.items.retrieve(id)     }
 			if(type === "WEB_PAGE") { return storage.web_pages.retrieve(id) }
-
-			//if(type === "SCENE")    { return Scene   }
-			//if(type === "FACTORY")  { return Factory }
+			if(type === "SCENE")    { return storage.scenes.retrieve(id)    }
+			if(type === "FACTORY")  { return storage.factories.retrieve(id) }
 
 			else { throw "cant fetch game object of type: " + type }
 		}

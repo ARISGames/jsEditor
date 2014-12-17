@@ -4,6 +4,7 @@ define(function(require)
 	var $          = require('jquery');
 	var EditorView = require('views/editor_base');
 	var vent       = require('vent');
+	var storage    = require('storage');
 	var Template   = require('text!templates/trigger_editor_base.tpl');
 
 	var QRCode = require('qrcode');
@@ -186,6 +187,7 @@ define(function(require)
 			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
 			game_object.save({}, {
 				create: function() {
+					storage.add_game_object(game_object);
 					vent.trigger("game_object:add", game_object);
 				},
 				success: function() {
@@ -200,6 +202,10 @@ define(function(require)
 					}
 
 					instance.save({}, {
+						create: function() {
+							storage.instances.add(instance);
+						},
+
 						success: function() {
 							// Save Trigger
 							trigger.set("instance_id", instance.id);
@@ -226,6 +232,8 @@ define(function(require)
 							{
 								create: function()
 								{
+									storage.triggers.add(instance);
+
 									// FIXME better way to handle this?
 									vent.trigger("scene:add_trigger", trigger);
 									vent.trigger("application:popup:hide");

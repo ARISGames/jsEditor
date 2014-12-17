@@ -7,8 +7,9 @@ define(function(require)
 
 	var QRCode   = require('qrcode');
 	var vent     = require('vent');
+	var storage  = require('storage');
 
-	var SceneEditorView        = require('views/scene_editor');
+	var SceneEditorView         = require('views/scene_editor');
 
 	var RequirementsEditorView  = require('views/requirements');
 	var MediaChooserView        = require('views/media_chooser');
@@ -162,6 +163,7 @@ define(function(require)
 			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
 			scene.save({}, {
 				create: function() {
+					storage.add_game_object(scene);
 					vent.trigger("scenes:add", scene);
 				},
 				success: function() {
@@ -171,6 +173,10 @@ define(function(require)
 					instance.set("object_type", Instance.type_for(scene));
 
 					instance.save({}, {
+						create: function() {
+							storage.instances.add(instance);
+						},
+
 						success: function() {
 							// If new, create empty requirement
 							/* {

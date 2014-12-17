@@ -3,8 +3,9 @@ define([
 	'text!templates/item_chooser_row.tpl',
 	'models/trigger',
 	'models/instance',
-	'vent'
-], function(Backbone, Template, Trigger, Instance, vent) {
+	'vent',
+	'storage'
+], function(Backbone, Template, Trigger, Instance, vent, storage) {
 
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
@@ -34,7 +35,8 @@ define([
 			instance.set("qty", "1");
 
 			instance.save({}, {
-				success: function() {
+				create: function() {
+					storage.instances.add(instance);
 
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
@@ -43,6 +45,8 @@ define([
 					{
 						create: function()
 						{
+							storage.triggers.add(trigger);
+
 							// FIXME better way to handle this?
 							vent.trigger("scene:add_trigger", trigger);
 							vent.trigger("application:popup:hide");

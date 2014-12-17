@@ -1,11 +1,12 @@
 define([
 	'underscore',
+	'underscore.string',
 	'backbone',
 	'text!templates/note_row.tpl',
 	'views/note_editor',
 	'models/media',
 	'vent'
-], function(_, Backbone, Template, NoteEditorView, Media, vent) {
+], function(_, _S, Backbone, Template, NoteEditorView, Media, vent) {
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

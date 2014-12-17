@@ -1,16 +1,18 @@
-<div class="thumbnail tiny pull-left">
+<div class="thumbnail tiny pull-right">
 	<img src=<%= media_url %>>
 </div>
 <div class="note-details">
-	<h4 class="list-group-item-heading edit clear">
-		<%= name || "(unnamed)" %>
-		<small class="pull-right">
+	<blockquote>
+		<p>
+			<%= _.str.prune(description, 50) %>
+		</p>
+		<footer>
 			<%= user_name %>
-		</small>
-	</h4>
-	<p class="list-group-item-text edit"><%= description %></p>
+		</footer>
+	</blockquote>
+
 	<% if(tag_name) { %>
-		<p class="list-group-item-text pull-right">
+		<p class="pull-right">
 			<span class="glyphicon glyphicon-tags"></span>
 			&nbsp;
 			<%= tag_name %>

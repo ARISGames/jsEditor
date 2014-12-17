@@ -38,10 +38,6 @@ define(function(require)
 		initialize: function(options) {
 			var view = this;
 
-			this.collection = new TriggerCollection([], {parent: this.model});
-			this.collection.fetch();
-
-			// Must find cleaner way to interface this with the other view
 			vent.on("scene:add_trigger", function(trigger) {
 				if (view.model.id == trigger.get("scene_id"))
 				{
@@ -52,6 +48,7 @@ define(function(require)
 			vent.on("game_object:update", function(game_object) {
 				if(game_object.is(view.model))
 				{
+					// FIXME guarentee single instanes.
 					view.model = game_object;
 					view.render();
 				}
@@ -79,6 +76,7 @@ define(function(require)
 			}
 		},
 
+		/* Listen to children asking to be removed */
 		onItemviewTriggerRemove: function(item_view, trigger) {
 			this.collection.remove(trigger);
 		},

@@ -175,6 +175,7 @@ define(function(require)
 			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
 			factory.save({}, {
 				create: function() {
+					storage.add_game_object(factory);
 					vent.trigger("factory:add", factory);
 				},
 				success: function() {
@@ -184,6 +185,10 @@ define(function(require)
 					instance.set("object_type", Instance.type_for(factory));
 
 					instance.save({}, {
+						create: function() {
+							storage.instances.add(instance);
+						},
+
 						success: function() {
 							// If new, create empty requirement
 							/* {

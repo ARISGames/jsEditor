@@ -1,20 +1,39 @@
-define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'jquidrag',
-	'bootstrap',
-	'text!templates/scenes.tpl',
-	'models/scene',
-	'views/scene',
-	'views/scene_editor',
-	'vent'
-], function($, _, Backbone, jQueryUiDraggable, Bootstrap, Template, Scene, SceneView, SceneEditorView, vent) {
+define(function(require)
+{
+	var $                  = require('jquery');
+	var _                  = require('underscore');
+	var Backbone           = require('backbone');
+	var Template           = require('text!templates/scenes.tpl');
+
+	var jQueryUiDraggable  = require('jquidrag');
+	var Bootstrap          = require('bootstrap');
+
+	var SceneView          = require('views/scene');
+	var SceneEditorView    = require('views/scene_editor');
+	var Scene              = require('models/scene');
+	var TriggersCollection = require('collections/triggers');
+
+	var vent               = require('vent');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: SceneView,
 		itemViewContainer: ".scenes",
+		itemViewOptions: function(model, index) {
+
+			var scene_trigger_selection = this.triggers.filter(function(trigger)
+			{
+				return trigger.get("scene_id") === model.id && trigger.instance().get("object_type") !== "NOTE";
+
+			});
+			var scene_triggers = new TriggersCollection(scene_trigger_selection, {parent: model});
+
+			return {
+				collection: scene_triggers
+			}
+		},
 
 		className: 'full-height',
 
@@ -26,6 +45,7 @@ define([
 			var view = this;
 
 			this.intro_scene = options.intro_scene;
+			this.triggers    = options.triggers;
 
 			vent.on("scenes:add", function(scene) {
 				view.collection.add(scene);
