@@ -53,12 +53,17 @@ define(function(require)
 		},
 
 
-		/* Association Binding */
+		/* Model Event Binding */
 
-		bindAssociations: function() {
+		bindModelEvents: function() {
 			this.listenTo(this.model,       "update",  this.update_icon);
 			this.listenTo(this.game_object, "update",  this.update_icon);
-			this.listenTo(this.game_object, "destroy", function() { view.trigger("trigger:remove", view.model); });
+			this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
+		},
+
+		triggerRemove: function() {
+			// Alert parent they should remove me.
+			this.trigger("trigger:remove", this.model);
 		},
 
 

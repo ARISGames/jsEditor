@@ -36,7 +36,7 @@ define([
 			trigger.set("type", "IMMEDIATE");
 
 			var trigger_editor = new FactoryTriggerEditorView({scene: this.options.parent, game_object: factory, instance: instance, model: trigger, visible_fields: "create_factory_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Web Page to Scene");
+			vent.trigger("application:popup:show", trigger_editor, "Add Factory to Scene");
 		},
 
 		// Marionette override

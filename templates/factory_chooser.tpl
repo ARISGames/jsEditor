@@ -1,6 +1,6 @@
 <div class="list-group factorys">
 	<a class="list-group-item active foot new-factory">
-		New Web Page
+		New Factory
 	</a>
 </div>
 

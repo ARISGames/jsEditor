@@ -38,6 +38,7 @@ define(function(require, exports, module)
 			else if(idAttribute === "item_id")     { this.items.add(game_object)     }
 			else if(idAttribute === "web_page_id") { this.web_pages.add(game_object) }
 			else if(idAttribute === "scene_id")    { this.scenes.add(game_object)    }
+			else if(idAttribute === "factory_id")  { this.factories.add(game_object) }
 			else { throw "don't know where to store object of type " + game_object.idAttribute + ": " + game_object.id; }
 		}
 	});
