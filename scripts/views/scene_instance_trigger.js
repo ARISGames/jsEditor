@@ -35,90 +35,27 @@ define([
 		},
 
 		initialize: function(options) {
-			this.scene = options.scene;
-
 			var view = this;
 
-			vent.on("trigger:update", function(trigger) {
-				if(trigger.id === view.model.id) {
-					view.model = trigger;
-
-					view.update_trigger_icon();
-				}
-			});
-
-			vent.on("scenes:remove", function(scene) {
-				if(view.instance.get("object_type") === "SCENE" && scene.id === view.game_object.id)
-				{
-					view.trigger("trigger:remove", view.model);
-				}
-			});
+			this.scene       = options.scene;
+			this.instance    = this.model.instance();
+			this.game_object = this.instance.game_object();
 
 			// Assign icon and name from instance and game object
 			view.loading_icon();
 			view.update_icon ();
 
 			// Listen to association events on on instance and game object
-			view.bindAssociations();
-		},
-
-		old_code: function() {
-			try {
-				var object_class = view.instance.object_class();
-				view.game_object = new object_class();
-				view.game_object.set(view.game_object.idAttribute, view.instance.get("object_id"));
-
-				// FIXME refer to global instance of object so change happens everywhere
-				view.game_object.on("change", function() {
-					view.object_name = view.game_object.get("name");
-
-					var type = view.instance.get("object_type");
-					if(type === "DIALOG")   { view.object_icon = "comment"; }
-					if(type === "PLAQUE")   { view.object_icon = "align-justify"; }
-					if(type === "ITEM")     { view.object_icon = "stop";    }
-					if(type === "WEB_PAGE") { view.object_icon = "globe";   }
-					if(type === "SCENE")    { view.object_icon = "film";    }
-					if(type === "FACTORY")  { view.object_icon = "home";    }
-
-					view.render();
-				});
-
-				view.game_object.fetch({
-					success: function() {
-
-						// FIXME need global instance
-						vent.on("game_object:update", function(game_object) {
-							if(game_object.is(view.game_object))
-							{
-								view.game_object = game_object;
-								view.object_name = game_object.get("name");
-								view.render();
-							}
-						});
-
-						vent.on("game_object:delete", function(game_object) {
-							if(game_object.is(view.game_object))
-							{
-								view.trigger("trigger:remove", view.model);
-							}
-						});
-					}
-				});
-			} // try load game object
-			catch(error) {
-				console.error("Scene Trigger Fetch Error", error);
-			}
+			view.bindModelEvents();
 		},
 
 
 		/* Association Binding */
 
-		unbindAssociations: function() {
-			//this.stopListening(this.dostuff);
-		},
-
 		bindAssociations: function() {
-			//this.listenTo(this.model.icon(), 'change', this.dostuff);
+			this.listenTo(this.model,       "update", this.update_icon);
+			this.listenTo(this.game_object, "update", this.update_icon);
+			this.listenTo(this.game_object, "destroy", function() { view.trigger("trigger:remove", view.model); });
 		},
 
 
@@ -166,8 +103,6 @@ define([
 			this.type_icon   = "question-sign";
 			this.type_color  = "text-warning";
 
-			this.instance    = this.model.instance();
-			this.game_object = this.instance.game_object();
 		},
 
 
