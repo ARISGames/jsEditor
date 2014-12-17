@@ -16,6 +16,9 @@ body {
 a {
   cursor: pointer;
 }
+.clear {
+  clear: both;
+}
 /* Left Organizer */
 .organizer-section-header {
   color: #777777;
