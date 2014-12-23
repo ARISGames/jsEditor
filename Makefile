@@ -17,9 +17,10 @@ help:
 	@echo "  build: optimize all js into one file with requireJS"
 	@echo "    all: merge css build render"
 	@echo " heroku: push build branch to heroku"
+	@echo "    dev: push master branch to dev"
 	@echo " deploy: push build branch to aris"
 	@echo ""
-	@echo "make [all|css|build|deploy]"
+	@echo "make [all|css|build|dev|deploy]"
 
 css:
 	@echo "Compiling LESS into CSS."
