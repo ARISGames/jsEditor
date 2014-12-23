@@ -27,7 +27,7 @@ define(function(require)
 
 		// Bootstrap
 		tagName: 'a',
-		className: "list-group-item",
+		className: "list-group-item draggable-game-tab",
 
 		events: {
 			"click": "onClickEdit"
@@ -138,7 +138,6 @@ define(function(require)
 				this.listenTo(this.model.game_object(), 'change', this.render);// function() { console.log("got it", arguments) ;});
 			}
 			this.listenTo(this.model, 'change:content_id', this.loadAssociation);
-		},
-
+		}
 	});
 });

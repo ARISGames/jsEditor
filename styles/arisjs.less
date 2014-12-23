@@ -664,3 +664,29 @@ h5:hover .object-id, h4:hover .object-id {
 		text-align: right;
 	}
 }
+
+/* Tab drag and drop */
+
+.tab-drag-handle {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	padding-top: 10px;
+	padding-right: 15px;
+	padding-left: 15px;
+	font-size: 125%;
+	color: @gray-light;
+}
+
+.tab-drag-handle:hover {
+	color: @brand-primary;
+	cursor: row-resize;
+}
+
+.tabs .ui-sortable-placeholder
+{
+	visibility: visible !important;
+	border: none;
+	background: none;
+}
