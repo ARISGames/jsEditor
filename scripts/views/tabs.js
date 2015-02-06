@@ -56,8 +56,13 @@ define(function(require)
 
 		onRender: function()
 		{
-			this.$el.find('.list-group.tabs').sortable({items: '.draggable-game-tab', handle: '.tab-drag-handle'})
+			var sort_options = {
+				items: '.draggable-game-tab',
+				handle: '.tab-drag-handle',
+				stop: function( event, ui ) { vent.trigger("tabrow:released", ui.item, ui.item.index()); }
+			};
 
+			this.$el.find('.list-group.tabs').sortable(sort_options);
 		}
 	});
 });

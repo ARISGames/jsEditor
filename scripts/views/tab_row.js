@@ -79,6 +79,8 @@ define(function(require)
 		{
 			this.bindAssociation();
 			this.loadAssociation();
+
+			this.listenTo(vent, 'tabrow:released', this.onRowReleased.bind(this));
 		},
 
 
@@ -138,6 +140,17 @@ define(function(require)
 				this.listenTo(this.model.game_object(), 'change', this.render);// function() { console.log("got it", arguments) ;});
 			}
 			this.listenTo(this.model, 'change:content_id', this.loadAssociation);
+		},
+
+
+		/* Sorting */
+
+		onRowReleased: function(element, position)
+		{
+			if(this.$el.is(element))
+			{
+				this.model.save({"sort_index": position}, {patch: true});
+			}
 		}
 	});
 });
