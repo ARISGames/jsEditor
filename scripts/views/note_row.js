@@ -1,12 +1,14 @@
-define([
-	'underscore',
-	'underscore.string',
-	'backbone',
-	'text!templates/note_row.tpl',
-	'views/note_editor',
-	'models/media',
-	'vent'
-], function(_, _S, Backbone, Template, NoteEditorView, Media, vent) {
+define(function(require)
+{
+	var _              = require('underscore');
+	var _S             = require('underscore.string');
+	var Backbone       = require('backbone');
+	var Template       = require('text!templates/note_row.tpl');
+	var NoteEditorView = require('views/note_editor');
+	var Media          = require('models/media');
+	var vent           = require('vent');
+
+
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 

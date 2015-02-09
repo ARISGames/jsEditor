@@ -499,11 +499,13 @@ h4:hover .object-id {
   visibility: inherit;
 }
 /* Notes View */
-.notes-editor .thumbnail {
+.notes-editor .thumbnail,
+.games-list-container .thumbnail {
   margin: 0;
-  margin-right: 10px;
+  margin-left: 10px;
 }
-.notes-editor .list-group-item {
+.notes-editor .list-group-item,
+.games-list-container .list-group-item {
   padding: 10px;
 }
 /* Helpers */
