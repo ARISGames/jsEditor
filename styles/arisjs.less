@@ -378,7 +378,7 @@ h5:hover .object-id, h4:hover .object-id {
 	height: 96px;
 }
 
-.thumbnail.tiny img {
+.thumbnail.tiny img, .media-object.tiny {
 	width: 48px;
 	height: 48px;
 }
@@ -591,13 +591,17 @@ h5:hover .object-id, h4:hover .object-id {
 
 
 /* Notes View */
-.notes-editor, .games-list-container {
+.notes-editor {
 	.thumbnail {
 		margin: 0;
 		margin-left: 10px;
 	}
 	.list-group-item {
 		padding: 10px;
+
+		blockquote {
+			margin-bottom: 10px;
+		}
 	}
 }
 
@@ -662,6 +666,15 @@ h5:hover .object-id, h4:hover .object-id {
 	& > h4:before {
 		margin-left: -50%;
 		text-align: right;
+	}
+}
+
+
+/* Game list */
+
+.games-list-container {
+	.description {
+		color: @gray-light;
 	}
 }
 

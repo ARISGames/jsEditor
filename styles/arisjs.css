@@ -312,7 +312,8 @@ h4:hover .object-id {
   width: 96px;
   height: 96px;
 }
-.thumbnail.tiny img {
+.thumbnail.tiny img,
+.media-object.tiny {
   width: 48px;
   height: 48px;
 }
@@ -499,14 +500,15 @@ h4:hover .object-id {
   visibility: inherit;
 }
 /* Notes View */
-.notes-editor .thumbnail,
-.games-list-container .thumbnail {
+.notes-editor .thumbnail {
   margin: 0;
   margin-left: 10px;
 }
-.notes-editor .list-group-item,
-.games-list-container .list-group-item {
+.notes-editor .list-group-item {
   padding: 10px;
+}
+.notes-editor .list-group-item blockquote {
+  margin-bottom: 10px;
 }
 /* Helpers */
 .addon-bg-info {
@@ -560,6 +562,10 @@ h4:hover .object-id {
 .well > h4:before {
   margin-left: -50%;
   text-align: right;
+}
+/* Game list */
+.games-list-container .description {
+  color: #777777;
 }
 /* Tab drag and drop */
 .tab-drag-handle {
