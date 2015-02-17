@@ -25,13 +25,17 @@ define(function(require)
 				"data"
 			];
 
+
+			if(this.id === "0") {
+				attribute_list = _.without(attribute_list, "game_id");
+			}
+
 			// FIXME temporary fix for optional attribute, might need to remove the fixed attribute logic and make it a white list (with non nulls) that gets sent? (make sure nothing ever needs to be nulled out)
-			if(this.get("data")) {
-				return attribute_list;
+			if(!this.get("data")) {
+				attribute_list = _.without(attribute_list, "data");
 			}
-			else {
-				return _.without(attribute_list, "data");
-			}
+
+			return attribute_list;
 		},
 
 
