@@ -613,6 +613,7 @@ h5:hover .object-id, h4:hover .object-id {
 
 .well {
 	background: darken(@well-bg, 5%);
+	padding-top: 12px;
 }
 
 .form-inline {
@@ -675,6 +676,19 @@ h5:hover .object-id, h4:hover .object-id {
 .games-list-container {
 	.description {
 		color: @gray-light;
+	}
+
+	.media-body {
+		width: 10000px; /* Missing from bootstrap version */
+	}
+
+	.migration-badge {
+		line-height: 1;
+		border-radius: 1em;
+		min-width: 2em;
+		padding: 0.5em;
+		text-align: center;
+		display: inline-block;
 	}
 }
 

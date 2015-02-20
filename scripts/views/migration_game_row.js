@@ -14,18 +14,25 @@ define(function(require)
 
 		initialize: function(options)
 		{
-			this.model.icon().on('change', this.render);
+			this.listenTo(this.model, 'change', this.render);
+			this.listenTo(this.model, 'all',    function() { console.log("WAT", arguments);});
 		},
 
 		templateHelpers: function()
 		{
 			return {
-				icon_thumb_url: this.model.icon_thumbnail()
+				icon_thumb_url:     this.model.icon_thumbnail(),
+				my_migration_count: this.model.get("my_prev_migrations").length,
+				migration_count:    this.model.get("prev_migrations"   ).length
 			}
 		},
 
 		events: {
 			"click": "onClickMigrate"
 		},
+
+		onClickMigrate: function() {
+			this.model.migrate();
+		}
 	});
 });

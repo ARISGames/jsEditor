@@ -14,7 +14,7 @@ define(function(require)
 
 		initialize: function(options)
 		{
-			this.model.icon().on('change', this.render);
+			this.listenTo(this.model.icon(), 'change', this.render);
 		},
 
 		templateHelpers: function()

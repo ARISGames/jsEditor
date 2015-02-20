@@ -516,6 +516,7 @@ h4:hover .object-id {
 }
 .well {
   background: #e8e8e8;
+  padding-top: 12px;
 }
 .form-inline {
   margin-top: 5px;
@@ -566,6 +567,18 @@ h4:hover .object-id {
 /* Game list */
 .games-list-container .description {
   color: #777777;
+}
+.games-list-container .media-body {
+  width: 10000px;
+  /* Missing from bootstrap version */
+}
+.games-list-container .migration-badge {
+  line-height: 1;
+  border-radius: 1em;
+  min-width: 2em;
+  padding: 0.5em;
+  text-align: center;
+  display: inline-block;
 }
 /* Tab drag and drop */
 .tab-drag-handle {
