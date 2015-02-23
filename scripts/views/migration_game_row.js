@@ -15,7 +15,6 @@ define(function(require)
 		initialize: function(options)
 		{
 			this.listenTo(this.model, 'change', this.render);
-			this.listenTo(this.model, 'all',    function() { console.log("WAT", arguments);});
 		},
 
 		templateHelpers: function()
