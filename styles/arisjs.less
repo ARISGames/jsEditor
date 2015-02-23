@@ -682,13 +682,28 @@ h5:hover .object-id, h4:hover .object-id {
 		width: 10000px; /* Missing from bootstrap version */
 	}
 
-	.migration-badge {
-		line-height: 1;
-		border-radius: 1em;
-		min-width: 2em;
-		padding: 0.5em;
-		text-align: center;
-		display: inline-block;
+
+	.migration_games {
+		.migration-badge {
+			line-height: 1;
+			border-radius: @border-radius-base;
+			min-width: 2em;
+			padding: 0.5em;
+			text-align: center;
+			display: inline-block;
+		}
+
+		.previously_migrated {
+			img {
+				opacity: 0.75;
+			}
+			.media-heading {
+				color: lighten(@gray, 25%);;
+			}
+			.description {
+				color: lighten(@gray-light, 25%);
+			}
+		}
 	}
 }
 

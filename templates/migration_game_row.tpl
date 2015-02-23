@@ -1,5 +1,4 @@
-<div class="media">
-
+<div class="media <%= migration_count > 0 ? "previously_migrated" : "" %>">
 	<div class="media-left">
 		<img class="media-object tiny" src=<%= icon_thumb_url %>>
 	</div>
@@ -11,9 +10,9 @@
 			<%= _.str.prune(description, 100) %>
 		</div>
 	</div>
-	<div class="media-right" style="vertical-align: middle;">
+	<div class="media-right media-middle">
 		<% if(migration_count > 0) { %>
-			<span class="migration-badge <%= my_migration_count > 0 ? "bg-success" : "bg-primary" %>"><%= migration_count %></span>
+			<span class="migration-badge bg-primary">Migrated</span>
 		<% } %>
 	</div>
 </div>
