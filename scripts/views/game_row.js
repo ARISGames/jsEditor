@@ -29,6 +29,12 @@ define(function(require)
 		},
 
 		onClickShow: function() {
+			// Fixme, move into own module for migration managing
+			if(window.running_migrations && Object.keys(window.running_migrations).length > 0) {
+				alert(window.onbeforeunload.call());
+				return;
+			}
+
 			// TODO Move this to an event ie gamelist.game.clicked
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
 		}

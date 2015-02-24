@@ -101,6 +101,10 @@ define([
 
 		auth_token: function () {
 			return $.cookie('auth_token');
+		},
+
+		auth_json: function() {
+			return {"key": this.auth_token(), "user_id": this.editor_id()};
 		}
 	});
 

@@ -132,7 +132,7 @@ define([
 			_.extend(template_values, model.attributes);
 			_.extend(template_values, {id: model.id});
 
-			var auth_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
+			var auth_data = {"auth": session.auth_json()};
 
 			// Build url from model attributes for update
 			if(method === "read") {

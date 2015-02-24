@@ -38,8 +38,9 @@ define(function(require)
 			var view = this;
 			var game = this.model;
 
+			// TODO move into templates
 			var migrating_text = '<i class="migrating-spinner"></i> <p style="text-align: center">Importing. Please do not close this window until finished.</p>';
-			var migrate_text = '<p><strong>This will import your legacy game into the new ARIS!</strong></p>' +
+			var migrate_text = '<p>This will import your legacy game into the new ARIS! It will not be an exact 1:1 copy as certain features are different. Make sure to examine your <span class="text-primary"><span class="glyphicon glyphicon-comment"></span> Conversations</span> and remove any uneeded <span class="text-primary"><span class="glyphicon glyphicon-qrcode"></span> QR Codes</span> or <span class="text-primary"><span class="glyphicon glyphicon-map-marker"></span> Locations</span> from the converted game.</p>' +
 				'<div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;If you have already imported this game, this will <strong>not</strong> overwrite it. Each import creates a new copy.</div>' +
 				'<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span> Please be aware that legacy player logs, notes and editors will not be imported.</div>';
 
@@ -65,7 +66,7 @@ define(function(require)
 				{
 					// Keep track of migrations to prevent navigation
 					window.onbeforeunload = function() {
-						return "Your game is still importing, please wait till it finishes.";
+						return "Your game is still importing, please wait until it finishes.";
 					}
 					window.running_migrations || (window.running_migrations = {});
 					window.running_migrations[game.id] = true;
@@ -92,7 +93,7 @@ define(function(require)
 				});
 			}
 
-			vent.trigger("application:popup:show", view.alert_dialog, "Import Legacy Game?");
+			vent.trigger("application:popup:show", view.alert_dialog, "Import Legacy Game");
 		},
 
 		show_spinner_alert: function(migrating_text) {

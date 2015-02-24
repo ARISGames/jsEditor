@@ -92,10 +92,22 @@ define(function(require)
 
 			// {"data":"v2 user not migrated","returnCode":1,"returnCodeDescription":null}"
 			//
-			var migratable_games_data = {"data":[{"icon_media_url": "https://placekitten.com/g/128/128", "game_id":"3456","prefix":"","name":"meow game","description":"its meowy!","pc_media_id":"0","icon_media_id":"0","media_id":"0","allow_player_created_locations":"0","updated":"2015-02-13 11:16:53","delete_player_locations_on_reset":"0","on_launch_node_id":"0","game_complete_node_id":"0","ready_for_public":"0","is_locational":"1","game_icon_media_id":"0","inventory_weight_cap":"0","created":"2015-02-13 11:16:53","allow_share_note_to_map":"1","allow_share_note_to_book":"1","allow_note_comments":"1","allow_player_tags":"1","allow_note_likes":"1","allow_trading":"1","show_player_location":"1","use_player_pic":"1","map_type":"STREET","full_quick_travel":"0","offline":"0","note_title_behavior":"FORCE_OVERWRITE","latitude":"0","longitude":"0","zoom_level":"0","num_players":"0","prev_migrations":[],"my_prev_migrations":[]},{"icon_media_url": "https://placekitten.com/g/228/228", "game_id":"5456","prefix":"","name":"meow two","description":"its meowyer","pc_media_id":"0","icon_media_id":"0","media_id":"0","allow_player_created_locations":"0","updated":"2015-02-13 11:16:53","delete_player_locations_on_reset":"0","on_launch_node_id":"0","game_complete_node_id":"0","ready_for_public":"0","is_locational":"1","game_icon_media_id":"0","inventory_weight_cap":"0","created":"2015-02-13 11:16:53","allow_share_note_to_map":"1","allow_share_note_to_book":"1","allow_note_comments":"1","allow_player_tags":"1","allow_note_likes":"1","allow_trading":"1","show_player_location":"1","use_player_pic":"1","map_type":"STREET","full_quick_travel":"0","offline":"0","note_title_behavior":"FORCE_OVERWRITE","latitude":"0","longitude":"0","zoom_level":"0","num_players":"0","prev_migrations":["bob", "sally"],"my_prev_migrations":[]}, {"icon_media_url": "https://placekitten.com/g/328/328", "game_id":"7456","prefix":"","name":"my migration","description":"woo","pc_media_id":"0","icon_media_id":"0","media_id":"0","allow_player_created_locations":"0","updated":"2015-02-13 11:16:53","delete_player_locations_on_reset":"0","on_launch_node_id":"0","game_complete_node_id":"0","ready_for_public":"0","is_locational":"1","game_icon_media_id":"0","inventory_weight_cap":"0","created":"2015-02-13 11:16:53","allow_share_note_to_map":"1","allow_share_note_to_book":"1","allow_note_comments":"1","allow_player_tags":"1","allow_note_likes":"1","allow_trading":"1","show_player_location":"1","use_player_pic":"1","map_type":"STREET","full_quick_travel":"0","offline":"0","note_title_behavior":"FORCE_OVERWRITE","latitude":"0","longitude":"0","zoom_level":"0","num_players":"0","prev_migrations":["joe", "me"],"my_prev_migrations":["me"]}],"returnCode":0,"returnCodeDescription":null};
+			//var migratable_games_data = {"data":[{"icon_media_url": "https://placekitten.com/g/128/128", "game_id":"3456","prefix":"","name":"meow game","description":"its meowy!","pc_media_id":"0","icon_media_id":"0","media_id":"0","allow_player_created_locations":"0","updated":"2015-02-13 11:16:53","delete_player_locations_on_reset":"0","on_launch_node_id":"0","game_complete_node_id":"0","ready_for_public":"0","is_locational":"1","game_icon_media_id":"0","inventory_weight_cap":"0","created":"2015-02-13 11:16:53","allow_share_note_to_map":"1","allow_share_note_to_book":"1","allow_note_comments":"1","allow_player_tags":"1","allow_note_likes":"1","allow_trading":"1","show_player_location":"1","use_player_pic":"1","map_type":"STREET","full_quick_travel":"0","offline":"0","note_title_behavior":"FORCE_OVERWRITE","latitude":"0","longitude":"0","zoom_level":"0","num_players":"0","prev_migrations":[],"my_prev_migrations":[]},{"icon_media_url": "https://placekitten.com/g/228/228", "game_id":"5456","prefix":"","name":"meow two","description":"its meowyer","pc_media_id":"0","icon_media_id":"0","media_id":"0","allow_player_created_locations":"0","updated":"2015-02-13 11:16:53","delete_player_locations_on_reset":"0","on_launch_node_id":"0","game_complete_node_id":"0","ready_for_public":"0","is_locational":"1","game_icon_media_id":"0","inventory_weight_cap":"0","created":"2015-02-13 11:16:53","allow_share_note_to_map":"1","allow_share_note_to_book":"1","allow_note_comments":"1","allow_player_tags":"1","allow_note_likes":"1","allow_trading":"1","show_player_location":"1","use_player_pic":"1","map_type":"STREET","full_quick_travel":"0","offline":"0","note_title_behavior":"FORCE_OVERWRITE","latitude":"0","longitude":"0","zoom_level":"0","num_players":"0","prev_migrations":["bob", "sally"],"my_prev_migrations":[]}, {"icon_media_url": "https://placekitten.com/g/328/328", "game_id":"7456","prefix":"","name":"my migration","description":"woo","pc_media_id":"0","icon_media_id":"0","media_id":"0","allow_player_created_locations":"0","updated":"2015-02-13 11:16:53","delete_player_locations_on_reset":"0","on_launch_node_id":"0","game_complete_node_id":"0","ready_for_public":"0","is_locational":"1","game_icon_media_id":"0","inventory_weight_cap":"0","created":"2015-02-13 11:16:53","allow_share_note_to_map":"1","allow_share_note_to_book":"1","allow_note_comments":"1","allow_player_tags":"1","allow_note_likes":"1","allow_trading":"1","show_player_location":"1","use_player_pic":"1","map_type":"STREET","full_quick_travel":"0","offline":"0","note_title_behavior":"FORCE_OVERWRITE","latitude":"0","longitude":"0","zoom_level":"0","num_players":"0","prev_migrations":["joe", "me"],"my_prev_migrations":["me"]}],"returnCode":0,"returnCodeDescription":null};
 
-			migration_games.add(migratable_games_data.data);
-			// migration_games.fetch();
+			//migration_games.add(migratable_games_data.data);
+
+			// Conditionally add migration table.
+			var migration_list_added = false;
+			migration_games.on("add", function() {
+				if(migration_list_added) {
+					return;
+				}
+
+				games_layout.migration_games.show(migrations_view);
+				migration_list_added = true;
+			});
+
+			migration_games.fetch();
 			games.fetch();
 
 			var games_layout    = new GamesLayoutView();
@@ -106,8 +118,6 @@ define(function(require)
 
 			games_layout.games.show(games_view);
 
-			// Conditionally add
-			games_layout.migration_games.show(migrations_view);
 
 			vent.trigger("application:nav:hide" );
 			vent.trigger("application:info:hide");

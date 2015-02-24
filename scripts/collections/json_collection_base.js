@@ -22,7 +22,7 @@ define([
 
 			options.method = "POST"
 
-			var auth_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
+			var auth_data = {"auth": session.auth_json()};
 
 			if(method === "read") {
 				vent.trigger("application:working:show", "<span class='glyphicon glyphicon-refresh'></span> Loading");
