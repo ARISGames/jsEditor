@@ -7,6 +7,7 @@ define([
 
 		model: MigrationGame,
 
+		amfphp_url_root: config.migration_api_url,
 		amfphp_url: "migrate.v1GamesForV2User"
 	});
 });
