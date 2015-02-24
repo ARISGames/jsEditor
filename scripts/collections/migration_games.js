@@ -1,7 +1,8 @@
 define([
 	'collections/json_collection_base',
-	'models/migration_game'
-], function(JsonCollection, MigrationGame) {
+	'models/migration_game',
+	'config'
+], function(JsonCollection, MigrationGame, config) {
 
 	return JsonCollection.extend({
 
