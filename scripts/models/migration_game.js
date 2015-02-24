@@ -62,7 +62,7 @@ define(function(require) {
 			var migration_data = {"game_id": this.get("game_id"), "auth": session.auth_json()};
 
 			$.ajax({
-				url: config.migration_api_url + "migrate.v1GamesForV2User",
+				url: config.migration_api_url + "migration.migrateGame",
 				type: 'POST',
 				data: JSON.stringify(migration_data),
 				processData: false,
