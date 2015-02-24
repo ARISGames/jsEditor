@@ -69,7 +69,7 @@ define(function(require) {
 				processData: false,
 				success: function(data) {
 
-					var game_attributes = data.data;
+					var game_attributes = JSON.parse(data).data;
 
 					// Find or Add game.
 					storage.games.retrieve(game_attributes);
