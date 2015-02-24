@@ -64,7 +64,12 @@ define([
 					throw "amf Collection Fault: "+data.faultString+" for "+options.url;
 				}
 				else if(data.returnCode != 0) {
-					throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription+" for "+options.url;
+					if(options.amf_error) {
+						options.amf_error.apply(this, [data.returnCode, data.returnCodeDescription]);
+					}
+					else {
+						throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription+" for "+options.url;
+					}
 				}
 				else {
 					// Call original callback
