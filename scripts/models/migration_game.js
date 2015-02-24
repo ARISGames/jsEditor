@@ -3,6 +3,7 @@ define(function(require) {
 	var storage       = require('storage');
 	var config        = require('config');
 	var Media         = require('models/media');
+	var session       = require('models/session');
 
 	return JsonBaseModel.extend({
 		idAttribute: 'game_id',
