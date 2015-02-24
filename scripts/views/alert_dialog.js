@@ -38,6 +38,18 @@ define([
 			this.danger_text  = options.danger_text;
 		},
 
+		set_text: function(text) {
+			this.text = text;
+			this.render();
+		},
+
+		hide_controls: function() {
+			this.confirm_button = false;
+			this.danger_button  = false;
+			this.cancel_button  = false;
+			this.render();
+		},
+
 		onShow: function() {
 			// gross
 			setTimeout(function() { this.$el.find('button[autofocus]').focus()}.bind(this), 300);

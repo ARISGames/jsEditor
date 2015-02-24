@@ -11,8 +11,10 @@
 		</div>
 	</div>
 	<div class="media-right media-middle">
-		<% if(migration_count > 0) { %>
-			<span class="migration-badge bg-primary">Migrated</span>
+		<% if(migrating === "true") { %>
+			<span class="migrating-badge"><span class="glyphicon glyphicon-time"></span></span>
+		<% } else if(migration_count > 0) { %>
+			<span class="migrated-badge">Imported</span>
 		<% } %>
 	</div>
 </div>

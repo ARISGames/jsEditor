@@ -682,15 +682,28 @@ h5:hover .object-id, h4:hover .object-id {
 		width: 10000px; /* Missing from bootstrap version */
 	}
 
-
 	.migration_games {
-		.migration-badge {
+		.migrated-badge {
 			line-height: 1;
 			border-radius: @border-radius-base;
 			min-width: 2em;
 			padding: 0.5em;
 			text-align: center;
 			display: inline-block;
+			color: @btn-primary-bg;
+			background: @btn-primary-color;
+			border: 1px solid @btn-primary-bg;
+		}
+
+		.migrating-badge {
+			line-height: 1;
+			border-radius: @border-radius-base;
+			min-width: 2em;
+			padding: 0.5em;
+			text-align: center;
+			display: inline-block;
+			background: @btn-primary-bg;
+			color: @btn-primary-color;
 		}
 
 		.previously_migrated {
@@ -705,6 +718,71 @@ h5:hover .object-id, h4:hover .object-id {
 			}
 		}
 	}
+}
+
+@keyframes migrating-spin {
+  0% {
+    transform-origin: 100% 100%;
+    transform: rotate(0deg);
+  }
+  100% {
+    transform-origin: 100% 100%;
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes migrating-spin {
+  0% {
+    transform-origin: 100% 100%;
+    transform: rotate(0deg);
+  }
+  100% {
+    transform-origin: 100% 100%;
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Cool loading spinner, credit http://codepen.io/Erik/pen/cslHn */
+.migrating-spinner {
+  position: relative;
+  display: block;
+  z-index: 13;
+  margin: 15px auto;
+  width: 100px;
+  height: 100px;
+  border: 5px solid darken(@gray-lighter, 15%);
+  border-radius: 50%;
+  background-color: @gray-dark;
+
+  &:before {
+    position: absolute;
+    display: block;
+    content: '';
+    z-index: 12;
+    top: 4px;
+    left: 4px;
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background-color: darken(@gray-lighter, 15%);
+  }
+
+  &:after {
+    position: absolute;
+    display: block;
+    top: 0;
+    content: '';
+    z-index: 11;
+    top: 0px;
+    left: 0px;
+    width: 45px;
+    height: 45px;
+    border-radius: 200px 0 0 0;
+    background: linear-gradient(45deg, rgba(0,0,0,0) 0%,@brand-primary 50%,@brand-info 100%);
+   	-webkit-animation: migrating-spin 1s linear infinite;
+    animation: migrating-spin 1s linear infinite;
+  }
 }
 
 /* Tab drag and drop */
@@ -731,4 +809,12 @@ h5:hover .object-id, h4:hover .object-id {
 	visibility: visible !important;
 	border: none;
 	background: none;
+}
+
+
+/* Better contrast for radio button test */
+.btn-info.inverted {
+	color: @btn-info-bg;
+	background: @btn-info-color;
+	border: 1px solid @btn-info-bg;
 }

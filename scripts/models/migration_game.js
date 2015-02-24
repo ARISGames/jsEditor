@@ -20,7 +20,8 @@ define(function(require) {
 
 		defaults: {
 			name: "",
-			description: ""
+			description: "",
+			migrating: "false"
 		},
 
 
@@ -39,9 +40,11 @@ define(function(require) {
 
 		/* Migrations */
 
-		migrate: function() {
+		migrate: function(options) {
+			options || (options = {});
 
 			// fake ajax here and store it.
+			this.set("migrating", "true")
 
 			var media_id = Math.floor((Math.random() * 200) + 50);
 
@@ -49,16 +52,23 @@ define(function(require) {
 
 			var thing = storage.media.retrieve({media_id: String(media_id), thumb_url: ""});
 
-			setTimeout(function(){ thing.set("thumb_url", "https://placekitten.com/g/"+media_id+"/"+media_id); }, 5000);
-			var thing2 = storage.games.retrieve(fake_response);
+			var view = this;
 
+			setTimeout(function() {
+				setTimeout(function() { thing.set("thumb_url", "https://placekitten.com/g/"+media_id+"/"+media_id); }, 300);
+				var thing2 = storage.games.retrieve(fake_response);
 
-			// Temporary local reference count
-			this.get("prev_migrations").push(String(Date.now()));
-			this.get("my_prev_migrations").push(String(Date.now()));
-			this.trigger("change");
+				// Temporary local reference count
+				view.get("prev_migrations"   ).push(String(Date.now()));
+				view.get("my_prev_migrations").push(String(Date.now()));
+				view.set("migrating", "false");
+				view.trigger("change");
 
-			// set state to migrating so view can show it.
+				if(options.success) {
+					options.success.call();
+				}
+			}, 10000);
+
 			/*
 			 *
 			var migration_data = {};

@@ -18,6 +18,7 @@ define(function(require)
 		initialize: function(options)
 		{
 			this.listenTo(this.model, 'change', this.render);
+			this.alert_dialog = null;
 		},
 
 		templateHelpers: function()
@@ -34,19 +35,69 @@ define(function(require)
 		},
 
 		onClickMigrate: function() {
-			var alert_dialog = new AlertDialog({text: "Would you like to import your game to the new ARIS? ", confirm_button: true, cancel_button: true});
+			var view = this;
 			var game = this.model;
 
-			alert_dialog.on("confirm", function() {
-				game.migrate();
-				vent.trigger("application:popup:hide");
-			});
+			var migrating_text = '<i class="migrating-spinner"></i> <p style="text-align: center">Importing. Please do not close this window until finished.</p>';
+			var migrate_text = '<p><strong>This will import your legacy game into the new ARIS!</strong></p>' +
+				'<div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;If you have already imported this game, this will <strong>not</strong> overwrite it. Each import creates a new copy.</div>' +
+				'<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span> Please be aware that legacy player logs, notes and editors will not be imported.</div>';
 
-			alert_dialog.on("cancel", function() {
-				vent.trigger("application:popup:hide");
-			});
+			// Reuse dialog to track it
+			if(view.alert_dialog)
+			{
+				// Did user re open alert while migrating?
+				if(game.get("migrating") === "true")
+				{
+					view.show_spinner_alert(migrating_text);
+				}
+			}
+			else
+			{
+				view.alert_dialog = new AlertDialog({
+					text: migrate_text,
+					confirm_button: true,
+					cancel_button: true,
+					confirm_text: "Import"
+				});
 
-			vent.trigger("application:popup:show", alert_dialog, "Import game?");
+				view.alert_dialog.on("confirm", function()
+				{
+					// Keep track of migrations to prevent navigation
+					window.onbeforeunload = function() {
+						return "Your game is still importing, please wait till it finishes.";
+					}
+					window.running_migrations || (window.running_migrations = {});
+					window.running_migrations[game.id] = true;
+
+					view.show_spinner_alert(migrating_text);
+
+					game.migrate({
+						success: function() {
+							// Clear navigation warning
+							delete window.running_migrations[game.id];
+							if(Object.keys(window.running_migrations).length === 0)
+							{
+								window.onbeforeunload = null;
+							}
+
+							vent.trigger("application:popup:hide:ifself", view.alert_dialog);
+							view.alert_dialog = null;
+						}
+					});
+				});
+
+				this.alert_dialog.on("cancel", function() {
+					vent.trigger("application:popup:hide");
+				});
+			}
+
+			vent.trigger("application:popup:show", view.alert_dialog, "Import Legacy Game?");
+		},
+
+		show_spinner_alert: function(migrating_text) {
+			this.alert_dialog.set_text(migrating_text);
+			this.alert_dialog.hide_controls();
 		}
 	});
 });
