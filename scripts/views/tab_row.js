@@ -27,7 +27,7 @@ define(function(require)
 
 		// Bootstrap
 		tagName: 'a',
-		className: "list-group-item",
+		className: "list-group-item draggable-game-tab",
 
 		events: {
 			"click": "onClickEdit"
@@ -79,6 +79,8 @@ define(function(require)
 		{
 			this.bindAssociation();
 			this.loadAssociation();
+
+			this.listenTo(vent, 'tabrow:released', this.onRowReleased.bind(this));
 		},
 
 
@@ -140,5 +142,15 @@ define(function(require)
 			this.listenTo(this.model, 'change:content_id', this.loadAssociation);
 		},
 
+
+		/* Sorting */
+
+		onRowReleased: function(element, position)
+		{
+			if(this.$el.is(element))
+			{
+				this.model.save({"sort_index": position}, {patch: true});
+			}
+		}
 	});
 });

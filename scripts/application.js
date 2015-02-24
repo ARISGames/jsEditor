@@ -116,7 +116,6 @@ define(function(require)
 
 		application.dialog_region.show(view);
 		$('.modal').modal('show');
-
 		// Clear event list
 		$('.modal').off("hidden.bs.modal");
 
@@ -133,6 +132,13 @@ define(function(require)
 
 	vent.on("application:popup:hide", function() {
 		$('.modal').modal('hide');
+	});
+
+	vent.on("application:popup:hide:ifself", function(view) {
+		if(application.dialog_region.currentView === view)
+		{
+			$('.modal').modal('hide');
+		}
 	});
 
 	vent.on("application:user:show", function() {

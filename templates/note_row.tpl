@@ -12,10 +12,10 @@
 	</blockquote>
 
 	<% if(tag_name) { %>
-		<p class="pull-right">
+		<div class="pull-right">
 			<span class="glyphicon glyphicon-tags"></span>
 			&nbsp;
 			<%= tag_name %>
-		</p>
+		</div>
 	<% } %>
 </div>

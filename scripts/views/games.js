@@ -1,33 +1,31 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/games.tpl',
-	'collections/games',
-	'views/game_row',
-	'views/game_create',
-	'models/game',
-	'vent',
-	'config'
-], function(_, Backbone, Template, GameCollection, GameRowView, GameCreateView, Game, vent, config) {
+define(function(require)
+{
+	var _              = require('underscore');
+	var Backbone       = require('backbone');
+	var Template       = require('text!templates/games.tpl');
+	var GameRowView    = require('views/game_row');
+	var GameCreateView = require('views/game_create');
+	var Game           = require('models/game');
+	var vent           = require('vent');
+	var config         = require('config');
+
+
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		itemView: GameRowView,
 		itemViewContainer: '.games',
 
-		templateHelpers: function() {
-			return {
-				migrate_path: config.migrate_path
-			}
-		},
-
 		events: {
 			"click .new": "onClickNew"
 		},
 
-		className: "games-list-container",
-
 		onClickNew: function() {
+			if(window.running_migrations && Object.keys(window.running_migrations).length > 0) {
+				alert(window.onbeforeunload.call());
+				return;
+			}
+
 			var game = new Game();
 			vent.trigger("application.show", new GameCreateView({model: game}));
 		},

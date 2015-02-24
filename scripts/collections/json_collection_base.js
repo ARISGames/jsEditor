@@ -22,7 +22,7 @@ define([
 
 			options.method = "POST"
 
-			var auth_data = {"auth": {"key": session.auth_token(), "user_id": session.editor_id()}};
+			var auth_data = {"auth": session.auth_json()};
 
 			if(method === "read") {
 				vent.trigger("application:working:show", "<span class='glyphicon glyphicon-refresh'></span> Loading");
@@ -64,7 +64,12 @@ define([
 					throw "amf Collection Fault: "+data.faultString+" for "+options.url;
 				}
 				else if(data.returnCode != 0) {
-					throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription+" for "+options.url;
+					if(options.amf_error) {
+						options.amf_error.apply(this, [data.returnCode, data.returnCodeDescription]);
+					}
+					else {
+						throw "Collection returnCode "+data.returnCode+": "+data.returnCodeDescription+" for "+options.url;
+					}
 				}
 				else {
 					// Call original callback
