@@ -124,7 +124,7 @@ define(function(require)
 
 						// Display game list once migrated
 						vent.on("application:user_migrated", function() {
-							migration_games.fetch
+							migration_games.fetch();
 
 							var migrations_view = new MigrationGamesView({collection: migration_games});
 							games_layout.migration_games.show(migrations_view);
