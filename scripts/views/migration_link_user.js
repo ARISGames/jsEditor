@@ -35,7 +35,7 @@ define(function(require)
 				vent.trigger("application:alert", {text: "Enter a Username and Password."});
 			}
 			else {
-				var link_data = {"auth": session.auth_json(), "v1_user":this.ui.username.val(), "v1_pass":this.ui.password.val()};
+				var link_data = {"auth": session.auth_json(), "v1_name":this.ui.username.val(), "v1_pass":this.ui.password.val()};
 				$.ajax({
 					url: config.migration_api_url + "migration.linkV1EditorToV2User",
 					type: 'POST',
@@ -47,12 +47,9 @@ define(function(require)
 						console.log("link_response", link_response);
 
 						if(link_response.returnCode === 1) {
-							vent.trigger("application:alert", {text: "Invalid Username or Password."});
+							vent.trigger("application:alert", {text: link_response.returnCodeDescription});
 						}
-						else if(link_response.returnCode === 2) {
-							vent.trigger("application:alert", {text: "Already linked to an another account."});
-						}
-						else if(link.returnCode === 0) {
+						else if(link_response.returnCode === 0) {
 							vent.trigger("application:user_migrated");
 						}
 						else {
