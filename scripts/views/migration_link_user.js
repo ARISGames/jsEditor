@@ -35,7 +35,7 @@ define(function(require)
 				vent.trigger("application:alert", {text: "Enter a Username and Password."});
 			}
 			else {
-				var link_data = {"auth": session.auth_json, "v1_user":this.ui.username.val(), "v1_pass":this.ui.password.val()};
+				var link_data = {"auth": session.auth_json(), "v1_user":this.ui.username.val(), "v1_pass":this.ui.password.val()};
 				$.ajax({
 					url: config.migration_api_url + "migration.linkV1EditorToV2User",
 					type: 'POST',
