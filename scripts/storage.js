@@ -11,9 +11,11 @@ define(function(require, exports, module)
 	{
 		for: function(game)
 		{
-			this.users.parent = game;
-			this.tags.parent  = game;
-			this.media.parent = game;
+			this.users.parent     = game;
+			this.tags.parent      = game;
+			this.quests.parent    = game;
+			this.media.parent     = game;
+			this.web_hooks.parent = game;
 
 			this.instances.parent = game;
 			this.triggers.parent  = game;
@@ -24,6 +26,8 @@ define(function(require, exports, module)
 			this.plaques.parent   = game;
 			this.items.parent     = game;
 			this.factories.parent = game;
+
+			this.dialog_scripts.parent = game;
 
 			this.games.add(game);
 		},

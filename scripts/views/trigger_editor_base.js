@@ -20,7 +20,6 @@ define(function(require)
 	var AndPackagesCollection   = require('collections/and_packages');
 	var AtomsCollection         = require('collections/atoms');
 
-	var ItemsCollection         = require('collections/items');
 	var TagsCollection          = require('collections/tags');
 	var PlaquesCollection       = require('collections/plaques');
 	var DialogsCollection       = require('collections/dialogs');
@@ -431,19 +430,20 @@ define(function(require)
 			var game = view.model.game();
 
 			var contents = {
-				items:          new ItemsCollection         ([], {parent: game}),
-				tags:           new TagsCollection          ([], {parent: game}),
-				plaques:        new PlaquesCollection       ([], {parent: game}),
-				dialogs:        new DialogsCollection       ([], {parent: game}),
-				dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
-				web_pages:      new WebPagesCollection      ([], {parent: game}),
-				quests:         new QuestsCollection        ([], {parent: game}),
-				hooks:          new WebHooksCollection      ([], {parent: game})
+				tags:      storage.tags,
+				quests:    storage.quests,
+				web_hooks: storage.web_hooks,
+				items:     storage.items,
+				plaques:   storage.plaques,
+				web_pages: storage.web_pages,
+				dialogs:   storage.dialogs,
+
+				dialog_scripts: storage.dialog_scripts
 			};
 
 			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.web_hooks.fetch(), requirement_package.fetch()).done(function()
 			{
 				// Load associations into collections
 				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));

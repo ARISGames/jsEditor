@@ -3,10 +3,12 @@ define(function(require, exports, module)
 	var Backbone   = require("backbone"  );
 	var Marionette = require("marionette");
 
-	var UsersCollection = require("collections/users");
-	var TagsCollection  = require("collections/tags" );
-	var MediaCollection = require("collections/media");
-	var GamesCollection = require("collections/games");
+	var UsersCollection     = require("collections/users");
+	var TagsCollection      = require("collections/tags");
+	var QuestsCollection    = require("collections/quests");
+	var MediaCollection     = require("collections/media");
+	var WebhooksCollection  = require("collections/web_hooks");
+	var GamesCollection     = require("collections/games");
 
 	var TriggersCollection  = require("collections/game_triggers");
 	var InstancesCollection = require("collections/instances");
@@ -18,16 +20,20 @@ define(function(require, exports, module)
 	var WebPagesCollection  = require("collections/web_pages");
 	var FactoriesCollection = require("collections/factories");
 
+	var DialogScriptsCollection = require("collections/game_dialog_scripts");
+
 	return Marionette.Controller.extend(
 	{},
 	/* Static methods */
 	{
 		inject: function(storage)
 		{
-			storage.users = new UsersCollection ();
-			storage.tags  = new TagsCollection  ();
-			storage.media = new MediaCollection ();
-			storage.games = new GamesCollection ();
+			storage.users     = new UsersCollection    ();
+			storage.tags      = new TagsCollection     ();
+			storage.quests    = new QuestsCollection   ();
+			storage.media     = new MediaCollection    ();
+			storage.web_hooks = new WebhooksCollection ();
+			storage.games     = new GamesCollection    ();
 
 			storage.triggers  = new TriggersCollection  ();
 			storage.instances = new InstancesCollection ();
@@ -39,6 +45,7 @@ define(function(require, exports, module)
 			storage.web_pages = new WebPagesCollection  ();
 			storage.factories = new FactoriesCollection ();
 
+			storage.dialog_scripts = new DialogScriptsCollection ();
 		}
 	});
 });
