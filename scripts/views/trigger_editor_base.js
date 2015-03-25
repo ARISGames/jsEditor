@@ -20,14 +20,6 @@ define(function(require)
 	var AndPackagesCollection   = require('collections/and_packages');
 	var AtomsCollection         = require('collections/atoms');
 
-	var TagsCollection          = require('collections/tags');
-	var PlaquesCollection       = require('collections/plaques');
-	var DialogsCollection       = require('collections/dialogs');
-	var DialogScriptsCollection = require('collections/game_dialog_scripts');
-	var WebPagesCollection      = require('collections/web_pages');
-	var QuestsCollection        = require('collections/quests');
-	var WebHooksCollection      = require('collections/web_hooks');
-
 	return EditorView.extend({
 
 		/* View */
