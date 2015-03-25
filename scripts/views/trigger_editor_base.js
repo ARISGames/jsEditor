@@ -85,9 +85,18 @@ define(function(require)
 				instance_infinite_quantity: this.instance.get("infinite_qty"),
 				instance_quantity: this.instance.get("qty"),
 
-				// Virtual, defined in sub classes
-				parent_label: this.parent_label,
-				parent_icon:  this.parent_icon
+				// Dropdown game objects
+				items:     storage.items,
+				plaques:   storage.plaques,
+				dialogs:   storage.dialogs,
+				web_pages: storage.web_pages,
+				factories: storage.factories,
+				scenes:    storage.scenes,
+
+				// Helpers
+				option_selected: function(boolean_statement) {
+					return boolean_statement ? "selected" : "";
+				},
 			}
 		},
 
@@ -148,7 +157,6 @@ define(function(require)
 			"click @ui.cancel": "onClickCancel",
 
 			"click @ui.change_icon":       "onClickChangeIcon",
-			"click @ui.edit_game_object":  "onClickEditGameObject",
 			"click @ui.edit_requirements": "onClickEditRequirements",
 
 			"change @ui.quantity":      "onChangeQuantity",

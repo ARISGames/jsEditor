@@ -28,7 +28,7 @@
 						<% }); %>
 					</optgroup>
 
-					<optgroup label="Web URLs">
+					<optgroup label="Web Items">
 						<% _.each(items.where({type: "URL"}), function(item) { %>
 							<option value="<%= item.get("item_id") %>" <%= option_selected(content_id === item.get("item_id")) %>>
 								<%= item.get("name") %>
