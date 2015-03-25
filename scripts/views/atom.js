@@ -1,9 +1,10 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/atom.tpl',
-	'vent'
-], function(_, Backbone, Template, vent) {
+define(function(require)
+{
+	var _          = require("underscore");
+	var Backbone   = require("backbone");
+	var Template   = require("text!templates/atom.tpl");
+	var vent       = require("vent");
+
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
