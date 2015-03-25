@@ -5,6 +5,7 @@ define(function(require, exports, module)
 
 	var UsersCollection     = require("collections/users");
 	var TagsCollection      = require("collections/tags");
+	var TabsCollection      = require("collections/tabs");
 	var QuestsCollection    = require("collections/quests");
 	var MediaCollection     = require("collections/media");
 	var WebhooksCollection  = require("collections/web_hooks");
@@ -30,6 +31,7 @@ define(function(require, exports, module)
 		{
 			storage.users     = new UsersCollection    ();
 			storage.tags      = new TagsCollection     ();
+			storage.tabs      = new TabsCollection     ();
 			storage.quests    = new QuestsCollection   ();
 			storage.media     = new MediaCollection    ();
 			storage.web_hooks = new WebhooksCollection ();

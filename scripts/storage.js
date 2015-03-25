@@ -13,6 +13,7 @@ define(function(require, exports, module)
 		{
 			this.users.parent     = game;
 			this.tags.parent      = game;
+			this.tabs.parent      = game;
 			this.quests.parent    = game;
 			this.media.parent     = game;
 			this.web_hooks.parent = game;

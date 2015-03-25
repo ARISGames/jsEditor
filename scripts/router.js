@@ -142,33 +142,17 @@ define(function(require)
 			var game = storage.games.retrieve(game_id);
 			storage.for(game);
 
-			game.fetch({
-				success: function() {
+			// TODO catch errors if any fail (since its a non-standard failure)
+			$.when(game.fetch(), storage.instances.fetch(), storage.triggers.fetch(), storage.scenes.fetch(), storage.dialogs.fetch(), storage.plaques.fetch(), storage.items.fetch(), storage.web_pages.fetch(), storage.factories.fetch()).done(function()
+			{
+				// TODO make game a promise and store it so we can access the same game instance in other tabs.
+				// then 'intro scene' test can just be if this.model.is(game.intro_scene())
+				var intro_scene = storage.scenes.get(game.get("intro_scene_id"));
 
-					var instances = storage.instances;
-					var triggers  = storage.triggers;
-
-					var pages     = storage.web_pages;
-					var plaques   = storage.plaques;
-					var dialogs   = storage.dialogs;
-					var items     = storage.items;
-
-					var scenes    = storage.scenes;
-					var factories = storage.factories;
-
-					// TODO catch errors if any fail (since its a non-standard failure)
-					$.when(instances.fetch(), triggers.fetch(), scenes.fetch(), dialogs.fetch(), plaques.fetch(), items.fetch(), pages.fetch(), factories.fetch()).done(function()
-					{
-						// TODO make game a promise and store it so we can access the same game instance in other tabs.
-						// then 'intro scene' test can just be if this.model.is(game.intro_scene())
-						var intro_scene = scenes.get(game.get("intro_scene_id"));
-
-						vent.trigger("application.show",      new ScenesView  ({model: game, collection: scenes, triggers: triggers, intro_scene: intro_scene}));
-						vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-						vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: dialogs, plaques: plaques, items: items, pages: pages, factories: factories}));
-						vent.trigger("application:info:hide");
-					});
-				}
+				vent.trigger("application.show",      new ScenesView  ({model: game, collection: storage.scenes, triggers: storage.triggers, intro_scene: intro_scene}));
+				vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
+				vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: storage.dialogs, plaques: storage.plaques, items: storage.items, pages: storage.web_pages, factories: storage.factories}));
+				vent.trigger("application:info:hide");
 			});
 		},
 
@@ -177,18 +161,12 @@ define(function(require)
 			var game = storage.games.retrieve(game_id);
 			storage.for(game);
 
-			game.fetch({
-				success: function() {
-					var scenes = new SceneCollection([], {parent: game});
-
-					$.when(scenes.fetch()).done(function()
-					{
-						vent.trigger("application.show",     new GameEditorView ({model: game, scenes: scenes}));
-						vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".game"}));
-						vent.trigger("application:info:hide");
-						vent.trigger("application:list:hide");
-					});
-				}
+			$.when(game.fetch(), storage.scenes.fetch()).done(function()
+			{
+				vent.trigger("application.show",     new GameEditorView ({model: game, scenes: storage.scenes}));
+				vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".game"}));
+				vent.trigger("application:info:hide");
+				vent.trigger("application:list:hide");
 			});
 		},
 
@@ -211,29 +189,27 @@ define(function(require)
 
 		editTabs: function(game_id) {
 			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var tabs = new TabsCollection([], {parent: game});
-			tabs.fetch({
-				success: function() {
-					vent.trigger("application.show",     new TabsView  ({model: game, collection: tabs}));
-					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
-					vent.trigger("application:list:hide");
-					vent.trigger("application:info:hide");
-				}
+			$.when(storage.tabs.fetch()).done(function()
+			{
+				vent.trigger("application.show",     new TabsView    ({model: game, collection: storage.tabs}));
+				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+				vent.trigger("application:list:hide");
+				vent.trigger("application:info:hide");
 			});
 		},
 
 		editTags: function(game_id) {
 			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var tags = new TagsCollection([], {parent: game});
-			tags.fetch({
-				success: function() {
-					vent.trigger("application.show",     new TagsView  ({model: game, collection: tags}));
-					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
-					vent.trigger("application:list:hide");
-					vent.trigger("application:info:hide");
-				}
+			$.when(storage.tags.fetch()).done(function()
+			{
+				vent.trigger("application.show",     new TagsView    ({model: game, collection: storage.tags}));
+				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+				vent.trigger("application:list:hide");
+				vent.trigger("application:info:hide");
 			});
 		},
 
@@ -241,6 +217,7 @@ define(function(require)
 			var game  = new Game({game_id: game_id});
 			storage.for(game);
 
+			// TODO should be a search module with pagination?
 			var notes = new NotesCollection([], {parent: game});
 
 			$.when(notes.fetch()).done(function()
