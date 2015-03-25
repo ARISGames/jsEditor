@@ -286,39 +286,37 @@ define(function(require)
 
 		listQuests: function(game_id) {
 			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var quests = new QuestsCollection([], {parent: game});
-			quests.fetch({
-				success: function() {
-					vent.trigger("application.show",     new QuestsView  ({model: game, collection: quests}));
-					vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".quests"}));
-					vent.trigger("application:list:hide");
-					vent.trigger("application:info:hide");
-				}
+			$.when(storage.quests.fetch()).done(function()
+			{
+				vent.trigger("application.show",     new QuestsView  ({model: game, collection: storage.quests}));
+				vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".quests"}));
+				vent.trigger("application:list:hide");
+				vent.trigger("application:info:hide");
 			});
 		},
 
 		listMedia: function(game_id) {
 			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var media = new MediaCollection([], {parent: game});
-			media.fetch({
-				success: function() {
-					vent.trigger("application.show",      new MediaEditorView ({model: game, collection: media}));
-					vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
-					vent.trigger("application:list:show", new MediaOrganizerView({collection: media}));
-					vent.trigger("application:info:hide");
-				}
+			$.when(storage.media.fetch()).done(function()
+			{
+				vent.trigger("application.show",      new MediaEditorView ({model: game, collection: storage.media}));
+				vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
+				vent.trigger("application:list:show", new MediaOrganizerView({collection: storage.media}));
+				vent.trigger("application:info:hide");
 			});
 		},
 
 		listConversations: function(game_id) {
 			var game  = new Game({game_id: game_id});
+			storage.for(game);
 
-			var conversations = new DialogsCollection   ([], {parent: game});
-
-			$.when(conversations.fetch()).done(function() {
-				vent.trigger("application.show",      new ConversationsView ({model: game, collection: conversations}));
+			$.when(storage.dialogs.fetch()).done(function()
+			{
+				vent.trigger("application.show",      new ConversationsView ({model: game, collection: storage.dialogs}));
 				vent.trigger("application:nav:show",  new GameNavMenu       ({model: game, active: ".conversations"}));
 				vent.trigger("application:list:hide");
 				vent.trigger("application:info:hide");
