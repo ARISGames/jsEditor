@@ -25,27 +25,12 @@ define(function(require)
 	var TagsView                 = require('views/tags');
 	var NotesView                = require('views/notes');
 
-	var GameCollection           = require('collections/games');
 	var MigrationGameCollection  = require('collections/migration_games');
 	var EditorsCollection        = require('collections/editors');
 	var GameTriggersCollection   = require('collections/game_triggers');
-	var InstancesCollection      = require('collections/instances');
-	var DialogsCollection        = require('collections/dialogs');
-	var ItemCollection           = require('collections/items');
-	var PlaqueCollection         = require('collections/plaques');
-	var WebPagesCollection       = require('collections/web_pages');
-	var MediaCollection          = require('collections/media');
-	var SceneCollection          = require('collections/scenes');
-	var QuestsCollection         = require('collections/quests');
-	var CharactersCollection     = require('collections/characters');
-	var FactoriesCollection      = require('collections/factories');
-	var TabsCollection           = require('collections/tabs');
-	var TagsCollection           = require('collections/tags');
 	var NotesCollection          = require('collections/notes');
 
 	var Game                     = require('models/game');
-	var Item                     = require('models/item');
-	var Media                    = require('models/media');
 
 	var vent                     = require('vent');
 	var session                  = require('models/session');
