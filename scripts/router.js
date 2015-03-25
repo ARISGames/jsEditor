@@ -221,15 +221,7 @@ define(function(require)
 			var game  = new Game({game_id: game_id});
 			storage.for(game);
 
-			var instances = storage.instances;
-			var triggers  = storage.triggers;
-
-			var web_pages = storage.web_pages;
-			var plaques   = storage.plaques;
-			var dialogs   = storage.dialogs;
-			var items     = storage.items;
-
-			$.when(triggers.fetch(), instances.fetch(), web_pages.fetch(), plaques.fetch(), dialogs.fetch(), items.fetch()).done(function()
+			$.when(storage.triggers.fetch(), storage.instances.fetch(), storage.web_pages.fetch(), storage.plaques.fetch(), storage.dialogs.fetch(), storage.items.fetch()).done(function()
 			{
 				// Just give non-note location triggers to view (until we filtering view is created)
 				var location_selection = triggers.filter(function(trigger)
@@ -241,7 +233,7 @@ define(function(require)
 
 				vent.trigger("application.show",      new LocationsView ({model: game, collection: locations}));
 				vent.trigger("application:nav:show",  new GameNavMenu   ({model: game, active: ".locations"}));
-				vent.trigger("application:list:show", new LocationsOrganizerView({locations: locations, instances: instances}));
+				vent.trigger("application:list:show", new LocationsOrganizerView({locations: locations, instances: storage.instances}));
 				vent.trigger("application:info:hide");
 			});
 		},
