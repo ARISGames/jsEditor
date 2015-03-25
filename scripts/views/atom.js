@@ -51,7 +51,6 @@ define([
 			this.web_pages = options.contents.web_pages;
 			this.quests = options.contents.quests;
 			this.web_hooks = options.contents.web_hooks;
-			this.notes = options.contents.notes;
 		},
 
 		ui: {
