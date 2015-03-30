@@ -26,7 +26,15 @@ define(function(require)
 		template: _.template(Template),
 
 		tagName: 'li',
-		className: 'scene-trigger',
+
+		// Remove after upgrading to Marionette 2.0.x with `filter`
+		className: function() {
+			if(this.options.scene.get("scene_id") !== this.model.get("scene_id"))
+			{
+				return 'hidden'
+			}
+			return 'scene-trigger'
+		},
 
 		templateHelpers: function() {
 			return {
@@ -38,20 +46,24 @@ define(function(require)
 		},
 
 		initialize: function(options) {
-			var view = this;
+			// Remove after upgrading to Marionette 2.0.x with `filter`
+			if(this.model.get("scene_id") != this.options.scene.get("scene_id"))
+			{
+				this.render = function() {};
+				return;
+			}
 
 			this.scene       = options.scene;
 			this.instance    = this.model.instance();
 			this.game_object = this.instance.game_object();
 
 			// Assign icon and name from instance and game object
-			view.loading_icon();
-			view.update_icon ();
+			this.loading_icon();
+			this.update_icon ();
 
 			// Listen to association events on on instance and game object
-			view.bindModelEvents();
+			this.bindModelEvents();
 		},
-
 
 		/* Model Event Binding */
 
