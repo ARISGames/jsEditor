@@ -187,7 +187,6 @@ define(function(require)
 			game_object.save({}, {
 				create: function() {
 					storage.add_game_object(game_object);
-					vent.trigger("game_object:add", game_object);
 				},
 				success: function() {
 					// Save Instance
@@ -202,7 +201,7 @@ define(function(require)
 
 					instance.save({}, {
 						create: function() {
-							storage.instances.add(instance);
+							storage.add_game_object(instance);
 						},
 
 						success: function() {
@@ -231,17 +230,10 @@ define(function(require)
 							{
 								create: function()
 								{
-									storage.triggers.add(instance);
+									storage.add_game_object(trigger);
 
-									// FIXME better way to handle this?
-									vent.trigger("scene:add_trigger", trigger);
 									vent.trigger("application:popup:hide");
-								},
-								success: function()
-								{
-									vent.trigger("trigger:update", trigger);
 								}
-
 							}); /* Trigger save */
 						}
 					}); /* Instance save */
@@ -279,27 +271,15 @@ define(function(require)
 
 		bindGameObjectAssociation: function() {
 			var view = this;
-			this.listenTo(vent, "game_object:update", function(game_object)
+			this.listenTo(this.game_object, "update", function(game_object)
 			{
-				if(game_object.is(view.game_object))
-				{
-					// FIXME probably a bug to not set model.game_object here too. Will be fixed when storage is used to reference all objects.
-					view.unbindIconAssociation();
-					view.game_object = game_object;
-					view.model.game_object(game_object);
-					view.bindIconAssociation();
-					view.set_name(view.game_object);
-					view.set_icon(view.icon);
-				}
+				view.unbindIconAssociation();
+				view.bindIconAssociation();
+				view.set_name(view.game_object);
+				view.set_icon(view.icon);
 			});
 
-			this.listenTo(vent, "game_object:delete", function(game_object)
-			{
-				if(game_object.is(view.game_object))
-				{
-					view.close();
-				}
-			});
+			this.listenTo(this.game_object, "destroy", view.close);
 		},
 
 
