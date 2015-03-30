@@ -38,12 +38,17 @@ define(function(require, exports, module)
 		{
 			var idAttribute = game_object.idAttribute;
 
+			// These should call retrieve, just in case.
 			     if(idAttribute === "dialog_id")   { this.dialogs.add(game_object)   }
 			else if(idAttribute === "plaque_id")   { this.plaques.add(game_object)   }
 			else if(idAttribute === "item_id")     { this.items.add(game_object)     }
 			else if(idAttribute === "web_page_id") { this.web_pages.add(game_object) }
 			else if(idAttribute === "scene_id")    { this.scenes.add(game_object)    }
 			else if(idAttribute === "factory_id")  { this.factories.add(game_object) }
+
+			else if(idAttribute === "instance_id") { this.instances.add(game_object) }
+			else if(idAttribute === "trigger_id")  { this.triggers.add(game_object)  }
+
 			else { throw "don't know where to store object of type " + game_object.idAttribute + ": " + game_object.id; }
 		}
 	});
