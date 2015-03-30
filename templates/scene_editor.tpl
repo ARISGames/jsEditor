@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="checkbox">
-			<input type="checkbox" id="scene-intro" <%= is_checked(is_intro_scene ? "1" : "0") %>>
+			<input type="checkbox" id="scene-intro" <%= is_checked(is_intro_scene ? "1" : "0") %> <%= is_intro_scene ? "disabled" : "" %>>
 			<label for="scene-intro">
 				Intro Scene
 			</label>
