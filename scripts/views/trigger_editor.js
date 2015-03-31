@@ -20,6 +20,8 @@ define(function(require)
 	var AndPackagesCollection   = require('collections/and_packages');
 	var AtomsCollection         = require('collections/atoms');
 
+	var TriggerObjectSelectorView = require('views/trigger_editor_object_selector');
+
 	return EditorView.extend({
 
 		/* View */
@@ -83,20 +85,7 @@ define(function(require)
 				// Instance Attributes
 				quantity_fields_visible: this.game_object.is_a(Item),
 				instance_infinite_quantity: this.instance.get("infinite_qty"),
-				instance_quantity: this.instance.get("qty"),
-
-				// Dropdown game objects
-				items:     storage.items,
-				plaques:   storage.plaques,
-				dialogs:   storage.dialogs,
-				web_pages: storage.web_pages,
-				factories: storage.factories,
-				scenes:    storage.scenes,
-
-				// Helpers
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
+				instance_quantity: this.instance.get("qty")
 			}
 		},
 
@@ -117,6 +106,7 @@ define(function(require)
 		/* Initialization and Rendering */
 
 		initialize: function(options) {
+
 			this.icon        = this.model.icon();
 
 			this.scene       = options.scene;
@@ -140,6 +130,9 @@ define(function(require)
 		},
 
 		onRender: function() {
+			this.object_selector_view = new TriggerObjectSelectorView({model: this.instance, el: this.$el.find('#trigger_object_selector')});
+			this.object_selector_view.render();
+
 			var view = this;
 
 			if(this.options.visible_fields === "trigger") {
