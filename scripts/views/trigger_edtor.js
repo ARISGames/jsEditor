@@ -5,7 +5,7 @@ define(function(require)
 	var EditorView = require('views/editor_base');
 	var vent       = require('vent');
 	var storage    = require('storage');
-	var Template   = require('text!templates/trigger_editor_base.tpl');
+	var Template   = require('text!templates/trigger_editor.tpl');
 
 	var QRCode = require('qrcode');
 	var Item   = require('models/item');
