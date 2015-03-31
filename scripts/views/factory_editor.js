@@ -182,14 +182,13 @@ define([
 
 			factory.save({}, {
 				create: function() {
-					vent.trigger("factory:add", factory);
+					storage.add_game_object(factory);
+
 					vent.trigger("application:popup:hide");
 				},
 
 				update: function()
 				{
-					// FIXME get rid of global update broadcasts for models
-					vent.trigger("game_object:update", factory);
 					vent.trigger("application:popup:hide");
 				}
 			});
@@ -199,7 +198,6 @@ define([
 			var view = this;
 			this.model.destroy({
 				success: function() {
-					vent.trigger("game_object:delete", view.model);
 					vent.trigger("application:popup:hide");
 				}
 			});
