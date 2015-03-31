@@ -15,18 +15,6 @@ define(function(require)
 		itemViewContainer: ".items",
 
 
-		initialize: function(options) {
-			var view = this;
-
-			vent.on("game_object:add", function(game_object) {
-				if(game_object instanceof Item)
-				{
-					view.collection.add(game_object);
-				}
-			});
-		},
-
-
 		events: {
 			"click .new": "onClickNew"
 		},
