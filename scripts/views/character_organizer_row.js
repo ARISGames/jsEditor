@@ -18,7 +18,7 @@ define(function(require)
 
 		initialize: function() {
 			this.listenTo(this.model, "update", this.render);
-		}
+		},
 
 		onClickEdit: function() {
 			var character_editor = new CharacterEditorView({model: this.model});
