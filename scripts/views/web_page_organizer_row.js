@@ -14,23 +14,13 @@ define(function(require)
 		},
 
 		initialize: function() {
-			var view = this;
-
-			vent.on("game_object:update", function(game_object) {
-				if(game_object.is(view.model))
-				{
-					view.model = game_object;
-					view.render();
-				}
-			});
+			this.listenTo(this.model, "update", this.render);
 		},
 
 		tagName: 'tr',
 
 		onClickEdit: function() {
-			var view  = this;
-
-			var web_page_editor = new WebPageEditorView({model: view.model});
+			var web_page_editor = new WebPageEditorView({model: this.model});
 			vent.trigger("application:popup:show", web_page_editor, "Edit Web Page");
 		}
 	});

@@ -20,9 +20,7 @@ define(function(require)
 		tagName: 'tr',
 
 		onClickEdit: function() {
-			var view  = this;
-
-			var plaque_editor = new PlaqueEditorView({model: view.model});
+			var plaque_editor = new PlaqueEditorView({model: this.model});
 			vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
 		}
 	});
