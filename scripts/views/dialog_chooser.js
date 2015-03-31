@@ -1,14 +1,16 @@
-define([
-	'backbone',
-	'text!templates/dialog_chooser.tpl',
-	'models/dialog',
-	'models/trigger',
-	'models/instance',
-	'models/media',
-	'views/dialog_chooser_row',
-	'views/trigger_editor',
-	'vent'
-], function(Backbone, Template, Dialog, Trigger, Instance, Media, DialogChooserRowView, DialogTriggerEditorView, vent) {
+define(function(require)
+{
+
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/dialog_chooser.tpl');
+	var Dialog               = require('models/dialog');
+	var Trigger              = require('models/trigger');
+	var Instance             = require('models/instance');
+	var Media                = require('models/media');
+	var DialogChooserRowView = require('views/dialog_chooser_row');
+	var TriggerEditorView    = require('views/trigger_editor');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),

@@ -1,14 +1,16 @@
-define([
-	'backbone',
-	'text!templates/plaque_chooser.tpl',
-	'models/plaque',
-	'models/trigger',
-	'models/instance',
-	'models/media',
-	'views/plaque_chooser_row',
-	'views/trigger_editor',
-	'vent'
-], function(Backbone, Template, Plaque, Trigger, Instance, Media, PlaqueChooserRowView, PlaqueTriggerEditorView, vent) {
+define(function(require)
+{
+
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/plaque_chooser.tpl');
+	var Plaque               = require('models/plaque');
+	var Trigger              = require('models/trigger');
+	var Instance             = require('models/instance');
+	var Media                = require('models/media');
+	var PlaqueChooserRowView = require('views/plaque_chooser_row');
+	var TriggerEditorView    = require('views/trigger_editor');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),

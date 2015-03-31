@@ -1,14 +1,16 @@
-define([
-	'backbone',
-	'text!templates/web_page_chooser.tpl',
-	'models/web_page',
-	'models/trigger',
-	'models/instance',
-	'models/media',
-	'views/web_page_chooser_row',
-	'views/trigger_editor',
-	'vent'
-], function(Backbone, Template, WebPage, Trigger, Instance, Media, WebPageChooserRowView, WebPageTriggerEditorView, vent) {
+define(function(require)
+{
+
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/web_page_chooser.tpl');
+	var WebPage                 = require('models/web_page');
+	var Trigger              = require('models/trigger');
+	var Instance             = require('models/instance');
+	var Media                = require('models/media');
+	var WebPageChooserRowView   = require('views/web_page_chooser_row');
+	var TriggerEditorView    = require('views/trigger_editor');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
