@@ -6,7 +6,7 @@ define([
 	'models/instance',
 	'models/media',
 	'views/dialog_chooser_row',
-	'views/dialog_trigger_editor',
+	'views/trigger_editor',
 	'vent'
 ], function(Backbone, Template, Dialog, Trigger, Instance, Media, DialogChooserRowView, DialogTriggerEditorView, vent) {
 
@@ -32,7 +32,7 @@ define([
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			var trigger_editor = new DialogTriggerEditorView({scene: this.options.parent, game_object: dialog, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
+			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: dialog, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Conversation to Scene");
 		},
 

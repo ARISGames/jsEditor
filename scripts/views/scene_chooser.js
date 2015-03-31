@@ -6,7 +6,7 @@ define([
 	'models/instance',
 	'models/media',
 	'views/scene_chooser_row',
-	'views/scene_trigger_editor',
+	'views/trigger_editor',
 	'vent'
 ], function(Backbone, Template, Scene, Trigger, Instance, Media, SceneChooserRowView, SceneTriggerEditorView, vent) {
 
@@ -35,7 +35,7 @@ define([
 			// Scenes can only be immediate for now.
 			trigger.set("type", "IMMEDIATE");
 
-			var trigger_editor = new SceneTriggerEditorView({game_object: scene, instance: instance, model: trigger, visible_fields: "create_scene_with_trigger"});
+			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: scene, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Scene to Scene");
 		},
 

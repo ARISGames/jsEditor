@@ -6,7 +6,7 @@ define([
 	'models/instance',
 	'models/media',
 	'views/factory_chooser_row',
-	'views/factory_trigger_editor',
+	'views/trigger_editor',
 	'vent'
 ], function(Backbone, Template, Factory, Trigger, Instance, Media, FactoryChooserRowView, FactoryTriggerEditorView, vent) {
 
@@ -35,7 +35,7 @@ define([
 			// Scenes can only be immediate for now.
 			trigger.set("type", "IMMEDIATE");
 
-			var trigger_editor = new FactoryTriggerEditorView({scene: this.options.parent, game_object: factory, instance: instance, model: trigger, visible_fields: "create_factory_with_trigger"});
+			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: factory, instance: instance, model: trigger, visible_fields: "create_factory_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Factory to Scene");
 		},
 

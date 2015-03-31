@@ -6,7 +6,7 @@ define([
 	'models/instance',
 	'models/media',
 	'views/item_chooser_row',
-	'views/item_trigger_editor',
+	'views/trigger_editor',
 	'vent'
 ], function(Backbone, Template, Item, Trigger, Instance, Media, ItemChooserRowView, ItemTriggerEditorView, vent) {
 
@@ -35,7 +35,7 @@ define([
 			instance.set("infinite_qty", "1");
 			instance.set("qty", "1");
 
-			var trigger_editor = new ItemTriggerEditorView({scene: this.options.parent, game_object: item, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
+			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: item, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
 			vent.trigger("application:popup:show", trigger_editor, "Add Item to Scene");
 		},
 
