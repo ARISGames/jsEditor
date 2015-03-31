@@ -4,10 +4,13 @@ define(function(require)
 	var $                = require('jquery');
 	var Backbone         = require('backbone');
 	var Template         = require('text!templates/item_editor.tpl');
+
 	var MediaCollection  = require('collections/media');
 	var Game             = require('models/game');
 	var MediaChooserView = require('views/media_chooser');
+
 	var vent             = require('vent');
+	var storage          = require('storage');
 
 
 	return Backbone.Marionette.CompositeView.extend({

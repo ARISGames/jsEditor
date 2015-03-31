@@ -5,6 +5,7 @@ define(function(require)
 	var Backbone                = require('backbone');
 	var Template                = require('text!templates/dialog_editor.tpl');
 	var vent                    = require('vent');
+	var storage                 = require('storage');
 
 	var CharactersCollection    = require('collections/characters');
 	var MediaCollection         = require('collections/media');

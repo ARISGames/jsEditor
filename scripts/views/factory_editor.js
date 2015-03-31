@@ -1,28 +1,28 @@
-define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/factory_editor.tpl',
-	'collections/media',
-	'collections/and_packages',
-	'collections/atoms',
-	'collections/items',
-	'collections/tags',
-	'collections/plaques',
-	'collections/dialogs',
-	'collections/game_dialog_scripts',
-	'collections/web_pages',
-	'collections/quests',
-	'collections/web_hooks',
-	'models/requirement_package',
-	'views/media_chooser',
-	'views/requirements',
-	'vent'
-], function(_, $, Backbone, Template,
-	MediaCollection, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, QuestsCollection, WebHooksCollection,
-	RequirementPackage,
-	MediaChooserView, RequirementsEditorView,
-	vent) {
+define(function(require)
+{
+	var _                       = require('underscore');
+	var $                       = require('jquery');
+	var Backbone                = require('backbone');
+	var Template                = require('text!templates/factory_editor.tpl');
+
+	var MediaCollection         = require('collections/media');
+	var AndPackagesCollection   = require('collections/and_packages');
+	var AtomsCollection         = require('collections/atoms');
+	var ItemsCollection         = require('collections/items');
+	var TagsCollection          = require('collections/tags');
+	var PlaquesCollection       = require('collections/plaques');
+	var DialogsCollection       = require('collections/dialogs');
+	var DialogScriptsCollection = require('collections/game_dialog_scripts');
+	var WebPagesCollection      = require('collections/web_pages');
+	var QuestsCollection        = require('collections/quests');
+	var WebHooksCollection      = require('collections/web_hooks');
+
+	var RequirementPackage      = require('models/requirement_package');
+	var MediaChooserView        = require('views/media_chooser');
+	var RequirementsEditorView  = require('views/requirements');
+
+	var vent                    = require('vent');
+	var storage                 = require('storage');
 
 	return Backbone.Marionette.CompositeView.extend({
 
