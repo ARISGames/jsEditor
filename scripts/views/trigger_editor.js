@@ -7,8 +7,9 @@ define(function(require)
 	var storage    = require('storage');
 	var Template   = require('text!templates/trigger_editor.tpl');
 
-	var QRCode = require('qrcode');
-	var Item   = require('models/item');
+	var QRCode   = require('qrcode');
+	var Item     = require('models/item');
+	var Instance = require('models/instance');
 
 	/* Media Editor */
 	var MediaChooserView        = require('views/media_chooser');
@@ -93,13 +94,25 @@ define(function(require)
 		/* Dom manipulation */
 
 		set_icon: function(media) {
-			this.ui.icon.attr("src", media.thumbnail_for(this.model));
+			// if not 0 use this, else thumb for this.game_model
+			if(this.model.get("icon_media_id") === "0")
+			{
+				this.ui.icon.attr("src", this.game_object.icon_thumbnail());
+			}
+			else
+			{
+				this.ui.icon.attr("src", media.thumbnail_for(this.model));
+			}
 		},
 
 		set_name: function(game_object) {
 			var name = game_object.get("name");
 			this.ui.object_name.text(name);
 			this.ui.title.attr('placeholder', name);
+		},
+
+		onClose: function() {
+			this.instance.attributes = this.previous_instance_attributes;
 		},
 
 
@@ -112,6 +125,9 @@ define(function(require)
 			this.scene       = options.scene;
 			this.game_object = options.game_object;
 			this.instance    = options.instance;
+
+			// Undo for object changer
+			this.previous_instance_attributes = _.clone(this.instance.attributes);
 
 			// FIXME trying to avoid circular bug with storage
 			this.model.game_object(this.game_object);
@@ -132,6 +148,8 @@ define(function(require)
 		onRender: function() {
 			this.object_selector_view = new TriggerObjectSelectorView({model: this.model, el: this.$el.find('#trigger_object_selector')});
 			this.object_selector_view.render();
+
+			this.listenTo(this.object_selector_view, "game_object:choose", this.onChangeGameObject);
 
 			var view = this;
 
@@ -185,7 +203,7 @@ define(function(require)
 					// Save Instance
 
 					instance.set("object_id",   game_object.id);
-					instance.set("object_type", instance.type_for(game_object));
+					instance.set("object_type", Instance.type_for(game_object));
 
 					if(game_object.is_a(Item) && view.options.visible_fields === "trigger") {
 						instance.set("qty", view.ui.quantity_amount.val());
@@ -198,6 +216,9 @@ define(function(require)
 						},
 
 						success: function() {
+							// For undo
+							view.previous_instance_attributes = _.clone(instance.attributes);
+
 							// Save Trigger
 							trigger.set("instance_id", instance.id);
 
@@ -273,6 +294,25 @@ define(function(require)
 			});
 
 			this.listenTo(this.game_object, "destroy", view.close);
+		},
+
+		unbindGameObjectAssociation: function() {
+			this.stopListening(this.game_object);
+			this.unbindIconAssociation();
+		},
+
+		onChangeGameObject: function(game_object) {
+			this.unbindGameObjectAssociation();
+
+			this.instance.set("object_id",   game_object.id);
+			this.instance.set("object_type", Instance.type_for(game_object));
+			this.game_object = game_object;
+			this.bindGameObjectAssociation();
+			this.icon = this.model.icon();
+
+			this.set_name(this.game_object);
+			this.set_icon(this.icon);
+			// Change to sequence if scene or factory.
 		},
 
 
