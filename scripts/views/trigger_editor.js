@@ -151,6 +151,8 @@ define(function(require)
 
 			this.listenTo(this.object_selector_view, "game_object:choose", this.onChangeGameObject);
 
+			this.hide_type_tabs();
+
 			var view = this;
 
 			if(this.options.visible_fields === "trigger") {
@@ -312,7 +314,33 @@ define(function(require)
 
 			this.set_name(this.game_object);
 			this.set_icon(this.icon);
+
 			// Change to sequence if scene or factory.
+			if(this.instance.get("object_type") === "SCENE" || this.instance.get("object_type") === "FACTORY")
+			{
+				var trigger_radio = ".trigger-type[value=IMMEDIATE]";
+				this.$el.find(trigger_radio).click();
+
+				this.$el.find('.trigger-type').parent().addClass('hidden');
+				this.$el.find('.trigger-type[value=IMMEDIATE]').parent().removeClass('hidden');
+				this.$el.find('.trigger-type[value=IMMEDIATE]').parent().addClass('only_button');
+			}
+			else
+			{
+				// Unhide buttons
+				this.$el.find('.trigger-type').parent().removeClass('hidden');
+				this.$el.find('.trigger-type[value=IMMEDIATE]').parent().removeClass('only_button');
+			}
+		},
+
+
+		hide_type_tabs: function() {
+			if(this.instance.get("object_type") === "SCENE" || this.instance.get("object_type") === "FACTORY")
+			{
+				this.$el.find('.trigger-type').parent().addClass('hidden');
+				this.$el.find('.trigger-type[value=IMMEDIATE]').parent().removeClass('hidden');
+				this.$el.find('.trigger-type[value=IMMEDIATE]').parent().addClass('only_button');
+			}
 		},
 
 
