@@ -5,7 +5,7 @@
 	<% if(!attribute_items.isEmpty()) { %>
 	<optgroup label="Player Attributes">
 		<% attribute_items.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="ITEM" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -15,7 +15,7 @@
 	<% if(!items.isEmpty()) { %>
 	<optgroup label="Items">
 		<% items.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="ITEM" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -25,7 +25,7 @@
 	<% if(!web_items.isEmpty()) { %>
 	<optgroup label="Web Items">
 		<% web_items.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="ITEM" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -37,7 +37,7 @@
 	<% if(!plaques.isEmpty()) { %>
 	<optgroup label="Plaques">
 		<% plaques.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="PLAQUE" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -49,7 +49,7 @@
 	<% if(!dialogs.isEmpty()) { %>
 	<optgroup label="Conversations">
 		<% dialogs.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="DIALOG" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -60,7 +60,7 @@
 	<% if(!web_pages.isEmpty()) { %>
 	<optgroup label="Web Pages">
 		<% web_pages.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="WEB_PAGE" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -71,7 +71,7 @@
 	<% if(!factories.isEmpty()) { %>
 	<optgroup label="Factories">
 		<% factories.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="FACTORY" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
@@ -82,7 +82,7 @@
 	<% if(!scenes.isEmpty()) { %>
 	<optgroup label="Scenes">
 		<% scenes.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+			<option value="<%= object.id %>" data-object-type="SCENE" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>

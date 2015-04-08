@@ -37,6 +37,15 @@ define(function(require)
 			}
 		},
 
+		ui: {
+			game_object_select: "#instance-object_id"
+		},
+
+		events: {
+			"change @ui.game_object_select": "onChangeGameObject"
+		},
+
+
 		/* Constructor */
 
 		initialize: function() {
@@ -46,6 +55,17 @@ define(function(require)
 			this.listenTo(storage.web_pages, "change add remove", this.render);
 			this.listenTo(storage.factories, "change add remove", this.render);
 			this.listenTo(storage.scenes,    "change add remove", this.render);
+		},
+
+
+		/* Events */
+
+		onChangeGameObject: function() {
+			var id   = this.ui.game_object_select.find("option:selected").val();
+			var type = this.ui.game_object_select.find("option:selected").data("object-type");
+
+			var game_object = storage.retrieve_with_type(id, type);
+			this.trigger("game_object:choose", game_object);
 		}
 	});
 });
