@@ -15,16 +15,20 @@ define(function(require)
 		/* View */
 
 		templateHelpers: function() {
+			var view = this;
+
 			return {
-				game_object_id: this.model.get("object_id"),
+				game_object: this.model.game_object(),
 
 				// Dropdown game objects
-				items:     storage.items,
+				attribute_items: new Backbone.Collection(storage.items.where({type: "ATTRIB"})),
+				web_items:       new Backbone.Collection(storage.items.where({type: "URL"})),
+				items:           new Backbone.Collection(storage.items.where({type: "NORMAL"})),
 				plaques:   storage.plaques,
 				dialogs:   storage.dialogs,
 				web_pages: storage.web_pages,
 				factories: storage.factories,
-				scenes:    storage.scenes,
+				scenes:    new Backbone.Collection(storage.scenes.filter(function(scene) { return scene !== view.model.scene(); })),
 
 				// Helpers
 				option_selected: function(boolean_statement) {
@@ -33,14 +37,15 @@ define(function(require)
 			}
 		},
 
-
 		/* Constructor */
 
 		initialize: function() {
-		},
-
-		onRender: function() {
-			console.log("im rendered");
+			this.listenTo(storage.items,     "change add remove", this.render);
+			this.listenTo(storage.plaques,   "change add remove", this.render);
+			this.listenTo(storage.dialogs,   "change add remove", this.render);
+			this.listenTo(storage.web_pages, "change add remove", this.render);
+			this.listenTo(storage.factories, "change add remove", this.render);
+			this.listenTo(storage.scenes,    "change add remove", this.render);
 		}
 	});
 });

@@ -2,76 +2,92 @@
 	<option value="0" selected disabled>- No Game Object -</option>
 
 	<!-- Game Items -->
+	<% if(!attribute_items.isEmpty()) { %>
 	<optgroup label="Player Attributes">
-		<% _.each(items.where({type: "ATTRIB"}), function(item) { %>
-			<option value="<%= item.get("item_id") %>" <%= option_selected(game_object_id === item.get("item_id")) %>>
-				<%= item.get("name") %>
+		<% attribute_items.each(function(object) { %>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
+	<% if(!items.isEmpty()) { %>
 	<optgroup label="Items">
-		<% _.each(items.where({type: "NORMAL"}), function(item) { %>
-			<option value="<%= item.get("item_id") %>" <%= option_selected(game_object_id === item.get("item_id")) %>>
-				<%= item.get("name") %>
+		<% items.each(function(object) { %>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
+	<% if(!web_items.isEmpty()) { %>
 	<optgroup label="Web Items">
-		<% _.each(items.where({type: "URL"}), function(item) { %>
-			<option value="<%= item.get("item_id") %>" <%= option_selected(game_object_id === item.get("item_id")) %>>
-				<%= item.get("name") %>
+		<% web_items.each(function(object) { %>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
+				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
 
 	<!-- Plaques -->
+	<% if(!plaques.isEmpty()) { %>
 	<optgroup label="Plaques">
 		<% plaques.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object_id === object.id) %>>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
 
 	<!-- Dialogs -->
+	<% if(!dialogs.isEmpty()) { %>
 	<optgroup label="Conversations">
 		<% dialogs.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object_id === object.id) %>>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
 	<!-- Web Pages -->
+	<% if(!web_pages.isEmpty()) { %>
 	<optgroup label="Web Pages">
 		<% web_pages.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object_id === object.id) %>>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
 	<!-- Factories -->
+	<% if(!factories.isEmpty()) { %>
 	<optgroup label="Factories">
 		<% factories.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object_id === object.id) %>>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
 	<!-- Scenes -->
+	<% if(!scenes.isEmpty()) { %>
 	<optgroup label="Scenes">
 		<% scenes.each(function(object) { %>
-			<option value="<%= object.id %>" <%= option_selected(game_object_id === object.id) %>>
+			<option value="<%= object.id %>" <%= option_selected(game_object === object) %>>
 				<%= object.get("name") %>
 			</option>
 		<% }); %>
 	</optgroup>
+	<% } %>
 
 </select>
 

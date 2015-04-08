@@ -130,7 +130,7 @@ define(function(require)
 		},
 
 		onRender: function() {
-			this.object_selector_view = new TriggerObjectSelectorView({model: this.instance, el: this.$el.find('#trigger_object_selector')});
+			this.object_selector_view = new TriggerObjectSelectorView({model: this.model, el: this.$el.find('#trigger_object_selector')});
 			this.object_selector_view.render();
 
 			var view = this;

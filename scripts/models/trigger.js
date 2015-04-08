@@ -71,6 +71,10 @@ define(function(require) {
 			return storage.games.retrieve(this.get('game_id'));
 		},
 
+		scene: function() {
+			return storage.scenes.retrieve(this.get('scene_id'));
+		},
+
 		icon: function() {
 			return storage.media.retrieve(this.get('icon_media_id'));
 		},
