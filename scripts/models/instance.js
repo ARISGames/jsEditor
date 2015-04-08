@@ -46,17 +46,6 @@ define([
 			else { throw "cant determine class of: " + type }
 		},
 
-		// For creating new instances.
-		type_for: function(object) {
-			if(object instanceof Dialog)  { return "DIALOG"   }
-			if(object instanceof Item)    { return "ITEM"     }
-			if(object instanceof Plaque)  { return "PLAQUE"   }
-			if(object instanceof WebPage) { return "WEB_PAGE" }
-			if(object instanceof Scene)   { return "SCENE"    }
-			if(object instanceof Factory) { return "FACTORY"  }
-
-			else { throw "cant determine type of " + object.idAttribute + ": " + object.id; }
-		},
 
 		/* Associations */
 
@@ -65,14 +54,7 @@ define([
 			var type = this.get("object_type");
 			var id   = this.get("object_id");
 
-			if(type === "DIALOG")   { return storage.dialogs.retrieve(id)   }
-			if(type === "PLAQUE")   { return storage.plaques.retrieve(id)   }
-			if(type === "ITEM")     { return storage.items.retrieve(id)     }
-			if(type === "WEB_PAGE") { return storage.web_pages.retrieve(id) }
-			if(type === "SCENE")    { return storage.scenes.retrieve(id)    }
-			if(type === "FACTORY")  { return storage.factories.retrieve(id) }
-
-			else { throw "cant fetch game object of type: " + type }
+			return storage.retrieve_with_type(id, type);
 		}
 	},
 	// Static methods

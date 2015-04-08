@@ -50,6 +50,19 @@ define(function(require, exports, module)
 			else if(idAttribute === "trigger_id")  { this.triggers.add(game_object)  }
 
 			else { throw "don't know where to store object of type " + game_object.idAttribute + ": " + game_object.id; }
+		},
+
+		// Retrieve based on id and aris type
+		retrieve_with_type: function(id, type)
+		{
+			if(type === "DIALOG")   { return this.dialogs.retrieve(id)   }
+			if(type === "PLAQUE")   { return this.plaques.retrieve(id)   }
+			if(type === "ITEM")     { return this.items.retrieve(id)     }
+			if(type === "WEB_PAGE") { return this.web_pages.retrieve(id) }
+			if(type === "SCENE")    { return this.scenes.retrieve(id)    }
+			if(type === "FACTORY")  { return this.factories.retrieve(id) }
+
+			else { throw "cant fetch game object of type: " + type }
 		}
 	});
 

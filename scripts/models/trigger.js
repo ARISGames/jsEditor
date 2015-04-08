@@ -53,14 +53,8 @@ define(function(require) {
 
 		/* Associations */
 
-		game_object: function(object) {
-			// FIXME remove local object storage used by scene editor
-			if(object)
-			{
-				this.game_object_model = object;
-			}
-
-			return this.game_object_model || this.instance().game_object();
+		game_object: function() {
+			return this.instance().game_object();
 		},
 
 		instance: function() {
