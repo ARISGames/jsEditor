@@ -29,8 +29,8 @@ define([
         ],
 
 		defaults: {
-			"qty": "0",
-			"infinite_qty": "0"
+			"qty": "1",
+			"infinite_qty": "1"
 		},
 
 		// For loading the right class from the instance
