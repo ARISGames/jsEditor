@@ -64,6 +64,7 @@ define(function(require)
 
 		bindModelEvents: function() {
 			this.listenTo(this.model,       "update",  this.update_icon);
+			this.listenTo(this.model,       "update",  this.update_game_object);
 			this.listenTo(this.game_object, "update",  this.update_icon);
 			this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
 		},
@@ -73,6 +74,14 @@ define(function(require)
 			this.trigger("trigger:remove", this.model);
 		},
 
+		update_game_object: function()
+		{
+			this.stopListening(this.game_object);
+			this.game_object = this.model.game_object();
+			this.listenTo(this.game_object, "update",  this.update_icon);
+			this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
+			this.update_icon ();
+		},
 
 		/* Events */
 
