@@ -1,15 +1,15 @@
 define(function(require)
 {
 
-	var Backbone             = require('backbone');
-	var Template             = require('text!templates/web_page_chooser.tpl');
-	var WebPage                 = require('models/web_page');
-	var Trigger              = require('models/trigger');
-	var Instance             = require('models/instance');
-	var Media                = require('models/media');
-	var WebPageChooserRowView   = require('views/web_page_chooser_row');
-	var TriggerEditorView    = require('views/trigger_editor');
-	var vent                 = require('vent');
+	var Backbone              = require('backbone');
+	var Template              = require('text!templates/web_page_chooser.tpl');
+	var WebPage               = require('models/web_page');
+	var Trigger               = require('models/trigger');
+	var Instance              = require('models/instance');
+	var Media                 = require('models/media');
+	var WebPageChooserRowView = require('views/web_page_chooser_row');
+	var TriggerCreatorView    = require('views/trigger_creator');
+	var vent                  = require('vent');
 
 
 	return Backbone.Marionette.CompositeView.extend({
@@ -34,8 +34,8 @@ define(function(require)
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: web_page, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Web Page to Scene");
+			var trigger_creator = new TriggerCreatorView({scene: this.options.parent, game_object: web_page, instance: instance, model: trigger});
+			vent.trigger("application:popup:show", trigger_creator, "Add Web Page to Scene");
 		},
 
 		// Marionette override

@@ -1,15 +1,15 @@
 define(function(require)
 {
 
-	var Backbone               = require('backbone');
-	var Template               = require('text!templates/factory_chooser.tpl');
-	var Factory                = require('models/factory');
-	var Trigger                = require('models/trigger');
-	var Instance               = require('models/instance');
-	var Media                  = require('models/media');
-	var FactoryChooserRowView  = require('views/factory_chooser_row');
-	var TriggerEditorView      = require('views/trigger_editor');
-	var vent                   = require('vent');
+	var Backbone              = require('backbone');
+	var Template              = require('text!templates/factory_chooser.tpl');
+	var Factory               = require('models/factory');
+	var Trigger               = require('models/trigger');
+	var Instance              = require('models/instance');
+	var Media                 = require('models/media');
+	var FactoryChooserRowView = require('views/factory_chooser_row');
+	var TriggerCreatorView    = require('views/trigger_creator');
+	var vent                  = require('vent');
 
 
 
@@ -38,8 +38,8 @@ define(function(require)
 			// Scenes can only be immediate for now.
 			trigger.set("type", "IMMEDIATE");
 
-			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: factory, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Factory to Scene");
+			var trigger_creator = new TriggerCreatorView({scene: this.options.parent, game_object: factory, instance: instance, model: trigger});
+			vent.trigger("application:popup:show", trigger_creator, "Add Factory to Scene");
 		},
 
 		// Marionette override

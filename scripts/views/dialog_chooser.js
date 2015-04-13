@@ -8,7 +8,7 @@ define(function(require)
 	var Instance             = require('models/instance');
 	var Media                = require('models/media');
 	var DialogChooserRowView = require('views/dialog_chooser_row');
-	var TriggerEditorView    = require('views/trigger_editor');
+	var TriggerCreatorView   = require('views/trigger_creator');
 	var vent                 = require('vent');
 
 
@@ -34,8 +34,8 @@ define(function(require)
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			var trigger_editor = new TriggerEditorView({scene: this.options.parent, game_object: dialog, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Conversation to Scene");
+			var trigger_creator = new TriggerCreatorView({scene: this.options.parent, game_object: dialog, instance: instance, model: trigger});
+			vent.trigger("application:popup:show", trigger_creator, "Add Conversation to Scene");
 		},
 
 		// Marionette override
