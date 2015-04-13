@@ -8,7 +8,7 @@
 <!-- Game Object attributes -->
 
 <div class="form-group">
-	<label class="sr-only" for="object-name">Conversation Name</label>
+	<label class="sr-only" for="object-name">Game Object Name</label>
 	<input type="text" autofocus class="form-control" id="object-name" placeholder="Enter Name" value="<%= name %>">
 </div>
 

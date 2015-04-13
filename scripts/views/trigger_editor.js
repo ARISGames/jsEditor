@@ -129,9 +129,6 @@ define(function(require)
 			// Undo for object changer
 			this.previous_instance_attributes = _.clone(this.instance.attributes);
 
-			// FIXME trying to avoid circular bug with storage
-			this.model.game_object(this.game_object);
-
 			// TODO refactor visible fields into separate view for 'quick create'
 			this.visible_fields = options.visible_fields;
 
