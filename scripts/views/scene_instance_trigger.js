@@ -1,32 +1,35 @@
 define(function(require)
 {
-	var _                        = require('underscore');
-	var Backbone                 = require('backbone');
-	var Template                 = require('text!templates/scene_instance_trigger.tpl');
-	var vent                     = require('vent');
+	var _                 = require('underscore');
+	var Backbone          = require('backbone');
+	var Template          = require('text!templates/scene_instance_trigger.tpl');
+	var vent              = require('vent');
 
-	var Instance                 = require('models/instance');
-	var Dialog                   = require('models/dialog');
-	var Plaque                   = require('models/plaque');
-	var Item                     = require('models/item');
-	var WebPage                  = require('models/web_page');
-	var Media                    = require('models/media');
-	var Scene                    = require('models/scene');
-	var Factory                  = require('models/factory');
+	var Instance          = require('models/instance');
+	var Dialog            = require('models/dialog');
+	var Plaque            = require('models/plaque');
+	var Item              = require('models/item');
+	var WebPage           = require('models/web_page');
+	var Media             = require('models/media');
+	var Scene             = require('models/scene');
+	var Factory           = require('models/factory');
 
-	var DialogTriggerEditorView  = require('views/dialog_trigger_editor');
-	var PlaqueTriggerEditorView  = require('views/plaque_trigger_editor');
-	var ItemTriggerEditorView    = require('views/item_trigger_editor');
-	var WebPageTriggerEditorView = require('views/web_page_trigger_editor');
-	var SceneTriggerEditorView   = require('views/scene_trigger_editor');
-	var FactoryTriggerEditorView = require('views/factory_trigger_editor');
+	var TriggerEditorView = require('views/trigger_editor');
 
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
 
 		tagName: 'li',
-		className: 'scene-trigger',
+
+		// Remove after upgrading to Marionette 2.0.x with `filter`
+		className: function() {
+			if(this.options.scene.get("scene_id") !== this.model.get("scene_id"))
+			{
+				return 'hidden'
+			}
+			return 'scene-trigger'
+		},
 
 		templateHelpers: function() {
 			return {
@@ -38,25 +41,30 @@ define(function(require)
 		},
 
 		initialize: function(options) {
-			var view = this;
+			// Remove after upgrading to Marionette 2.0.x with `filter`
+			if(this.model.get("scene_id") != this.options.scene.get("scene_id"))
+			{
+				this.render = function() {};
+				return;
+			}
 
 			this.scene       = options.scene;
 			this.instance    = this.model.instance();
 			this.game_object = this.instance.game_object();
 
 			// Assign icon and name from instance and game object
-			view.loading_icon();
-			view.update_icon ();
+			this.loading_icon();
+			this.update_icon ();
 
 			// Listen to association events on on instance and game object
-			view.bindModelEvents();
+			this.bindModelEvents();
 		},
-
 
 		/* Model Event Binding */
 
 		bindModelEvents: function() {
 			this.listenTo(this.model,       "update",  this.update_icon);
+			this.listenTo(this.model,       "update",  this.update_game_object);
 			this.listenTo(this.game_object, "update",  this.update_icon);
 			this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
 		},
@@ -66,6 +74,14 @@ define(function(require)
 			this.trigger("trigger:remove", this.model);
 		},
 
+		update_game_object: function()
+		{
+			this.stopListening(this.game_object);
+			this.game_object = this.model.game_object();
+			this.listenTo(this.game_object, "update",  this.update_icon);
+			this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
+			this.update_icon ();
+		},
 
 		/* Events */
 
@@ -82,17 +98,16 @@ define(function(require)
 				scene: view.scene,
 				game_object: view.game_object,
 				instance: view.instance,
-				model: view.model,
-				visible_fields: "trigger"
+				model: view.model
 			};
 
 			// launch based on type
-			if(view.game_object instanceof Dialog ) { trigger_editor = new  DialogTriggerEditorView(options); }
-			if(view.game_object instanceof Item   ) { trigger_editor = new    ItemTriggerEditorView(options); }
-			if(view.game_object instanceof Plaque ) { trigger_editor = new  PlaqueTriggerEditorView(options); }
-			if(view.game_object instanceof WebPage) { trigger_editor = new WebPageTriggerEditorView(options); }
-			if(view.game_object instanceof Scene  ) { trigger_editor = new   SceneTriggerEditorView(options); }
-			if(view.game_object instanceof Factory) { trigger_editor = new FactoryTriggerEditorView(options); }
+			if(view.game_object instanceof Dialog ) { trigger_editor = new TriggerEditorView(options); }
+			if(view.game_object instanceof Item   ) { trigger_editor = new TriggerEditorView(options); }
+			if(view.game_object instanceof Plaque ) { trigger_editor = new TriggerEditorView(options); }
+			if(view.game_object instanceof WebPage) { trigger_editor = new TriggerEditorView(options); }
+			if(view.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorView(options); }
+			if(view.game_object instanceof Factory) { trigger_editor = new TriggerEditorView(options); }
 
 			if(trigger_editor === null) {
 				throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;

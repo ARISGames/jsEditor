@@ -27,6 +27,12 @@ define(function(require)
 
 		itemView: SceneInstanceTriggerView,
 		itemViewContainer: ".scene-triggers",
+		itemViewOptions: function(model, index) {
+			return {
+				scene: this.model
+			}
+		},
+
 		emptyView: EmptySceneView,
 
 		templateHelpers: function() {
@@ -38,24 +44,9 @@ define(function(require)
 		initialize: function(options) {
 			var view = this;
 
-			vent.on("scene:add_trigger", function(trigger) {
-				if (view.model.id == trigger.get("scene_id"))
-				{
-					view.collection.add(trigger);
-				}
-			});
-
-			vent.on("game_object:update", function(game_object) {
-				if(game_object.is(view.model))
-				{
-					// FIXME guarentee single instanes.
-					view.model = game_object;
-					view.render();
-				}
-			});
-
-			// Track scene deletes to adjust intro scene
-			this.model.game().on("change:intro_scene_id", this.onChangeIntroScene.bind(this));
+			// Track to adjust intro scene
+			this.listenTo(this.model.game(), "change:intro_scene_id", this.onChangeIntroScene.bind(this));
+			this.listenTo(this.model, "update", this.render);
 		},
 
 		is_intro_scene: function() {
@@ -84,15 +75,6 @@ define(function(require)
 		events: {
 			"click .name": "onClickName",
 			"click .new-trigger": "onClickNewTrigger"
-		},
-
-		/* TODO cleanest way to do this? */
-		modelEvents: {
-			"change": "modelChanged"
-		},
-
-		modelChanged: function() {
-			this.render();
 		},
 
 		onRender: function() {

@@ -1,14 +1,16 @@
-define([
-	'backbone',
-	'text!templates/item_chooser.tpl',
-	'models/item',
-	'models/trigger',
-	'models/instance',
-	'models/media',
-	'views/item_chooser_row',
-	'views/item_trigger_editor',
-	'vent'
-], function(Backbone, Template, Item, Trigger, Instance, Media, ItemChooserRowView, ItemTriggerEditorView, vent) {
+define(function(require)
+{
+
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/item_chooser.tpl');
+	var Item                 = require('models/item');
+	var Trigger              = require('models/trigger');
+	var Instance             = require('models/instance');
+	var Media                = require('models/media');
+	var ItemChooserRowView   = require('views/item_chooser_row');
+	var TriggerCreatorView   = require('views/trigger_creator');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -32,11 +34,8 @@ define([
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			instance.set("infinite_qty", "1");
-			instance.set("qty", "1");
-
-			var trigger_editor = new ItemTriggerEditorView({scene: this.options.parent, game_object: item, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Item to Scene");
+			var trigger_creator = new TriggerCreatorView({scene: this.options.parent, game_object: item, instance: instance, model: trigger});
+			vent.trigger("application:popup:show", trigger_creator, "Add Item to Scene");
 		},
 
 		// Marionette override

@@ -58,7 +58,7 @@
 			<label class="btn btn-info <%= tab_selected(type === "URL") %>">
 				<input type="radio" class="item-type" name="item-type" value="URL"    <%= radio_selected(type === "URL") %>>
 				<span class="glyphicon glyphicon-globe"></span>
-				&nbsp;Web URL
+				&nbsp;Web Item
 			</label>
 		</div>
 	</div>

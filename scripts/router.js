@@ -224,7 +224,7 @@ define(function(require)
 			$.when(storage.triggers.fetch(), storage.instances.fetch(), storage.web_pages.fetch(), storage.plaques.fetch(), storage.dialogs.fetch(), storage.items.fetch()).done(function()
 			{
 				// Just give non-note location triggers to view (until we filtering view is created)
-				var location_selection = triggers.filter(function(trigger)
+				var location_selection = storage.triggers.filter(function(trigger)
 				{
 					return trigger.get("type") === "LOCATION" && trigger.instance().get("object_type") !== "NOTE";
 

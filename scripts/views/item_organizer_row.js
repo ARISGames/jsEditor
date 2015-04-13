@@ -14,15 +14,7 @@ define(function(require)
 		},
 
 		initialize: function() {
-			var view = this;
-
-			vent.on("game_object:update", function(game_object) {
-				if(game_object.is(view.model))
-				{
-					view.model = game_object;
-					view.render();
-				}
-			});
+			this.listenTo(this.model, "update", this.render);
 		},
 
 		tagName: 'tr',

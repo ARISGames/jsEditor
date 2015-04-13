@@ -1,9 +1,12 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/scene_editor.tpl',
-	'vent'
-], function(_, Backbone, Template, vent) {
+define(function(require)
+{
+	var _                        = require('underscore');
+	var Backbone                 = require('backbone');
+	var Template                 = require('text!templates/scene_editor.tpl');
+	var vent                     = require('vent');
+	var storage                  = require('storage');
+
+
 	return Backbone.Marionette.ItemView.extend({
 		template: _.template(Template),
 
@@ -49,7 +52,7 @@ define([
 
 			this.model.save({}, {
 					create: function() {
-						vent.trigger("scenes:add", view.model);
+						storage.add_game_object(view.model);
 					},
 					success: function() {
 
@@ -62,7 +65,8 @@ define([
 							view.model.game().fetch();
 						}
 
-						vent.trigger("game_object:update", view.model);
+						view.render();
+
 						vent.trigger("application:popup:hide");
 					}
 			});
@@ -80,8 +84,8 @@ define([
 
 			this.model.destroy({
 				success: function() {
+					view.model.game().fetch();
 					view.close();
-					vent.trigger("scenes:remove", view.model);
 				}
 			});
 		}

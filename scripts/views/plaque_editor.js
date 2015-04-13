@@ -12,6 +12,7 @@ define(function(require)
 	var MediaChooserView = require('views/media_chooser');
 	var EventsEditorView = require('views/events');
 	var vent             = require('vent');
+	var storage          = require('storage');
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -87,7 +88,8 @@ define(function(require)
 				create: function() {
 					view.storePreviousAttributes();
 
-					vent.trigger("game_object:add", plaque);
+					storage.add_game_object(plaque);
+
 					vent.trigger("application:popup:hide");
 				},
 
@@ -95,8 +97,6 @@ define(function(require)
 				{
 					view.storePreviousAttributes();
 
-					// FIXME get rid of global update broadcasts for models
-					vent.trigger("game_object:update", plaque);
 					vent.trigger("application:popup:hide");
 				}
 			});
@@ -111,7 +111,6 @@ define(function(require)
 			var view = this;
 			this.model.destroy({
 				success: function() {
-					vent.trigger("game_object:delete", view.model);
 					vent.trigger("application:popup:hide");
 				}
 			});

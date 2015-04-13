@@ -35,21 +35,16 @@ define([
 
 			instance.save({}, {
 				create: function() {
-					storage.instances.add(instance);
+					storage.add_game_object(instance);
 
 					// Save Trigger
 					trigger.set("instance_id", instance.id);
-
-					trigger.set("title", Trigger.title_for(factory));
 
 					trigger.save({},
 					{
 						create: function()
 						{
-							storage.triggers.add(trigger);
-
-							// FIXME better way to handle this?
-							vent.trigger("scene:add_trigger", trigger);
+							storage.add_game_object(trigger);
 							vent.trigger("application:popup:hide");
 						}
 					});

@@ -1,14 +1,16 @@
-define([
-	'backbone',
-	'text!templates/scene_chooser.tpl',
-	'models/scene',
-	'models/trigger',
-	'models/instance',
-	'models/media',
-	'views/scene_chooser_row',
-	'views/scene_trigger_editor',
-	'vent'
-], function(Backbone, Template, Scene, Trigger, Instance, Media, SceneChooserRowView, SceneTriggerEditorView, vent) {
+define(function(require)
+{
+
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/scene_chooser.tpl');
+	var Scene                = require('models/scene');
+	var Trigger              = require('models/trigger');
+	var Instance             = require('models/instance');
+	var Media                = require('models/media');
+	var SceneChooserRowView  = require('views/scene_chooser_row');
+	var TriggerCreatorView   = require('views/trigger_creator');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -35,8 +37,8 @@ define([
 			// Scenes can only be immediate for now.
 			trigger.set("type", "IMMEDIATE");
 
-			var trigger_editor = new SceneTriggerEditorView({game_object: scene, instance: instance, model: trigger, visible_fields: "create_scene_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Scene to Scene");
+			var trigger_creator = new TriggerCreatorView({scene: this.options.parent, game_object: scene, instance: instance, model: trigger});
+			vent.trigger("application:popup:show", trigger_creator, "Add Scene to Scene");
 		},
 
 		// Marionette override

@@ -81,8 +81,6 @@ define(function(require)
 				update: function() {
 					view.storePreviousAttributes();
 
-					// FIXME get rid of global update broadcasts for models
-					vent.trigger("game_object:update", character);
 					vent.trigger("application:popup:hide");
 				}
 			});

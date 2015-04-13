@@ -19,15 +19,6 @@ define([
 		itemViewContainer: ".factories",
 
 
-		initialize: function(options) {
-			var view = this;
-
-			vent.on("factory:add", function(factory) {
-				view.collection.add(factory);
-			});
-		},
-
-
 		events: {
 			"click .new": "onClickNew"
 		},

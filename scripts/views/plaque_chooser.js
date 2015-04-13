@@ -1,14 +1,16 @@
-define([
-	'backbone',
-	'text!templates/plaque_chooser.tpl',
-	'models/plaque',
-	'models/trigger',
-	'models/instance',
-	'models/media',
-	'views/plaque_chooser_row',
-	'views/plaque_trigger_editor',
-	'vent'
-], function(Backbone, Template, Plaque, Trigger, Instance, Media, PlaqueChooserRowView, PlaqueTriggerEditorView, vent) {
+define(function(require)
+{
+
+	var Backbone             = require('backbone');
+	var Template             = require('text!templates/plaque_chooser.tpl');
+	var Plaque               = require('models/plaque');
+	var Trigger              = require('models/trigger');
+	var Instance             = require('models/instance');
+	var Media                = require('models/media');
+	var PlaqueChooserRowView = require('views/plaque_chooser_row');
+	var TriggerCreatorView   = require('views/trigger_creator');
+	var vent                 = require('vent');
+
 
 	return Backbone.Marionette.CompositeView.extend({
 		template: _.template(Template),
@@ -32,8 +34,8 @@ define([
 			var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
 			var instance = new Instance ({game_id: this.options.parent.get("game_id")});
 
-			var trigger_editor = new PlaqueTriggerEditorView({scene: this.options.parent, game_object: plaque, instance: instance, model: trigger, visible_fields: "create_game_object_with_trigger"});
-			vent.trigger("application:popup:show", trigger_editor, "Add Plaque to Scene");
+			var trigger_creator = new TriggerCreatorView({scene: this.options.parent, game_object: plaque, instance: instance, model: trigger});
+			vent.trigger("application:popup:show", trigger_creator, "Add Plaque to Scene");
 		},
 
 		// Marionette override
