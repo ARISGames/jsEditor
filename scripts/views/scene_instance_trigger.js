@@ -98,8 +98,7 @@ define(function(require)
 				scene: view.scene,
 				game_object: view.game_object,
 				instance: view.instance,
-				model: view.model,
-				visible_fields: "trigger"
+				model: view.model
 			};
 
 			// launch based on type

@@ -74,7 +74,6 @@ define(function(require)
 			return {
 				is_new: this.model.isNew(),
 				in_modal: this.options.in_modal,
-				visible_fields: this.visible_fields,
 
 				// Using views icon since we are not directly changing the model until save.
 				icon_thumbnail_url: this.icon.thumbnail_for(this.model),
@@ -111,15 +110,15 @@ define(function(require)
 			this.ui.title.attr('placeholder', name);
 		},
 
+		// FIXME bug where new view is created before previous is reset if clicking on same object. (Need to use proxy objects for edit views)
 		onClose: function() {
-			this.instance.attributes = this.previous_instance_attributes;
+			this.instance.attributes = _.clone(this.previous_instance_attributes);
 		},
 
 
 		/* Initialization and Rendering */
 
 		initialize: function(options) {
-
 			this.icon        = this.model.icon();
 
 			this.scene       = options.scene;
@@ -128,9 +127,6 @@ define(function(require)
 
 			// Undo for object changer
 			this.previous_instance_attributes = _.clone(this.instance.attributes);
-
-			// TODO refactor visible fields into separate view for 'quick create'
-			this.visible_fields = options.visible_fields;
 
 			/* Game object and Icon media change events */
 
@@ -152,10 +148,8 @@ define(function(require)
 
 			var view = this;
 
-			if(this.options.visible_fields === "trigger") {
-				setTimeout(function() {view.renderMap()}, 300);
-				this.initializeQR();
-			}
+			setTimeout(function() {view.renderMap()}, 300);
+			this.initializeQR();
 		},
 
 
@@ -188,10 +182,6 @@ define(function(require)
 			var game_object = this.game_object;
 			var trigger     = this.model;
 
-			// FIXME temporary fix to grab fields only when visible
-			if(view.options.visible_fields === "create_game_object_with_trigger" ) {
-				game_object.set("name", view.ui.name.val());
-			}
 
 			// TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
 			game_object.save({}, {
@@ -204,7 +194,7 @@ define(function(require)
 					instance.set("object_id",   game_object.id);
 					instance.set("object_type", Instance.type_for(game_object));
 
-					if(game_object.is_a(Item) && view.options.visible_fields === "trigger") {
+					if(game_object.is_a(Item)) {
 						instance.set("qty", view.ui.quantity_amount.val());
 						instance.set("infinite_qty", view.ui.quantity.is(":checked") ? "1" : "0");
 					}
@@ -221,23 +211,18 @@ define(function(require)
 							// Save Trigger
 							trigger.set("instance_id", instance.id);
 
-							// FIXME temporary fix to grab fields only when visible
-							if(view.options.visible_fields === "trigger") {
-								trigger.set("title",             view.ui.title.val());
-								trigger.set("qr_code",           view.ui.code.val());
+							trigger.set("title",             view.ui.title.val());
+							trigger.set("qr_code",           view.ui.code.val());
 
-								trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
-								trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
-								trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
-								trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
+							trigger.set("wiggle",            view.ui.wiggle.is    (":checked") ? "1" : "0");
+							trigger.set("show_title",        view.ui.show_title.is(":checked") ? "1" : "0");
+							trigger.set("hidden",            view.ui.hidden.is    (":checked") ? "1" : "0");
+							trigger.set("infinite_distance", view.ui.infinite.is  (":checked") ? "1" : "0");
 
-								trigger.set("type",              view.$el.find(".trigger-type:checked").val());
-								trigger.set("trigger_on_enter",  view.$el.find(".trigger-enter:checked").val());
+							trigger.set("type",              view.$el.find(".trigger-type:checked").val());
+							trigger.set("trigger_on_enter",  view.$el.find(".trigger-enter:checked").val());
 
-								trigger.set("icon_media_id", view.icon.get("media_id"));
-							}
-
-							// Otherwise Initial Fields are all default.
+							trigger.set("icon_media_id", view.icon.get("media_id"));
 
 							trigger.save({},
 							{
@@ -327,6 +312,16 @@ define(function(require)
 				// Unhide buttons
 				this.$el.find('.trigger-type').parent().removeClass('hidden');
 				this.$el.find('.trigger-type[value=IMMEDIATE]').parent().removeClass('only_button');
+			}
+
+			// Toggle quantity visibility.
+			if(this.game_object.is_a(Item))
+			{
+				this.$el.find('#instance-quantity-fields').removeClass('hidden');
+			}
+			else
+			{
+				this.$el.find('#instance-quantity-fields').addClass('hidden');
 			}
 		},
 

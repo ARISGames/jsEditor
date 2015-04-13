@@ -3,19 +3,6 @@
 <% } %>
 
 <form class="form" role="form" onsubmit="return false;">
-<% if(visible_fields === "create_game_object_with_trigger" ) { %>
-
-<!-- Game Object attributes -->
-
-<div class="form-group">
-	<label class="sr-only" for="object-name">Game Object Name</label>
-	<input type="text" autofocus class="form-control" id="object-name" placeholder="Enter Name" value="<%= name %>">
-</div>
-
-<% } %>
-
-
-<% if(visible_fields === "trigger") { %>
 
 <!-- Edit Object -->
 
@@ -152,7 +139,7 @@
 
 
 <!-- Quantity of Instance -->
-<% if(quantity_fields_visible) { %>
+<div id="instance-quantity-fields" class="<%= quantity_fields_visible ? "" : "hidden" %>">
 	<hr>
 
 	<label>Quantity Available</label>
@@ -166,11 +153,8 @@
 	<div class="form-group quantity-container"  <%= tab_visible(instance_infinite_quantity === "0") %>>
 		<input type="number" class="form-control" id="instance-quantity" placeholder="Quantity" min="0" value="<%= instance_quantity %>">
 	</div>
-<% } %> <!-- quantity fields visible -->
+</div>
 
-<% } %> <!-- if visible fields == trigger -->
-
-<!-- create vs update -->
 
 <hr>
 
@@ -178,9 +162,7 @@
 	<button type="submit" class="btn btn-primary save">
 		Save
 	</button>
-	<% if(!is_new) { %>
-		<button type="button" class="btn btn-danger delete">Delete</button>
-	<% } %>
+	<button type="button" class="btn btn-danger delete">Delete</button>
 	<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
 </div>
 </form>
