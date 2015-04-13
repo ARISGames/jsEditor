@@ -54,3 +54,7 @@ Translations
 ------------
 
 Text sourced by running `xgettext.pl` (BSD version on OSX) to get .po files of templates. Edited with `poedit` or similar. Then `po2json` from https://github.com/mikeedwards/po2json converts them to json with `jed` mode enabled.
+
+---
+
+_This project is licensed under the terms of the MIT license._
