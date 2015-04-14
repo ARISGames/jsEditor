@@ -97,7 +97,7 @@ define([
 
 		events: {
 			"click @ui.save":   "onClickSave",
-			"click @ui.cancel": "onClickSave",
+			"click @ui.cancel": "onClickCancel",
 			"click @ui.delete": "onClickDelete",
 
 			"click @ui.change_icon":       "onClickIcon",
