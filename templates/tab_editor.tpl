@@ -33,6 +33,12 @@
 					</select>
 				</div>
 			<% } %>
+
+
+			<div class="form-group">
+				<label for="name">Title</label>
+				<input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
+			</div>
 		</div> <!-- /attributes -->
 
 
@@ -48,11 +54,6 @@
 						</button>
 					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="name">Title</label>
-				<input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
 			</div>
 		</div>
 	</div>
