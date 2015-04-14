@@ -24,7 +24,7 @@ define(function(require)
 
 		// Remove after upgrading to Marionette 2.0.x with `filter`
 		className: function() {
-			if(this.options.scene.get("scene_id") !== this.model.get("scene_id"))
+			if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE")
 			{
 				return 'hidden'
 			}
@@ -42,7 +42,7 @@ define(function(require)
 
 		initialize: function(options) {
 			// Remove after upgrading to Marionette 2.0.x with `filter`
-			if(this.model.get("scene_id") != this.options.scene.get("scene_id"))
+			if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE")
 			{
 				this.render = function() {};
 				return;

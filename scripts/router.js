@@ -123,7 +123,6 @@ define(function(require)
 
 
 		showSceneEditor: function(game_id) {
-			// FIXME ability to promise so we don't fetch twice? or guarentee a new fetch.
 			var game = storage.games.retrieve(game_id);
 			storage.for(game);
 
