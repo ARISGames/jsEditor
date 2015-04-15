@@ -214,6 +214,9 @@ define([
 			// Reset Game Object Dropdown.
 			this.model.set("content_id", "0");
 
+			// Reset info string
+			this.model.set("info", "");
+
 			this.render();
 		},
 
