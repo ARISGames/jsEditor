@@ -1,6 +1,8 @@
 define(function(require) {
 	var JsonBaseModel = require('models/json_base');
 	var storage       = require('storage');
+	var session       = require('models/session');
+	var config        = require('config');
 
 
 	return JsonBaseModel.extend({
@@ -53,7 +55,8 @@ define(function(require) {
 			notebook_allow_comments: "1",
 			notebook_allow_player_tags: "1",
 			notebook_allow_likes: "1",
-			inventory_weight_cap: "0"
+			inventory_weight_cap: "0",
+			duplicating: "false"
 		},
 
 
@@ -79,6 +82,37 @@ define(function(require) {
 
 		media_thumbnail: function() {
 			return this.media().thumbnail_for();
+		},
+
+
+		/* Duplication */
+		duplicate: function(options) {
+			options || (options = {});
+
+			this.set("duplicating", "true")
+
+			var view = this;
+			var duplication_data = {"game_id": this.get("game_id"), "auth": session.auth_json()};
+
+			$.ajax({
+				url: config.aris_api_url + "duplicate.duplicateGame",
+				type: 'POST',
+				data: JSON.stringify(duplication_data),
+				processData: false,
+				success: function(data) {
+
+					var game_attributes = JSON.parse(data).data;
+
+					// Find or Add game.
+					storage.games.retrieve(game_attributes);
+
+					view.set("duplicating", "false");
+
+					if(options.success) {
+						options.success.call();
+					}
+				}
+			});
 		}
 	});
 });

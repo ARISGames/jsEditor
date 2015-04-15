@@ -51,9 +51,10 @@ define(function(require)
 		},
 
 		ui: {
-			"save":   ".save",
-			"delete": ".delete",
-			"cancel": ".cancel",
+			"save":      ".save",
+			"delete":    ".delete",
+			"duplicate": ".duplicate",
+			"cancel":    ".cancel",
 
 			"change_icon":  ".change-icon",
 			"change_media": ".change-media",
@@ -119,9 +120,10 @@ define(function(require)
 		/* View Events */
 
 		events: {
-			"click @ui.save":   "onClickSave",
-			"click @ui.cancel": "onClickCancel",
-			"click @ui.delete": "onClickDelete",
+			"click @ui.save":      "onClickSave",
+			"click @ui.cancel":    "onClickCancel",
+			"click @ui.duplicate": "onClickDuplicate",
+			"click @ui.delete":    "onClickDelete",
 
 			"click @ui.change_icon":  "onClickIcon",
 			"click @ui.change_media": "onClickMedia",
@@ -166,6 +168,22 @@ define(function(require)
 
 		onClickCancel: function() {
 			Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
+		},
+
+
+		onClickDuplicate: function() {
+			// Popup confirmation
+
+			console.log("DUPE");
+
+			// On confirm, begin
+
+			this.model.duplicate({
+				success: function() {
+					// Replace dialog text
+					console.log("DID IT");
+				}
+			});
 		},
 
 		onClickDelete: function() {

@@ -46,7 +46,7 @@ define(function(require) {
 
 			this.set("migrating", "true")
 
-			var view = this;
+			var model = this;
 			var migration_data = {"game_id": this.get("game_id"), "auth": session.auth_json()};
 
 			$.ajax({
@@ -62,9 +62,9 @@ define(function(require) {
 					storage.games.retrieve(game_attributes);
 
 					// Temporary update local reference count
-					view.get("prev_migrations"   ).push(String(Date.now()));
-					view.get("my_prev_migrations").push(String(Date.now()));
-					view.set("migrating", "false");
+					model.get("prev_migrations"   ).push(String(Date.now()));
+					model.get("my_prev_migrations").push(String(Date.now()));
+					model.set("migrating", "false");
 
 					if(options.success) {
 						options.success.call();

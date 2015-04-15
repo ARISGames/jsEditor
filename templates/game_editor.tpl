@@ -212,8 +212,17 @@
 		<button type="submit" class="btn btn-primary save">
 			Save
 		</button>
-		<button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
-		<button type="button" class="btn btn-danger delete pull-right">Delete</button>
+		<button type="button" class="btn btn-default cancel" data-dismiss="modal">
+			Cancel
+		</button>
+		<div class="pull-right">
+			<button type="button" class="btn btn-info duplicate">
+				Duplicate
+			</button>
+			<button type="button" class="btn btn-danger delete">
+				Delete
+			</button>
+		</div>
 	</div>
 	</form>
 </div>
