@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   id="svg10555"
+   viewBox="0 0 207.63779 438.66143"
+   height="123.8mm"
+   width="58.599998mm">
+  <defs
+     id="defs10557" />
+  <metadata
+     id="metadata10560">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-613.70079)"
+     id="layer1">
+    <rect
+       ry="30.227997"
+       y="620.92633"
+       x="5.4959917"
+       height="422.60391"
+       width="197.65396"
+       id="phone-list"
+	   class="phone-template"
+       style="fill:#e6e6e6" />
+    <rect
+       ry="1.3739978"
+       y="673.18781"
+       x="18.104465"
+       height="318.08099"
+       width="172.43701"
+       id="rect10599"
+       style="fill:#ffffff" />
+    <circle
+       r="17.518497"
+       cy="1016.3557"
+       cx="104.32298"
+       id="path10603"
+       style="fill:#ffffff" />
+    <rect
+       ry="4.4654994"
+       y="642.22327"
+       x="81.065987"
+       height="8.9309988"
+       width="48.089996"
+       id="rect10605"
+       style="fill:#ffffff" />
+    <g
+       id="g11710">
+      <rect
+         ry="0.25432739"
+         y="682.57513"
+         x="25.115854"
+         height="9.5372763"
+         width="86.48127"
+         id="use11459"
+         style="fill:#cccccc" />
+      <rect
+         style="fill:#e6e6e6"
+         id="rect11625"
+         width="155.90707"
+         height="6.1228924"
+         x="25.115854"
+         y="697.9895"
+         ry="0.16327715" />
+      <rect
+         ry="0.16327715"
+         y="707.9895"
+         x="25.115854"
+         height="6.1228924"
+         width="137.69702"
+         id="rect11636"
+         style="fill:#e6e6e6" />
+      <path
+         style="fill:#ececec;fill-rule:evenodd;stroke:#ececec;stroke-width:1.0169791px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 18.210039,724.30512 171.857321,0"
+         id="path11708" />
+    </g>
+    <use
+       id="use11732"
+       xlink:href="#g11710"
+       y="0"
+       x="0" />
+    <use
+       id="use11734"
+       transform="translate(0,57.021942)"
+       xlink:href="#g11710"
+       y="0"
+       x="0" />
+    <use
+       id="use11736"
+       transform="translate(0,114.04388)"
+       xlink:href="#g11710"
+       y="0"
+       x="0" />
+    <use
+       id="use11738"
+       transform="translate(0,171.06582)"
+       xlink:href="#g11710"
+       y="0"
+       x="0" />
+    <use
+       id="use11740"
+       transform="translate(0,228.08777)"
+       xlink:href="#g11710"
+       y="0"
+       x="0" />
+  </g>
+</svg>

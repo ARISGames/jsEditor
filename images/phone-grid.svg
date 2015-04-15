@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg10555"
+   viewBox="0 0 207.63779 438.66143"
+   height="123.8mm"
+   width="58.599998mm">
+  <defs
+     id="defs10557" />
+  <metadata
+     id="metadata10560">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-613.70079)"
+     id="layer1">
+    <rect
+       ry="30.227997"
+       y="620.92633"
+       x="5.4959917"
+       height="422.60391"
+       width="197.65396"
+       id="phone-grid"
+	   class="phone-template"
+       style="fill:#e6e6e6" />
+    <rect
+       ry="1.3739978"
+       y="673.18781"
+       x="18.104465"
+       height="318.08099"
+       width="172.43701"
+       id="rect10599"
+       style="fill:#ffffff" />
+    <circle
+       r="17.518497"
+       cy="1016.3557"
+       cx="104.32298"
+       id="path10603"
+       style="fill:#ffffff" />
+    <rect
+       ry="4.4654994"
+       y="642.22327"
+       x="81.065987"
+       height="8.9309988"
+       width="48.089996"
+       id="rect10605"
+       style="fill:#ffffff" />
+    <rect
+       style="fill:#cccccc"
+       id="use11459"
+       width="45.261272"
+       height="45.261272"
+       x="25.115854"
+       y="682.57513"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11461"
+       width="45.261272"
+       height="45.261272"
+       x="25.115854"
+       y="738.90912"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11463"
+       width="45.261272"
+       height="45.261272"
+       x="25.115854"
+       y="795.2431"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11465"
+       width="45.261272"
+       height="45.261272"
+       x="25.115854"
+       y="851.57709"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11467"
+       width="45.261272"
+       height="45.261272"
+       x="81.449844"
+       y="682.57513"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11469"
+       width="45.261272"
+       height="45.261272"
+       x="81.449844"
+       y="738.90912"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11471"
+       width="45.261272"
+       height="45.261272"
+       x="81.449844"
+       y="795.2431"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11473"
+       width="45.261272"
+       height="45.261272"
+       x="81.449844"
+       y="851.57709"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11475"
+       width="45.261272"
+       height="45.261272"
+       x="137.78383"
+       y="682.57513"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11477"
+       width="45.261272"
+       height="45.261272"
+       x="137.78383"
+       y="738.90912"
+       ry="1.2069674" />
+    <rect
+       style="fill:#cccccc"
+       id="use11479"
+       width="45.261272"
+       height="45.261272"
+       x="137.78383"
+       y="795.2431"
+       ry="1.2069674" />
+  </g>
+</svg>

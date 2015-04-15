@@ -692,3 +692,28 @@ h4:hover .object-id {
 .only_button {
   border-radius: 3px !important;
 }
+/* Radio SVG buttons */
+.radio-images svg {
+  width: 38%;
+  height: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.radio-images svg:hover .phone-template {
+  fill: #ccc  !important;
+}
+.radio-images label {
+  display: inline;
+}
+.radio-images input {
+  display: none;
+}
+.radio-images input:checked + label .phone-template {
+  fill: #5bc0de !important;
+}
+.radio-images:first-child {
+  margin-left: 0;
+}
+.radio-images:last-child {
+  margin-right: 0;
+}
