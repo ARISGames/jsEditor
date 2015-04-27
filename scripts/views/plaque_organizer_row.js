@@ -14,23 +14,13 @@ define(function(require)
 		},
 
 		initialize: function() {
-			var view = this;
-
-			vent.on("game_object:update", function(game_object) {
-				if(game_object.is(view.model))
-				{
-					view.model = game_object;
-					view.render();
-				}
-			});
+			this.listenTo(this.model, "update", this.render);
 		},
 
 		tagName: 'tr',
 
 		onClickEdit: function() {
-			var view  = this;
-
-			var plaque_editor = new PlaqueEditorView({model: view.model});
+			var plaque_editor = new PlaqueEditorView({model: this.model});
 			vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
 		}
 	});

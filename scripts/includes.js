@@ -31,7 +31,10 @@ require.config({
 		'config': 'config',
 
 		/* Templages */
-		'templates': '../templates'
+		'templates': '../templates',
+
+		/* Images */
+		'images': '../images'
 	},
 
 	shim: {

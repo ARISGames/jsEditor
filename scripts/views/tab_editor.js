@@ -3,6 +3,8 @@ define([
 	'jquery',
 	'backbone',
 	'text!templates/tab_editor.tpl',
+	'text!images/phone-grid.svg',
+	'text!images/phone-list.svg',
 	'collections/media',
 	'collections/events',
 	'collections/items',
@@ -25,8 +27,9 @@ define([
 	'collections/tabs',
 	'collections/web_hooks',
 	'vent'
-], function(_, $, Backbone, Template, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, Tab, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, TabsCollection, WebHooksCollection, vent) {
+], function(_, $, Backbone, Template, PhoneGridSVG, PhoneListSVG, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, Tab, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, TabsCollection, WebHooksCollection, vent) {
 
+	// TODO subclass editor
 	return Backbone.Marionette.CompositeView.extend({
 
 		/* View */
@@ -47,7 +50,16 @@ define([
 
 				option_selected: function(boolean_statement) {
 					return boolean_statement ? "selected" : "";
-				}
+				},
+
+				radio_selected: function(boolean_statement) {
+					return boolean_statement ? "checked" : "";
+				},
+
+				phone_grid_svg: PhoneGridSVG,
+				phone_list_svg: PhoneListSVG,
+
+				is_quest_tab: this.model.get('type') === "QUESTS"
 			};
 		},
 
@@ -65,7 +77,8 @@ define([
 			"type_select":    "#type",
 			"content_select": "#content",
 
-			"icon":  ".change-icon img"
+			"icon":  ".change-icon img",
+			"quest_layouts": ".quest-tab-layout"
 		},
 
 
@@ -97,7 +110,7 @@ define([
 
 		events: {
 			"click @ui.save":   "onClickSave",
-			"click @ui.cancel": "onClickSave",
+			"click @ui.cancel": "onClickCancel",
 			"click @ui.delete": "onClickDelete",
 
 			"click @ui.change_icon":       "onClickIcon",
@@ -107,7 +120,8 @@ define([
 			"change @ui.name": "onChangeName",
 			"change @ui.info": "onChangeInfo",
 			"change @ui.type_select":    "onChangeType",
-			"change @ui.content_select": "onChangeContent"
+			"change @ui.content_select": "onChangeContent",
+			"change @ui.quest_layouts":  "onChangeQuestLayout"
 		},
 
 
@@ -200,6 +214,9 @@ define([
 			// Reset Game Object Dropdown.
 			this.model.set("content_id", "0");
 
+			// Reset info string
+			this.model.set("info", "");
+
 			this.render();
 		},
 
@@ -222,6 +239,12 @@ define([
 			this.bindAssociations();
 
 			this.render();
+		},
+
+
+		onChangeQuestLayout: function() {
+			var selected_radio = this.$el.find(".quest-tab-layout:checked");
+			this.model.set("info", selected_radio.val());
 		},
 
 

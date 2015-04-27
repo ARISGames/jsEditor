@@ -818,3 +818,46 @@ h5:hover .object-id, h4:hover .object-id {
 	background: @btn-info-color;
 	border: 1px solid @btn-info-bg;
 }
+
+
+/* Rounded corner for single button in trigger editor */
+.only_button {
+	border-radius: @border-radius-small !important;
+}
+
+/* Radio SVG buttons */
+.radio-images {
+	svg {
+		width: 38%;
+		height: 100%;
+
+		margin-left: 5%;
+		margin-right: 5%;
+
+		&:hover .phone-template {
+			fill: #ccc  !important;
+		}
+	}
+
+	label {
+		display: inline;
+	}
+
+	input {
+		display: none;
+	}
+
+	input:checked + label .phone-template
+	{
+		fill: @btn-info-bg !important;
+	}
+
+	&:first-child {
+		margin-left: 0;
+	}
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
+

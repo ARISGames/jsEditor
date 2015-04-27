@@ -33,6 +33,30 @@
 					</select>
 				</div>
 			<% } %>
+
+
+			<div class="form-group">
+				<label for="name">Title</label>
+				<input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
+			</div>
+
+
+			<!-- Client Layout -->
+			<% if(is_quest_tab) { %>
+				<div class="form-group" id="quest-layout">
+					<label for="quests">Quest Layout</label>
+					<div class="radio-images">
+						<input type="radio" name="quest-tab-layout" class="quest-tab-layout" id="quest-layout-grid" value="grid" <%= radio_selected(info !== "") %>>
+						<label for="quest-layout-grid">
+							<%= phone_grid_svg %>
+						</label>
+						<input type="radio" name="quest-tab-layout" class="quest-tab-layout" id="quest-layout-list" value="" <%= radio_selected(info === "") %>>
+						<label for="quest-layout-list">
+							<%= phone_list_svg %>
+						</label>
+					</div>
+				</div>
+			<% } %>
 		</div> <!-- /attributes -->
 
 
@@ -48,11 +72,6 @@
 						</button>
 					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="name">Title</label>
-				<input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
 			</div>
 		</div>
 	</div>

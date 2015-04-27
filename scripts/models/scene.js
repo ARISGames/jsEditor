@@ -27,7 +27,22 @@ define(function(require)
 		/* Associations */
 		game: function() {
 			return storage.games.retrieve(this.get('game_id'));
-		}
+		},
+
+
+		/* Make trigger editor happy */
+
+		default_icon: function() {
+			return storage.media.retrieve('0');
+		},
+
+		icon: function() {
+			return this.default_icon();
+		},
+
+		icon_thumbnail: function() {
+			return this.icon().thumbnail_for(this);
+		},
 	});
 });
 

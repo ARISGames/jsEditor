@@ -16,19 +16,12 @@ define(function(require)
 
 		tagName: 'tr',
 
-		// FIXME is this needed (especially if we live bind attributes and need cancel)
-		modelEvents: {
-			"change": "modelChanged"
-		},
-
-		modelChanged: function() {
-			this.render();
+		initialize: function() {
+			this.listenTo(this.model, "update", this.render);
 		},
 
 		onClickEdit: function() {
-			var view = this;
-
-			var character_editor = new CharacterEditorView({model: view.model});
+			var character_editor = new CharacterEditorView({model: this.model});
 			vent.trigger("application:popup:show", character_editor, "Edit Character");
 		}
 	});

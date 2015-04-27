@@ -5,6 +5,7 @@ define(function(require)
 	var Backbone                = require('backbone');
 	var Template                = require('text!templates/dialog_editor.tpl');
 	var vent                    = require('vent');
+	var storage                 = require('storage');
 
 	var CharactersCollection    = require('collections/characters');
 	var MediaCollection         = require('collections/media');
@@ -98,7 +99,8 @@ define(function(require)
 				create: function() {
 					view.storePreviousAttributes();
 
-					vent.trigger("game_object:add", dialog);
+					storage.add_game_object(dialog);
+
 					vent.trigger("application:popup:hide");
 				},
 
@@ -106,8 +108,6 @@ define(function(require)
 				{
 					view.storePreviousAttributes();
 
-					// FIXME get rid of global update broadcasts for models
-					vent.trigger("game_object:update", dialog);
 					vent.trigger("application:popup:hide");
 				}
 			});
@@ -121,7 +121,6 @@ define(function(require)
 			var view = this;
 			this.model.destroy({
 				success: function() {
-					vent.trigger("game_object:delete", view.model);
 					vent.trigger("application:popup:hide");
 				}
 			});

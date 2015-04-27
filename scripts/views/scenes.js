@@ -22,16 +22,8 @@ define(function(require)
 		itemView: SceneView,
 		itemViewContainer: ".scenes",
 		itemViewOptions: function(model, index) {
-
-			var scene_trigger_selection = this.triggers.filter(function(trigger)
-			{
-				return trigger.get("scene_id") === model.id && trigger.instance().get("object_type") !== "NOTE";
-
-			});
-			var scene_triggers = new TriggersCollection(scene_trigger_selection, {parent: model});
-
 			return {
-				collection: scene_triggers
+				collection: this.triggers
 			}
 		},
 
@@ -47,21 +39,13 @@ define(function(require)
 			this.intro_scene = options.intro_scene;
 			this.triggers    = options.triggers;
 
-			vent.on("scenes:add", function(scene) {
-				view.collection.add(scene);
-			});
-
-			vent.on("scenes:remove", function(scene) {
-				view.model.fetch();
-			});
-
-			this.listenTo(this.model, "change:intro_scene_id", this.render);
+			// This fails with undefined when .fetch is passed without a closure.
+			this.listenTo(this.collection, "remove", function() { view.model.fetch()});
 		},
 
 
 		onClickNewScene: function() {
 			var scene = new Scene({game_id: this.model.id});
-			// track created event to close?
 			vent.trigger("application:popup:show", new SceneEditorView({model: scene}), "Add Scene");
 		},
 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="58.599998mm"
+   height="123.8mm"
+   viewBox="0 0 207.63779 438.66143"
+   id="svg10555"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="phone-template.svg">
+  <defs
+     id="defs10557" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4556042"
+     inkscape:cx="91.796396"
+     inkscape:cy="219.33071"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1437"
+     inkscape:window-height="1069"
+     inkscape:window-x="1765"
+     inkscape:window-y="136"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata10560">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-613.70079)">
+    <rect
+       style="fill:#e6e6e6"
+       id="rect10593"
+       width="197.65396"
+       height="422.60391"
+       x="5.4959917"
+       y="620.92633"
+       ry="30.227997" />
+    <rect
+       style="fill:#ffffff"
+       id="rect10599"
+       width="172.43701"
+       height="318.08099"
+       x="18.104465"
+       y="673.18781"
+       ry="1.3739978" />
+    <circle
+       style="fill:#ffffff"
+       id="path10603"
+       cx="104.32298"
+       cy="1016.3557"
+       r="17.518497" />
+    <rect
+       style="fill:#ffffff"
+       id="rect10605"
+       width="48.089996"
+       height="8.9309988"
+       x="81.065987"
+       y="642.22327"
+       ry="4.4654994" />
+  </g>
+</svg>
