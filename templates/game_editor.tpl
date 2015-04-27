@@ -196,7 +196,7 @@
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="game-inventory_weight_cap">Weight Cap (0 = no weight cap)</label>
-					<input type="text" class="form-control" id="game-inventory_weight_cap" placeholder="0" value="<%= inventory_weight_cap %>">
+					<input type="number" min="0" class="form-control" id="game-inventory_weight_cap" placeholder="0" value="<%= inventory_weight_cap %>">
 				</div>
 				<div class="alert alert-info">
 					<span class="glyphicon glyphicon-info-sign"></span>
