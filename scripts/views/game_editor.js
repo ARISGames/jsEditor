@@ -172,18 +172,68 @@ define(function(require)
 
 
 		onClickDuplicate: function() {
-			// Popup confirmation
+			var view = this;
+			var game = this.model;
 
-			console.log("DUPE");
+			// TODO move into templates
+			var duplicating_text = '<i class="migrating-spinner"></i> <p style="text-align: center">Duplicating. Please do not close this window until finished.</p>';
+			var duplicate_text = "This will create a copy of this game, all its game objects, and media.";
 
-			// On confirm, begin
-
-			this.model.duplicate({
-				success: function() {
-					// Replace dialog text
-					console.log("DID IT");
+			// Reuse dialog to track it
+			if(view.alert_dialog)
+			{
+				// Did user re open alert while duplicating?
+				if(game.get("duplicating") === "true")
+				{
+					view.show_spinner_alert(duplicating_text);
 				}
-			});
+			}
+			else
+			{
+				view.alert_dialog = new AlertDialog({
+					text: duplicate_text,
+					confirm_button: true,
+					cancel_button: true,
+					confirm_text: "Duplicate"
+				});
+
+				view.alert_dialog.on("confirm", function()
+				{
+					// Keep track of duplication to prevent navigation
+					window.onbeforeunload = function() {
+						return "Your game is still duplicating, please wait until it finishes.";
+					}
+					window.running_duplications || (window.running_duplications = {});
+					window.running_duplications[game.id] = true;
+
+					view.show_spinner_alert(duplicating_text);
+
+					 game.duplicate({
+						success: function() {
+							// Clear navigation warning
+							delete window.running_duplications[game.id];
+							if(Object.keys(window.running_duplications).length === 0)
+							{
+								window.onbeforeunload = null;
+							}
+
+							vent.trigger("application:popup:hide:ifself", view.alert_dialog);
+							view.alert_dialog = null;
+						}
+					});
+				});
+
+				this.alert_dialog.on("cancel", function() {
+					vent.trigger("application:popup:hide");
+				});
+			}
+
+			vent.trigger("application:popup:show", view.alert_dialog, "Duplicate Game");
+		},
+
+		show_spinner_alert: function(duplicating_text) {
+			this.alert_dialog.set_text(duplicating_text);
+			this.alert_dialog.hide_controls();
 		},
 
 		onClickDelete: function() {
