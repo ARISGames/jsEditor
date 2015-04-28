@@ -216,6 +216,9 @@
 			Cancel
 		</button>
 		<div class="pull-right">
+			<button type="button" class="btn btn-info duplicate">
+				Duplicate
+			</button>
 			<button type="button" class="btn btn-danger delete">
 				Delete
 			</button>
