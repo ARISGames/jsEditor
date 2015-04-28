@@ -177,7 +177,7 @@ define(function(require)
 
 			// TODO move into templates
 			var duplicating_text = '<i class="migrating-spinner"></i> <p style="text-align: center">Duplicating. Please do not close this window until finished.</p>';
-			var duplicate_text = "This will create a copy of this game, all its game objects, and media.";
+			var duplicate_text = "This will create a copy of this game, all its game objects, and media. The copy will show up in your games list.";
 
 			// Reuse dialog to track it
 			if(view.alert_dialog)
