@@ -14,6 +14,6 @@
 	},
 	include : ['inlineRequireJS', 'main'],
 	findNestedDependencies: true,
-	preserveLicenseComments: false
-
+	preserveLicenseComments: false,
+	generateSourceMaps: true
 })
