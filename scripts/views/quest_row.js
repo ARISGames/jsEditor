@@ -35,15 +35,6 @@ define(function(require)
 		},
 
 		sanitize_html: function(html) {
-			// Attempt 1
-			//html.replace(/(<([^>]+)>)/ig,"")
-
-			// Attempt 2
-			//var tmp = document.createElement("DIV");
-			//tmp.innerHTML = html;
-			//return tmp.textContent || tmp.innerText;
-
-			// Attempt 3
 			var div = document.createElement('div');
 			div.innerHTML = html;
 			var scripts = div.getElementsByTagName('script');
