@@ -53,6 +53,9 @@ prod:
 	@echo "Pushing to Github."
 	@git push 1>/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 1."
+	@ssh aris-prod1 "cd /var/www/html/editor/ && git checkout build && git pull" 1>/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 2."
 	@ssh aris-prod2 "cd /var/www/html/editor/ && git checkout build && git pull" 1>/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
