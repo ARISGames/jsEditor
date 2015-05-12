@@ -51,7 +51,7 @@ define(function(require)
 			this.dialog_scripts = options.contents.dialog_scripts;
 			this.web_pages = options.contents.web_pages;
 			this.quests = options.contents.quests;
-			this.web_hooks = options.contents.web_hooks;
+			this.web_hooks = options.contents.hooks;
 		},
 
 		ui: {
