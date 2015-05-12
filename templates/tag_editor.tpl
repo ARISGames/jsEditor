@@ -3,6 +3,10 @@
 	<!-- Tag attributes -->
 	<div class="row">
 		<div class="col-sm-8 padded">
+			<h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+				<span class="object-id text-muted"><%= is_new ? "" : tag_id %></span>
+			</h4>
+
 			<div class="form-group">
 				<label for="tag">Name</label>
 				<input type="text" autofocus class="form-control" id="tag" placeholder="Name" value="<%= tag %>">
