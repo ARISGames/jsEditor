@@ -47,6 +47,7 @@
 			</div>
 		</div> <!-- /fields col -->
 
+
 		<div class="col-xs-12 col-md-4 padded">
 
 			<div class="form-group">
@@ -88,7 +89,26 @@
 
 
 	<div id="login-codes" class="collapse">
-	hi
+		<div class="form-group row">
+			<div class="col-xs-12 col-md-4 padded">
+				<div class="qr_image"></div>
+			</div>
+
+			<div class="col-xs-12 col-md-8 padded">
+				<div class="form-group">
+					<label for="login-group">Player Group (optional)</label>
+					<input type="text" class="form-control" id="login-group" placeholder="Group Name" value="">
+				</div>
+
+				<label for="login-group">Access to ARIS</label>
+				<div class="checkbox">
+					<input type="checkbox" id="login-disable-exit">
+					<label for="login-disable-exit">
+						Disable ability to leave this game.
+					</label>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
