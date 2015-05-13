@@ -7,82 +7,89 @@
 	<div class="form-group row">
 		<div class="col-xs-12 col-md-8 padded">
 
-	<div class="form-group">
-		<label for="game-name">Name</label>
-		<input type="text" autofocus class="form-control" id="game-name" placeholder="Name" value="<%= name %>">
-	</div>
+			<div class="form-group">
+				<label for="game-name">Name</label>
+				<input type="text" autofocus class="form-control" id="game-name" placeholder="Name" value="<%= name %>">
+			</div>
 
-	<div class="form-group">
-		<label for="game-description">Description</label>
-		<textarea class="form-control" id="game-description" placeholder="Description" rows=5><%= description %></textarea>
-	</div>
+			<div class="form-group">
+				<label for="game-description">Description</label>
+				<textarea class="form-control" id="game-description" placeholder="Description" rows=5><%= description %></textarea>
+			</div>
 
-	<div class="form-group">
-		<label for="game-intro_scene_id">Intro Scene</label>
+			<div class="form-group">
+				<label for="game-intro_scene_id">Intro Scene</label>
 
-		<select class="form-control" id="game-intro_scene_id">
-			<option value="0" selected disabled>- Select One -</option>
+				<select class="form-control" id="game-intro_scene_id">
+					<option value="0" selected disabled>- Select One -</option>
 
-			<% scenes.each(function(scene) { %>
-				<option value="<%= scene.id %>" <%= option_selected(intro_scene_id === scene.id) %>><%= scene.get("name") %></option>
-			<% }); %>
-		</select>
-	</div>
+					<% scenes.each(function(scene) { %>
+						<option value="<%= scene.id %>" <%= option_selected(intro_scene_id === scene.id) %>><%= scene.get("name") %></option>
+					<% }); %>
+				</select>
+			</div>
 
-	<div class="form-group">
-	<br>
-		<label for="game-intro_scene_id">Visibility To ARIS Client</label>
-		<div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong class='text-success'>Published</strong> your game will be listed as playable on the ARIS client to everyone. If <strong class='text-info'>Private</strong> it will appear under the 'mine' tab for all editors of the game.">
-			<label class="btn btn-success <%= tab_selected(published === "1") %>">
-				<input type="radio" class="game-published" name="game-published" value="1" <%= radio_selected(published === "1") %>>
-				<span class="glyphicon glyphicon-saved"></span>
-				Published
-			</label>
-			<label class="btn btn-info <%= tab_selected(published === "0") %>">
-				<input type="radio" class="game-published" name="game-published" value="0" <%= radio_selected(published === "0") %>>
-				<span class="glyphicon glyphicon-eye-close"></span>
-				Private
-			</label>
-
-		</div>
-	</div>
-
-		</div>
+			<div class="form-group">
+				<br>
+				<label for="game-intro_scene_id">Visibility To ARIS Client</label>
+				<div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong class='text-success'>Published</strong> your game will be listed as playable on the ARIS client to everyone. If <strong class='text-info'>Private</strong> it will appear under the 'mine' tab for all editors of the game.">
+					<label class="btn btn-success <%= tab_selected(published === "1") %>">
+						<input type="radio" class="game-published" name="game-published" value="1" <%= radio_selected(published === "1") %>>
+						<span class="glyphicon glyphicon-saved"></span>
+						Published
+					</label>
+					<label class="btn btn-info <%= tab_selected(published === "0") %>">
+						<input type="radio" class="game-published" name="game-published" value="0" <%= radio_selected(published === "0") %>>
+						<span class="glyphicon glyphicon-eye-close"></span>
+						Private
+					</label>
+				</div>
+			</div>
+		</div> <!-- /fields col -->
 
 		<div class="col-xs-12 col-md-4 padded">
 
+			<div class="form-group">
+				<label>Appearance</label>
 
-	<div class="form-group">
-		<label>Appearance</label>
+				<div class="thumbnail change-icon">
+					<img src=<%= icon_thumbnail_url %>>
+					<div class="caption">
+						<button type="button" class="btn btn-link btn-info btn-block change-icon">
+							<span class="glyphicon glyphicon-picture"></span>
+							Icon
+						</button>
+					</div>
+				</div>
 
-		<div class="thumbnail change-icon">
-			<img src=<%= icon_thumbnail_url %>>
-			<div class="caption">
-				<button type="button" class="btn btn-link btn-info btn-block change-icon">
-					<span class="glyphicon glyphicon-picture"></span>
-					Icon
-				</button>
+				<div class="thumbnail change-media">
+					<img src=<%= media_thumbnail_url %>>
+					<div class="caption">
+						<button type="button" class="btn btn-link btn-info btn-block change-media">
+							<span class="glyphicon glyphicon-facetime-video"></span>
+							Media
+						</button>
+					</div>
+				</div>
 			</div>
-		</div>
+		</div> <!-- /media col -->
+	</div> <!-- /main form -->
 
-		<div class="thumbnail change-media">
-			<img src=<%= media_thumbnail_url %>>
-			<div class="caption">
-				<button type="button" class="btn btn-link btn-info btn-block change-media">
-					<span class="glyphicon glyphicon-facetime-video"></span>
-					Media
-				</button>
-			</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h5 class="panel-title collapsed" data-toggle="collapse" data-target="#login-codes">
+				<a>
+					Login QR Codes
+				</a>
+			</h5>
 		</div>
 	</div>
 
 
-
-
-		</div>
+	<div id="login-codes" class="collapse">
+	hi
 	</div>
-
-
 
 
 	<!-- Advanced Section -->
@@ -208,6 +215,8 @@
 
 	</div> <!-- /advanced -->
 
+
+src/models/AppModel.m
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary save">
 			Save
