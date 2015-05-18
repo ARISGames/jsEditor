@@ -5,6 +5,7 @@ define(function(require)
 	var Backbone = require('backbone');
 	var Template = require('text!templates/game_editor.tpl');
 
+	var QRCode           = require('qrcode');
 	var MediaCollection  = require('collections/media');
 	var MediaChooserView = require('views/media_chooser');
 	var AlertDialog      = require('views/alert_dialog');
@@ -81,6 +82,10 @@ define(function(require)
 			"icon":  ".change-icon img",
 			"media": ".change-media img",
 
+			"qr_image":           ".qr_image",
+			"login_group":        "#login-group",
+			"login_disable_exit": "#login-disable-exit",
+
 			"autofocus":  "input[autofocus]"
 		},
 
@@ -110,10 +115,34 @@ define(function(require)
 			/* Icon media change events */
 
 			this.bindIconAssociation();
+
+			/* QR settings */
+
+			this.qr_group_name = "";
+			this.qr_disable_leave = "0";
 		},
 
 		onRender: function() {
 			this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
+			this.initializeQR();
+		},
+
+
+		/* QR */
+		initializeQR: function() {
+			this.qr_code = new QRCode(this.ui.qr_image.get(0), this.loginQrString());
+		},
+
+		onChangeLoginOptions: function() {
+			this.qr_group_name    = this.ui.login_group.val();
+			this.qr_disable_leave = this.ui.login_disable_exit.is(":checked") ? "1" : "0";
+
+			this.qr_code.makeCode(this.loginQrString());
+		},
+
+		loginQrString: function() {
+			var qr_string = "1,"+this.qr_group_name+","+this.model.id+","+this.qr_disable_leave;
+			return qr_string;
 		},
 
 
@@ -128,7 +157,11 @@ define(function(require)
 			"click @ui.change_icon":  "onClickIcon",
 			"click @ui.change_media": "onClickMedia",
 
-			"change @ui.game_published": "onChangePublished"
+			"change @ui.game_published": "onChangePublished",
+
+			"change @ui.login_group":        "onChangeLoginOptions",
+			"keyup @ui.login_group":         "onChangeLoginOptions",
+			"change @ui.login_disable_exit": "onChangeLoginOptions"
 		},
 
 
