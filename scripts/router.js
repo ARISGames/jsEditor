@@ -39,6 +39,21 @@ define(function(require)
 
 
 	return Backbone.Router.extend({
+		initialize: function() {
+			this.bind('route', this._pageView);
+		},
+
+
+		// Hash based url tracking
+		_pageView: function()
+		{
+			if(typeof ga != 'undefined')
+			{
+				var path = Backbone.history.getFragment();
+				ga('send', 'pageview', {page: "/" + path})
+			}
+		},
+
 
 		routes: {
 			"": "listGames",
