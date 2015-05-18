@@ -80,4 +80,4 @@ build: css js html
 
 deploy: prod
 
-all: merge css js html note
+all: merge build note

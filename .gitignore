@@ -1,5 +1,7 @@
 scripts/config*.js
 !scripts/config.js.template
+scripts/tracker*.js
+!scripts/tracker.js.template
 node_modules
 
 .DS_Store

@@ -14,8 +14,13 @@ file_signature() {
 	fi
 }
 
+tracker_snippet() {
+	cat scripts/tracker.production.js
+}
+
 cat index.html.template |\
 	sed "s/{{build_date}}/$(date)/g" |\
 	sed "s/{{js_signature}}/$(file_signature dist/aris.js)/g" |\
 	sed "s/{{css_signature}}/$(file_signature styles/arisjs.css)/g" \
+	sed "s/{{google_analytics}}/$(tracker_snippet)/g" \
 	> index.html
