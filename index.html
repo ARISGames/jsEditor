@@ -13,7 +13,7 @@
 		<title>ARIS Editor</title>
 
 		<!-- Built:
-			Mon May 18 13:46:24 CDT 2015
+			Mon May 18 14:55:11 CDT 2015
 		-->
 	</head>
 
@@ -91,10 +91,6 @@
 		<!-- google maps api. move to requireJS -->
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
-		<script src="dist/aris.js?af26a9e2f2a20550e9f4b9fd90bba68605de78dbd6b314699a84e6d4f7122565"></script>
-		<script>
-		  require(['main']);
-		</script>
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -102,7 +98,12 @@
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 			ga('create', 'UA-10031673-5', 'auto');
-			ga('send', 'pageview');
+		</script>
+
+		<!-- Application -->
+		<script src="dist/aris.js?5d56040ac4d96c8948030ad6eebd4a91ee991ed4c1a736e9ca595fb40a11cec5"></script>
+		<script>
+		  require(['main']);
 		</script>
 	</body>
 </html>
