@@ -172,7 +172,7 @@ define(function(require)
 				case "PLAYER_VIEWED_DIALOG_SCRIPT":
 				case "PLAYER_VIEWED_WEB_PAGE":
 				case "PLAYER_HAS_COMPLETED_QUEST":
-				case "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK":
+				case "PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK":
 				case "PLAYER_HAS_NOTE_WITH_TAG":
 					return true;
 
@@ -269,7 +269,7 @@ define(function(require)
 
 		isContentWebHooks: function() {
 			switch(this.model.get("requirement")) {
-				case "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK":
+				case "PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK":
 					return true;
 
 				default:

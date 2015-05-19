@@ -56,7 +56,7 @@
 					</optgroup>
 
 					<optgroup label="External">
-						<option value="PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK" <%= option_selected(requirement === "PLAYER_HAS_RECEIVED_ICOMING_WEB_HOOK") %>>Received Incoming Web Hook</option>
+						<option value="PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK" <%= option_selected(requirement === "PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK") %>>Received Incoming Web Hook</option>
 					</optgroup>
 					<% } %>
 				</select>
