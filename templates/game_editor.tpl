@@ -236,7 +236,6 @@
 	</div> <!-- /advanced -->
 
 
-src/models/AppModel.m
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary save">
 			Save
