@@ -1,18 +1,15 @@
 define(function(require)
 {
 	var _          = require("underscore");
-	var Backbone   = require("backbone");
+	var EditorView = require('views/editor_base');
 	var Template   = require("text!templates/atom.tpl");
 	var vent       = require("vent");
 
-	return Backbone.Marionette.ItemView.extend({
+	return EditorView.extend({
 		template: _.template(Template),
 
 		templateHelpers: function() {
 			return {
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
 				item_list_selection: this.hasItemListSelection(),
 
 				quantity_visible: this.isQuantityVisible(),

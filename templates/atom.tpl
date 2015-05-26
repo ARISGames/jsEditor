@@ -147,7 +147,7 @@
 						<% if(content_dialog_scripts) { %>
 							<% dialog_scripts.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
-									<%= object.get("text") %>
+									<%= sanitize_html(object.get("text")) %>
 								</option>
 							<% }); %>
 						<% } %>
