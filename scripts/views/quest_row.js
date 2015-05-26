@@ -25,30 +25,23 @@ define(function(require)
 
 		initialize: function()
 		{
-			// Listen to association events on media
-			this.active_icon = this.model.active_icon()
-			this.bindEvents();
-		},
-
-		bindEvents: function()
-		{
-			// Model
-			// TODO listen to new icon incase its not fully loaded
+			// Model events
 			this.listenTo(this.model, 'change', this.rebindEvents);
-
-			// Thumbnail
-			this.listenTo(this.active_icon, 'change', this.render);
+			this.rebindEvents();
 		},
 
 		rebindEvents: function(model)
 		{
-			if(model.hasChanged("active_icon_media_id"))
+			// Thumbnail
+			if(this.active_icon)
 			{
 				this.stopListening(this.active_icon);
-				this.active_icon = this.model.active_icon()
-				this.listenTo(this.active_icon, 'change', this.render);
 			}
-			this.render();
+
+			this.active_icon = this.model.active_icon()
+			this.listenTo(this.active_icon, 'change', this.render);
+
+			if(model) { this.render(); }
 		},
 
 		onClickEdit: function() {
