@@ -32,6 +32,7 @@ define(function(require) {
 			"trigger_latitude",
 			"trigger_longitude",
 			"trigger_distance",
+			"trigger_infinite_distance",
 			"trigger_on_enter",
 			"trigger_hidden",
 			"trigger_wiggle",
