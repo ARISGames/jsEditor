@@ -13,12 +13,42 @@ define(function(require)
 		tagName: 'a',
 		className: "list-group-item",
 
-		events: {
-			"click .edit": "onClickEdit"
+		templateHelpers: function() {
+			return {
+				active_icon_thumbnail_url: this.model.active_icon_thumbnail()
+			}
 		},
 
-		modelEvents: {
-			"change": "render"
+		events: {
+			"click": "onClickEdit"
+		},
+
+		initialize: function()
+		{
+			// Listen to association events on media
+			this.active_icon = this.model.active_icon()
+			this.bindEvents();
+		},
+
+		bindEvents: function()
+		{
+			// Model
+			// TODO listen to new icon incase its not fully loaded
+			this.listenTo(this.model, 'change', this.rebindEvents);
+
+			// Thumbnail
+			this.listenTo(this.active_icon, 'change', this.render);
+		},
+
+		rebindEvents: function(model)
+		{
+			if(model.hasChanged("active_icon_media_id"))
+			{
+				this.stopListening(this.active_icon);
+				this.active_icon = this.model.active_icon()
+				this.listenTo(this.active_icon, 'change', this.render);
+			}
+			this.render();
 		},
 
 		onClickEdit: function() {

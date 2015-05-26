@@ -1,2 +1,13 @@
-<h4 class="list-group-item-heading edit"><%= name || "(unnamed)" %></h4>
-<p class="list-group-item-text edit"><%= sanitize_html(description) %></p>
+<div class="media">
+	<div class="media-left">
+		<img class="media-object tiny" src=<%= active_icon_thumbnail_url %>>
+	</div>
+	<div class="media-body">
+		<h4 class="media-heading">
+			<%= name || "(unnamed)" %>
+		</h4>
+		<div class="description">
+			<%= sanitize_html(description) %>
+		</div>
+	</div>
+</div>
