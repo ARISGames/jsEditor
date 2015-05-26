@@ -26,11 +26,11 @@ define(function(require)
 		initialize: function()
 		{
 			// Model events
-			this.listenTo(this.model, 'change', this.rebindEvents);
-			this.rebindEvents();
+			this.listenTo(this.model, 'change', this.rebindEventsAndRender);
+			this.rebindEventsAndRender();
 		},
 
-		rebindEvents: function(model)
+		rebindEventsAndRender: function(model)
 		{
 			// Thumbnail
 			if(this.active_icon)
@@ -41,6 +41,7 @@ define(function(require)
 			this.active_icon = this.model.active_icon()
 			this.listenTo(this.active_icon, 'change', this.render);
 
+			// Don't render while initializing
 			if(model) { this.render(); }
 		},
 
