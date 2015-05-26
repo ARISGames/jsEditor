@@ -23,7 +23,28 @@ define(function(require)
 
 			tab_visible: function(boolean_statement) {
 				return boolean_statement ? "" : "style='display: none;'";
+			},
+			option_selected: function(boolean_statement) {
+				return boolean_statement ? "selected" : "";
+			},
+			sanitize_html: function(html) {
+				var div = document.createElement('div');
+				div.innerHTML = html;
+				var scripts = div.getElementsByTagName('script');
+				var i = scripts.length;
+				while (i--) {
+				  scripts[i].parentNode.removeChild(scripts[i]);
+				}
+
+				var styles = div.getElementsByTagName('style');
+				var i = styles.length;
+				while (i--) {
+				  styles[i].parentNode.removeChild(styles[i]);
+				}
+
+				return div.textContent || div.innerText;
 			}
+
 		},
 
 
