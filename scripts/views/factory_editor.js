@@ -2,7 +2,7 @@ define(function(require)
 {
 	var _                       = require('underscore');
 	var $                       = require('jquery');
-	var Backbone                = require('backbone');
+	var EditorView              = require('views/editor_base');
 	var Template                = require('text!templates/factory_editor.tpl');
 
 	var MediaCollection         = require('collections/media');
@@ -24,7 +24,7 @@ define(function(require)
 	var vent                    = require('vent');
 	var storage                 = require('storage');
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorView.extend({
 
 		/* View */
 
@@ -34,18 +34,6 @@ define(function(require)
 			return {
 				is_new: this.model.isNew(),
 				icon_thumbnail_url:  this.model.icon_thumbnail(),
-
-				is_checked: function(value) {
-					return value === "1" ? "checked" : "";
-				},
-
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
-
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
 
 				content_items:     this.isContentItems(),
 				content_plaques:   this.isContentPlaques(),
