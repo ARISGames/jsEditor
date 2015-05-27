@@ -22,7 +22,7 @@
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
 				<a class="aris-logo" href="#">
-					<img src="images/Aris-Horizontal251.png">
+					<img src="images/Aris-Horizontal251.png" title="ARIS Editor Build: {{build_date}}">
 				</a>
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#aris-collapse-menu">
 					<span class="sr-only">Toggle navigation</span>
