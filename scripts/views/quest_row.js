@@ -13,12 +13,36 @@ define(function(require)
 		tagName: 'a',
 		className: "list-group-item",
 
-		events: {
-			"click .edit": "onClickEdit"
+		templateHelpers: function() {
+			return {
+				active_icon_thumbnail_url: this.model.active_icon_thumbnail()
+			}
 		},
 
-		modelEvents: {
-			"change": "render"
+		events: {
+			"click": "onClickEdit"
+		},
+
+		initialize: function()
+		{
+			// Model events
+			this.listenTo(this.model, 'change', this.rebindEventsAndRender);
+			this.rebindEventsAndRender();
+		},
+
+		rebindEventsAndRender: function(model)
+		{
+			// Thumbnail
+			if(this.active_icon)
+			{
+				this.stopListening(this.active_icon);
+			}
+
+			this.active_icon = this.model.active_icon()
+			this.listenTo(this.active_icon, 'change', this.render);
+
+			// Don't render while initializing
+			if(model) { this.render(); }
 		},
 
 		onClickEdit: function() {

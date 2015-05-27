@@ -34,14 +34,40 @@ define(function(require)
 		tagName: 'a',
 		className: "list-group-item",
 
+		templateHelpers: function() {
+			return {
+				icon_thumb_url: this.model.icon_thumbnail()
+			}
+		},
+
 		events: {
-			"click .edit": "onClickEdit"
+			"click": "onClickEdit"
 		},
 
-		modelEvents: {
-			"change": "render"
+		initialize: function()
+		{
+			// Model events
+			this.listenTo(this.model, 'change', this.rebindEventsAndRender);
+			this.rebindEventsAndRender();
 		},
 
+		rebindEventsAndRender: function(model)
+		{
+			// Thumbnail
+			if(this.icon)
+			{
+				this.stopListening(this.icon);
+			}
+
+			this.icon = this.model.icon()
+			this.listenTo(this.icon, 'change', this.render);
+
+			// Don't render while initializing
+			if(model) { this.render(); }
+		},
+
+
+		// TODO convert to storage collection references
 		onClickEdit: function() {
 			var game = new Game({game_id: this.model.get("game_id")});
 

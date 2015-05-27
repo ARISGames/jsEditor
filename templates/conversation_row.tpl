@@ -1,2 +1,11 @@
-<h4 class="list-group-item-heading edit"><%= name || "(unnamed)" %></h4>
-<p class="list-group-item-text edit"><%= description %></p>
+<div class="media">
+	<div class="media-left">
+		<img class="media-object tiny" src=<%= icon_thumb_url %>>
+	</div>
+	<div class="media-body">
+		<h4 class="media-heading">
+			<%= name || "(unnamed)" %>
+		</h4>
+	</div>
+</div>
+
