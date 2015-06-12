@@ -60,11 +60,16 @@
 				<span class="glyphicon glyphicon-globe"></span>
 				&nbsp;Web Item
 			</label>
+			<label class="btn btn-info <%= tab_selected(type === "HIDDEN") %>">
+				<input type="radio" class="item-type" name="item-type" value="HIDDEN" <%= radio_selected(type === "HIDDEN") %>>
+				<span class="glyphicon glyphicon-eye-close"></span>
+				&nbsp;Hidden
+			</label>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-xs-6 padded">
+		<div class="col-xs-6 padded type-tab NORMAL-fields ATTRIB-fields URL-fields" <%= tab_visible(type === "ATTRIB" || type === "NORMAL" || type === "URL") %>>
 			<div class="thumbnail change-icon">
 				<img src=<%= icon_thumbnail_url %>>
 				<div class="caption">

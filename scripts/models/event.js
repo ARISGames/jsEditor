@@ -21,7 +21,7 @@ define([
         ],
 
 		defaults: {
-			"event": "GIVE_ITEM",
+			"event": "GIVE_ITEM_PLAYER",
 		   	"content_id": "0",
 			"qty": "1"
 		}
