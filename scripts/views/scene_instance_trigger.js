@@ -24,7 +24,8 @@ define(function(require)
 
 		// Remove after upgrading to Marionette 2.0.x with `filter`
 		className: function() {
-			if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE")
+			// Hide triggers not from scene, user notes and factory triggers.
+			if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE" || this.model.instance().get("factory_id") !== "0")
 			{
 				return 'hidden'
 			}
