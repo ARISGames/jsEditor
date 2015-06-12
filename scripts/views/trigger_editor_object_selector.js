@@ -24,6 +24,7 @@ define(function(require)
 				attribute_items: new Backbone.Collection(storage.items.where({type: "ATTRIB"})),
 				web_items:       new Backbone.Collection(storage.items.where({type: "URL"})),
 				items:           new Backbone.Collection(storage.items.where({type: "NORMAL"})),
+				hidden_items:    new Backbone.Collection(storage.items.where({type: "HIDDEN"})),
 				plaques:   storage.plaques,
 				dialogs:   storage.dialogs,
 				web_pages: storage.web_pages,

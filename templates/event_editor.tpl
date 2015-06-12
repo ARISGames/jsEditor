@@ -41,6 +41,14 @@
 							</option>
 						<% }); %>
 					</optgroup>
+
+					<optgroup label="Hidden Items">
+						<% _.each(items.where({type: "HIDDEN"}), function(item) { %>
+							<option value="<%= item.get("item_id") %>" <%= option_selected(content_id === item.get("item_id")) %>>
+								<%= item.get("name") %>
+							</option>
+						<% }); %>
+					</optgroup>
 				</select>
 			</div>
 			<div class="col-xs-2 padded">
