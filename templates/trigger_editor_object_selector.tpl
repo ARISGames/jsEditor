@@ -32,6 +32,16 @@
 	</optgroup>
 	<% } %>
 
+	<% if(!hidden_items.isEmpty()) { %>
+	<optgroup label="Hidden Items">
+		<% hidden_items.each(function(object) { %>
+			<option value="<%= object.id %>" data-object-type="ITEM" <%= option_selected(game_object === object) %>>
+				<%= object.get("name") %>
+			</option>
+		<% }); %>
+	</optgroup>
+	<% } %>
+
 
 	<!-- Plaques -->
 	<% if(!plaques.isEmpty()) { %>
