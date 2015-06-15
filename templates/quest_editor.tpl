@@ -18,7 +18,7 @@
 	<!-- Active Section -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			Start
+			Active
 		</div>
 		<div class="panel-body">
 
