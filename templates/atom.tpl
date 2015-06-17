@@ -25,6 +25,16 @@
 						<option value="PLAYER_HAS_ITEM"        <%= option_selected(requirement === "PLAYER_HAS_ITEM")        %>># of Item/Attribute</option>
 						<option value="PLAYER_HAS_TAGGED_ITEM" <%= option_selected(requirement === "PLAYER_HAS_TAGGED_ITEM") %>># of Items/Attributes with Tag</option>
 					</optgroup>
+
+					<optgroup label="Group Attributes">
+						<option value="GROUP_HAS_ITEM"        <%= option_selected(requirement === "GROUP_HAS_ITEM")        %>># of Item/Attribute</option>
+						<option value="GROUP_HAS_TAGGED_ITEM" <%= option_selected(requirement === "GROUP_HAS_TAGGED_ITEM") %>># of Items/Attributes with Tag</option>
+					</optgroup>
+
+					<optgroup label="World Attributes">
+						<option value="WORLD_HAS_ITEM"        <%= option_selected(requirement === "WORLD_HAS_ITEM")        %>># of Item/Attribute</option>
+						<option value="WORLD_HAS_TAGGED_ITEM" <%= option_selected(requirement === "WORLD_HAS_TAGGED_ITEM") %>># of Items/Attributes with Tag</option>
+					</optgroup>
 					<% } %>
 
 					<% if(!item_list_selection) { %>
@@ -53,10 +63,6 @@
 
 					<optgroup label="Quests">
 						<option value="PLAYER_HAS_COMPLETED_QUEST" <%= option_selected(requirement === "PLAYER_HAS_COMPLETED_QUEST") %>>Completed Quest</option>
-					</optgroup>
-
-					<optgroup label="External">
-						<option value="PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK" <%= option_selected(requirement === "PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK") %>>Received Incoming Web Hook</option>
 					</optgroup>
 					<% } %>
 				</select>
