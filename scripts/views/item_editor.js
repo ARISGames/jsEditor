@@ -281,7 +281,9 @@ define(function(require)
 				events.fetch({
 					success: function()
 					{
-						var item_events = events.where({content_id: item.id});
+						var item_events = events.filter(function(event) {
+							return event.get("content_id") === item.id && event.modified_by() !== null
+						});
 						view.collection.reset(item_events);
 						if(item_events.length > 0)
 						{

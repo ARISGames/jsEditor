@@ -46,7 +46,8 @@ define([
 			object = storage.dialog_scripts.findWhere({event_package_id: event_package_id});
 			if(object) return object;
 
-			throw "Can not locate game object with event_package_id: "+event_package_id;
+			console.error("Can not locate game object with event_package_id: "+event_package_id);
+			return null;
 		}
 	});
 });

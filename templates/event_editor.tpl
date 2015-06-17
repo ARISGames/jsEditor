@@ -7,10 +7,12 @@
 					<optgroup label="Player">
 						<option value="GIVE_ITEM_PLAYER" <%= option_selected(event === "GIVE_ITEM_PLAYER" || event === "GIVE_ITEM") %>>Give to Player</option>
 						<option value="TAKE_ITEM_PLAYER" <%= option_selected(event === "TAKE_ITEM_PLAYER" || event === "TAKE_ITEM") %>>Take from Player</option>
+						<option value="SET_ITEM_PLAYER"  <%= option_selected(event === "SET_ITEM_PLAYER")    %>>Set amount for Player</option>
 					</optgroup>
 					<optgroup label="World">
 						<option value="GIVE_ITEM_GAME"   <%= option_selected(event === "GIVE_ITEM_GAME")   %>>Give to World</option>
 						<option value="TAKE_ITEM_GAME"   <%= option_selected(event === "TAKE_ITEM_GAME")   %>>Take from World</option>
+						<option value="SET_ITEM_GAME"    <%= option_selected(event === "SET_ITEM_GAME")    %>>Set amount for World</option>
 					</optgroup>
 				</select>
 			</div>
