@@ -283,6 +283,10 @@ define(function(require)
 					{
 						var item_events = events.where({content_id: item.id});
 						view.collection.reset(item_events);
+						if(item_events.length > 0)
+						{
+							view.$el.find('.inference_label').removeClass('hidden');
+						}
 					}
 				});
 			});

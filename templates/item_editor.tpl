@@ -103,6 +103,7 @@
 
 	<div class="row">
 		<div class="col-xs-12 padded">
+			<label class="inference_label hidden">Given/Taken By</label>
 			<div class="events"></div>
 		</div>
 	</div>
