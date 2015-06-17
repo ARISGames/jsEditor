@@ -62,22 +62,25 @@ define(function(require)
 				case "GIVE_ITEM":
 				case "GIVE_ITEM_PLAYER":
 					return "Give to Player";
-
 				case "TAKE_ITEM":
 				case "TAKE_ITEM_PLAYER":
 					return "Take from Player";
+				case "SET_ITEM_PLAYER":
+					return "Set for Player";
 
 				case "GIVE_ITEM_GAME":
 					return "Give to World";
-
 				case "TAKE_ITEM_GAME":
 					return "Take from World";
+				case "SET_ITEM_GAME":
+					return "Set for Game";
 
 				case "GIVE_ITEM_GROUP":
 					return "Give to Player Group";
-
 				case "TAKE_ITEM_GROUP":
 					return "Take from Player Group";
+				case "SET_ITEM_GROUP":
+					return "Set for Group";
 
 				default:
 					throw "cant humanize event "+event+" on "+this.model.idAttribute+" "+this.model.id;
