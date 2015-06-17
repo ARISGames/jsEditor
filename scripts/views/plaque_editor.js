@@ -89,6 +89,7 @@ define(function(require)
 					view.storePreviousAttributes();
 
 					storage.add_game_object(plaque);
+					storage.events.fetch();
 
 					vent.trigger("application:popup:hide");
 				},
@@ -96,6 +97,7 @@ define(function(require)
 				update: function()
 				{
 					view.storePreviousAttributes();
+					storage.events.fetch();
 
 					vent.trigger("application:popup:hide");
 				}

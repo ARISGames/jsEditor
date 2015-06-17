@@ -142,7 +142,7 @@ define(function(require)
 			storage.for(game);
 
 			// TODO catch errors if any fail (since its a non-standard failure)
-			$.when(game.fetch(), storage.instances.fetch(), storage.triggers.fetch(), storage.scenes.fetch(), storage.dialogs.fetch(), storage.plaques.fetch(), storage.items.fetch(), storage.web_pages.fetch(), storage.factories.fetch()).done(function()
+			$.when(game.fetch(), storage.instances.fetch(), storage.triggers.fetch(), storage.scenes.fetch(), storage.dialogs.fetch(), storage.plaques.fetch(), storage.items.fetch(), storage.web_pages.fetch(), storage.factories.fetch(), storage.media.fetch(), storage.events.fetch()).done(function()
 			{
 				// TODO make game a promise and store it so we can access the same game instance in other tabs.
 				// then 'intro scene' test can just be if this.model.is(game.intro_scene())

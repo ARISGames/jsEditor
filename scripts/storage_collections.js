@@ -23,6 +23,8 @@ define(function(require, exports, module)
 
 	var DialogScriptsCollection = require("collections/game_dialog_scripts");
 
+	var EventsCollection    = require("collections/game_events");
+
 	return Marionette.Controller.extend(
 	{},
 	/* Static methods */
@@ -48,6 +50,8 @@ define(function(require, exports, module)
 			storage.factories = new FactoriesCollection ();
 
 			storage.dialog_scripts = new DialogScriptsCollection ();
+
+			storage.events    = new EventsCollection ();
 		}
 	});
 });

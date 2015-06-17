@@ -9,7 +9,7 @@ define(function(require)
 	var Game             = require('models/game');
 	var MediaChooserView = require('views/media_chooser');
 
-	var EventsCollection  = require('collections/item_events');
+	var EventsCollection  = require('collections/game_events');
 	var EventInferenceRow = require('views/event_inference_row');
 
 	var vent             = require('vent');
@@ -264,33 +264,24 @@ define(function(require)
 			var item = this.model;
 			var view = this;
 
-			var game   = new Game({game_id: this.model.get("game_id")});
-			var events = new EventsCollection([], {parent: game});
-
 			// FIXME Add easier event binding to new/missing models so no local prefetch is needed (or is done outside this)
 			// Right now: Fetch these locally just so the association on event will work without re-rendering.
 			var contents = {
 				quests:    storage.quests,
-				plaques:   storage.plaques,
-				dialogs:   storage.dialogs,
 				dialog_scripts: storage.dialog_scripts
 			};
 
-			$.when(contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.quests.fetch()).done(function()
+			$.when(contents.dialog_scripts.fetch(), contents.quests.fetch()).done(function()
 			{
-				events.fetch({
-					success: function()
-					{
-						var item_events = events.filter(function(event) {
-							return event.get("content_id") === item.id && event.modified_by() !== null
-						});
-						view.collection.reset(item_events);
-						if(item_events.length > 0)
-						{
-							view.$el.find('.inference_label').removeClass('hidden');
-						}
-					}
+				var item_events = storage.events.filter(function(event) {
+					return event.get("content_id") === item.id && event.modified_by() !== null
 				});
+
+				view.collection.reset(item_events);
+				if(item_events.length > 0)
+				{
+					view.$el.find('.inference_label').removeClass('hidden');
+				}
 			});
 		}
 	}); /* class */
