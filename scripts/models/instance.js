@@ -1,13 +1,14 @@
 define([
 	'models/json_base',
 	'models/dialog',
+	'models/dialog_script',
 	'models/plaque',
 	'models/item',
 	'models/web_page',
 	'models/scene',
 	'models/factory',
 	'storage'
-], function(JsonBaseModel, Dialog, Plaque, Item, WebPage, Scene, Factory, storage) {
+], function(JsonBaseModel, Dialog, DialogScript, Plaque, Item, WebPage, Scene, Factory, storage) {
 
 	return JsonBaseModel.extend({
 		idAttribute: 'instance_id',
@@ -43,7 +44,7 @@ define([
 			if(type === "WEB_PAGE") { return WebPage }
 			if(type === "SCENE")    { return Scene   }
 			if(type === "FACTORY")  { return Factory }
-			else { throw "cant determine class of: " + type }
+			throw "cant determine class of: " + type
 		},
 
 
