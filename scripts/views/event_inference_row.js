@@ -84,7 +84,8 @@ define(function(require)
 					return "Set to "+qty+" for Group";
 
 				default:
-					throw "cant humanize event "+event+" on "+this.model.idAttribute+" "+this.model.id;
+					console.error("cant humanize event "+event+" on "+this.model.idAttribute+" "+this.model.id);
+					return "N/A";
 			}
 		},
 
