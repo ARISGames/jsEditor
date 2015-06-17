@@ -101,18 +101,27 @@
 
 	</div>
 
+	<div class="row">
+		<div class="col-xs-12 padded">
+			<div class="events"></div>
+		</div>
+	</div>
 
-	<button type="submit" class="btn btn-primary save">
-		Save
-	</button>
+	<div class="row">
+		<div class="col-xs-12 padded">
+			<button type="submit" class="btn btn-primary save">
+				Save
+			</button>
 
-	<% if(!is_new) { %>
-		<button type="button" class="btn btn-danger delete">
-			Delete
-		</button>
-	<% } %>
+			<% if(!is_new) { %>
+				<button type="button" class="btn btn-danger delete">
+					Delete
+				</button>
+			<% } %>
 
-	<button type="button" class="btn btn-default cancel" data-dismiss="modal">
-		Cancel
-	</button>
+			<button type="button" class="btn btn-default cancel" data-dismiss="modal">
+				Cancel
+			</button>
+		</div>
+	</div>
 </form>
