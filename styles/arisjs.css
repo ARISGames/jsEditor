@@ -717,3 +717,7 @@ h4:hover .object-id {
 .radio-images:last-child {
   margin-right: 0;
 }
+.inference_thumbnail {
+  display: inline-block;
+  margin-bottom: 1em;
+}

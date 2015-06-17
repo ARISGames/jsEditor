@@ -3,9 +3,10 @@
 		<form class="form" role="form">
 			<div class="col-xs-4 padded">
 				<select class="form-control event-select">
+					<option value="0" selected disabled>None</option>
 					<optgroup label="Player">
-						<option value="GIVE_ITEM_PLAYER" <%= option_selected(event === "GIVE_ITEM_PLAYER") %>>Give to Player</option>
-						<option value="TAKE_ITEM_PLAYER" <%= option_selected(event === "TAKE_ITEM_PLAYER") %>>Take from Player</option>
+						<option value="GIVE_ITEM_PLAYER" <%= option_selected(event === "GIVE_ITEM_PLAYER" || event === "GIVE_ITEM") %>>Give to Player</option>
+						<option value="TAKE_ITEM_PLAYER" <%= option_selected(event === "TAKE_ITEM_PLAYER" || event === "TAKE_ITEM") %>>Take from Player</option>
 					</optgroup>
 					<optgroup label="World">
 						<option value="GIVE_ITEM_GAME"   <%= option_selected(event === "GIVE_ITEM_GAME")   %>>Give to World</option>

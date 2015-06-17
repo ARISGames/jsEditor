@@ -2,19 +2,25 @@ define(function(require)
 {
 	var _                = require('underscore');
 	var $                = require('jquery');
-	var Backbone         = require('backbone');
+	var EditorView       = require('views/editor_base');
 	var Template         = require('text!templates/item_editor.tpl');
 
 	var MediaCollection  = require('collections/media');
 	var Game             = require('models/game');
 	var MediaChooserView = require('views/media_chooser');
 
+	var EventsCollection  = require('collections/item_events');
+	var EventInferenceRow = require('views/event_inference_row');
+
 	var vent             = require('vent');
 	var storage          = require('storage');
 
 
-	return Backbone.Marionette.CompositeView.extend({
+	return EditorView.extend({
 		template: _.template(Template),
+
+		itemView: EventInferenceRow,
+		itemViewContainer: ".events",
 
 		/* View */
 
@@ -23,24 +29,7 @@ define(function(require)
 			return {
 				is_new: this.model.isNew(),
 				icon_thumbnail_url:  this.model.icon_thumbnail(),
-				media_thumbnail_url: this.model.media_thumbnail(),
-
-				is_checked: function(value)
-				{
-					return value === "1" ? "checked" : "";
-				},
-
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
-
-				tab_selected: function(boolean_statement) {
-					return boolean_statement ? "active" : "";
-				},
-
-				tab_visible: function(boolean_statement) {
-					return boolean_statement ? "" : "style='display: none;'";
-				}
+				media_thumbnail_url: this.model.media_thumbnail()
 			}
 		},
 
@@ -77,6 +66,10 @@ define(function(require)
 
 			// Handle cancel from modal X or dark area
 			this.on("popup:hide", this.onClickCancel);
+
+			this.collection = new EventsCollection;
+			// Load inferences
+			this.loadInferences();
 		},
 
 
@@ -265,5 +258,38 @@ define(function(require)
 				}
 			});
 		},
+
+		loadInferences: function()
+		{
+			var item = this.model;
+			var view = this;
+
+			var game   = new Game({game_id: this.model.get("game_id")});
+			var events = new EventsCollection([], {parent: game});
+
+			// FIXME Add easier event binding to new/missing models so no local prefetch is needed (or is done outside this)
+			// Right now: Fetch these locally just so the association on event will work without re-rendering.
+			var contents = {
+				quests:    storage.quests,
+				plaques:   storage.plaques,
+				dialogs:   storage.dialogs,
+				dialog_scripts: storage.dialog_scripts
+			};
+
+			$.when(contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.quests.fetch()).done(function()
+			{
+				events.fetch({
+					success: function()
+					{
+						var item_events = events.where({content_id: item.id});
+						view.collection.reset(item_events);
+						if(item_events.length > 0)
+						{
+							view.$el.find('.inference_label').removeClass('hidden');
+						}
+					}
+				});
+			});
+		}
 	}); /* class */
 }); /* define */
