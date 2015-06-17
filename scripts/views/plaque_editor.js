@@ -225,6 +225,7 @@ define(function(require)
 				events_editor.on("event_package:save", function(event_package)
 				{
 					view.model.set("event_package_id", event_package.id);
+					storage.events.fetch();
 
 					if(!view.model.isNew() && view.model.hasChanged("event_package_id"))
 					{

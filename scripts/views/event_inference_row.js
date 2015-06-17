@@ -57,33 +57,35 @@ define(function(require)
 		event_name: function()
 		{
 			var event = this.model.get("event");
+			var qty   = this.model.get("qty");
 			switch(event)
 			{
 				case "GIVE_ITEM":
 				case "GIVE_ITEM_PLAYER":
-					return "Give to Player";
+					return "Give "+qty+" to Player";
 				case "TAKE_ITEM":
 				case "TAKE_ITEM_PLAYER":
-					return "Take from Player";
+					return "Take "+qty+" from Player";
 				case "SET_ITEM_PLAYER":
-					return "Set for Player";
+					return "Set to "+qty+" for Player";
 
 				case "GIVE_ITEM_GAME":
-					return "Give to World";
+					return "Give "+qty+" to World";
 				case "TAKE_ITEM_GAME":
-					return "Take from World";
+					return "Take "+qty+" from World";
 				case "SET_ITEM_GAME":
-					return "Set for Game";
+					return "Set to "+qty+" for Game";
 
 				case "GIVE_ITEM_GROUP":
-					return "Give to Player Group";
+					return "Give "+qty+" to Player Group";
 				case "TAKE_ITEM_GROUP":
-					return "Take from Player Group";
+					return "Take "+qty+" from Player Group";
 				case "SET_ITEM_GROUP":
-					return "Set for Group";
+					return "Set to "+qty+" for Group";
 
 				default:
-					throw "cant humanize event "+event+" on "+this.model.idAttribute+" "+this.model.id;
+					console.error("cant humanize event "+event+" on "+this.model.idAttribute+" "+this.model.id);
+					return "N/A";
 			}
 		},
 

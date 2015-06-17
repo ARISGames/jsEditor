@@ -30,6 +30,8 @@ define(function(require, exports, module)
 
 			this.dialog_scripts.parent = game;
 
+			this.events.parent = game;
+
 			this.games.add(game);
 		},
 
