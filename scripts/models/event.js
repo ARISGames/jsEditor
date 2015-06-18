@@ -27,6 +27,20 @@ define([
 			"qty": "1"
 		},
 
+		initialize: function(attributes)
+		{
+			// Adapt to incoming legacy values
+			if(this.get("event") === "GIVE_ITEM")
+			{
+				this.set("event", "GIVE_ITEM_PLAYER");
+			}
+
+			if(this.get("event") === "TAKE_ITEM")
+			{
+				this.set("event", "TAKE_ITEM_PLAYER");
+			}
+		},
+
 
 		/* Inference */
 		modified_by: function()

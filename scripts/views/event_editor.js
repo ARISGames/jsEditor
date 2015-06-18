@@ -1,17 +1,16 @@
-define([
-	'underscore',
-	'backbone',
-	'text!templates/event_editor.tpl',
-	'vent'
-], function(_, Backbone, Template, vent) {
-	return Backbone.Marionette.ItemView.extend({
+define(function(require)
+{
+	var _          = require("underscore");
+	var EditorView = require('views/editor_base');
+	var Template   = require("text!templates/event_editor.tpl");
+	var vent       = require("vent");
+
+
+	return EditorView.extend({
 		template: _.template(Template),
 
 		templateHelpers: function() {
 			return {
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
 				items: this.items
 			};
 		},
