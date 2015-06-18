@@ -10,7 +10,10 @@ define(function(require)
 
 		templateHelpers: function() {
 			return {
-				item_list_selection: this.hasItemListSelection(),
+				player_item_list_selection: this.hasPlayerItemListSelection(),
+				group_item_list_selection:  this.hasGroupItemListSelection(),
+				world_item_list_selection:  this.hasWorldItemListSelection(),
+				action_list_selection:      this.hasActionListSelection(),
 
 				quantity_visible: this.isQuantityVisible(),
 				content_visible:  this.isContentVisible (),
@@ -23,16 +26,14 @@ define(function(require)
 				content_dialog_scripts: this.isContentDialogScripts(),
 				content_web_pages:      this.isContentWebPages(),
 				content_quests:         this.isContentQuests(),
-				content_web_hooks:      this.isContentWebHooks(),
 
-				items: this.items,
-				tags: this.tags,
-				plaques: this.plaques,
-				dialogs: this.dialogs,
+				items:          this.items,
+				tags:           this.tags,
+				plaques:        this.plaques,
+				dialogs:        this.dialogs,
 				dialog_scripts: this.dialog_scripts,
-				web_pages: this.web_pages,
-				quests: this.quests,
-				web_hooks: this.web_hooks
+				web_pages:      this.web_pages,
+				quests:         this.quests
 			};
 		},
 
@@ -41,14 +42,13 @@ define(function(require)
 		className: "list-group-item",
 
 		initialize: function(options) {
-			this.items = options.contents.items;
-			this.tags = options.contents.tags;
-			this.plaques = options.contents.plaques;
-			this.dialogs = options.contents.dialogs;
+			this.items          = options.contents.items;
+			this.tags           = options.contents.tags;
+			this.plaques        = options.contents.plaques;
+			this.dialogs        = options.contents.dialogs;
 			this.dialog_scripts = options.contents.dialog_scripts;
-			this.web_pages = options.contents.web_pages;
-			this.quests = options.contents.quests;
-			this.web_hooks = options.contents.hooks;
+			this.web_pages      = options.contents.web_pages;
+			this.quests         = options.contents.quests;
 		},
 
 		ui: {
@@ -78,24 +78,47 @@ define(function(require)
 			var value = this.ui.operator.find("option:selected").val();
 			var type  = this.ui.operator.find("option:selected").data("set");
 
-			// Change requirement to one from proper dropdown
-			if(type === "item_list")
+			// Change requirement to one from proper dropdown.
+			// only change when incompatible type. So you can switch from Has to Has not
+
+			if(type === "player_item_list")
 			{
-				// Switch to value from first list.
-				if(!this.hasItemListSelection())
+				if(!this.hasPlayerItemListSelection())
 				{
 					this.model.set("requirement", "PLAYER_HAS_ITEM");
-					this.model.set("content_id", "0");
+					this.model.set("content_id",  "0");
 				}
 
 			}
-			else {
-				// Switch to value from second list.
-				if(this.hasItemListSelection())
+			else if(type === "group_item_list")
+			{
+				if(!this.hasGroupItemListSelection())
+				{
+					this.model.set("requirement", "GROUP_HAS_ITEM");
+					this.model.set("content_id",  "0");
+				}
+
+			}
+			else if(type === "world_item_list")
+			{
+				if(!this.hasWorldItemListSelection())
+				{
+					this.model.set("requirement", "GAME_HAS_ITEM");
+					this.model.set("content_id",  "0");
+				}
+
+			}
+			else if(type === "action_list")
+			{
+				if(!this.hasActionListSelection())
 				{
 					this.model.set("requirement", "PLAYER_VIEWED_DIALOG");
-					this.model.set("content_id", "0");
+					this.model.set("content_id",  "0");
 				}
+			}
+			else
+			{
+				throw "cant figure out how to decipher boolean combination "+value+" "+type;
 			}
 
 			this.model.set("bool_operator", value);
@@ -128,7 +151,7 @@ define(function(require)
 
 		/* Visibility Logic */
 
-		hasItemListSelection: function() {
+		hasPlayerItemListSelection: function() {
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_ITEM":
 				case "PLAYER_HAS_TAGGED_ITEM":
@@ -138,10 +161,38 @@ define(function(require)
 			}
 		},
 
+		hasGroupItemListSelection: function() {
+			switch(this.model.get("requirement")) {
+				case "GROUP_HAS_ITEM":
+				case "GROUP_HAS_TAGGED_ITEM":
+					return true;
+				default:
+					return false;
+			}
+		},
+
+		hasWorldItemListSelection: function() {
+			switch(this.model.get("requirement")) {
+				case "GAME_HAS_ITEM":
+				case "GAME_HAS_TAGGED_ITEM":
+					return true;
+				default:
+					return false;
+			}
+		},
+
+		hasActionListSelection: function() {
+			return !(this.hasPlayerItemListSelection() || this.hasGroupItemListSelection() || this.hasWorldItemListSelection())
+		},
+
 		isQuantityVisible: function() {
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_ITEM":
 				case "PLAYER_HAS_TAGGED_ITEM":
+				case "GROUP_HAS_ITEM":
+				case "GROUP_HAS_TAGGED_ITEM":
+				case "GAME_HAS_ITEM":
+				case "GAME_HAS_TAGGED_ITEM":
 				case "PLAYER_HAS_UPLOADED_MEDIA_ITEM":
 				case "PLAYER_HAS_UPLOADED_MEDIA_ITEM_IMAGE":
 				case "PLAYER_HAS_UPLOADED_MEDIA_ITEM_AUDIO":
@@ -163,6 +214,10 @@ define(function(require)
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_ITEM":
 				case "PLAYER_HAS_TAGGED_ITEM":
+				case "GROUP_HAS_ITEM":
+				case "GROUP_HAS_TAGGED_ITEM":
+				case "GAME_HAS_ITEM":
+				case "GAME_HAS_TAGGED_ITEM":
 				case "PLAYER_VIEWED_ITEM":
 				case "PLAYER_VIEWED_PLAQUE":
 				case "PLAYER_VIEWED_DIALOG":
@@ -196,6 +251,8 @@ define(function(require)
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_ITEM":
 				case "PLAYER_VIEWED_ITEM":
+				case "GROUP_HAS_ITEM":
+				case "GAME_HAS_ITEM":
 					return true;
 
 				default:
@@ -206,6 +263,8 @@ define(function(require)
 		isContentTags: function() {
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_TAGGED_ITEM":
+				case "GROUP_HAS_TAGGED_ITEM":
+				case "GAME_HAS_TAGGED_ITEM":
 				case "PLAYER_HAS_NOTE_WITH_TAG":
 					return true;
 
@@ -257,16 +316,6 @@ define(function(require)
 		isContentQuests: function() {
 			switch(this.model.get("requirement")) {
 				case "PLAYER_HAS_COMPLETED_QUEST":
-					return true;
-
-				default:
-					return false;
-			}
-		},
-
-		isContentWebHooks: function() {
-			switch(this.model.get("requirement")) {
-				case "PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK":
 					return true;
 
 				default:
