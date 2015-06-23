@@ -11,7 +11,7 @@ define(function(require)
 
 		// Bootstrap
 		tagName: 'a',
-		className: "list-group-item",
+		className: "list-group-item draggable-quest",
 
 		templateHelpers: function() {
 			return {
@@ -28,6 +28,8 @@ define(function(require)
 			// Model events
 			this.listenTo(this.model, 'change', this.rebindEventsAndRender);
 			this.rebindEventsAndRender();
+
+			this.listenTo(vent, 'questrow:released', this.onRowReleased.bind(this));
 		},
 
 		rebindEventsAndRender: function(model)
@@ -50,6 +52,16 @@ define(function(require)
 
 			var quest_editor = new QuestEditorView({model: view.model});
 			vent.trigger("application:popup:show", quest_editor, "Edit Quest");
+		},
+
+		/* Sorting */
+
+		onRowReleased: function(element, position)
+		{
+			if(this.$el.is(element))
+			{
+				this.model.save({"sort_index": position}, {patch: true});
+			}
 		}
 	});
 });
