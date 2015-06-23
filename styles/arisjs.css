@@ -662,6 +662,10 @@ h4:hover .object-id {
   animation: migrating-spin 1s linear infinite;
 }
 /* Tab drag and drop */
+.quests-editor .media,
+.tabs-editor .media {
+  margin-right: 1.5em;
+}
 .tab-drag-handle {
   position: absolute;
   top: 0;
