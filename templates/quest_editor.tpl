@@ -12,13 +12,12 @@
 
 	<div class="form-group">
 		<label for="description">Description</label>
-		<textarea id="description" placeholder="Description" class="form-control" rows="2"><%= description %></textarea>
 	</div>
 
 	<!-- Active Section -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			Active
+			Visible
 		</div>
 		<div class="panel-body">
 

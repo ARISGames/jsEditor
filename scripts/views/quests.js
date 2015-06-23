@@ -34,6 +34,17 @@ define(function(require)
 			});
 
 			vent.trigger("application:popup:show", quest_editor, "Create Quest");
+		},
+
+		onRender: function()
+		{
+			var sort_options = {
+				items: '.draggable-quest',
+				handle: '.tab-drag-handle',
+				stop: function( event, ui ) { vent.trigger("questrow:released", ui.item, ui.item.index()); }
+			};
+
+			this.$el.find('.list-group.quests').sortable(sort_options);
 		}
 	});
 });
