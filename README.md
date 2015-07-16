@@ -7,13 +7,14 @@ See http://arisgames.org
 Requirements
 ------------
 
-| Library    | Version |
-|------------|---------|
-| require.js | 2.1.10  |
-| jquery     | 1.10.2  |
-| marionette | 1.4.1   |
-| backbone   | 1.1.0   |
-| underscore | 1.5.2   |
+| Library    | Version | Install                    |
+|------------|---------|----------------------------|
+| less       | 2.5.1   | `npm install -g less`      |
+| require.js | 2.1.10  | `npm install -g requirejs` |
+| jquery     | 1.10.2  |                            |
+| marionette | 1.4.1   |                            |
+| backbone   | 1.1.0   |                            |
+| underscore | 1.5.2   |                            |
 
 Getting Started
 ---------------
@@ -29,11 +30,13 @@ The flow control of the application goes:
 Installation
 ------------
 
-The aris editor uses RequireJS in two modes 'dev' (master branch) and 'production' (build branch).
+Copy the following templates and modify to your server preferences:
+`scripts/config.js.template` -> `scripts/config.js`
+`scripts/tracker.js.template` -> `scripts/tracker.js`
 
-For dev, copy `scripts/config.js.template` to `scripts/config.js`. Index.html will access all files individually.
+Run `make build` which will compile css, run the r.js optimizer to unify all modules, and build `index.html` from `template.index.html` and the above config files.
 
-For production switch to the build branch and copy `scripts/config.js.template` to `scripts/config.js` and `scripts/tracker.js.template` to `scripts/tracker.js`, edit their values and run `make all` which will compile css, run the r.js optimizer to unify all modules, and tag the index file with sha256 signatures of both files. Building requires:
+Building requires:
 
 * Make
 * Bash
