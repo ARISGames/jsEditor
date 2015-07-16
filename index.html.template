@@ -100,7 +100,13 @@
     </script>
 
     <!-- Application -->
+    {{compressedo}}
     <script src="dist/aris.js?{{js_signature}}"></script>
+    {{compressedc}}
+    {{uncompressedo}}
+    <script src="scripts/library/require.js?{{js_signature}}"></script>
+    <script src="scripts/includes.js?{{js_signature}}"></script>
+    {{uncompressedc}}
     <script>
       require(['main']);
     </script>

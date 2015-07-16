@@ -1,8 +1,24 @@
-define([], function() {
-	var base_url = "http://dev.arisgames.org/server/";
+define(
+  [],
+  function()
+  {
+    var base_url = "http://arisgames.org/server/";
 
-	return {
-		"aris_api_url": base_url + "json.php/v2.",
-		"migrate_path": base_url + "services/migration/"
-	};
-});
+    return {
+      "aris_api_url": base_url + "json.php/v2.",
+      "migrate_path": base_url + "services/migration/",
+
+      /*
+        Note- the following lines will be parsed by a simple pre-processor
+        expecting simple, straightforward key-value pairs.
+
+        So please leave the values as simple strings (no arbitrary javascript)!
+      */
+
+      "google_analytics_key": "XX-########-#",
+      "compress": true,
+
+    };
+  }
+);
+

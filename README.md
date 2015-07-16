@@ -30,14 +30,9 @@ The flow control of the application goes:
 Installation
 ------------
 
-Copy the following templates and modify to your server preferences:
+Copy `scripts/config.js.template` to `scripts/config.js` and modify to your server preferences.
 
-`scripts/config.js.template` -> `scripts/config.js`
-
-`scripts/tracker.js.template` -> `scripts/tracker.js`
-
-
-Run `make build` which will compile css, run the r.js optimizer to unify all modules, and build `index.html` from `index.html.template` and the above config files.
+Run `make build` which will compile css, run the r.js optimizer to unify all modules, and build `index.html` from `index.html.template` and the above config file.
 
 Building requires:
 

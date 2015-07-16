@@ -1,7 +1,6 @@
 dist/*
 !dist/.gitignore
 scripts/config.js
-scripts/tracker.js
 index.html
 styles/arisjs.css
 
