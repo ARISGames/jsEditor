@@ -1,72 +1,82 @@
 /* Load paths for frameworks */
 
-require.config({
-	baseUrl: 'scripts',
+require.config(
+{
+  baseUrl:'scripts',
 
-	paths: {
-		/* Using AMD forks for non AMD compliant libraries */
-		'text':     'library/require.text',
-		'jed':      'library/jed',
-		'qrcode':   'library/qrcode',
+  paths:
+  {
+    /* Using AMD forks for non AMD compliant libraries */
+    'text':  'library/require.text',
+    'jed':   'library/jed',
+    'qrcode':'library/qrcode',
 
-		'jquery':   'library/jquery',
-		'cookie':   'library/jquery.cookie',
-		'jquidrag': 'library/jquery.ui.draggable',
-		'panzoom':  'library/jquery.panzoom',
+    'jquery':  'library/jquery',
+    'cookie':  'library/jquery.cookie',
+    'jquidrag':'library/jquery.ui.draggable',
+    'panzoom': 'library/jquery.panzoom',
 
-		/* Backbone */
-		'underscore':          'library/underscore',
-		'backbone':            'library/backbone',
-		'underscore.string':   'library/underscore.string',
+    /* Backbone */
+    'underscore':       'library/underscore',
+    'backbone':         'library/backbone',
+    'underscore.string':'library/underscore.string',
 
-		/* Marionette */
-		'backbone.babysitter': 'library/backbone.babysitter',
-		'backbone.wreqr':      'library/backbone.wreqr',
-		'marionette':          'library/backbone.marionette',
+    /* Marionette */
+    'backbone.babysitter':'library/backbone.babysitter',
+    'backbone.wreqr':     'library/backbone.wreqr',
+    'marionette':         'library/backbone.marionette',
 
-		/* Bootstrap */
-		'bootstrap': 'library/bootstrap',
+    /* Bootstrap */
+    'bootstrap':'library/bootstrap',
 
-		/* App Config */
-		'config': 'config',
+    /* App Config */
+    'config':'config',
 
-		/* Templages */
-		'templates': '../templates',
+    /* Templages */
+    'templates':'../templates',
 
-		/* Images */
-		'images': '../images'
-	},
+    /* Images */
+    'images':'../images'
+  },
 
-	shim: {
-	   'underscore.string': {
-			deps: ['underscore'],
-		},
+  shim:
+  {
+    'underscore.string':
+    {
+      deps:['underscore'],
+    },
 
-        "jqueryui": {
-            exports: "$",
-            deps: ['jquery']
-        },
+    "jqueryui":
+    {
+      exports:"$",
+      deps:['jquery']
+    },
 
-        "jquerypan": {
-            exports: "$",
-            deps: ['jquery']
-        },
+    "jquerypan":
+    {
+      exports:"$",
+      deps:['jquery']
+    },
 
-		'bootstrap' : {
-			deps: ['jquery']
-		},
+    'bootstrap':
+    {
+      deps:['jquery']
+    },
 
-		'qrcode': {
-			exports: "QRCode"
-		}
-	},
+    'qrcode':
+    {
+      exports:"QRCode"
+    }
+  },
 
-	/* Visual Debugging */
-	config: {
-		text: {
-			xrayTemplateDebugging: (typeof document !== 'undefined') ? document.URL.match(/xray-goggles/) : false
-		},
+  /* Visual Debugging */
+  config:
+  {
+    text:
+    {
+      xrayTemplateDebugging: (typeof document !== 'undefined') ? document.URL.match(/xray-goggles/) : false
+    },
 
-		moduleLog: (typeof document !== 'undefined') ? document.URL.match(/module-log/) : false
-	}
+    moduleLog: (typeof document !== 'undefined') ? document.URL.match(/module-log/) : false
+  }
 });
