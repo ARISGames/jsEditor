@@ -31,8 +31,11 @@ Installation
 ------------
 
 Copy the following templates and modify to your server preferences:
+
 `scripts/config.js.template` -> `scripts/config.js`
+
 `scripts/tracker.js.template` -> `scripts/tracker.js`
+
 
 Run `make build` which will compile css, run the r.js optimizer to unify all modules, and build `index.html` from `template.index.html` and the above config files.
 
