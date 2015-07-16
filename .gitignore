@@ -1,8 +1,10 @@
-scripts/config*.js
-!scripts/config.js.template
-scripts/tracker*.js
-!scripts/tracker.js.template
+dist/*
+!dist/.gitignore
+scripts/config.js
+scripts/tracker.js
 index.html
+styles/arisjs.css
+
 node_modules
 
 .DS_Store

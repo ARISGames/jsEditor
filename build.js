@@ -9,7 +9,7 @@
 	optimize: 'uglify2',
 	paths: {
 		"inlineRequireJS": 'library/require',
-		"config": 'config.production'
+		"config": 'config'
 		// "config": 'empty' /* Load config.js every time */
 	},
 	include : ['inlineRequireJS', 'main'],

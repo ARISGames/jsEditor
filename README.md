@@ -33,7 +33,7 @@ The aris editor uses RequireJS in two modes 'dev' (master branch) and 'productio
 
 For dev, copy `scripts/config.js.template` to `scripts/config.js`. Index.html will access all files individually.
 
-For production switch to the build branch and copy `scripts/config.js.template` to `scripts/config.production.js` and `scripts/tracker.js.template` to `scripts/tracker.production.js`, edit their values and run `make all` which will compile css, run the r.js optimizer to unify all modules, and tag the index file with sha256 signatures of both files. Building requires:
+For production switch to the build branch and copy `scripts/config.js.template` to `scripts/config.js` and `scripts/tracker.js.template` to `scripts/tracker.js`, edit their values and run `make all` which will compile css, run the r.js optimizer to unify all modules, and tag the index file with sha256 signatures of both files. Building requires:
 
 * Make
 * Bash

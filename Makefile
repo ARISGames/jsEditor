@@ -31,7 +31,7 @@ css:
 
 js:
 	@echo "Builing application into dist/aris.js."
-	@r.js -o build.js 1>/dev/null
+	@r.js -o build.js
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 
