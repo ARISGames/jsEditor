@@ -32,7 +32,7 @@ css:
 
 js:
 	@echo "Builing application into dist/aris.js."
-	@r.js -o build.js
+	@r.js -o build.js >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 html:

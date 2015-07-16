@@ -28,7 +28,7 @@ sed \
 -e "s/{{google_analytics}}/$(key_from_conf google_analytics_key)/" \
 > tmp_index.html
 
-if [[ `key_from_conf compress` = true ]]; then
+if [ "`key_from_conf compress`" = "true" ]; then
   echo "hello?"
   cat tmp_index.html |
   sed \
