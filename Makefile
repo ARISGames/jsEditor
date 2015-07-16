@@ -32,17 +32,17 @@ css:
 
 js:
 	@echo "Builing application into dist/aris.js."
-	@r.js -o build.js
+	@r.js -o build.js >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 html:
 	@echo "Rendering template into index.html."
-	@bin/render_index.sh
+	@bin/render_index.sh >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 dev:
 	@echo "Pushing to Github."
-	@git push 1>/dev/null
+	@git push >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to dev."
 	@ssh -t aris-dev "cd /var/www/html/editor2/ && sudo git checkout master && sudo git pull"
@@ -53,17 +53,17 @@ prod:
 	@git merge master
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Pushing to Github."
-	@git push 1>/dev/null
+	@git push >/dev/null
 	@git checkout master;
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 1."
-	@ssh $(arisprod1) "cd /var/www/html/editor/ && git checkout build && git pull" 1>/dev/null
+	@ssh $(arisprod1) "cd /var/www/html/editor/ && git checkout build && git pull && make build" >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 2."
-	@ssh $(arisprod2) "cd /var/www/html/editor/ && git checkout build && git pull" 1>/dev/null
+	@ssh $(arisprod2) "cd /var/www/html/editor/ && git checkout build && git pull && make build" >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 3."
-	@ssh $(arisprod3) "cd /var/www/html/editor/ && git checkout build && git pull" 1>/dev/null
+	@ssh $(arisprod3) "cd /var/www/html/editor/ && git checkout build && git pull && make build" >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 build: css js html
