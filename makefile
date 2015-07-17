@@ -49,12 +49,12 @@ dev:
 
 prod:
 	@echo "Merging build."
-	@git checkout build
-	@git merge master
+	@git checkout build >/dev/null
+	@git merge master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Pushing to Github."
 	@git push >/dev/null
-	@git checkout master;
+	@git checkout master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 1."
 	@deploy/deploy.sh $(arisprod1) >/dev/null
@@ -72,18 +72,22 @@ prod:
 # the config hacks allow utilization of config local to production,
 # while maintaining unique local config
 hack_config:
-	@cp ./scripts/config.js ./scripts/config.js.local
-	@scp $(arisprod1):/var/www/html/editor/scripts/config.js ./scripts/config.js
+	@echo "Fetching remote config."
+	@cp ./scripts/config.js ./scripts/config.js.local >/dev/null
+	@scp $(arisprod1):/var/www/html/editor/scripts/config.js ./scripts/config.js >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 unhack_config:
-	@mv ./scripts/config.js.local ./scripts/config.js
+	@echo "Restoring local config.."
+	@mv ./scripts/config.js.local ./scripts/config.js >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 prod_precompile: hack_config build unhack_config #hack->build->unhack order is intentional
 	@echo "Merging build."
-	@git checkout build
-	@git merge master
+	@git checkout build >/dev/null
+	@git merge master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Pushing to Github."
 	@git push >/dev/null
-	@git checkout master;
+	@git checkout master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 1."
 	@deploy/precompile_deploy.sh $(arisprod1) >/dev/null
