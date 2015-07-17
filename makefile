@@ -8,9 +8,9 @@ OK_COLOR=\033[0;32m
 INFO_COLOR=\033[1;36m
 CLEAR=\033[m\017
 
-arisprod1="root@neo.arisgames.org"
-arisprod2="root@trinity.arisgames.org"
-arisprod3="root@morpheus.arisgames.org"
+arisprod1=root@neo.arisgames.org
+arisprod2=root@trinity.arisgames.org
+arisprod3=root@morpheus.arisgames.org
 
 help:
 	@echo "Aris Javascript Editor"
@@ -72,10 +72,10 @@ prod:
 # the config hacks allow utilization of config local to production,
 # while maintaining unique local config
 hack_config:
-	cp ./scripts/config.js ./scripts/config.js.local
-	scp $(arisprod1):/var/www/html/editor/scripts/config.js ./scripts/config.js
+	@cp ./scripts/config.js ./scripts/config.js.local
+	@scp $(arisprod1):/var/www/html/editor/scripts/config.js ./scripts/config.js
 unhack_config:
-	mv ./scripts/config.js.local ./scripts/config.js
+	@mv ./scripts/config.js.local ./scripts/config.js
 prod_precompile: hack_config build unhack_config #hack->build->unhack order is intentional
 	@echo "Merging build."
 	@git checkout build
