@@ -57,16 +57,45 @@ prod:
 	@git checkout master;
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 1."
-	@ssh $(arisprod1) "cd /var/www/html/editor/ && git checkout build && git pull && make build" >/dev/null
+	@deploy/deploy.sh $(arisprod1) >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 2."
-	@ssh $(arisprod2) "cd /var/www/html/editor/ && git checkout build && git pull && make build" >/dev/null
+	@deploy/deploy.sh $(arisprod2) >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 3."
-	@ssh $(arisprod3) "cd /var/www/html/editor/ && git checkout build && git pull && make build" >/dev/null
+	@deploy/deploy.sh $(arisprod3) >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+
+# note- this needs to be updated to explicitly scp any essential files
+# for this reason, 'make prod' is a more simple, elegant, and robust deploy script
+# however, local precompilation is faster/ less resource intensive for hosts
+# the config hacks allow utilization of config local to production,
+# while maintaining unique local config
+hack_config:
+	cp ./scripts/config.js ./scripts/config.js.local
+	scp $(arisprod1):/var/www/html/editor/scripts/config.js ./scripts/config.js
+unhack_config:
+	mv ./scripts/config.js.local ./scripts/config.js
+prod_precompile: hack_config build unhack_config #hack->build->unhack order is intentional
+	@echo "Merging build."
+	@git checkout build
+	@git merge master
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Pushing to Github."
+	@git push >/dev/null
+	@git checkout master;
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 1."
+	@deploy/precompile_deploy.sh $(arisprod1) >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 2."
+	@deploy/precompile_deploy.sh $(arisprod2) >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 3."
+	@deploy/precompile_deploy.sh $(arisprod3) >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 build: css js html
 
-deploy: prod
+deploy: prod_precompile #switch to just 'prod' if you want a simpler, less volatile (but slower) deploy
 
