@@ -15,17 +15,34 @@ define([
 
 		onRender: function() {
 			var view = this;
-			setTimeout(function() {view.renderMap()}, 300);
+                        if(navigator.geolocation)
+                        {
+                          navigator.geolocation.getCurrentPosition(
+                            function(position)
+                            {
+                              view.renderMap(position.coords.latitude,position.coords.longitude);
+                            }
+                          );
+                        }
+                        else
+                        {
+                          setTimeout(
+                            function()
+                            {
+                              view.renderMap(43.073, -89.4012)
+                            },
+                          300);
+                        }
 		},
 
-		renderMap: function() {
+		renderMap: function(lat,lon) {
 			var view = this;
 
 			// Render Map
 			var canv_element = this.$el.find('.map-canvas').get(0);
                         var input_element = this.$el.find('.map-input').get(0);
 
-			var default_location = new google.maps.LatLng(43.073, -89.4012);
+			var default_location = new google.maps.LatLng(lat,lon);
 			var map_options = {
 				zoom: 8,
 				center: default_location
