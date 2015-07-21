@@ -43,15 +43,16 @@ define(function(require)
 			"change_icon":  ".change-icon",
 			"change_media": ".change-media",
 
-			"name":        "#item-name",
-			"description": "#item-description",
-			"url":         "#item-url",
-			"droppable":   "#item-droppable",
-			"destroyable": "#item-destroyable",
-			"weight":      "#item-weight",
-			"max_qty":     "#item-max_qty_in_inventory",
-			"item_types":  ".item-type",
-			"type_tabs":   ".type-tab"
+			"name":               "#item-name",
+			"description":        "#item-description",
+			"url":                "#item-url",
+			"delta_notification": "#item-delta_notification",
+			"droppable":          "#item-droppable",
+			"destroyable":        "#item-destroyable",
+			"weight":             "#item-weight",
+			"max_qty":            "#item-max_qty_in_inventory",
+			"item_types":         ".item-type",
+			"type_tabs":          ".type-tab"
 		},
 
 
@@ -92,15 +93,16 @@ define(function(require)
 
 
 			// Field events
-			"change @ui.name":        "onChangeName",
-			"change @ui.description": "onChangeDescription",
-			"change @ui.url":         "onChangeUrl",
-			"change @ui.weight":      "onChangeWeight",
-			"change @ui.droppable":   "onChangeDroppable",
-			"change @ui.destroyable": "onChangeDestroyable",
-			"change @ui.max_qty":     "onChangeMaxQuantity",
+			"change @ui.name":               "onChangeName",
+			"change @ui.description":        "onChangeDescription",
+			"change @ui.url":                "onChangeUrl",
+			"change @ui.weight":             "onChangeWeight",
+			"change @ui.delta_notification": "onChangeDeltaNotification",
+			"change @ui.droppable":          "onChangeDroppable",
+			"change @ui.destroyable":        "onChangeDestroyable",
+			"change @ui.max_qty":            "onChangeMaxQuantity",
 
-			"change @ui.item_types":   "onChangeType"
+			"change @ui.item_types":          "onChangeType"
 		},
 
 
@@ -152,8 +154,9 @@ define(function(require)
 		onChangeUrl:         function() { this.model.set("url",         this.ui.url.val()); },
 		onChangeWeight:      function() { this.model.set("weight",      this.ui.weight.val()); },
 
-		onChangeDroppable:   function() { this.model.set("droppable",   this.ui.droppable.is(":checked") ? "1" : "0");   },
-		onChangeDestroyable: function() { this.model.set("destroyable", this.ui.destroyable.is(":checked") ? "1" : "0"); },
+		onChangeDeltaNotification: function() { this.model.set("delta_notification", this.ui.delta_notification.is(":checked") ? "1" : "0");   },
+		onChangeDroppable:         function() { this.model.set("droppable",          this.ui.droppable.is(":checked")          ? "1" : "0");   },
+		onChangeDestroyable:       function() { this.model.set("destroyable",        this.ui.destroyable.is(":checked")        ? "1" : "0"); },
 
 		onChangeMaxQuantity: function() { this.model.set("max_qty_in_inventory", this.ui.max_qty.val()); },
 

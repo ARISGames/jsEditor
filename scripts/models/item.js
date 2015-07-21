@@ -22,6 +22,7 @@ define(function(require) {
 			"description",
 			"icon_media_id",
 			"media_id",
+			"delta_notification",
 			"droppable",
 			"destroyable",
 			"max_qty_in_inventory",
@@ -33,6 +34,7 @@ define(function(require) {
 		defaults: {
 			name: "",
 			description: "",
+			delta_notification: "1",
 			droppable: "1",
 			destroyable: "1",
 			max_qty_in_inventory:"500",

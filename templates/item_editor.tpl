@@ -28,6 +28,13 @@
 	</div>
 
 	<div class="checkbox">
+		<input type="checkbox" id="item-delta_notification" <%= is_checked(delta_notification) %>>
+		<label for="item-delta_notification">
+			Notify on Change
+		</label>
+	</div>
+
+	<div class="checkbox">
 		<input type="checkbox" id="item-droppable" <%= is_checked(droppable) %>>
 		<label for="item-droppable">
 			Droppable
