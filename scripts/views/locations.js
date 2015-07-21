@@ -22,18 +22,19 @@ define([
         navigator.geolocation.getCurrentPosition(
           function(position)
           {
-            view.renderMap(position.coords.latitude,position.coords.longitude);
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            setTimeout(function() { view.renderMap(lat,lon); }, 300);
+          },
+          function(error)
+          {
+            setTimeout(function() { view.renderMap(43.073,-89.4012); }, 300);
           }
         );
       }
       else
       {
-        setTimeout(
-          function()
-          {
-            view.renderMap(43.073, -89.4012)
-          },
-        300);
+        setTimeout(function() { view.renderMap(43.073,-89.4012); }, 300);
       }
     },
 
