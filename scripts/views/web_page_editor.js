@@ -1,166 +1,167 @@
-define(function(require)
+define(
+function(require)
 {
-	var _                = require('underscore');
-	var $                = require('jquery');
-	var Backbone         = require('backbone');
-	var Template         = require('text!templates/web_page_editor.tpl');
+  var _                = require('underscore');
+  var $                = require('jquery');
+  var Backbone         = require('backbone');
+  var Template         = require('text!templates/web_page_editor.tpl');
 
-	var MediaCollection  = require('collections/media');
-	var Game             = require('models/game');
-	var MediaChooserView = require('views/media_chooser');
+  var MediaCollection  = require('collections/media');
+  var Game             = require('models/game');
+  var MediaChooserView = require('views/media_chooser');
 
-	var vent             = require('vent');
-	var storage          = require('storage');
+  var vent             = require('vent');
+  var storage          = require('storage');
 
+  return Backbone.Marionette.CompositeView.extend({
+    template: _.template(Template),
 
-	return Backbone.Marionette.CompositeView.extend({
-		template: _.template(Template),
+    /* View */
 
-		/* View */
-
-		templateHelpers: function() {
-			return {
-				is_new: this.model.isNew(),
-				icon_thumbnail_url: this.model.icon_thumbnail()
-			}
-		},
-
-
-		ui: {
-			"save":   ".save",
-			"delete": ".delete",
-			"cancel": ".cancel",
-
-			"change_icon": ".change-icon",
-
-			"name": "#web_page-name",
-			"url":  "#web_page-url"
-		},
+    templateHelpers: function() {
+      return {
+        is_new: this.model.isNew(),
+        icon_thumbnail_url: this.model.icon_thumbnail()
+      }
+    },
 
 
-		/* Constructor */
+    ui: {
+      "save":   ".save",
+      "delete": ".delete",
+      "cancel": ".cancel",
 
-		initialize: function() {
-			// Allow returning to original attributes
-			this.storePreviousAttributes();
+      "change_icon": ".change-icon",
 
-			// Listen to association events on media
-			this.bindAssociations();
-
-			// Handle cancel from modal X or dark area
-			this.on("popup:hide", this.onClickCancel);
-		},
+      "name": "#web_page-name",
+      "url":  "#web_page-url"
+    },
 
 
-		/* View Events */
+    /* Constructor */
 
-		onShow: function() {
-			this.$el.find('input[autofocus]').focus();
-		},
+    initialize: function() {
+      // Allow returning to original attributes
+      this.storePreviousAttributes();
 
+      // Listen to association events on media
+      this.bindAssociations();
 
-		events: {
-			"click @ui.save":   "onClickSave",
-			"click @ui.delete": "onClickDelete",
-			"click @ui.cancel": "onClickCancel",
-
-			"click @ui.change_icon": "onClickChangeIcon",
-
-			// Field events
-			"change @ui.name":  "onChangeName",
-			"change @ui.url":   "onChangeUrl"
-		},
-
-		initialize: function(options) {
-		},
-
-		onClickSave: function() {
-			var view   = this;
-			var web_page = this.model;
-
-			web_page.save({}, {
-				create: function() {
-					view.storePreviousAttributes();
-
-					storage.add_game_object(web_page);
-
-					vent.trigger("application:popup:hide");
-				},
-
-				update: function()
-				{
-					view.storePreviousAttributes();
-
-					vent.trigger("application:popup:hide");
-				}
-			});
-		},
-
-		onClickCancel: function() {
-			this.model.set(this.previous_attributes);
-		},
-
-		onClickDelete: function() {
-			var view = this;
-			this.model.destroy({
-				success: function() {
-					vent.trigger("application:popup:hide");
-				}
-			});
-		},
+      // Handle cancel from modal X or dark area
+      this.on("popup:hide", this.onClickCancel);
+    },
 
 
+    /* View Events */
 
-		/* Field Changes */
+    onShow: function() {
+      this.$el.find('input[autofocus]').focus();
+    },
 
-		onChangeName: function() { this.model.set("name", this.ui.name.val()); },
-		onChangeUrl:  function() { this.model.set("url",  this.ui.url.val());  },
+
+    events: {
+      "click @ui.save":   "onClickSave",
+      "click @ui.delete": "onClickDelete",
+      "click @ui.cancel": "onClickCancel",
+
+      "click @ui.change_icon": "onClickChangeIcon",
+
+      // Field events
+      "change @ui.name":  "onChangeName",
+      "change @ui.url":   "onChangeUrl"
+    },
+
+    initialize: function(options) {
+    },
+
+    onClickSave: function() {
+      var view   = this;
+      var web_page = this.model;
+
+      web_page.save({}, {
+        create: function() {
+          view.storePreviousAttributes();
+
+          storage.add_game_object(web_page);
+
+          vent.trigger("application:popup:hide");
+        },
+
+        update: function()
+        {
+          view.storePreviousAttributes();
+
+          vent.trigger("application:popup:hide");
+        }
+      });
+    },
+
+    onClickCancel: function() {
+      this.model.set(this.previous_attributes);
+    },
+
+    onClickDelete: function() {
+      var view = this;
+      this.model.destroy({
+        success: function() {
+          vent.trigger("application:popup:hide");
+        }
+      });
+    },
 
 
-		/* Undo and Association Binding */
 
-		storePreviousAttributes: function() {
-			this.previous_attributes = _.clone(this.model.attributes)
-		},
+    /* Field Changes */
 
-		unbindAssociations: function() {
-			this.stopListening(this.model.icon());
-		},
+    onChangeName: function() { this.model.set("name", this.ui.name.val()); },
+    onChangeUrl:  function() { this.model.set("url",  this.ui.url.val());  },
 
-		bindAssociations: function() {
-			this.listenTo(this.model.icon(), 'change', this.render);
-		},
 
-		/* Media Selector */
+    /* Undo and Association Binding */
 
-		onClickChangeIcon: function() {
-			var view = this;
+    storePreviousAttributes: function() {
+      this.previous_attributes = _.clone(this.model.attributes)
+    },
 
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
+    unbindAssociations: function() {
+      this.stopListening(this.model.icon());
+    },
 
-			media.fetch({
-				success: function() {
-					/* Add default */
-					media.unshift(view.model.default_icon());
+    bindAssociations: function() {
+      this.listenTo(this.model.icon(), 'change', this.render);
+    },
 
-					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
+    /* Media Selector */
 
-					icon_chooser.on("media:choose", function(media) {
-						view.unbindAssociations();
-						view.model.set("icon_media_id", media.id);
-						view.bindAssociations();
-						vent.trigger("application:popup:show", view, "Edit Conversation");
-					});
+    onClickChangeIcon: function() {
+      var view = this;
 
-					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Conversation");
-					});
+      var game  = new Game({game_id: this.model.get("game_id")});
+      var media = new MediaCollection([], {parent: game});
 
-					vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
-				}
-			});
-		},
-	});
+      media.fetch({
+        success: function() {
+          /* Add default */
+          media.unshift(view.model.default_icon());
+
+          /* Icon */
+          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
+
+          icon_chooser.on("media:choose", function(media) {
+            view.unbindAssociations();
+            view.model.set("icon_media_id", media.id);
+            view.bindAssociations();
+            vent.trigger("application:popup:show", view, "Edit Conversation");
+          });
+
+          icon_chooser.on("cancel", function() {
+            vent.trigger("application:popup:show", view, "Edit Conversation");
+          });
+
+          vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
+        }
+      });
+    },
+  });
 });
+

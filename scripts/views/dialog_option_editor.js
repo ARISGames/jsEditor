@@ -1,246 +1,253 @@
 define([
-	'underscore',
-	'underscore.string',
-	'backbone',
-	'text!templates/dialog_option_editor.tpl',
-	'views/requirements',
-	'views/alert_dialog',
-	'models/requirement_package',
-	'models/game',
-	'collections/and_packages',
-	'collections/atoms',
-	'collections/items',
-	'collections/tags',
-	'collections/plaques',
-	'collections/dialogs',
-	'collections/game_dialog_scripts',
-	'collections/web_pages',
-	'collections/quests',
-	'collections/web_hooks',
-	'vent'
-], function(_, _S, Backbone, Template,
-	RequirementsEditorView,
-	AlertDialog,
-	RequirementPackage,
-	Game,
-	AndPackagesCollection,
-	AtomsCollection,
-	ItemsCollection,
-	TagsCollection,
-	PlaquesCollection,
-	DialogsCollection,
-	DialogScriptsCollection,
-	WebPagesCollection,
-	QuestsCollection,
-	WebHooksCollection,
-	vent) {
-	return Backbone.Marionette.ItemView.extend({
+  'underscore',
+  'underscore.string',
+  'backbone',
+  'text!templates/dialog_option_editor.tpl',
+  'views/requirements',
+  'views/alert_dialog',
+  'models/requirement_package',
+  'models/game',
+  'collections/and_packages',
+  'collections/atoms',
+  'collections/items',
+  'collections/tags',
+  'collections/plaques',
+  'collections/dialogs',
+  'collections/game_dialog_scripts',
+  'collections/web_pages',
+  'collections/quests',
+  'collections/web_hooks',
+  'vent'
+],
+function(
+  _,
+  _S,
+  Backbone,
+  Template,
+  RequirementsEditorView,
+  AlertDialog,
+  RequirementPackage,
+  Game,
+  AndPackagesCollection,
+  AtomsCollection,
+  ItemsCollection,
+  TagsCollection,
+  PlaquesCollection,
+  DialogsCollection,
+  DialogScriptsCollection,
+  WebPagesCollection,
+  QuestsCollection,
+  WebHooksCollection,
+  vent
+)
+{
+  return Backbone.Marionette.ItemView.extend({
 
-		template: _.template(Template),
-
-
-		initialize: function(options) {
-			//These are essentially the classes, not actual properties (can't include via require- circular reqs)
-			this.DialogScript = options.DialogScript;
-			this.DialogOption = options.DialogOption;
-
-			this.dialog = options.dialog;
-			this.scripts = options.scripts;
-			this.script_options = options.script_options;
-
-			this.plaques   = options.contents.plaques;
-			this.items     = options.contents.items;
-			this.web_pages = options.contents.web_pages;
-			this.dialogs   = options.contents.dialogs;
-			this.tabs      = options.contents.tabs;
-
-			this.previous_attributes = _.clone(this.model.attributes)
-		},
+    template: _.template(Template),
 
 
-		templateHelpers: function() {
-			return {
-				is_new: this.model.isNew(),
+    initialize: function(options) {
+      //These are essentially the classes, not actual properties (can't include via require- circular reqs)
+      this.DialogScript = options.DialogScript;
+      this.DialogOption = options.DialogOption;
 
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
-				link_types: this.link_types,
+      this.dialog = options.dialog;
+      this.scripts = options.scripts;
+      this.script_options = options.script_options;
 
-				scripts: this.scripts,
+      this.plaques   = options.contents.plaques;
+      this.items     = options.contents.items;
+      this.web_pages = options.contents.web_pages;
+      this.dialogs   = options.contents.dialogs;
+      this.tabs      = options.contents.tabs;
 
-				// game objects for option menu
-				plaques:   this.plaques,
-				items:     this.items,
-				web_pages: this.web_pages,
-				dialogs:   this.dialogs,
-				tabs:      this.tabs,
+      this.previous_attributes = _.clone(this.model.attributes)
+    },
 
-				link_options_visible: this.model.get("link_type") !== "EXIT",
 
-				link_scripts:   this.model.get("link_type") === "DIALOG_SCRIPT",
-				link_plaques:   this.model.get("link_type") === "EXIT_TO_PLAQUE",
-				link_items:     this.model.get("link_type") === "EXIT_TO_ITEM",
-				link_web_pages: this.model.get("link_type") === "EXIT_TO_WEB_PAGE",
-				link_dialogs:   this.model.get("link_type") === "EXIT_TO_DIALOG",
-				link_tabs:      this.model.get("link_type") === "EXIT_TO_TAB"
-			}
-		},
+    templateHelpers: function() {
+      return {
+        is_new: this.model.isNew(),
 
-		ui: {
-			link_type: ".link-type",
-			link_id:   ".link-id",
-			prompt:    ".prompt"
-		},
+        option_selected: function(boolean_statement) {
+          return boolean_statement ? "selected" : "";
+        },
+        link_types: this.link_types,
 
-		events: {
-			"change @ui.link_type":     "onChangeLinkType",
-			"change @ui.link_id":       "onChangeLinkId",
-			"change @ui.prompt":        "onChangePrompt",
-			"click .save":              "onClickSave",
-			"click .cancel":            "onClickCancel",
-			"click .edit-requirements": "onClickEditRequirements",
-			"click .delete":            "onClickDelete",
-		},
+        scripts: this.scripts,
 
-		link_types: {
-			'DIALOG_SCRIPT':    "Say Line",
-			'EXIT':             "End Conversation",
-			'EXIT_TO_PLAQUE':   "Exit to Plaque",
-			'EXIT_TO_ITEM':     "Exit to Item",
-			'EXIT_TO_WEB_PAGE': "Exit to Web Page",
-			'EXIT_TO_DIALOG':   "Exit to Conversation",
-			'EXIT_TO_TAB':      "Exit to Tab"
-		},
+        // game objects for option menu
+        plaques:   this.plaques,
+        items:     this.items,
+        web_pages: this.web_pages,
+        dialogs:   this.dialogs,
+        tabs:      this.tabs,
 
-		onChangeLinkType: function() {
-			var value = this.ui.link_type.find("option:selected").val();
-			this.model.set("link_type", value);
+        link_options_visible: this.model.get("link_type") !== "EXIT",
 
-			// 0 out link ID before re-rendering sub select
-			this.model.set("link_id", "0");
-			this.render();
-		},
+        link_scripts:   this.model.get("link_type") === "DIALOG_SCRIPT",
+        link_plaques:   this.model.get("link_type") === "EXIT_TO_PLAQUE",
+        link_items:     this.model.get("link_type") === "EXIT_TO_ITEM",
+        link_web_pages: this.model.get("link_type") === "EXIT_TO_WEB_PAGE",
+        link_dialogs:   this.model.get("link_type") === "EXIT_TO_DIALOG",
+        link_tabs:      this.model.get("link_type") === "EXIT_TO_TAB"
+      }
+    },
 
-		onChangeLinkId: function() {
-			var value = this.ui.link_id.find("option:selected").val();
-			this.model.set("link_id", value);
-		},
+    ui: {
+      link_type: ".link-type",
+      link_id:   ".link-id",
+      prompt:    ".prompt"
+    },
 
-		onChangePrompt: function() {
-			this.model.set("prompt", this.ui.prompt.val());
-		},
+    events: {
+      "change @ui.link_type":     "onChangeLinkType",
+      "change @ui.link_id":       "onChangeLinkId",
+      "change @ui.prompt":        "onChangePrompt",
+      "click .save":              "onClickSave",
+      "click .cancel":            "onClickCancel",
+      "click .edit-requirements": "onClickEditRequirements",
+      "click .delete":            "onClickDelete",
+    },
 
-		onClickSave: function() {
-			var view = this;
+    link_types: {
+      'DIALOG_SCRIPT':    "Say Line",
+      'EXIT':             "End Conversation",
+      'EXIT_TO_PLAQUE':   "Exit to Plaque",
+      'EXIT_TO_ITEM':     "Exit to Item",
+      'EXIT_TO_WEB_PAGE': "Exit to Web Page",
+      'EXIT_TO_DIALOG':   "Exit to Conversation",
+      'EXIT_TO_TAB':      "Exit to Tab"
+    },
 
-			if(this.model.get("link_type") == "DIALOG_SCRIPT" && this.model.get("link_id") == 0) {
-				//create new script, set link id to that script
+    onChangeLinkType: function() {
+      var value = this.ui.link_type.find("option:selected").val();
+      this.model.set("link_type", value);
 
-				var script = new view.DialogScript();
-				script.set("game_id",view.model.get("game_id"));
-				script.set("dialog_id",view.model.get("dialog_id"));
-				script.set("text","Hello");
-				script.save({}, {
-					success: function() {
-						view.scripts.push(script);
+      // 0 out link ID before re-rendering sub select
+      this.model.set("link_id", "0");
+      this.render();
+    },
 
-						var option = new view.DialogOption();
-						option.set("game_id",view.model.get("game_id"));
-						option.set("dialog_id",view.model.get("dialog_id"));
-						option.set("parent_dialog_script_id",script.get("dialog_script_id"));
-						option.set("link_type","EXIT");
-						option.set("prompt","Exit");
+    onChangeLinkId: function() {
+      var value = this.ui.link_id.find("option:selected").val();
+      this.model.set("link_id", value);
+    },
 
-						option.save({}, {
-							success:function() {
-								view.script_options.push(option);
+    onChangePrompt: function() {
+      this.model.set("prompt", this.ui.prompt.val());
+    },
 
-								view.model.set("link_type","DIALOG_SCRIPT");
-								view.model.set("link_id",script.get("dialog_script_id"));
+    onClickSave: function() {
+      var view = this;
 
-								view.model.save({}, {
-									success:function() {
-										vent.trigger("conversation:update");
-										vent.trigger("application:info:hide");
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-			else {
-				this.model.save({}, {
-					success: function() {
-						vent.trigger("conversation:update");
-						vent.trigger("application:info:hide");
-					}
-				});
-			}
-		},
+      if(this.model.get("link_type") == "DIALOG_SCRIPT" && this.model.get("link_id") == 0) {
+        //create new script, set link id to that script
 
-		onClickCancel: function() {
-			delete this.previous_attributes.requirement_root_package_id;
-			this.model.set(this.previous_attributes);
-			vent.trigger("application:info:hide");
-		},
+        var script = new view.DialogScript();
+        script.set("game_id",view.model.get("game_id"));
+        script.set("dialog_id",view.model.get("dialog_id"));
+        script.set("text","Hello");
+        script.save({}, {
+          success: function() {
+            view.scripts.push(script);
 
-		onClickEditRequirements: function() {
-			var view = this;
+            var option = new view.DialogOption();
+            option.set("game_id",view.model.get("game_id"));
+            option.set("dialog_id",view.model.get("dialog_id"));
+            option.set("parent_dialog_script_id",script.get("dialog_script_id"));
+            option.set("link_type","EXIT");
+            option.set("prompt","Exit");
 
-			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
+            option.save({}, {
+              success:function() {
+                view.script_options.push(option);
 
-			var game = new Game({game_id: view.model.get("game_id")});
+                view.model.set("link_type","DIALOG_SCRIPT");
+                view.model.set("link_id",script.get("dialog_script_id"));
 
-			var contents = {
-				items:          new ItemsCollection         ([], {parent: game}),
-				tags:           new TagsCollection          ([], {parent: game}),
-				plaques:        new PlaquesCollection       ([], {parent: game}),
-				dialogs:        new DialogsCollection       ([], {parent: game}),
-				dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
-				web_pages:      new WebPagesCollection      ([], {parent: game}),
-				quests:         new QuestsCollection        ([], {parent: game}),
-				hooks:          new WebHooksCollection      ([], {parent: game})
-			};
+                view.model.save({}, {
+                  success:function() {
+                    vent.trigger("conversation:update");
+                    vent.trigger("application:info:hide");
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+      else {
+        this.model.save({}, {
+          success: function() {
+            vent.trigger("conversation:update");
+            vent.trigger("application:info:hide");
+          }
+        });
+      }
+    },
 
-			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
+    onClickCancel: function() {
+      delete this.previous_attributes.requirement_root_package_id;
+      this.model.set(this.previous_attributes);
+      vent.trigger("application:info:hide");
+    },
 
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
-			{
-				// Load associations into collections
-				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
-				requirement_package.set("and_packages", and_packages);
+    onClickEditRequirements: function() {
+      var view = this;
 
-				and_packages.each(function(and_package) {
-					var atoms = new AtomsCollection(and_package.get("atoms"));
-					and_package.set("atoms", atoms);
-				});
+      var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-				// launch editor
-				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
+      var game = new Game({game_id: view.model.get("game_id")});
 
-				requirements_editor.on("cancel", function()
-				{
-					vent.trigger("application:popup:hide");
-				});
+      var contents = {
+        items:          new ItemsCollection         ([], {parent: game}),
+        tags:           new TagsCollection          ([], {parent: game}),
+        plaques:        new PlaquesCollection       ([], {parent: game}),
+        dialogs:        new DialogsCollection       ([], {parent: game}),
+        dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
+        web_pages:      new WebPagesCollection      ([], {parent: game}),
+        quests:         new QuestsCollection        ([], {parent: game}),
+        hooks:          new WebHooksCollection      ([], {parent: game})
+      };
 
-				requirements_editor.on("requirement_package:save", function(requirement_package)
-				{
-					view.model.set("requirement_root_package_id", requirement_package.id);
+      if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-					if(view.model.hasChanged("requirement_root_package_id"))
-					{
-						// Quicksave if moving from 0 so user has consistent experience
-						view.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
-					}
+      $.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.quests.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+      {
+        // Load associations into collections
+        var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
+        requirement_package.set("and_packages", and_packages);
 
-					vent.trigger("application:popup:hide");
-				});
+        and_packages.each(function(and_package) {
+          var atoms = new AtomsCollection(and_package.get("atoms"));
+          and_package.set("atoms", atoms);
+        });
 
-				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
-			});
-		},
+        // launch editor
+        var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
+
+        requirements_editor.on("cancel", function()
+        {
+          vent.trigger("application:popup:hide");
+        });
+
+        requirements_editor.on("requirement_package:save", function(requirement_package)
+        {
+          view.model.set("requirement_root_package_id", requirement_package.id);
+
+          if(view.model.hasChanged("requirement_root_package_id"))
+          {
+            // Quicksave if moving from 0 so user has consistent experience
+            view.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
+          }
+
+          vent.trigger("application:popup:hide");
+        });
+
+        vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
+      });
+    },
 
                 findCascadingScriptDeletesFromPruningOption: function()
                 {
@@ -303,76 +310,76 @@ define([
   return TBA;
                 },
 
-		onClickDelete: function() {
-			var view = this;
+    onClickDelete: function() {
+      var view = this;
 
-			var TBD = view.findCascadingScriptDeletesFromPruningOption();
-			if(TBD.length > 0) {
-				var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
+      var TBD = view.findCascadingScriptDeletesFromPruningOption();
+      if(TBD.length > 0) {
+        var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
 
-				alert_dialog.on("danger", function() {
-					vent.trigger("application:popup:hide");
-					view.script_options.remove(view.model);
-					view.model.destroy({
-						success: function() {
-							vent.trigger("conversation:update");
-							vent.trigger("application:info:hide");
-						}
-					});
-					for(var i = 0; i < TBD.length; i++)
-					{
-						view.scripts.remove(TBD[i]);
-						TBD[i].destroy();
-					}
+        alert_dialog.on("danger", function() {
+          vent.trigger("application:popup:hide");
+          view.script_options.remove(view.model);
+          view.model.destroy({
+            success: function() {
+              vent.trigger("conversation:update");
+              vent.trigger("application:info:hide");
+            }
+          });
+          for(var i = 0; i < TBD.length; i++)
+          {
+            view.scripts.remove(TBD[i]);
+            TBD[i].destroy();
+          }
 
-					var TBA = view.findOptionlessScripts();
-					for(var i = 0; i < TBA.length; i++)
-					{
-						var option = new view.DialogOption();
-						option.set("game_id",view.model.get("game_id"));
-						option.set("dialog_id",view.model.get("dialog_id"));
-						option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
-						option.set("link_type","EXIT");
-						option.set("prompt","Exit");
-						option.save({}, {
-							success:function() {
-								view.script_options.push(option);
-								vent.trigger("conversation:update");
-							}
-						});
-					}
-				});
+          var TBA = view.findOptionlessScripts();
+          for(var i = 0; i < TBA.length; i++)
+          {
+            var option = new view.DialogOption();
+            option.set("game_id",view.model.get("game_id"));
+            option.set("dialog_id",view.model.get("dialog_id"));
+            option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
+            option.set("link_type","EXIT");
+            option.set("prompt","Exit");
+            option.save({}, {
+              success:function() {
+                view.script_options.push(option);
+                vent.trigger("conversation:update");
+              }
+            });
+          }
+        });
 
-				vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
-			}
-			else {
-				view.script_options.remove(view.model);
-				view.model.destroy({
-					success: function() {
-						vent.trigger("conversation:update");
-						vent.trigger("application:info:hide");
-					}
-				});
+        vent.trigger("application:popup:show", alert_dialog, "Delete Lines");
+      }
+      else {
+        view.script_options.remove(view.model);
+        view.model.destroy({
+          success: function() {
+            vent.trigger("conversation:update");
+            vent.trigger("application:info:hide");
+          }
+        });
 
-				var TBA = view.findOptionlessScripts();
-				for(var i = 0; i < TBA.length; i++)
-				{
-					var option = new view.DialogOption();
-					option.set("game_id",view.model.get("game_id"));
-					option.set("dialog_id",view.model.get("dialog_id"));
-					option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
-					option.set("link_type","EXIT");
-					option.set("prompt","Exit");
-					option.save({}, {
-						success:function() {
-							view.script_options.push(option);
-							vent.trigger("conversation:update");
-						}
-					});
-				}
-			}
+        var TBA = view.findOptionlessScripts();
+        for(var i = 0; i < TBA.length; i++)
+        {
+          var option = new view.DialogOption();
+          option.set("game_id",view.model.get("game_id"));
+          option.set("dialog_id",view.model.get("dialog_id"));
+          option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
+          option.set("link_type","EXIT");
+          option.set("prompt","Exit");
+          option.save({}, {
+            success:function() {
+              view.script_options.push(option);
+              vent.trigger("conversation:update");
+            }
+          });
+        }
+      }
 
-		}
+    }
 
-	});
+  });
 });

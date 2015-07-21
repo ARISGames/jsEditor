@@ -4,7 +4,15 @@ define([
   'text!templates/locations.tpl',
   'views/trigger_location_editor',
   'vent'
-], function(_, Backbone, Template, TriggerLocationEditorView, vent) {
+],
+function(
+  _,
+  Backbone,
+  Template,
+  TriggerLocationEditorView,
+  vent
+)
+{
   return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
     className: 'full-height',

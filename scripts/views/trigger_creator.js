@@ -1,105 +1,107 @@
-define(function(require)
+define(
+function(require)
 {
-	var _          = require('underscore');
-	var $          = require('jquery');
-	var EditorView = require('views/editor_base');
-	var vent       = require('vent');
-	var storage    = require('storage');
-	var Template   = require('text!templates/trigger_creator.tpl');
+  var _          = require('underscore');
+  var $          = require('jquery');
+  var EditorView = require('views/editor_base');
+  var vent       = require('vent');
+  var storage    = require('storage');
+  var Template   = require('text!templates/trigger_creator.tpl');
 
-	var Instance = require('models/instance');
+  var Instance = require('models/instance');
 
-	return EditorView.extend({
+  return EditorView.extend({
 
-		/* View */
+    /* View */
 
-		template: _.template(Template),
+    template: _.template(Template),
 
-		ui: {
-			"save":   ".save",
-			"cancel": ".cancel",
+    ui: {
+      "save":   ".save",
+      "cancel": ".cancel",
 
-			"name":   "#object-name",
+      "name":   "#object-name",
 
-			"autofocus":  "input[autofocus]"
-		},
+      "autofocus":  "input[autofocus]"
+    },
 
-		templateHelpers: function() {
-			return {
-			}
-		},
-
-
-		/* Initialization and Rendering */
-
-		initialize: function(options) {
-			this.scene       = options.scene;
-			this.game_object = options.game_object;
-			this.instance    = options.instance;
-		},
-
-		onShow: function() {
-			this.ui.autofocus.focus();
-		},
+    templateHelpers: function() {
+      return {
+      }
+    },
 
 
-		/* View Events */
+    /* Initialization and Rendering */
 
-		events: {
-			"click @ui.save":   "onClickSave",
-			"click @ui.cancel": "onClickCancel"
-		},
+    initialize: function(options) {
+      this.scene       = options.scene;
+      this.game_object = options.game_object;
+      this.instance    = options.instance;
+    },
+
+    onShow: function() {
+      this.ui.autofocus.focus();
+    },
 
 
-		/* Crud */
+    /* View Events */
 
-		onClickSave: function() {
-			var view = this;
-			var instance    = this.instance;
-			var game_object = this.game_object;
-			var trigger     = this.model;
+    events: {
+      "click @ui.save":   "onClickSave",
+      "click @ui.cancel": "onClickCancel"
+    },
 
-			game_object.set("name", view.ui.name.val());
 
-			game_object.save({}, {
-				create: function() {
-					storage.add_game_object(game_object);
-				},
-				success: function() {
-					// Save Instance
+    /* Crud */
 
-					instance.set("object_id",   game_object.id);
-					instance.set("object_type", Instance.type_for(game_object));
+    onClickSave: function() {
+      var view = this;
+      var instance    = this.instance;
+      var game_object = this.game_object;
+      var trigger     = this.model;
 
-					instance.save({}, {
-						create: function() {
-							storage.add_game_object(instance);
-						},
+      game_object.set("name", view.ui.name.val());
 
-						success: function() {
+      game_object.save({}, {
+        create: function() {
+          storage.add_game_object(game_object);
+        },
+        success: function() {
+          // Save Instance
 
-							// Save Trigger
-							trigger.set("instance_id", instance.id);
+          instance.set("object_id",   game_object.id);
+          instance.set("object_type", Instance.type_for(game_object));
 
-							trigger.save({},
-							{
-								create: function()
-								{
-									storage.add_game_object(trigger);
+          instance.save({}, {
+            create: function() {
+              storage.add_game_object(instance);
+            },
 
-									vent.trigger("application:popup:hide");
-								}
-							}); /* Trigger save */
-						}
-					}); /* Instance save */
-				}
-			}); /* Game Object save */
-		},
+            success: function() {
 
-		onClickCancel: function() {
-			this.close();
-			vent.trigger("application:popup:hide");
-		}
+              // Save Trigger
+              trigger.set("instance_id", instance.id);
 
-	});
+              trigger.save({},
+              {
+                create: function()
+                {
+                  storage.add_game_object(trigger);
+
+                  vent.trigger("application:popup:hide");
+                }
+              }); /* Trigger save */
+            }
+          }); /* Instance save */
+        }
+      }); /* Game Object save */
+    },
+
+    onClickCancel: function() {
+      this.close();
+      vent.trigger("application:popup:hide");
+    }
+
+  });
 });
+

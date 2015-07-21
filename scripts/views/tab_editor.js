@@ -1,368 +1,399 @@
 define([
-	'underscore',
-	'jquery',
-	'backbone',
-	'text!templates/tab_editor.tpl',
-	'text!images/phone-grid.svg',
-	'text!images/phone-list.svg',
-	'collections/media',
-	'collections/events',
-	'collections/items',
-	'models/game',
-	'models/event_package',
-	'models/event',
-	'models/tab',
-	'views/media_chooser',
-	'views/events',
-	'views/requirements',
-	'models/requirement_package',
-	'collections/and_packages',
-	'collections/atoms',
-	'collections/items',
-	'collections/tags',
-	'collections/plaques',
-	'collections/dialogs',
-	'collections/game_dialog_scripts',
-	'collections/web_pages',
-	'collections/tabs',
-	'collections/web_hooks',
-	'vent'
-], function(_, $, Backbone, Template, PhoneGridSVG, PhoneListSVG, MediaCollection, EventsCollection, ItemsCollection, Game, EventPackage, Event, Tab, MediaChooserView, EventsEditorView, RequirementsEditorView, RequirementPackage, AndPackagesCollection, AtomsCollection, ItemsCollection, TagsCollection, PlaquesCollection, DialogsCollection, DialogScriptsCollection, WebPagesCollection, TabsCollection, WebHooksCollection, vent) {
-
-	// TODO subclass editor
-	return Backbone.Marionette.CompositeView.extend({
-
-		/* View */
-
-		template: _.template(Template),
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!templates/tab_editor.tpl',
+  'text!images/phone-grid.svg',
+  'text!images/phone-list.svg',
+  'collections/media',
+  'collections/events',
+  'collections/items',
+  'models/game',
+  'models/event_package',
+  'models/event',
+  'models/tab',
+  'views/media_chooser',
+  'views/events',
+  'views/requirements',
+  'models/requirement_package',
+  'collections/and_packages',
+  'collections/atoms',
+  'collections/items',
+  'collections/tags',
+  'collections/plaques',
+  'collections/dialogs',
+  'collections/game_dialog_scripts',
+  'collections/web_pages',
+  'collections/tabs',
+  'collections/web_hooks',
+  'vent'
+],
+function(
+  _,
+  $,
+  Backbone,
+  Template,
+  PhoneGridSVG,
+  PhoneListSVG,
+  MediaCollection,
+  EventsCollection,
+  ItemsCollection,
+  Game,
+  EventPackage,
+  Event,
+  Tab,
+  MediaChooserView,
+  EventsEditorView,
+  RequirementsEditorView,
+  RequirementPackage,
+  AndPackagesCollection,
+  AtomsCollection,
+  ItemsCollection,
+  TagsCollection,
+  PlaquesCollection,
+  DialogsCollection,
+  DialogScriptsCollection,
+  WebPagesCollection,
+  TabsCollection,
+  WebHooksCollection,
+  vent
+)
+{
+  // TODO subclass editor
+  return Backbone.Marionette.CompositeView.extend({
+
+    /* View */
+
+    template: _.template(Template),
+
+    templateHelpers: function() {
+      return {
+        is_new: this.model.isNew(),
+
+        icon_thumbnail_url:  this.model.icon_thumbnail(),
+
+        parent_name: this.parent_name(),
+
+        tab_types: this.tab_types,
+        tab_options_visible: _.contains(["DIALOG", "ITEM", "PLAQUE", "WEB_PAGE"], this.model.get("type")),
+        tab_content_options: this.tab_content_options(),
+
+        option_selected: function(boolean_statement) {
+          return boolean_statement ? "selected" : "";
+        },
+
+        radio_selected: function(boolean_statement) {
+          return boolean_statement ? "checked" : "";
+        },
+
+        phone_grid_svg: PhoneGridSVG,
+        phone_list_svg: PhoneListSVG,
+
+        is_quest_tab: this.model.get('type') === "QUESTS"
+      };
+    },
+
+
+    ui: {
+      "save":   ".save",
+      "delete": ".delete",
+      "cancel": ".cancel",
+
+      "change_icon":       ".change-icon",
+      "edit_requirements": ".edit-requirements",
 
-		templateHelpers: function() {
-			return {
-				is_new: this.model.isNew(),
+      "name": "#name",
+      "info": "#info",
+      "type_select":    "#type",
+      "content_select": "#content",
 
-				icon_thumbnail_url:  this.model.icon_thumbnail(),
+      "icon":  ".change-icon img",
+      "quest_layouts": ".quest-tab-layout"
+    },
 
-				parent_name: this.parent_name(),
 
-				tab_types: this.tab_types,
-				tab_options_visible: _.contains(["DIALOG", "ITEM", "PLAQUE", "WEB_PAGE"], this.model.get("type")),
-				tab_content_options: this.tab_content_options(),
+    /* Constructor */
 
-				option_selected: function(boolean_statement) {
-					return boolean_statement ? "selected" : "";
-				},
+    initialize: function(options) {
+      // Dropdown lists FIXME replace with storage.
+      this.plaques   = options.contents.plaques;
+      this.items     = options.contents.items;
+      this.web_pages = options.contents.web_pages;
+      this.dialogs   = options.contents.dialogs;
 
-				radio_selected: function(boolean_statement) {
-					return boolean_statement ? "checked" : "";
-				},
+      // Allow returning to original attributes
+      this.storePreviousAttributes();
 
-				phone_grid_svg: PhoneGridSVG,
-				phone_list_svg: PhoneListSVG,
+      // Listen to association events on media
+      this.bindAssociations();
 
-				is_quest_tab: this.model.get('type') === "QUESTS"
-			};
-		},
-
-
-		ui: {
-			"save":   ".save",
-			"delete": ".delete",
-			"cancel": ".cancel",
+      // Handle cancel from modal X or dark area
+      this.on("popup:hide", this.onClickCancel);
+    },
 
-			"change_icon":       ".change-icon",
-			"edit_requirements": ".edit-requirements",
 
-			"name": "#name",
-			"info": "#info",
-			"type_select":    "#type",
-			"content_select": "#content",
+    /* View Events */
 
-			"icon":  ".change-icon img",
-			"quest_layouts": ".quest-tab-layout"
-		},
+    onShow: function() {
+      this.$el.find('input[autofocus]').focus();
+    },
 
+    events: {
+      "click @ui.save":   "onClickSave",
+      "click @ui.cancel": "onClickCancel",
+      "click @ui.delete": "onClickDelete",
 
-		/* Constructor */
+      "click @ui.change_icon":       "onClickIcon",
+      "click @ui.edit_requirements": "onClickRequirements",
 
-		initialize: function(options) {
-			// Dropdown lists FIXME replace with storage.
-			this.plaques   = options.contents.plaques;
-			this.items     = options.contents.items;
-			this.web_pages = options.contents.web_pages;
-			this.dialogs   = options.contents.dialogs;
+      // Field events
+      "change @ui.name": "onChangeName",
+      "change @ui.info": "onChangeInfo",
+      "change @ui.type_select":    "onChangeType",
+      "change @ui.content_select": "onChangeContent",
+      "change @ui.quest_layouts":  "onChangeQuestLayout"
+    },
 
-			// Allow returning to original attributes
-			this.storePreviousAttributes();
 
-			// Listen to association events on media
-			this.bindAssociations();
-
-			// Handle cancel from modal X or dark area
-			this.on("popup:hide", this.onClickCancel);
-		},
+    /* Dom manipulation */
 
+    set_icon: function(media) {
+      this.ui.icon.attr("src", media.thumbnail_for(this.model));
+    },
 
-		/* View Events */
 
-		onShow: function() {
-			this.$el.find('input[autofocus]').focus();
-		},
+    /* Crud */
 
-		events: {
-			"click @ui.save":   "onClickSave",
-			"click @ui.cancel": "onClickCancel",
-			"click @ui.delete": "onClickDelete",
+    onClickSave: function() {
+      var view  = this;
 
-			"click @ui.change_icon":       "onClickIcon",
-			"click @ui.edit_requirements": "onClickRequirements",
+      view.model.save({}, {
+        create: function() {
+          view.storePreviousAttributes();
 
-			// Field events
-			"change @ui.name": "onChangeName",
-			"change @ui.info": "onChangeInfo",
-			"change @ui.type_select":    "onChangeType",
-			"change @ui.content_select": "onChangeContent",
-			"change @ui.quest_layouts":  "onChangeQuestLayout"
-		},
+          view.trigger("tab:add", view.model);
+        },
 
+        success: function() {
+          view.storePreviousAttributes();
 
-		/* Dom manipulation */
+          vent.trigger("application:popup:hide");
+        }
+      });
+    },
 
-		set_icon: function(media) {
-			this.ui.icon.attr("src", media.thumbnail_for(this.model));
-		},
+    onClickCancel: function() {
+      delete this.previous_attributes.requirement_root_package_id;
+      this.model.set(this.previous_attributes);
+    },
 
+    onClickDelete: function() {
+      this.model.destroy({
+        success: function() {
+          vent.trigger("application:popup:hide");
+        }
+      });
+    },
 
-		/* Crud */
 
-		onClickSave: function() {
-			var view  = this;
+    /* Tab name logic */
 
-			view.model.save({}, {
-				create: function() {
-					view.storePreviousAttributes();
+    tab_types: Tab.tab_types,
 
-					view.trigger("tab:add", view.model);
-				},
+    tab_content_options: function() {
+      // TODO add section headers
+      switch(this.model.get("type")) {
+        case "DIALOG":
+          return this.dialogs.map(function(model)   { return {name: model.get("name"), value: model.id} });
 
-				success: function() {
-					view.storePreviousAttributes();
+        case "ITEM":
+          return this.items.map(function(model)     { return {name: model.get("name"), value: model.id} });
 
-					vent.trigger("application:popup:hide");
-				}
-			});
-		},
+        case "PLAQUE":
+          return this.plaques.map(function(model)   { return {name: model.get("name"), value: model.id} });
 
-		onClickCancel: function() {
-			delete this.previous_attributes.requirement_root_package_id;
-			this.model.set(this.previous_attributes);
-		},
+        case "WEB_PAGE":
+          return this.web_pages.map(function(model) { return {name: model.get("name"), value: model.id} });
+        default:
+          return [];
+      }
+    },
 
-		onClickDelete: function() {
-			this.model.destroy({
-				success: function() {
-					vent.trigger("application:popup:hide");
-				}
-			});
-		},
+    parent_name: function() {
 
+      if(this.model.get("content_id") === "0")
+      {
+        return this.model.tab_type_name();
+      }
+      else
+      {
+        return this.model.game_object().get("name");
+      }
+    },
 
-		/* Tab name logic */
+    /* Field Changes */
 
-		tab_types: Tab.tab_types,
+    onChangeName: function() { this.model.set("name", this.ui.name.val()); },
+    onChangeInfo: function() { this.model.set("info", this.ui.info.val()); },
 
-		tab_content_options: function() {
-			// TODO add section headers
-			switch(this.model.get("type")) {
-				case "DIALOG":
-					return this.dialogs.map(function(model)   { return {name: model.get("name"), value: model.id} });
 
-				case "ITEM":
-					return this.items.map(function(model)     { return {name: model.get("name"), value: model.id} });
+    onChangeType:   function() {
+      var type = this.ui.type_select.val();
+      this.model.set("type", type)
 
-				case "PLAQUE":
-					return this.plaques.map(function(model)   { return {name: model.get("name"), value: model.id} });
+      // Reset Game Object Dropdown.
+      this.model.set("content_id", "0");
 
-				case "WEB_PAGE":
-					return this.web_pages.map(function(model) { return {name: model.get("name"), value: model.id} });
-				default:
-					return [];
-			}
-		},
+      // Reset info string
+      this.model.set("info", "");
 
-		parent_name: function() {
+      this.render();
+    },
 
-			if(this.model.get("content_id") === "0")
-			{
-				return this.model.tab_type_name();
-			}
-			else
-			{
-				return this.model.game_object().get("name");
-			}
-		},
+    onChangeContent:   function() {
+      this.model.set("content_id", this.ui.content_select.val())
 
-		/* Field Changes */
+      var content_collections = {
+        "DIALOG":   this.dialogs,
+        "ITEM":     this.items,
+        "PLAQUE":   this.plaques,
+        "WEB_PAGE": this.web_pages
+      }
 
-		onChangeName: function() { this.model.set("name", this.ui.name.val()); },
-		onChangeInfo: function() { this.model.set("info", this.ui.info.val()); },
+      // FIXME replace with set game_object_id and storage.
+      var collection = content_collections[this.model.get("type")];
+      var game_object = collection.get(this.model.get("content_id"));
 
+      this.unbindAssociations();
+      this.model.game_object(game_object);
+      this.bindAssociations();
 
-		onChangeType:   function() {
-			var type = this.ui.type_select.val();
-			this.model.set("type", type)
+      this.render();
+    },
 
-			// Reset Game Object Dropdown.
-			this.model.set("content_id", "0");
 
-			// Reset info string
-			this.model.set("info", "");
+    onChangeQuestLayout: function() {
+      var selected_radio = this.$el.find(".quest-tab-layout:checked");
+      this.model.set("info", selected_radio.val());
+    },
 
-			this.render();
-		},
 
-		onChangeContent:   function() {
-			this.model.set("content_id", this.ui.content_select.val())
+    /* Undo and Association Binding */
 
-			var content_collections = {
-				"DIALOG":   this.dialogs,
-				"ITEM":     this.items,
-				"PLAQUE":   this.plaques,
-				"WEB_PAGE": this.web_pages
-			}
+    storePreviousAttributes: function() {
+      this.previous_attributes = _.clone(this.model.attributes)
+    },
 
-			// FIXME replace with set game_object_id and storage.
-			var collection = content_collections[this.model.get("type")];
-			var game_object = collection.get(this.model.get("content_id"));
+    unbindAssociations: function() {
+      this.stopListening(this.model.icon());
 
-			this.unbindAssociations();
-			this.model.game_object(game_object);
-			this.bindAssociations();
+      if(this.model.game_object())
+      {
+        this.stopListening(this.model.game_object().icon());
+      }
+    },
 
-			this.render();
-		},
+    bindAssociations: function() {
+      this.listenTo(this.model.icon(), 'change', this.set_icon);
 
+      if(this.model.game_object())
+      {
+        this.listenTo(this.model.game_object().icon(), 'change', this.set_icon);
+      }
+    },
 
-		onChangeQuestLayout: function() {
-			var selected_radio = this.$el.find(".quest-tab-layout:checked");
-			this.model.set("info", selected_radio.val());
-		},
 
+    /* Media Selection */
 
-		/* Undo and Association Binding */
+    onClickIcon: function(event) {
+      var view = this;
+      event.preventDefault();
 
-		storePreviousAttributes: function() {
-			this.previous_attributes = _.clone(this.model.attributes)
-		},
+      var game  = new Game({game_id: this.model.get("game_id")});
+      var media = new MediaCollection([], {parent: game});
 
-		unbindAssociations: function() {
-			this.stopListening(this.model.icon());
+      media.fetch({
+        success: function() {
+          /* Add default */
+          media.unshift(view.model.default_icon());
 
-			if(this.model.game_object())
-			{
-				this.stopListening(this.model.game_object().icon());
-			}
-		},
+          /* Icon */
+          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model, back_view: view});
+          vent.trigger("application:popup:show", icon_chooser, "Tab Icon");
 
-		bindAssociations: function() {
-			this.listenTo(this.model.icon(), 'change', this.set_icon);
+          icon_chooser.on("media:choose", function(media) {
+            view.unbindAssociations();
+            view.model.set("icon_media_id", media.id);
+            view.bindAssociations();
+            vent.trigger("application:popup:show", view, "Edit Tab");
+          });
 
-			if(this.model.game_object())
-			{
-				this.listenTo(this.model.game_object().icon(), 'change', this.set_icon);
-			}
-		},
+          icon_chooser.on("cancel", function() {
+            vent.trigger("application:popup:show", view, "Edit Tab");
+          });
+        }
+      });
+    },
 
 
-		/* Media Selection */
+    /* Requirements Editors */
 
-		onClickIcon: function(event) {
-			var view = this;
-			event.preventDefault();
+    onClickRequirements: function() {
+      var view = this;
 
-			var game  = new Game({game_id: this.model.get("game_id")});
-			var media = new MediaCollection([], {parent: game});
+      var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-			media.fetch({
-				success: function() {
-					/* Add default */
-					media.unshift(view.model.default_icon());
+      var game   = new Game({game_id: view.model.get("game_id")});
 
-					/* Icon */
-					var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model, back_view: view});
-					vent.trigger("application:popup:show", icon_chooser, "Tab Icon");
+      var contents = {
+        items:          new ItemsCollection         ([], {parent: game}),
+        tags:           new TagsCollection          ([], {parent: game}),
+        plaques:        new PlaquesCollection       ([], {parent: game}),
+        dialogs:        new DialogsCollection       ([], {parent: game}),
+        dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
+        web_pages:      new WebPagesCollection      ([], {parent: game}),
+        tabs:           new TabsCollection          ([], {parent: game}),
+        hooks:          new WebHooksCollection      ([], {parent: game})
+      };
 
-					icon_chooser.on("media:choose", function(media) {
-						view.unbindAssociations();
-						view.model.set("icon_media_id", media.id);
-						view.bindAssociations();
-						vent.trigger("application:popup:show", view, "Edit Tab");
-					});
+      // Don't fetch non existent package
+      if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-					icon_chooser.on("cancel", function() {
-						vent.trigger("application:popup:show", view, "Edit Tab");
-					});
-				}
-			});
-		},
+      $.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.tabs.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+      {
+        // Load associations into collections
+        var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
+        requirement_package.set("and_packages", and_packages);
 
+        and_packages.each(function(and_package) {
+          var atoms = new AtomsCollection(and_package.get("atoms"));
+          and_package.set("atoms", atoms);
+        });
 
-		/* Requirements Editors */
+        // launch editor
+        var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
 
-		onClickRequirements: function() {
-			var view = this;
+        requirements_editor.on("cancel", function()
+        {
+          vent.trigger("application:popup:show", view, "Edit Tab");
+        });
 
-			var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
+        requirements_editor.on("requirement_package:save", function(requirement_package)
+        {
+          view.model.set("requirement_root_package_id", requirement_package.id);
 
-			var game   = new Game({game_id: view.model.get("game_id")});
+          if(!view.model.isNew() && view.model.hasChanged("requirement_root_package_id"))
+          {
+            // Quicksave if moving from 0 so user has consistent experience
+            view.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
+          }
 
-			var contents = {
-				items:          new ItemsCollection         ([], {parent: game}),
-				tags:           new TagsCollection          ([], {parent: game}),
-				plaques:        new PlaquesCollection       ([], {parent: game}),
-				dialogs:        new DialogsCollection       ([], {parent: game}),
-				dialog_scripts: new DialogScriptsCollection ([], {parent: game}),
-				web_pages:      new WebPagesCollection      ([], {parent: game}),
-				tabs:           new TabsCollection          ([], {parent: game}),
-				hooks:          new WebHooksCollection      ([], {parent: game})
-			};
+          vent.trigger("application:popup:show", view, "Edit Tab");
+        });
 
-			// Don't fetch non existent package
-			if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
-
-			$.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.tabs.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
-			{
-				// Load associations into collections
-				var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
-				requirement_package.set("and_packages", and_packages);
-
-				and_packages.each(function(and_package) {
-					var atoms = new AtomsCollection(and_package.get("atoms"));
-					and_package.set("atoms", atoms);
-				});
-
-				// launch editor
-				var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
-
-				requirements_editor.on("cancel", function()
-				{
-					vent.trigger("application:popup:show", view, "Edit Tab");
-				});
-
-				requirements_editor.on("requirement_package:save", function(requirement_package)
-				{
-					view.model.set("requirement_root_package_id", requirement_package.id);
-
-					if(!view.model.isNew() && view.model.hasChanged("requirement_root_package_id"))
-					{
-						// Quicksave if moving from 0 so user has consistent experience
-						view.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
-					}
-
-					vent.trigger("application:popup:show", view, "Edit Tab");
-				});
-
-				vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
-			});
-		}
-	});
+        vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
+      });
+    }
+  });
 });
+

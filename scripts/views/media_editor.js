@@ -1,109 +1,120 @@
 define([
-	'underscore',
-	'backbone',
-	'text!templates/media_editor.tpl',
-	'collections/media',
-	'models/media',
-	'views/media_editor_thumbnail',
-	'views/media_upload',
-	'vent'
-], function(_, Backbone, Template, MediaCollection, Media, MediaThumbnailView, MediaUploadView, vent) {
-	return Backbone.Marionette.CompositeView.extend({
-		template: _.template(Template),
+  'underscore',
+  'backbone',
+  'text!templates/media_editor.tpl',
+  'collections/media',
+  'models/media',
+  'views/media_editor_thumbnail',
+  'views/media_upload',
+  'vent'
+],
+function(
+  _,
+  Backbone,
+  Template,
+  MediaCollection,
+  Media,
+  MediaThumbnailView,
+  MediaUploadView,
+  vent
+)
+{
+  return Backbone.Marionette.CompositeView.extend({
+    template: _.template(Template),
 
-		itemView: MediaThumbnailView,
-		itemViewContainer: '.itemViewContainer',
+    itemView: MediaThumbnailView,
+    itemViewContainer: '.itemViewContainer',
 
-		className: 'media-editor',
-
-
-		events: {
-			"click .upload": "onClickUpload",
-			"dragenter .media-drop-target": "onDragEnter",
-			"dragleave .media-drop-target": "onDragLeave",
-			"dragend .media-drop-target": "onDragEnd",
-			"dragover .media-drop-target": "onDragOver",
-			"drop .media-drop-target": "onDrop",
-		},
-
-
-		initialize: function() {
-			var view = this;
-			vent.on("media:upload", function(media) {
-				view.collection.add(media);
-			});
-
-			this.reader = new FileReader();
-			this.reader.onload = this.onReadFile.bind(this);
-		},
-
-		onRender: function() {
-			//this.$el.find(".media-drop-target").on("drop", this.onDrop.bind(this));
-		},
+    className: 'media-editor',
 
 
-		onClickUpload: function() {
-			var media = new Media({game_id: this.model.get("game_id"), name: ""});
-			vent.trigger("application:popup:show", new MediaUploadView({model: media}), "Upload Media");
-		},
+    events: {
+      "click .upload": "onClickUpload",
+      "dragenter .media-drop-target": "onDragEnter",
+      "dragleave .media-drop-target": "onDragLeave",
+      "dragend .media-drop-target": "onDragEnd",
+      "dragover .media-drop-target": "onDragOver",
+      "drop .media-drop-target": "onDrop",
+    },
 
 
-		onDragEnter: function(event) {
-			this.$el.find(".media-drop-target").addClass("media-hover");
-			event.preventDefault();
-			return false;
-		},
+    initialize: function() {
+      var view = this;
+      vent.on("media:upload", function(media) {
+        view.collection.add(media);
+      });
 
-		onDragOver: function(event) {
-			this.$el.find(".media-drop-target").addClass("media-hover");
-			event.preventDefault();
-			return false;
-		},
+      this.reader = new FileReader();
+      this.reader.onload = this.onReadFile.bind(this);
+    },
 
-		onDragEnd: function(event) {
-			this.$el.find(".media-drop-target").addClass("media-hover");
-			event.preventDefault();
-			return false;
-		},
+    onRender: function() {
+      //this.$el.find(".media-drop-target").on("drop", this.onDrop.bind(this));
+    },
 
-		onDragLeave: function(event) {
-			this.$el.find(".media-drop-target").removeClass("media-hover");
-			event.preventDefault();
-			return false;
-		},
 
-		onDrop: function(event) {
-			this.$el.find(".media-drop-target").removeClass("media-hover");
-			event.preventDefault();
+    onClickUpload: function() {
+      var media = new Media({game_id: this.model.get("game_id"), name: ""});
+      vent.trigger("application:popup:show", new MediaUploadView({model: media}), "Upload Media");
+    },
 
-			var file = event.originalEvent.dataTransfer.files[0];
 
-			this.model = new Media({game_id: this.model.get("game_id")});
-			this.model.set("file_name",    file.name.toLowerCase());
-			this.model.set("display_name", file.name.toLowerCase());
+    onDragEnter: function(event) {
+      this.$el.find(".media-drop-target").addClass("media-hover");
+      event.preventDefault();
+      return false;
+    },
 
-			this.reader.readAsDataURL(file);
+    onDragOver: function(event) {
+      this.$el.find(".media-drop-target").addClass("media-hover");
+      event.preventDefault();
+      return false;
+    },
 
-			return false;
-		},
+    onDragEnd: function(event) {
+      this.$el.find(".media-drop-target").addClass("media-hover");
+      event.preventDefault();
+      return false;
+    },
 
-		// TODO or pop up editor? single vs multiple file workflow.
-		onReadFile: function(event) {
-			var view = this;
+    onDragLeave: function(event) {
+      this.$el.find(".media-drop-target").removeClass("media-hover");
+      event.preventDefault();
+      return false;
+    },
 
-			var data = event.target.result;
+    onDrop: function(event) {
+      this.$el.find(".media-drop-target").removeClass("media-hover");
+      event.preventDefault();
 
-			// strip base64 header
-			var start = data.indexOf(",") + 1;
-			var data  = data.substr(start);
+      var file = event.originalEvent.dataTransfer.files[0];
 
-			this.model.set("data", data);
+      this.model = new Media({game_id: this.model.get("game_id")});
+      this.model.set("file_name",    file.name.toLowerCase());
+      this.model.set("display_name", file.name.toLowerCase());
 
-			this.model.save({}, {
-				success: function() {
-					vent.trigger("media:upload", view.model);
-				}
-			});
-		}
-	});
+      this.reader.readAsDataURL(file);
+
+      return false;
+    },
+
+    // TODO or pop up editor? single vs multiple file workflow.
+    onReadFile: function(event) {
+      var view = this;
+
+      var data = event.target.result;
+
+      // strip base64 header
+      var start = data.indexOf(",") + 1;
+      var data  = data.substr(start);
+
+      this.model.set("data", data);
+
+      this.model.save({}, {
+        success: function() {
+          vent.trigger("media:upload", view.model);
+        }
+      });
+    }
+  });
 });
