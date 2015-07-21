@@ -22,7 +22,8 @@ define([
 			var view = this;
 
 			// Render Map
-			var element = this.$el.find('.map-canvas').get(0);
+			var canv_element = this.$el.find('.map-canvas').get(0);
+                        var input_element = this.$el.find('.map-input').get(0);
 
 			var default_location = new google.maps.LatLng(43.073, -89.4012);
 			var map_options = {
@@ -30,8 +31,34 @@ define([
 				center: default_location
 			};
 
-			var map      = new google.maps.Map(element, map_options);
+			var map      = new google.maps.Map(canv_element, map_options);
 			var boundary = new google.maps.LatLngBounds();
+
+                        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input_element);
+                        var searchBox = new google.maps.places.SearchBox(input_element);
+
+                        google.maps.event.addListener(map, 'bounds_changed',
+                          function()
+                          {
+                            var bounds = map.getBounds();
+                            searchBox.setBounds(bounds);
+                          }
+                        );
+
+                        google.maps.event.addListener(searchBox, 'places_changed',
+                          function()
+                          {
+                            var places = searchBox.getPlaces();
+
+                            if(places.length == 0) return;
+
+                            var bounds = new google.maps.LatLngBounds();
+                            for (var i = 0, place; place = places[i]; i++)
+                              bounds.extend(place.geometry.location);
+
+                            map.fitBounds(bounds);
+                          }
+                        );
 
 			_.each(this.collection.models, function(trigger) {
 				// Add Trigger Location to map

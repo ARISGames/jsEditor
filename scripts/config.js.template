@@ -16,6 +16,7 @@ define(
       */
 
       "google_analytics_key": "XX-########-#",
+      "google_maps_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "compress": true,
 
     };

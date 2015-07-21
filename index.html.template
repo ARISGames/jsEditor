@@ -87,7 +87,7 @@
     </div>
 
     <!-- google maps api. move to requireJS -->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{google_maps}}">
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
