@@ -6,7 +6,7 @@ define(
 
     return {
       "aris_api_url": base_url + "json.php/v2.",
-      "migrate_path": base_url + "services/migration/",
+      "migration_api_url": base_url + "services/migration/",
 
       /*
         Note- the following lines will be parsed by a simple pre-processor
@@ -18,7 +18,6 @@ define(
       "google_analytics_key": "XX-########-#",
       "google_maps_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
       "compress": true,
-
     };
   }
 );

@@ -35,7 +35,7 @@ function(
         gettext: function(text) { return i18n.gettext(text); },
         available_languages: i18n.available_languages,
         current_language: i18n.current_language,
-        migrate_path: config.migrate_path
+        migration_api_url: config.migration_api_url
       }
     },
 

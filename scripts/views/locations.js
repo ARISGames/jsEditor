@@ -27,6 +27,7 @@ function(
       var view = this;
       if(navigator.geolocation)
       {
+        setTimeout(function() { view.renderMap(43.073,-89.4012); }, 300); //pre-render @ madison while getting browser loc
         navigator.geolocation.getCurrentPosition(
           function(position)
           {
@@ -36,13 +37,8 @@ function(
           },
           function(error)
           {
-            setTimeout(function() { view.renderMap(43.073,-89.4012); }, 300);
           }
         );
-      }
-      else
-      {
-        setTimeout(function() { view.renderMap(43.073,-89.4012); }, 300);
       }
     },
 
