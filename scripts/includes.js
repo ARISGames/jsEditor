@@ -31,7 +31,7 @@ require.config(
     /* App Config */
     'config':'config',
 
-    /* Templages */
+    /* Templates */
     'templates':'../templates',
 
     /* Images */
