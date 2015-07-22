@@ -1,23 +1,32 @@
 define([
-	'jquery',
-	'underscore',
-	'backbone',
-	'config',
-	'vent'
-], function($, _, Backbone, config, vent) {
-	return Backbone.Collection.extend({
+  'jquery',
+  'underscore',
+  'backbone',
+  'config',
+  'vent'
+],
+function(
+  $,
+  _,
+  Backbone,
+  config,
+  vent
+)
+{
+  return Backbone.Collection.extend(
+  {
+    initialize: function(models, options)
+    {
+      options || (options = {});
+      this.parent = options.parent;
+    },
 
-		initialize: function(models, options) {
-			options || (options = {});
-			this.parent = options.parent;
-		},
+    amfphp_url_root: config.aris_api_url,
 
-		amfphp_url_root: config.aris_api_url,
-
-		parse: function(json, response) {
-			return json.data;
-		},
-
-	});
+    parse: function(json, response)
+    {
+      return json.data;
+    },
+  });
 });
 

@@ -1,13 +1,12 @@
-define(function(require)
+define(
+function(require)
 {
-	var JsonCollection = require('collections/json_collection_base');
-	var NoteComment    = require('models/note_comment');
+  var JsonCollection = require('collections/json_collection_base');
+  var NoteComment    = require('models/note_comment');
 
-
-	return JsonCollection.extend({
-
-		model: NoteComment,
-
-		amfphp_url: "note_comments.getNoteCommentsForNote"
-	});
+  return JsonCollection.extend({
+    model: NoteComment,
+    amfphp_url: "note_comments.getNoteCommentsForNote"
+  });
 });
+
