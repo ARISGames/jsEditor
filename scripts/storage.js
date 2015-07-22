@@ -1,5 +1,4 @@
 /* Storage Singleton */
-
 /* The containers are injected from application.js to fix circular issues */
 define(
 function(require, exports, module)

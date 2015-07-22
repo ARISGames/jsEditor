@@ -1,31 +1,46 @@
-define(
-function(require, exports, module)
+define([
+  "backbone",
+  "marionette",
+  "collections/users",
+  "collections/tags",
+  "collections/tabs",
+  "collections/quests",
+  "collections/media",
+  "collections/web_hooks",
+  "collections/games",
+  "collections/game_triggers",
+  "collections/instances",
+  "collections/scenes",
+  "collections/plaques",
+  "collections/items",
+  "collections/dialogs",
+  "collections/web_pages",
+  "collections/factories",
+  "collections/game_dialog_scripts",
+  "collections/game_events"
+],
+function(
+  Backbone,
+  Marionette,
+  UsersCollection,
+  TagsCollection,
+  TabsCollection,
+  QuestsCollection,
+  MediaCollection,
+  WebhooksCollection,
+  GamesCollection,
+  TriggersCollection,
+  InstancesCollection,
+  ScenesCollection,
+  PlaquesCollection,
+  ItemsCollection,
+  DialogsCollection,
+  WebPagesCollection,
+  FactoriesCollection,
+  DialogScriptsCollection,
+  EventsCollection
+)
 {
-  var Backbone   = require("backbone"  );
-  var Marionette = require("marionette");
-
-  var UsersCollection     = require("collections/users");
-  var TagsCollection      = require("collections/tags");
-  var TabsCollection      = require("collections/tabs");
-  var QuestsCollection    = require("collections/quests");
-  var MediaCollection     = require("collections/media");
-  var WebhooksCollection  = require("collections/web_hooks");
-  var GamesCollection     = require("collections/games");
-
-  var TriggersCollection  = require("collections/game_triggers");
-  var InstancesCollection = require("collections/instances");
-  var ScenesCollection    = require("collections/scenes");
-
-  var PlaquesCollection   = require("collections/plaques");
-  var ItemsCollection     = require("collections/items");
-  var DialogsCollection   = require("collections/dialogs");
-  var WebPagesCollection  = require("collections/web_pages");
-  var FactoriesCollection = require("collections/factories");
-
-  var DialogScriptsCollection = require("collections/game_dialog_scripts");
-
-  var EventsCollection    = require("collections/game_events");
-
   return Marionette.Controller.extend(
   {},
   /* Static methods */
