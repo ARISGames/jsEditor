@@ -1,17 +1,27 @@
 /* Application */
-define(
-function(require)
+define([
+  'jquery',
+  'backbone',
+  'marionette',
+  'models/session',
+  'vent',
+  'router',
+  'views/user_nav_menu',
+  'storage',
+  'storage_collections'
+],
+function(
+  $,
+  Backbone,
+  Marionette,
+  session,
+  vent,
+  Router,
+  UserNavMenuView,
+  storage,
+  StorageCollections
+)
 {
-  var $                  = require('jquery');
-  var Backbone           = require('backbone');
-  var Marionette         = require('marionette');
-  var session            = require('models/session');
-  var vent               = require('vent');
-  var Router             = require('router');
-  var UserNavMenuView    = require('views/user_nav_menu');
-  var storage            = require('storage');
-  var StorageCollections = require('storage_collections');
-
   var application = new Backbone.Marionette.Application();
 
   // Application Layout
