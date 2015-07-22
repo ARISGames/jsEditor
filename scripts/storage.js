@@ -1,11 +1,15 @@
 /* Storage Singleton */
 /* The containers are injected from application.js to fix circular issues */
 define(
-function(require, exports, module)
+[
+  "backbone",
+  "marionette"
+],
+function(
+  Backbone,
+  Marionette
+)
 {
-  var Backbone   = require("backbone"  );
-  var Marionette = require("marionette");
-
   var Storage = Marionette.Controller.extend(
   {
     for: function(game)
