@@ -182,7 +182,6 @@ function(require)
       );
     },
 
-
     editSharing: function(game_id)
     {
       var game = new Game({game_id: game_id});

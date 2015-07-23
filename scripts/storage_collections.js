@@ -47,27 +47,26 @@ function(
   {
     inject: function(storage)
     {
-      storage.users     = new UsersCollection    ();
-      storage.tags      = new TagsCollection     ();
-      storage.tabs      = new TabsCollection     ();
-      storage.quests    = new QuestsCollection   ();
-      storage.media     = new MediaCollection    ();
-      storage.web_hooks = new WebhooksCollection ();
-      storage.games     = new GamesCollection    ();
+      storage.users          = new UsersCollection();
+      storage.tags           = new TagsCollection();
+      storage.tabs           = new TabsCollection();
+      storage.quests         = new QuestsCollection();
+      storage.media          = new MediaCollection();
+      storage.web_hooks      = new WebhooksCollection();
+      storage.games          = new GamesCollection();
 
-      storage.triggers  = new TriggersCollection  ();
-      storage.instances = new InstancesCollection ();
-      storage.scenes    = new ScenesCollection    ();
+      storage.triggers       = new TriggersCollection();
+      storage.instances      = new InstancesCollection();
+      storage.scenes         = new ScenesCollection();
 
-      storage.plaques   = new PlaquesCollection   ();
-      storage.items     = new ItemsCollection     ();
-      storage.dialogs   = new DialogsCollection   ();
-      storage.web_pages = new WebPagesCollection  ();
-      storage.factories = new FactoriesCollection ();
+      storage.plaques        = new PlaquesCollection();
+      storage.items          = new ItemsCollection();
+      storage.dialogs        = new DialogsCollection();
+      storage.web_pages      = new WebPagesCollection();
+      storage.factories      = new FactoriesCollection();
 
-      storage.dialog_scripts = new DialogScriptsCollection ();
-
-      storage.events    = new EventsCollection ();
+      storage.dialog_scripts = new DialogScriptsCollection();
+      storage.events         = new EventsCollection();
     }
   });
 });
