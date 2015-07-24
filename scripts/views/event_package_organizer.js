@@ -31,9 +31,8 @@ function(
 
     onClickNew: function()
     {
-      var eventPackage = new EventPackage({game_id: this.model.id});
-
-      var event_package_editor = new EventPackageEditorView({model: event, items:storage.items});
+      var eventPackage = new EventPackage({game_id:this.model.id});
+      var event_package_editor = new EventPackageEditorView({model:eventPackage});
       vent.trigger("application:popup:show", event_package_editor, "Create Event", true);
     }
   });

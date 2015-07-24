@@ -31,7 +31,7 @@ function(
 
     events:
     {
-      "click .edit": "onClickEdit"
+      "click .edit":"onClickEdit"
     },
 
     initialize: function()
@@ -39,13 +39,11 @@ function(
       this.listenTo(this.model, "update", this.render);
     },
 
-    tagName: 'tr',
+    tagName:'tr',
 
     onClickEdit: function()
     {
-      var view = this;
-
-      var event_package_editor = new EventPackageEditorView({model: view.model});
+      var event_package_editor = new EventPackageEditorView({model:this.model});
       vent.trigger("application:popup:show", event_package_editor, "Edit Event", true);
     }
   });
