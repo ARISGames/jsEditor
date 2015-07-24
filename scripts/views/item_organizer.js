@@ -14,7 +14,8 @@ function(require)
     itemView: ItemOrganizerRowView,
     itemViewContainer: ".items",
 
-    events: {
+    events:
+    {
       "click .new": "onClickNew"
     },
 

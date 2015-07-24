@@ -28,7 +28,8 @@ function(
     // Bootstrap
     className: "list-group-item",
 
-    events: {
+    events:
+    {
       "click .remove": "onClickRemove"
     },
 

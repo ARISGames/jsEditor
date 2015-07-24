@@ -1,6 +1,6 @@
-<div class="events-editor">
+<div class="event-package-editor">
 	<div class="container-fluid">
-		<div class="row event-table-header">
+		<div class="row event-package-table-header">
 			<div class="col-xs-4 ">
 				<label>Action</label>
 			</div>
@@ -28,3 +28,4 @@
 		</button>
 	</div>
 </div>
+

@@ -31,7 +31,8 @@ function(require)
       this.$el.find('input[autofocus]').focus();
     },
 
-    events: {
+    events:
+    {
       "click .delete": "onClickDelete"
     },
 

@@ -23,20 +23,23 @@ function(require)
       this.items = options.items;
     },
 
-    ui: {
+    ui:
+    {
       event: ".event-select",
       content: ".content-select",
       quantity: ".quantity"
     },
 
-    events: {
+    events:
+    {
       "change @ui.event":    "onChangeEvent",
       "change @ui.content":  "onChangeContent",
       "change @ui.quantity": "onChangeQuantity",
       "click .delete":       "onClickDeleteEvent"
     },
 
-    onChangeEvent: function() {
+    onChangeEvent: function()
+    {
       var value = this.ui.event.find("option:selected").val();
       this.model.set("event", value);
     },

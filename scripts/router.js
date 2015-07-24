@@ -150,7 +150,18 @@ function(require)
 
       // TODO catch errors if any fail (since its a non-standard failure)
       $.when(
-        game.fetch(), storage.instances.fetch(), storage.triggers.fetch(), storage.scenes.fetch(), storage.dialogs.fetch(), storage.plaques.fetch(), storage.items.fetch(), storage.web_pages.fetch(), storage.factories.fetch(), storage.media.fetch(), storage.events.fetch()).done(
+        game.fetch(),
+        storage.instances.fetch(),
+        storage.triggers.fetch(),
+        storage.scenes.fetch(),
+        storage.dialogs.fetch(),
+        storage.plaques.fetch(),
+        storage.items.fetch(),
+        storage.web_pages.fetch(),
+        storage.factories.fetch(),
+        storage.media.fetch(),
+        storage.event_packages.fetch()
+      ).done(
         function()
         {
           // TODO make game a promise and store it so we can access the same game instance in other tabs.
@@ -159,7 +170,17 @@ function(require)
 
           vent.trigger("application.show",      new ScenesView  ({model: game, collection: storage.scenes, triggers: storage.triggers, intro_scene: intro_scene}));
           vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-          vent.trigger("application:list:show", new GameObjectsOrganizerView({model: game, dialogs: storage.dialogs, plaques: storage.plaques, items: storage.items, pages: storage.web_pages, factories: storage.factories}));
+          vent.trigger("application:list:show", new GameObjectsOrganizerView(
+                                                  {
+                                                    model:game,
+                                                    dialogs:storage.dialogs,
+                                                    plaques:storage.plaques,
+                                                    items:storage.items,
+                                                    pages:storage.web_pages,
+                                                    factories:storage.factories,
+                                                    event_packages:storage.event_packages,
+                                                  }
+                                                ));
           vent.trigger("application:info:hide");
         }
       );

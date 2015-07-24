@@ -33,12 +33,14 @@ function(
     itemViewContainer: ".factories",
 
 
-    events: {
+    events:
+    {
       "click .new": "onClickNew"
     },
 
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var factory = new Factory({game_id: this.model.id});
 
       var contents = {

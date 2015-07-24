@@ -11,7 +11,8 @@ function(require)
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    events: {
+    events:
+    {
       "click .edit": "onClickEdit"
     },
 

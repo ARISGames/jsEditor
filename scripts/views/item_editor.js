@@ -10,7 +10,7 @@ function(require)
   var Game             = require('models/game');
   var MediaChooserView = require('views/media_chooser');
 
-  var EventsCollection  = require('collections/game_events');
+  var EventPackagesCollection = require('collections/event_packages');
   var EventInferenceRow = require('views/event_inference_row');
 
   var vent             = require('vent');
@@ -68,11 +68,10 @@ function(require)
       // Handle cancel from modal X or dark area
       this.on("popup:hide", this.onClickCancel);
 
-      this.collection = new EventsCollection;
+      this.collection = new EventPackagesCollection;
       // Load inferences
       this.loadInferences();
     },
-
 
     /* View Events */
 
@@ -80,7 +79,6 @@ function(require)
     {
       this.$el.find('input[autofocus]').focus();
     },
-
 
     events:
     {
@@ -90,7 +88,6 @@ function(require)
 
       "click @ui.change_icon":  "onClickChangeIcon",
       "click @ui.change_media": "onClickChangeMedia",
-
 
       // Field events
       "change @ui.name":               "onChangeName",
@@ -104,7 +101,6 @@ function(require)
 
       "change @ui.item_types":          "onChangeType"
     },
-
 
     /* Crud */
 
@@ -276,7 +272,8 @@ function(require)
 
       $.when(contents.dialog_scripts.fetch(), contents.quests.fetch()).done(function()
       {
-        var item_events = storage.events.filter(function(event) {
+        var item_events = storage.events.filter(function(event)
+        {
           return event.get("content_id") === item.id && event.modified_by() !== null
         });
 
@@ -289,3 +286,4 @@ function(require)
     }
   }); /* class */
 }); /* define */
+

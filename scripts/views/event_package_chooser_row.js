@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'text!templates/factory_chooser_row.tpl',
+  'text!templates/event_package_chooser_row.tpl',
   'models/trigger',
   'models/instance',
   'vent',
@@ -15,8 +15,8 @@ function(
   storage
 )
 {
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap
@@ -33,17 +33,19 @@ function(
     {
       var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
       var instance = new Instance ({game_id: this.options.parent.get("game_id")});
-      var factory = this.model;
+      var eventPackage = this.model;
 
       // Scenes can only be immediate for now.
       trigger.set("type", "IMMEDIATE");
 
       // Save directly and insert into scene/show sidebar
-      instance.set("object_id",   factory.id);
-      instance.set("object_type", Instance.type_for(factory));
+      instance.set("object_id",   eventPackage.id);
+      instance.set("object_type", Instance.type_for(eventPackage));
 
-      instance.save({}, {
-        create: function() {
+      instance.save({},
+      {
+        create: function()
+        {
           storage.add_game_object(instance);
 
           // Save Trigger

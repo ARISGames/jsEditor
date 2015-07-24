@@ -14,7 +14,8 @@ function(require)
     itemView: CharactersOrganizerRowView,
     itemViewContainer: ".characters",
 
-    events: {
+    events:
+    {
       "click .new": "onClickNew"
     },
 

@@ -15,19 +15,17 @@ function(
   storage
 )
 {
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap
     tagName: 'a',
     className: "list-group-item",
 
-
     events: {
       "click .new-instance": "onClickNewInstance",
     },
-
 
     // TODO how to bubble up? or get scene passed to us
     onClickNewInstance: function() {

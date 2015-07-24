@@ -62,7 +62,8 @@ function(require)
       distance:    ".distance"
     },
 
-    events: {
+    events:
+    {
       "change @ui.operator":    "onChangeBooleanOperator",
       "change @ui.requirement": "onChangeRequirement",
       "change @ui.content":     "onChangeContent",

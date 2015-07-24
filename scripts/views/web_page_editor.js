@@ -59,7 +59,8 @@ function(require)
     },
 
 
-    events: {
+    events:
+    {
       "click @ui.save":   "onClickSave",
       "click @ui.delete": "onClickDelete",
       "click @ui.cancel": "onClickCancel",

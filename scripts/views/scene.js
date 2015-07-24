@@ -72,7 +72,8 @@ function(require)
       this.collection.remove(trigger);
     },
 
-    events: {
+    events:
+    {
       "click .name": "onClickName",
       "click .new-trigger": "onClickNewTrigger"
     },

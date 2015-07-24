@@ -8,17 +8,16 @@ function(require)
   var Dialog                  = require('models/dialog');
   var vent                    = require('vent');
 
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: DialogsOrganizerRowView,
     itemViewContainer: ".dialogs",
 
-
     events: {
       "click .new": "onClickNew"
     },
-
 
     onClickNew: function() {
       var dialog = new Dialog({game_id: this.model.get("game_id")});

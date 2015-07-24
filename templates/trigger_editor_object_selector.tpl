@@ -99,5 +99,16 @@
 	</optgroup>
 	<% } %>
 
+	<!-- Events -->
+	<% if(!events.isEmpty()) { %>
+	<optgroup label="Events">
+		<% events.each(function(object) { %>
+			<option value="<%= object.id %>" data-object-type="EVENT" <%= option_selected(game_object === object) %>>
+				<%= object.get("name") %>
+			</option>
+		<% }); %>
+	</optgroup>
+	<% } %>
+
 </select>
 

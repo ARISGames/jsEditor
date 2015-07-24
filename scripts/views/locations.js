@@ -13,7 +13,8 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
     className: 'full-height',
 
@@ -42,7 +43,8 @@ function(
       }
     },
 
-    renderMap: function(lat,lon) {
+    renderMap: function(lat,lon)
+    {
       var view = this;
 
       // Render Map
@@ -58,31 +60,31 @@ function(
       var map      = new google.maps.Map(canv_element, map_options);
       var boundary = new google.maps.LatLngBounds();
 
-                        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input_element);
-                        var searchBox = new google.maps.places.SearchBox(input_element);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input_element);
+      var searchBox = new google.maps.places.SearchBox(input_element);
 
-                        google.maps.event.addListener(map, 'bounds_changed',
-                          function()
-                          {
-                            var bounds = map.getBounds();
-                            searchBox.setBounds(bounds);
-                          }
-                        );
+      google.maps.event.addListener(map, 'bounds_changed',
+        function()
+        {
+          var bounds = map.getBounds();
+          searchBox.setBounds(bounds);
+        }
+      );
 
-                        google.maps.event.addListener(searchBox, 'places_changed',
-                          function()
-                          {
-                            var places = searchBox.getPlaces();
+      google.maps.event.addListener(searchBox, 'places_changed',
+        function()
+        {
+          var places = searchBox.getPlaces();
 
-                            if(places.length == 0) return;
+          if(places.length == 0) return;
 
-                            var bounds = new google.maps.LatLngBounds();
-                            for (var i = 0, place; place = places[i]; i++)
-                              bounds.extend(place.geometry.location);
+          var bounds = new google.maps.LatLngBounds();
+          for (var i = 0, place; place = places[i]; i++)
+            bounds.extend(place.geometry.location);
 
-                            map.fitBounds(bounds);
-                          }
-                        );
+          map.fitBounds(bounds);
+        }
+      );
 
       _.each(this.collection.models, function(trigger) {
         // Add Trigger Location to map
@@ -175,7 +177,6 @@ function(
             }
           });
         });
-
 
         // Hover
 

@@ -100,7 +100,8 @@ function(
       prompt:    ".prompt"
     },
 
-    events: {
+    events:
+    {
       "change @ui.link_type":     "onChangeLinkType",
       "change @ui.link_id":       "onChangeLinkId",
       "change @ui.prompt":        "onChangePrompt",
@@ -110,7 +111,8 @@ function(
       "click .delete":            "onClickDelete",
     },
 
-    link_types: {
+    link_types:
+    {
       'DIALOG_SCRIPT':    "Say Line",
       'EXIT':             "End Conversation",
       'EXIT_TO_PLAQUE':   "Exit to Plaque",

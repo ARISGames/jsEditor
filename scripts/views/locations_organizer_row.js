@@ -11,30 +11,36 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         name: this.model.game_object().get('name')
       }
     },
 
-    events: {
+    events:
+    {
       "click .edit": "onClickEdit"
     },
 
     tagName: 'tr',
 
-    modelEvents: {
+    modelEvents:
+    {
       "change": "modelChanged"
     },
 
-    modelChanged: function() {
+    modelChanged: function()
+    {
       this.render();
     },
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var view = this;
 
       this.model.trigger("center_map");
@@ -44,3 +50,4 @@ function(
     }
   });
 });
+

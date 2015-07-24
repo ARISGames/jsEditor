@@ -16,11 +16,13 @@ function(
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    ui: {
+    ui:
+    {
       "search" : "#user-search"
     },
 
-    events: {
+    events:
+    {
       "click .add": "onClickAdd",
       "keydown @ui.search": "onChangeSearch"
     },

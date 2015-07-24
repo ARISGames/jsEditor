@@ -33,7 +33,8 @@ function(require)
       this.$el.find('input[autofocus]').focus();
     },
 
-    events: {
+    events:
+    {
       "click .save-scene":   "onClickSave",
       "click .cancel":       "onClickCancel",
       "click .delete-scene": "onClickDelete",

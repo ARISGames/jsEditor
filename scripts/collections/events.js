@@ -13,3 +13,4 @@ function(
     amfphp_url: "events.getEventsForEventPackage"
   });
 });
+

@@ -11,8 +11,9 @@ function(require)
   var vent             = require('vent');
   var storage          = require('storage');
 
-  return EditorView.extend({
-    template: _.template(Template),
+  return EditorView.extend(
+  {
+    template:_.template(Template),
 
     templateHelpers: function()
     {
@@ -28,7 +29,7 @@ function(require)
 
     onRender: function()
     {
-      this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 300 });
+      this.$el.find('[data-toggle="popover"]').popover({trigger:'hover',placement:'top',delay:300});
     },
 
     /* Inference helpers */

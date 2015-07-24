@@ -11,7 +11,8 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template:  _.template(Template),
 
     events: {
@@ -91,3 +92,4 @@ function(
     }
   });
 });
+

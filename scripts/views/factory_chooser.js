@@ -23,7 +23,8 @@ function(require)
       }
     },
 
-    events: {
+    events:
+    {
       "click .new-factory": "onClickNewFactory"
     },
 

@@ -23,7 +23,8 @@ function(
     className: "list-group-item",
 
 
-    events: {
+    events:
+    {
       "click .new-instance": "onClickNewInstance",
     },
 

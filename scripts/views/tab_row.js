@@ -29,11 +29,13 @@ function(require)
     tagName: 'a',
     className: "list-group-item draggable-game-tab",
 
-    events: {
+    events:
+    {
       "click": "onClickEdit"
     },
 
-    modelEvents: {
+    modelEvents:
+    {
       "change": "render"
     },
 

@@ -14,6 +14,7 @@ function(require)
   var Media    = require('models/media');
   var Scene    = require('models/scene');
   var Factory  = require('models/factory');
+  var Event    = require('models/event');
 
   var TriggerEditorView = require('views/trigger_editor');
 
@@ -86,8 +87,8 @@ function(require)
 
     /* Events */
 
-    events: {
-
+    events:
+    {
       "click .show": "onClickShow"
     },
 
@@ -109,11 +110,14 @@ function(require)
       if(view.game_object instanceof WebPage) { trigger_editor = new TriggerEditorView(options); }
       if(view.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorView(options); }
       if(view.game_object instanceof Factory) { trigger_editor = new TriggerEditorView(options); }
+      if(view.game_object instanceof Event  ) { trigger_editor = new TriggerEditorView(options); }
 
-      if(trigger_editor === null) {
+      if(trigger_editor === null)
+      {
         throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;
       }
-      else {
+      else
+      {
         vent.trigger("application:info:show", trigger_editor);
       }
     },
@@ -148,6 +152,7 @@ function(require)
       if(type === "WEB_PAGE") { this.object_icon = "globe";   }
       if(type === "SCENE")    { this.object_icon = "film";    }
       if(type === "FACTORY")  { this.object_icon = "home";    }
+      if(type === "EVENT")    { this.object_icon = "globe";    }
 
       this.object_name = this.game_object.get("name");
 

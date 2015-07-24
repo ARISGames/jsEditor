@@ -19,15 +19,18 @@ function(
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    ui: {
+    ui:
+    {
       "name": "#dialog-name",
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
-    events: {
+    events:
+    {
       "click .save": "onClickSave",
     },
 

@@ -13,7 +13,7 @@ define([
   'models/event',
   'models/tab',
   'views/media_chooser',
-  'views/events',
+  'views/event_package_editor',
   'views/requirements',
   'models/requirement_package',
   'collections/and_packages',

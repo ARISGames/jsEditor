@@ -1,19 +1,19 @@
 define(
 function(require)
 {
-  var _                = require('underscore');
-  var $                = require('jquery');
-  var Backbone         = require('backbone');
-  var Template         = require('text!templates/plaque_editor.tpl');
-  var MediaCollection  = require('collections/media');
-  var EventsCollection = require('collections/events');
-  var ItemsCollection  = require('collections/items');
-  var Game             = require('models/game');
-  var EventPackage     = require('models/event_package');
-  var MediaChooserView = require('views/media_chooser');
-  var EventsEditorView = require('views/events');
-  var vent             = require('vent');
-  var storage          = require('storage');
+  var _                       = require('underscore');
+  var $                       = require('jquery');
+  var Backbone                = require('backbone');
+  var Template                = require('text!templates/plaque_editor.tpl');
+  var MediaCollection         = require('collections/media');
+  var EventPackagesCollection = require('collections/event_packages');
+  var ItemsCollection         = require('collections/items');
+  var Game                    = require('models/game');
+  var EventPackage            = require('models/event_package');
+  var MediaChooserView        = require('views/media_chooser');
+  var EventPackageEditorView  = require('views/event_package_editor');
+  var vent                    = require('vent');
+  var storage                 = require('storage');
 
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
@@ -64,7 +64,8 @@ function(require)
     },
 
 
-    events: {
+    events:
+    {
       "click @ui.save":   "onClickSave",
       "click @ui.delete": "onClickDelete",
       "click @ui.cancel": "onClickCancel",
@@ -201,10 +202,10 @@ function(require)
       });
     },
 
-
     /* Events Editor */
 
-    onClickEditEvents: function() {
+    onClickEditEvents: function()
+    {
       var view = this;
 
       var event_package = new EventPackage({event_package_id: view.model.get("event_package_id"), game_id: view.model.get("game_id")});
@@ -216,7 +217,7 @@ function(require)
       $.when(items.fetch(), events.fetch()).done(function() {
 
         // launch editor
-        var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+        var events_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
 
         events_editor.on("cancel", function()
         {

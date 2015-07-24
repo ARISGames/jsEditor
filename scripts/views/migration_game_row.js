@@ -33,7 +33,8 @@ function(require)
       }
     },
 
-    events: {
+    events:
+    {
       "click": "onClickMigrate"
     },
 

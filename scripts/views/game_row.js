@@ -25,7 +25,8 @@ function(require)
       }
     },
 
-    events: {
+    events:
+    {
       "click": "onClickShow"
     },
 

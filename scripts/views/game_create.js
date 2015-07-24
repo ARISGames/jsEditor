@@ -29,7 +29,8 @@ function(
       this.$el.find('input[autofocus]').focus();
     },
 
-    events: {
+    events:
+    {
       "click .save": "onClickSave",
       "click .cancel": "onClickCancel"
     },

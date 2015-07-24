@@ -20,7 +20,8 @@ function(require)
       }
     },
 
-    events: {
+    events:
+    {
       "click": "onClickEdit"
     },
 

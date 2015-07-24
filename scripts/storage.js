@@ -32,7 +32,7 @@ function(
       this.factories.parent      = game;
 
       this.dialog_scripts.parent = game;
-      this.events.parent         = game;
+      this.event_packages.parent = game;
 
       this.games.add(game);
     },
@@ -51,7 +51,7 @@ function(
       else if(idAttribute === "factory_id")        { this.factories.add(game_object) }
 
       else if(idAttribute === "dialog_script_id")  { this.dialog_scripts.add(game_object) }
-      else if(idAttribute === "event_id")          { this.events.add(game_object) }
+      else if(idAttribute === "event_package_id")  { this.event_packages.add(game_object) }
 
       else if(idAttribute === "instance_id")       { this.instances.add(game_object) }
       else if(idAttribute === "trigger_id")        { this.triggers.add(game_object)  }
@@ -70,7 +70,7 @@ function(
       if(type === "FACTORY")       { return this.factories.retrieve(id) }
 
       if(type === "DIALOG_SCRIPT") { return this.dialog_scripts.retrieve(id) }
-      if(type === "EVENT")         { return this.events.retrieve(id) }
+      if(type === "EVENT_PACKAGE") { return this.event_packages.retrieve(id) }
 
       else { throw "cant fetch game object of type: " + type }
     }

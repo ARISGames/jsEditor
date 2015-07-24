@@ -6,11 +6,11 @@ function(require)
   var DialogEditorView = require('views/dialog_editor');
   var vent             = require('vent');
 
-
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    events: {
+    events:
+    {
       "click .edit": "onClickEditDialog"
     },
 

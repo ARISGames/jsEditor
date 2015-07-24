@@ -16,24 +16,28 @@ function(require)
 
   var vent               = require('vent');
 
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: SceneView,
     itemViewContainer: ".scenes",
     itemViewOptions: function(model, index) {
-      return {
+      return
+      {
         collection: this.triggers
       }
     },
 
     className: 'full-height',
 
-    events: {
+    events:
+    {
       "click .new-scene": "onClickNewScene"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       var view = this;
 
       this.intro_scene = options.intro_scene;
@@ -43,16 +47,16 @@ function(require)
       this.listenTo(this.collection, "remove", function() { view.model.fetch()});
     },
 
-
-    onClickNewScene: function() {
+    onClickNewScene: function()
+    {
       var scene = new Scene({game_id: this.model.id});
       vent.trigger("application:popup:show", new SceneEditorView({model: scene}), "Add Scene");
     },
 
-
     /* Line Drawing Code */
 
-    getPos: function(ele, targetParent){
+    getPos: function(ele, targetParent)
+    {
       var x=0;
       var y=0;
       while(true){
@@ -66,7 +70,8 @@ function(require)
       return [x, y];
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       var view = this;
       // make draggable
       //$(this.$el.find(".scene")).draggable({ containment: "parent" });
@@ -84,7 +89,8 @@ function(require)
       //setTimeout(function(){ view.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
     },
 
-    drawLinks: function(link_starts, link_ends, link_lines, scene_container) {
+    drawLinks: function(link_starts, link_ends, link_lines, scene_container)
+    {
       var view = this;
 
       link_starts.each(function(index, link_start)

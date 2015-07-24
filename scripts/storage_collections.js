@@ -17,7 +17,7 @@ define([
   "collections/web_pages",
   "collections/factories",
   "collections/game_dialog_scripts",
-  "collections/game_events"
+  "collections/event_packages"
 ],
 function(
   Backbone,
@@ -38,7 +38,7 @@ function(
   WebPagesCollection,
   FactoriesCollection,
   DialogScriptsCollection,
-  EventsCollection
+  EventPackagesCollection
 )
 {
   return Marionette.Controller.extend(
@@ -66,7 +66,7 @@ function(
       storage.factories      = new FactoriesCollection();
 
       storage.dialog_scripts = new DialogScriptsCollection();
-      storage.events         = new EventsCollection();
+      storage.event_packages = new EventPackagesCollection();
     }
   });
 });

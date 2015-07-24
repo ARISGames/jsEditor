@@ -27,8 +27,8 @@ function(
 
     className: 'media-editor',
 
-
-    events: {
+    events:
+    {
       "click .upload": "onClickUpload",
       "dragenter .media-drop-target": "onDragEnter",
       "dragleave .media-drop-target": "onDragLeave",
@@ -37,8 +37,8 @@ function(
       "drop .media-drop-target": "onDrop",
     },
 
-
-    initialize: function() {
+    initialize: function()
+    {
       var view = this;
       vent.on("media:upload", function(media) {
         view.collection.add(media);

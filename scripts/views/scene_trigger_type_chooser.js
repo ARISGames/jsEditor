@@ -7,19 +7,21 @@ function(require)
 
   var SceneInstanceTriggerView = require('views/scene_instance_trigger');
 
-  var DialogChooserView  = require('views/dialog_chooser');
-  var ItemChooserView    = require('views/item_chooser');
-  var PlaqueChooserView  = require('views/plaque_chooser');
-  var WebPageChooserView = require('views/web_page_chooser');
-  var SceneChooserView   = require('views/scene_chooser');
-  var FactoryChooserView = require('views/factory_chooser');
+  var DialogChooserView       = require('views/dialog_chooser');
+  var ItemChooserView         = require('views/item_chooser');
+  var PlaqueChooserView       = require('views/plaque_chooser');
+  var WebPageChooserView      = require('views/web_page_chooser');
+  var SceneChooserView        = require('views/scene_chooser');
+  var FactoryChooserView      = require('views/factory_chooser');
+  var EventPackageChooserView = require('views/event_package_chooser');
 
-  var DialogsCollection   = require('collections/dialogs');
-  var ItemsCollection     = require('collections/items');
-  var PlaquesCollection   = require('collections/plaques');
-  var WebPagesCollection  = require('collections/web_pages');
-  var ScenesCollection    = require('collections/scenes');
-  var FactoriesCollection = require('collections/factories');
+  var DialogsCollection       = require('collections/dialogs');
+  var ItemsCollection         = require('collections/items');
+  var PlaquesCollection       = require('collections/plaques');
+  var WebPagesCollection      = require('collections/web_pages');
+  var ScenesCollection        = require('collections/scenes');
+  var FactoriesCollection     = require('collections/factories');
+  var EventsPackageCollection = require('collections/event_packages');
 
   var vent = require('vent');
 
@@ -27,12 +29,13 @@ function(require)
     template: _.template(Template),
 
     events: {
-      "click .add-dialog":   "onClickAddDialog",
-      "click .add-plaque":   "onClickAddPlaque",
-      "click .add-web-page": "onClickAddWebPage",
-      "click .add-item":     "onClickAddItem",
-      "click .add-scene":    "onClickAddScene",
-      "click .add-factory":  "onClickAddFactory"
+      "click .add-dialog":        "onClickAddDialog",
+      "click .add-plaque":        "onClickAddPlaque",
+      "click .add-web-page":      "onClickAddWebPage",
+      "click .add-item":          "onClickAddItem",
+      "click .add-scene":         "onClickAddScene",
+      "click .add-factory":       "onClickAddFactory",
+      "click .add-event-package": "onClickAddEventPackage"
     },
 
     initialize: function(options) {
@@ -119,7 +122,21 @@ function(require)
           vent.trigger("application:popup:show", factory_chooser, "Add Factory to Scene");
         }
       });
+    },
+
+    onClickAddEventPackage: function() {
+      var scene = this.model;
+
+      var eventPackages = new EventPackagesCollection([], {parent: this.game});
+
+      eventPackages.fetch({
+        success: function() {
+          var event_package_chooser = new EventPackageChooserView({collection: eventPackages, parent: scene});
+          vent.trigger("application:popup:show", event_package_chooser, "Add Event to Scene");
+        }
+      });
     }
+
   });
 });
 

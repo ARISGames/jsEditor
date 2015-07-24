@@ -32,11 +32,13 @@ function(
       }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.contents = options.contents;
     },
 
-    events: {
+    events:
+    {
       "click .new-and-package": "onClickNewAndPackage",
       "click .save-all":  "onClickSaveAll",
       "click .cancel":    "onClickCancel"

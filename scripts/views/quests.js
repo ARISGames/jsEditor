@@ -18,11 +18,13 @@ function(require)
 
     className: 'quests-editor',
 
-    events: {
+    events:
+    {
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var view = this;
 
       var quest = new Quest({game_id: this.model.get("game_id")});

@@ -7,7 +7,7 @@ define([
   'models/event_package',
   'models/game',
   'models/dialog_option',
-  'views/events',
+  'views/event_package_editor',
   'vent'
 ],
 function(
@@ -19,7 +19,7 @@ function(
   EventPackage,
   Game,
   DialogOption,
-  EventsEditorView,
+  EventPackageEditorView,
   vent
 )
 {
@@ -108,14 +108,14 @@ function(
       $.when(items.fetch(), events.fetch()).done(function() {
 
         // launch editor
-        var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+        var event_package_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
 
-        events_editor.on("cancel", function()
+        event_package_editor.on("cancel", function()
         {
           vent.trigger("application:popup:hide");
         });
 
-        events_editor.on("event_package:save", function(event_package)
+        event_package_editor.on("event_package:save", function(event_package)
         {
           view.model.set("event_package_id", event_package.id);
 
@@ -128,7 +128,7 @@ function(
           vent.trigger("application:popup:hide");
         });
 
-        vent.trigger("application:popup:show", events_editor, "Player Modifier");
+        vent.trigger("application:popup:show", event_package_editor, "Player Modifier");
       });
     },
 

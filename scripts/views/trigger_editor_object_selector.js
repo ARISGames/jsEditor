@@ -29,6 +29,7 @@ function(require)
         dialogs:   storage.dialogs,
         web_pages: storage.web_pages,
         factories: storage.factories,
+        events:    storage.events,
         scenes:    new Backbone.Collection(storage.scenes.filter(function(scene) { return scene !== view.model.scene(); })),
 
         // Helpers
@@ -55,6 +56,7 @@ function(require)
       this.listenTo(storage.dialogs,   "change add remove", this.render);
       this.listenTo(storage.web_pages, "change add remove", this.render);
       this.listenTo(storage.factories, "change add remove", this.render);
+      this.listenTo(storage.events,    "change add remove", this.render);
       this.listenTo(storage.scenes,    "change add remove", this.render);
     },
 

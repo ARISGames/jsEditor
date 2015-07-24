@@ -25,7 +25,8 @@ function(require)
 
     className: 'tabs-editor',
 
-    events: {
+    events:
+    {
       "click .new": "onClickNew"
     },
 

@@ -11,7 +11,7 @@ define([
   'models/event',
   'models/quest',
   'views/media_chooser',
-  'views/events',
+  'views/event_package_editor',
   'views/requirements',
   'models/requirement_package',
   'collections/and_packages',
@@ -39,7 +39,7 @@ function(
   Event,
   Quest,
   MediaChooserView,
-  EventsEditorView,
+  EventPackageEditorView,
   RequirementsEditorView,
   RequirementPackage,
   AndPackagesCollection,
@@ -139,22 +139,23 @@ function(
       "change @ui.complete_function":          "onChangeCompleteFunction"
     },
 
-
     /* Crud */
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view  = this;
 
-      view.model.save({}, {
-        create: function() {
+      view.model.save({},
+      {
+        create: function()
+        {
           view.storePreviousAttributes();
-
           view.trigger("quest:add", view.model);
         },
 
-        success: function() {
+        success: function()
+        {
           view.storePreviousAttributes();
-
           vent.trigger("application:popup:hide");
         }
       });
@@ -339,7 +340,8 @@ function(
 
     /* Event Editors */
 
-    onClickActiveEvents: function() {
+    onClickActiveEvents: function()
+    {
       var view = this;
 
       var event_package = new EventPackage({event_package_id: view.model.get("active_event_package_id"), game_id: view.model.get("game_id")});
@@ -348,10 +350,10 @@ function(
       var game   = new Game({game_id: view.model.get("game_id")});
       var items  = new ItemsCollection([], {parent: game});
 
-      $.when(items.fetch(), events.fetch()).done(function() {
-
+      $.when(items.fetch(), events.fetch()).done(function()
+      {
         // launch editor
-        var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
+        var events_editor = new EventsEditorView({model:event_package, collection:events, items:items});
 
         events_editor.on("cancel", function()
         {
@@ -375,7 +377,8 @@ function(
       });
     },
 
-    onClickCompleteEvents: function() {
+    onClickCompleteEvents: function()
+    {
       var view = this;
 
       var event_package = new EventPackage({event_package_id: view.model.get("complete_event_package_id"), game_id: view.model.get("game_id")});
@@ -411,10 +414,10 @@ function(
       });
     },
 
-
     /* Requirements Editors */
 
-    onClickActiveRequirements: function() {
+    onClickActiveRequirements: function()
+    {
       var view = this;
 
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("active_requirement_root_package_id"), game_id: view.model.get("game_id")});
@@ -441,7 +444,8 @@ function(
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
 
-        and_packages.each(function(and_package) {
+        and_packages.each(function(and_package)
+        {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });
@@ -471,14 +475,16 @@ function(
       });
     },
 
-    onClickCompleteRequirements: function() {
+    onClickCompleteRequirements: function()
+    {
       var view = this;
 
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("complete_requirement_root_package_id"), game_id: view.model.get("game_id")});
 
       var game   = new Game({game_id: view.model.get("game_id")});
 
-      var contents = {
+      var contents =
+      {
         items:          new ItemsCollection         ([], {parent: game}),
         tags:           new TagsCollection          ([], {parent: game}),
         plaques:        new PlaquesCollection       ([], {parent: game}),
@@ -498,7 +504,8 @@ function(
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
 
-        and_packages.each(function(and_package) {
+        and_packages.each(function(and_package)
+        {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });

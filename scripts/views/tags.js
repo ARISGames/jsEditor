@@ -18,7 +18,8 @@ function(require)
 
     className: 'tags-editor',
 
-    events: {
+    events:
+    {
       "click .new": "onClickNew"
     },
 
