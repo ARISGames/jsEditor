@@ -29,11 +29,18 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function()
+    onClickEdit: function()
     {
-      var eventPackage = new EventPackage({game_id:this.model.id});
-      var event_package_editor = new EventPackageEditorView({model:eventPackage});
-      vent.trigger("application:popup:show", event_package_editor, "Create Event", true);
+      var items  = new ItemsCollection([], {parent: this.model});
+
+      $.when(items.fetch()).done(
+        function()
+        {
+          var eventPackage = new EventPackage({game_id:this.model.id});
+          var event_package_editor = new EventPackageEditorView({model:eventPackage, items:items});
+          vent.trigger("application:popup:show", event_package_editor, "Create Event", true);
+        }
+      );
     }
   });
 });

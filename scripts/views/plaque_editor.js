@@ -214,32 +214,38 @@ function(require)
       var game   = new Game({game_id: view.model.get("game_id")});
       var items  = new ItemsCollection([], {parent: game});
 
-      $.when(items.fetch(), events.fetch()).done(function() {
-
-        // launch editor
-        var events_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
-
-        events_editor.on("cancel", function()
+      $.when(items.fetch(), events.fetch()).done(
+        function()
         {
-          vent.trigger("application:popup:show", view, "Edit Plaque");
-        });
+          // launch editor
+          var events_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
 
-        events_editor.on("event_package:save", function(event_package)
-        {
-          view.model.set("event_package_id", event_package.id);
-          storage.events.fetch();
+          events_editor.on("cancel",
+            function()
+            {
+              vent.trigger("application:popup:show", view, "Edit Plaque");
+            }
+          );
 
-          if(!view.model.isNew() && view.model.hasChanged("event_package_id"))
-          {
-            // Quicksave if moving from 0 so user has consistent experience
-            view.model.save({"event_package_id": event_package.id}, {patch: true});
-          }
+          events_editor.on("event_package:save",
+            function(event_package)
+            {
+              view.model.set("event_package_id", event_package.id);
+              storage.events.fetch();
 
-          vent.trigger("application:popup:show", view, "Edit Plaque");
-        });
+              if(!view.model.isNew() && view.model.hasChanged("event_package_id"))
+              {
+                // Quicksave if moving from 0 so user has consistent experience
+                view.model.save({"event_package_id": event_package.id}, {patch: true});
+              }
 
-        vent.trigger("application:popup:show", events_editor, "Player Modifier");
-      });
+              vent.trigger("application:popup:show", view, "Edit Plaque");
+            }
+          );
+
+          vent.trigger("application:popup:show", events_editor, "Player Modifier");
+        }
+      );
     }
   });
 });

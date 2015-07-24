@@ -105,31 +105,33 @@ function(
       var game   = new Game({game_id: view.model.get("game_id")});
       var items  = new ItemsCollection([], {parent: game});
 
-      $.when(items.fetch(), events.fetch()).done(function() {
-
-        // launch editor
-        var event_package_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
-
-        event_package_editor.on("cancel", function()
+      $.when(items.fetch(), events.fetch()).done(
+        function()
         {
-          vent.trigger("application:popup:hide");
-        });
+          // launch editor
+          var event_package_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
 
-        event_package_editor.on("event_package:save", function(event_package)
-        {
-          view.model.set("event_package_id", event_package.id);
-
-          if(view.model.hasChanged("event_package_id"))
+          event_package_editor.on("cancel", function()
           {
-            // Quicksave if moving from 0 so user has consistent experience
-            view.model.save({"event_package_id": event_package.id}, {patch: true});
-          }
+            vent.trigger("application:popup:hide");
+          });
 
-          vent.trigger("application:popup:hide");
-        });
+          event_package_editor.on("event_package:save", function(event_package)
+          {
+            view.model.set("event_package_id", event_package.id);
 
-        vent.trigger("application:popup:show", event_package_editor, "Player Modifier");
-      });
+            if(view.model.hasChanged("event_package_id"))
+            {
+              // Quicksave if moving from 0 so user has consistent experience
+              view.model.save({"event_package_id": event_package.id}, {patch: true});
+            }
+
+            vent.trigger("application:popup:hide");
+          });
+
+          vent.trigger("application:popup:show", event_package_editor, "Player Modifier");
+        }
+      );
     },
 
     onClickDelete: function() {

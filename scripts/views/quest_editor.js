@@ -60,7 +60,8 @@ function(
 
     /* View */
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
 
@@ -69,7 +70,8 @@ function(
         complete_icon_thumbnail_url:  this.model.complete_icon_thumbnail(),
         complete_media_thumbnail_url: this.model.complete_media_thumbnail(),
 
-        option_selected: function(boolean_statement) {
+        option_selected: function(boolean_statement)
+        {
           return boolean_statement ? "selected" : "";
         },
 
@@ -93,7 +95,8 @@ function(
 
     /* Constructor */
 
-    initialize: function() {
+    initialize: function()
+    {
       // Allow returning to original attributes
       this.storePreviousAttributes();
 
@@ -107,7 +110,8 @@ function(
 
     /* View Events */
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -161,7 +165,8 @@ function(
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       delete this.previous_attributes.active_requirement_root_package_id;
       delete this.previous_attributes.complete_requirement_root_package_id;
       delete this.previous_attributes.active_event_package_id;
@@ -169,14 +174,16 @@ function(
       this.model.set(this.previous_attributes);
     },
 
-    onClickDelete: function() {
-      this.model.destroy({
-        success: function() {
+    onClickDelete: function()
+    {
+      this.model.destroy(
+      {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
     },
-
 
     /* Field Changes */
 
@@ -195,18 +202,21 @@ function(
 
     /* Undo and Association Binding */
 
-    storePreviousAttributes: function() {
+    storePreviousAttributes: function()
+    {
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-    unbindAssociations: function() {
+    unbindAssociations: function()
+    {
       this.stopListening(this.model.active_icon());
       this.stopListening(this.model.active_media());
       this.stopListening(this.model.complete_icon());
       this.stopListening(this.model.complete_media());
     },
 
-    bindAssociations: function() {
+    bindAssociations: function()
+    {
       this.listenTo(this.model.active_icon(),    'change', this.render);
       this.listenTo(this.model.active_media(),   'change', this.render);
       this.listenTo(this.model.complete_icon(),  'change', this.render);
@@ -216,15 +226,18 @@ function(
 
     /* Media Selection */
 
-    onClickActiveIcon: function(event) {
+    onClickActiveIcon: function(event)
+    {
       var view = this;
       event.preventDefault();
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
-        success: function() {
+      media.fetch(
+      {
+        success:function()
+        {
 
           /* Add default */
           media.unshift(view.model.default_icon());
@@ -233,16 +246,22 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.active_icon(), context: view.model, back_view: view});
           vent.trigger("application:popup:show", icon_chooser, "Start Quest Icon");
 
-          icon_chooser.on("media:choose", function(media) {
-            view.unbindAssociations();
-            view.model.set("active_icon_media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Quest");
-          });
+          icon_chooser.on("media:choose",
+            function(media)
+            {
+              view.unbindAssociations();
+              view.model.set("active_icon_media_id", media.id);
+              view.bindAssociations();
+              vent.trigger("application:popup:show", view, "Edit Quest");
+            }
+          );
 
-          icon_chooser.on("cancel", function() {
-            vent.trigger("application:popup:show", view, "Edit Quest");
-          });
+          icon_chooser.on("cancel",
+            function()
+            {
+              vent.trigger("application:popup:show", view, "Edit Quest");
+            }
+          );
         }
       });
     },
