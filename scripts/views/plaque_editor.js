@@ -1,35 +1,49 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!templates/plaque_editor.tpl',
+  'collections/media',
+  'collections/event_packages',
+  'collections/items',
+  'models/game',
+  'models/event_package',
+  'views/media_chooser',
+  'views/event_package_editor',
+  'vent',
+  'storage',
+],
+function(
+  _,
+  $,
+  Backbone,
+  Template,
+  MediaCollection,
+  EventPackagesCollection,
+  ItemsCollection,
+  Game,
+  EventPackage,
+  MediaChooserView,
+  EventPackageEditorView,
+  vent,
+  storage
+)
 {
-  var _                       = require('underscore');
-  var $                       = require('jquery');
-  var Backbone                = require('backbone');
-  var Template                = require('text!templates/plaque_editor.tpl');
-  var MediaCollection         = require('collections/media');
-  var EventPackagesCollection = require('collections/event_packages');
-  var ItemsCollection         = require('collections/items');
-  var Game                    = require('models/game');
-  var EventPackage            = require('models/event_package');
-  var MediaChooserView        = require('views/media_chooser');
-  var EventPackageEditorView  = require('views/event_package_editor');
-  var vent                    = require('vent');
-  var storage                 = require('storage');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
-    /* View */
-
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
         icon_thumbnail_url:  this.model.icon_thumbnail(),
-        media_thumbnail_url: this.model.media_thumbnail()
-      }
+        media_thumbnail_url: this.model.media_thumbnail(),
+      };
     },
 
-
-    ui: {
+    ui:
+    {
       "save":   ".save",
       "delete": ".delete",
       "cancel": ".cancel",
@@ -42,27 +56,17 @@ function(require)
       "description":  "#plaque-description"
     },
 
-
-    /* Constructor */
-
-    initialize: function() {
-      // Allow returning to original attributes
+    initialize: function()
+    {
       this.storePreviousAttributes();
-
-      // Listen to association events on media
       this.bindAssociations();
-
-      // Handle cancel from modal X or dark area
       this.on("popup:hide", this.onClickCancel);
     },
 
-
-    /* View Events */
-
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
-
 
     events:
     {
@@ -79,92 +83,90 @@ function(require)
       "change @ui.description": "onChangeDescription",
     },
 
-
-    /* Crud */
-
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
       var plaque = this.model;
 
-      plaque.save({}, {
-        create: function() {
+      plaque.save({},
+      {
+        create: function()
+        {
           view.storePreviousAttributes();
-
           storage.add_game_object(plaque);
-
           vent.trigger("application:popup:hide");
         },
 
         update: function()
         {
           view.storePreviousAttributes();
-
           vent.trigger("application:popup:hide");
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       delete this.previous_attributes.event_package_id;
       this.model.set(this.previous_attributes);
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
-      this.model.destroy({
-        success: function() {
+      this.model.destroy(
+      {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
     },
 
-
-    /* Field Changes */
-
     onChangeName:        function() { this.model.set("name",        this.ui.name.val())        },
     onChangeDescription: function() { this.model.set("description", this.ui.description.val()) },
 
-
-    /* Undo and Association Binding */
-
-    storePreviousAttributes: function() {
+    storePreviousAttributes: function()
+    {
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-    unbindAssociations: function() {
+    unbindAssociations: function()
+    {
       this.stopListening(this.model.icon());
       this.stopListening(this.model.media());
     },
 
-    bindAssociations: function() {
+    bindAssociations: function()
+    {
       this.listenTo(this.model.icon(),  'change', this.render);
       this.listenTo(this.model.media(), 'change', this.render);
     },
 
-    /* Media Selectors */
-
-    onClickChangeIcon: function() {
+    onClickChangeIcon: function()
+    {
       var view = this;
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
-        success: function() {
-          /* Add default */
+      media.fetch(
+      {
+        success: function()
+        {
           media.unshift(view.model.default_icon());
-
-          /* Icon */
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("icon_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Plaque");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Plaque");
           });
 
@@ -173,29 +175,32 @@ function(require)
       });
     },
 
-    onClickChangeMedia: function() {
+    onClickChangeMedia: function()
+    {
       var view = this;
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
-        success: function() {
-          /* Add default */
+      media.fetch(
+      {
+        success: function()
+        {
           media.unshift(view.model.default_icon());
 
-          /* Media */
           var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
           vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
-          media_chooser.on("media:choose", function(media) {
+          media_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Plaque");
           });
 
-          media_chooser.on("cancel", function() {
+          media_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Plaque");
           });
         }

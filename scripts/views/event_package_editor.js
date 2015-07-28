@@ -5,7 +5,7 @@ define([
   'views/event_editor',
   'collections/events',
   'models/event',
-  'vent'
+  'vent',
 ],
 function(
   _,
@@ -21,76 +21,127 @@ function(
   {
     template: _.template(Template),
 
+    templateHelpers: function()
+    {
+      return {
+        is_new: true,
+      };
+    },
+
+    ui:
+    {
+      "save": ".save",
+      "delete": ".delete",
+      "cancel": ".cancel",
+      "name": "#event-package-name",
+      "new-event": ".new-event",
+    },
+
     itemView: EventEditorView,
     itemViewContainer: ".events",
 
     itemViewOptions: function(model, index)
     {
-      return { items: this.items }
+      var self = this;
+      return { items: self.items }
     },
 
     initialize: function(options)
     {
-      this.items = options.items;
-      this.back_view = options.back_view;
+      var self = this;
+      self.items = options.items;
+      self.back_view = options.back_view;
+      self.on("popup:hide", self.onClickCancel);
+    },
+
+    onShow: function()
+    {
+      var self = this;
+      self.$el.find('input[autofocus]').focus();
     },
 
     events:
     {
-      "click .new-event": "onClickNewEvent",
-      "click .save-all":  "onClickSaveAll",
-      "click .cancel":    "onClickCancel"
+      "click @ui.new-event": "onClickNewEvent",
+      "click @ui.save":      "onClickSave",
+      "click @ui.cancel":    "onClickCancel",
+      "change @ui.name":     "onChangeName",
     },
 
     onClickNewEvent: function()
     {
-      var event = new Event({game_id: this.model.get("game_id")});
-      this.collection.add(event);
+      var self = this;
+      var event = new Event({game_id: self.model.get("game_id")});
+      self.collection.add(event);
     },
 
-    onClickSaveAll: function(event)
+    onClickSave: function(event)
     {
-      var view = this;
+      var self = this;
       event.preventDefault();
 
       // Save Event Package with children json
-      view.model.set("events", view.collection);
+      self.model.set("events", self.collection);
 
       // Don't save package 0
-      if(view.model.get("event_package_id") === "0")
+      if(self.model.get("event_package_id") === "0")
       {
-        view.model.unset("event_package_id");
+        self.model.unset("event_package_id");
       }
 
-      view.model.save({},
+      self.model.save({},
       {
         success: function()
         {
-          view.trigger("event_package:save", view.model);
+          self.trigger("event_package:save", self.model);
         }
       });
     },
 
     onClickCancel: function()
     {
-      this.trigger("cancel");
+      var self = this;
+      self.trigger("cancel");
+      //delete self.previous_attributes.event_package_id;
+      //self.model.set(self.previous_attributes);
+    },
+
+    onClickDelete: function()
+    {
+      var self = this;
+      self.model.destroy(
+      {
+        success: function()
+        {
+          vent.trigger("application:popup:hide");
+        }
+      });
+    },
+
+    onChangeName: function()
+    {
+      var self = this;
+      self.model.set("name",self.ui.name.val());
     },
 
     // Child View Events
     onItemviewEventRemove: function(item_view, event)
     {
-      this.collection.remove(event);
+      var self = this;
+      self.collection.remove(event);
     },
 
     // Marionette Collection Override
     appendBuffer: function(compositeView, buffer)
     {
-      var $container = this.getItemViewContainer(compositeView);
+      var self = this;
+      var $container = self.getItemViewContainer(compositeView);
       $container.find(".foot").before(buffer);
     },
 
     appendHtml: function(compositeView, itemView, index)
     {
+      var self = this;
       if(compositeView.isBuffering)
       {
         compositeView.elBuffer.appendChild(itemView.el);
@@ -99,10 +150,10 @@ function(
       {
         // If we've already rendered the main collection, just
         // append the new items directly into the element.
-        var $container = this.getItemViewContainer(compositeView);
+        var $container = self.getItemViewContainer(compositeView);
         $container.find(".foot").before(itemView.el);
       }
-    }
+    },
 
   });
 });

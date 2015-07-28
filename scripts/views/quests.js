@@ -31,7 +31,8 @@ function(require)
 
       var quest_editor = new QuestEditorView({model: quest});
 
-      quest_editor.on("quest:add", function(quest) {
+      quest_editor.on("quest:add", function(quest)
+      {
         view.collection.add(quest);
       });
 

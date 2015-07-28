@@ -139,7 +139,6 @@ function(require)
 
       "change @ui.produce_expire_on_view":  "onChangeProduceExpireOnView",
 
-
       /* Trigger section */
 
       "click .change-icon":            "onClickChangeIcon",

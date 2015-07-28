@@ -1,31 +1,47 @@
-<div class="event-package-editor">
-	<div class="container-fluid">
-		<div class="row event-package-table-header">
-			<div class="col-xs-4 ">
-				<label>Action</label>
-			</div>
-			<div class="col-xs-4">
-				<label>What</label>
-			</div>
-			<div class="col-xs-4">
-				<label>Quantity</label>
-			</div>
-		</div>
-	</div>
+<div class="object-editor form event-package-editor">
+   
+  <h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
+    <span class="object-id text-muted"><%= is_new ? "" : event_package_id %></span>
+  </h4>
 
-	<ul class="list-group events">
-	  <a class="list-group-item list-group-item-info foot new-event">
-		Add Row
-	  </a>
-	</ul>
+  <div class="form-group">
+    <label for="event-package-name">Name</label>
+    <input type="text" autofocus class="form-control" id="event-package-name" placeholder="Name" value="<%= name %>">
+  </div>
 
-	<div class="form-group">
-		<button type="submit" class="btn btn-primary save-all">
-			Save
-		</button>
-		<button type="button" class="btn btn-default cancel">
-			Cancel
-		</button>
-	</div>
+  <div class="container-fluid">
+    <div class="row event-package-table-header">
+      <div class="col-xs-4 ">
+        <label>Action</label>
+      </div>
+      <div class="col-xs-4">
+        <label>What</label>
+      </div>
+      <div class="col-xs-4">
+        <label>Quantity</label>
+      </div>
+    </div>
+  </div>
+
+  <ul class="list-group events">
+    <a class="list-group-item list-group-item-info foot new-event">
+      Add Row
+    </a>
+  </ul>
+
+  <button type="submit" class="btn btn-primary save">
+    Save
+  </button>
+
+  <% if(!is_new) { %>
+    <button type="button" class="btn btn-danger delete">
+      Delete
+    </button>
+  <% } %>
+
+  <button type="button" class="btn btn-default cancel">
+    Cancel
+  </button>
+
 </div>
 
