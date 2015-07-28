@@ -1,15 +1,22 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/web_page_organizer.tpl',
+  'views/web_page_organizer_row',
+  'views/web_page_editor',
+  'models/web_page',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  WebPageOrganizerRowView,
+  WebPageEditorView,
+  WebPage,
+  vent
+)
 {
-  var Backbone                = require('backbone');
-  var Template                = require('text!templates/web_page_organizer.tpl');
-  var WebPageOrganizerRowView = require('views/web_page_organizer_row');
-  var WebPageEditorView       = require('views/web_page_editor');
-  var WebPage                 = require('models/web_page');
-  var vent                    = require('vent');
-
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: WebPageOrganizerRowView,

@@ -1,15 +1,22 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!templates/trigger_editor_object_selector.tpl',
+  'vent',
+  'storage',
+],
+function(
+  _,
+  $,
+  Backbone,
+  Template,
+  vent,
+  storage
+)
 {
-  var _                = require('underscore');
-  var $                = require('jquery');
-  var Backbone         = require('backbone');
-  var Template         = require('text!templates/trigger_editor_object_selector.tpl');
-
-  var vent             = require('vent');
-  var storage          = require('storage');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     /* View */

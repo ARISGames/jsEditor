@@ -1,12 +1,18 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/dialog_organizer_row.tpl',
+  'views/dialog_editor',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  DialogEditorView,
+  vent
+)
 {
-  var Backbone         = require('backbone');
-  var Template         = require('text!templates/dialog_organizer_row.tpl');
-  var DialogEditorView = require('views/dialog_editor');
-  var vent             = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     events:

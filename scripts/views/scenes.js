@@ -1,21 +1,30 @@
-define(
-function(require)
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'text!templates/scenes.tpl',
+  'jquidrag',
+  'bootstrap',
+  'views/scene',
+  'views/scene_editor',
+  'models/scene',
+  'collections/triggers',
+  'vent',
+],
+function(
+  $,
+  _,
+  Backbone,
+  Template,
+  jQueryUiDraggable,
+  Bootstrap,
+  SceneView,
+  SceneEditorView,
+  Scene,
+  TriggersCollection,
+  vent
+)
 {
-  var $                  = require('jquery');
-  var _                  = require('underscore');
-  var Backbone           = require('backbone');
-  var Template           = require('text!templates/scenes.tpl');
-
-  var jQueryUiDraggable  = require('jquidrag');
-  var Bootstrap          = require('bootstrap');
-
-  var SceneView          = require('views/scene');
-  var SceneEditorView    = require('views/scene_editor');
-  var Scene              = require('models/scene');
-  var TriggersCollection = require('collections/triggers');
-
-  var vent               = require('vent');
-
   return Backbone.Marionette.CompositeView.extend(
   {
     template: _.template(Template),

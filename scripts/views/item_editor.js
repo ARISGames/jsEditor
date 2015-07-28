@@ -1,22 +1,32 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'views/editor_base',
+  'text!templates/item_editor.tpl',
+  'collections/media',
+  'models/game',
+  'views/media_chooser',
+  'collections/event_packages',
+  'views/event_inference_row',
+  'vent',
+  'storage',
+],
+function(
+  _,
+  $,
+  EditorView,
+  Template,
+  MediaCollection,
+  Game,
+  MediaChooserView,
+  EventPackagesCollection,
+  EventInferenceRow,
+  vent,
+  storage
+)
 {
-  var _                = require('underscore');
-  var $                = require('jquery');
-  var EditorView       = require('views/editor_base');
-  var Template         = require('text!templates/item_editor.tpl');
-
-  var MediaCollection  = require('collections/media');
-  var Game             = require('models/game');
-  var MediaChooserView = require('views/media_chooser');
-
-  var EventPackagesCollection = require('collections/event_packages');
-  var EventInferenceRow = require('views/event_inference_row');
-
-  var vent             = require('vent');
-  var storage          = require('storage');
-
-  return EditorView.extend({
+  return EditorView.extend(
+  {
     template: _.template(Template),
 
     itemView: EventInferenceRow,

@@ -1,12 +1,18 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'marionette',
+  'text!templates/games_layout.tpl',
+],
+function(
+  _,
+  Backbone,
+  Marionette,
+  Template
+)
 {
-  var _          = require('underscore');
-  var Backbone   = require('backbone');
-  var Marionette = require('marionette');
-  var Template   = require('text!templates/games_layout.tpl');
-
-  return Backbone.Marionette.Layout.extend({
+  return Backbone.Marionette.Layout.extend(
+  {
     template: _.template(Template),
 
     className: "games-list-container",

@@ -1,16 +1,24 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'views/editor_base',
+  'vent',
+  'storage',
+  'text!templates/trigger_creator.tpl',
+  'models/instance',
+],
+function(
+  _,
+  $,
+  EditorView,
+  vent,
+  storage,
+  Template,
+  Instance
+)
 {
-  var _          = require('underscore');
-  var $          = require('jquery');
-  var EditorView = require('views/editor_base');
-  var vent       = require('vent');
-  var storage    = require('storage');
-  var Template   = require('text!templates/trigger_creator.tpl');
-
-  var Instance = require('models/instance');
-
-  return EditorView.extend({
+  return EditorView.extend(
+  {
 
     /* View */
 

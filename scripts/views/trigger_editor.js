@@ -1,31 +1,42 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'views/editor_base',
+  'vent',
+  'storage',
+  'text!templates/trigger_editor.tpl',
+  'qrcode',
+  'models/item',
+  'models/instance',
+  'views/media_chooser',
+  'collections/media',
+  'views/requirements',
+  'models/requirement_package',
+  'collections/and_packages',
+  'collections/atoms',
+  'views/trigger_editor_object_selector',
+],
+function(
+  _,
+  $,
+  EditorView,
+  vent,
+  storage,
+  Template,
+  QRCode,
+  Item,
+  Instance,
+  MediaChooserView,
+  MediaCollection,
+  RequirementsEditorView,
+  RequirementPackage,
+  AndPackagesCollection,
+  AtomsCollection,
+  TriggerObjectSelectorView
+)
 {
-  var _          = require('underscore');
-  var $          = require('jquery');
-  var EditorView = require('views/editor_base');
-  var vent       = require('vent');
-  var storage    = require('storage');
-  var Template   = require('text!templates/trigger_editor.tpl');
-
-  var QRCode   = require('qrcode');
-  var Item     = require('models/item');
-  var Instance = require('models/instance');
-
-  /* Media Editor */
-  var MediaChooserView        = require('views/media_chooser');
-  var MediaCollection         = require('collections/media');
-
-  /* Requirements Editor */
-  var RequirementsEditorView  = require('views/requirements');
-  var RequirementPackage      = require('models/requirement_package');
-  var AndPackagesCollection   = require('collections/and_packages');
-  var AtomsCollection         = require('collections/atoms');
-
-  var TriggerObjectSelectorView = require('views/trigger_editor_object_selector');
-
-  return EditorView.extend({
-
+  return EditorView.extend(
+  {
     /* View */
 
     template: _.template(Template),

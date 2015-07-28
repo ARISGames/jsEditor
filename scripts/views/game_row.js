@@ -1,12 +1,18 @@
-define(
-function(require)
+define([
+  'underscore',
+  'underscore.string',
+  'backbone',
+  'text!templates/game_row.tpl',
+],
+function(
+  _,
+  _S,
+  Backbone,
+  Template
+)
 {
-  var _        = require('underscore');
-  var _S       = require('underscore.string');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/game_row.tpl');
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap

@@ -1,31 +1,48 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/scene_trigger_type_chooser.tpl',
+  'views/scene_instance_trigger',
+  'views/dialog_chooser',
+  'views/item_chooser',
+  'views/plaque_chooser',
+  'views/web_page_chooser',
+  'views/scene_chooser',
+  'views/factory_chooser',
+  'views/event_package_chooser',
+  'collections/dialogs',
+  'collections/items',
+  'collections/plaques',
+  'collections/web_pages',
+  'collections/scenes',
+  'collections/factories',
+  'collections/event_packages',
+  'vent',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  SceneInstanceTriggerView,
+  DialogChooserView,
+  ItemChooserView,
+  PlaqueChooserView,
+  WebPageChooserView,
+  SceneChooserView,
+  FactoryChooserView,
+  EventPackageChooserView,
+  DialogsCollection,
+  ItemsCollection,
+  PlaquesCollection,
+  WebPagesCollection,
+  ScenesCollection,
+  FactoriesCollection,
+  EventsPackageCollection,
+  vent
+)
 {
-  var _        = require('underscore');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/scene_trigger_type_chooser.tpl');
-
-  var SceneInstanceTriggerView = require('views/scene_instance_trigger');
-
-  var DialogChooserView       = require('views/dialog_chooser');
-  var ItemChooserView         = require('views/item_chooser');
-  var PlaqueChooserView       = require('views/plaque_chooser');
-  var WebPageChooserView      = require('views/web_page_chooser');
-  var SceneChooserView        = require('views/scene_chooser');
-  var FactoryChooserView      = require('views/factory_chooser');
-  var EventPackageChooserView = require('views/event_package_chooser');
-
-  var DialogsCollection       = require('collections/dialogs');
-  var ItemsCollection         = require('collections/items');
-  var PlaquesCollection       = require('collections/plaques');
-  var WebPagesCollection      = require('collections/web_pages');
-  var ScenesCollection        = require('collections/scenes');
-  var FactoriesCollection     = require('collections/factories');
-  var EventsPackageCollection = require('collections/event_packages');
-
-  var vent = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     events: {

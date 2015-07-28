@@ -1,13 +1,16 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+],
+function(
+  _,
+  Backbone
+)
 {
-  var _          = require('underscore');
-  var Backbone   = require('backbone');
-  var Marionette = Backbone.Marionette;
-
-  return Backbone.Marionette.CompositeView.extend({
-
-    templateBaseHelpers:  {
+  return Backbone.Marionette.CompositeView.extend(
+  {
+    templateBaseHelpers:
+    {
       // Field logic
       is_checked: function(value) {
         return value === "1" ? "checked" : "";
@@ -51,14 +54,14 @@ function(require)
       target = target || {};
 
       // View helpers for bootstrap fields
-      var templateBaseHelpers = Marionette.getOption(this, "templateBaseHelpers");
+      var templateBaseHelpers = Backbone.Marionette.getOption(this, "templateBaseHelpers");
       if (_.isFunction(templateBaseHelpers)){
         templateBaseHelpers = templateBaseHelpers.call(this);
       }
       _.extend(target, templateBaseHelpers);
 
       // Sub class methods
-      var templateHelpers = Marionette.getOption(this, "templateHelpers");
+      var templateHelpers = Backbone.Marionette.getOption(this, "templateHelpers");
       if (_.isFunction(templateHelpers)){
         templateHelpers = templateHelpers.call(this);
       }

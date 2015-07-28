@@ -1,14 +1,22 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/item_organizer.tpl',
+  'views/item_organizer_row',
+  'views/item_editor',
+  'models/item',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  ItemOrganizerRowView,
+  ItemEditorView,
+  Item,
+  vent
+)
 {
-  var Backbone             = require('backbone');
-  var Template             = require('text!templates/item_organizer.tpl');
-  var ItemOrganizerRowView = require('views/item_organizer_row');
-  var ItemEditorView       = require('views/item_editor');
-  var Item                 = require('models/item');
-  var vent                 = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: ItemOrganizerRowView,

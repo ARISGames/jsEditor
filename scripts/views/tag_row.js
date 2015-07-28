@@ -1,13 +1,20 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/tag_row.tpl',
+  'views/tag_editor',
+  'vent',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  TagEditorView,
+  vent
+)
 {
-  var _             = require('underscore');
-  var Backbone      = require('backbone');
-  var Template      = require('text!templates/tag_row.tpl');
-  var TagEditorView = require('views/tag_editor');
-  var vent          = require('vent');
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap

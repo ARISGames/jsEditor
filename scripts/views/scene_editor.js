@@ -1,13 +1,20 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/scene_editor.tpl',
+  'vent',
+  'storage',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  vent,
+  storage
+)
 {
-  var _        = require('underscore');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/scene_editor.tpl');
-  var vent     = require('vent');
-  var storage  = require('storage');
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // TODO move into a base view

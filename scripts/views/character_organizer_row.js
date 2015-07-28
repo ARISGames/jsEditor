@@ -1,14 +1,20 @@
-define(
-function(require)
+define([
+  'jquery',
+  'backbone',
+  'text!templates/character_organizer_row.tpl',
+  'views/character_editor',
+  'vent',
+],
+function(
+  $,
+  Backbone,
+  Template,
+  CharacterEditorView,
+  vent
+)
 {
-  var $                   = require('jquery');
-  var Backbone            = require('backbone');
-  var Template            = require('text!templates/character_organizer_row.tpl');
-  var CharacterEditorView = require('views/character_editor');
-  var vent                = require('vent');
-
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     events:

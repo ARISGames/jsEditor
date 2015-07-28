@@ -1,15 +1,22 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!templates/note_editor.tpl',
+  'vent',
+  'views/note_comment_row',
+],
+function(
+  _,
+  $,
+  Backbone,
+  Template,
+  vent,
+  NoteCommentRowView
+)
 {
-  var _        = require('underscore');
-  var $        = require('jquery');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/note_editor.tpl');
-  var vent     = require('vent');
-
-  var NoteCommentRowView = require('views/note_comment_row');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     templateHelpers: function() {

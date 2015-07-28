@@ -1,16 +1,26 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/event_package_chooser.tpl',
+  'models/event_package',
+  'models/trigger',
+  'models/instance',
+  'models/media',
+  'views/event_package_chooser_row',
+  'views/trigger_creator',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  EventPackage,
+  Trigger,
+  Instance,
+  Media,
+  EventPackageChooserRowView,
+  TriggerCreatorView,
+  vent
+)
 {
-  var Backbone                   = require('backbone');
-  var Template                   = require('text!templates/event_package_chooser.tpl');
-  var EventPackage               = require('models/event_package');
-  var Trigger                    = require('models/trigger');
-  var Instance                   = require('models/instance');
-  var Media                      = require('models/media');
-  var EventPackageChooserRowView = require('views/event_package_chooser_row');
-  var TriggerCreatorView         = require('views/trigger_creator');
-  var vent                       = require('vent');
-
   return Backbone.Marionette.CompositeView.extend(
   {
     template: _.template(Template),

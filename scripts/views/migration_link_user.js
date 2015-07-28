@@ -1,19 +1,28 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/migration_link_user.tpl',
+  'vent',
+  'config',
+  'models/session',
+  'i18n',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  vent,
+  config,
+  session,
+  i18n
+)
 {
-  var _              = require('underscore');
-  var Backbone       = require('backbone');
-  var Template       = require('text!templates/migration_link_user.tpl');
-  var vent           = require('vent');
-  var config         = require('config');
-  var session        = require('models/session');
-
-  var i18n           = require('i18n');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         gettext: function(text) { return i18n.gettext(text); }
       }

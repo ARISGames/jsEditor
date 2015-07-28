@@ -1,13 +1,17 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+],
+function(
+  _,
+  Backbone
+)
 {
-  var _          = require('underscore');
-  var Backbone   = require('backbone');
-  var Marionette = Backbone.Marionette;
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     // Marionette override
-    appendBuffer: function(compositeView, buffer) {
+    appendBuffer: function(compositeView, buffer)
+    {
       var $container = this.getItemViewContainer(compositeView);
       $container.find(".foot").before(buffer);
     },

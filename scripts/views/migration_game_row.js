@@ -1,17 +1,24 @@
-define(
-function(require)
+define([
+  'underscore',
+  'underscore.string',
+  'backbone',
+  'text!templates/migration_game_row.tpl',
+  'vent',
+  'text!templates/migration_game_prompt.tpl',
+  'views/alert_dialog',
+],
+function(
+  _,
+  _S,
+  Backbone,
+  Template,
+  vent,
+  MigrationPromptTemplate,
+  AlertDialog
+)
 {
-  var _        = require('underscore');
-  var _S       = require('underscore.string');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/migration_game_row.tpl');
-  var vent     = require('vent');
-
-  var MigrationPromptTemplate = require('text!templates/migration_game_prompt.tpl');
-
-  var AlertDialog = require('views/alert_dialog');
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap

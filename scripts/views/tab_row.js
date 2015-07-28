@@ -1,28 +1,42 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/tab_row.tpl',
+  'vent',
+  'views/tab_editor',
+  'models/media',
+  'models/game',
+  'models/tab',
+  'models/plaque',
+  'models/item',
+  'models/dialog',
+  'models/web_page',
+  'collections/items',
+  'collections/plaques',
+  'collections/web_pages',
+  'collections/dialogs',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  vent,
+  TabEditorView,
+  Media,
+  Game,
+  Tab,
+  Plaque,
+  Item,
+  Dialog,
+  WebPage,
+  ItemsCollection,
+  PlaquesCollection,
+  WebPagesCollection,
+  DialogsCollection
+)
 {
-  var _                  = require('underscore');
-  var Backbone           = require('backbone');
-  var Template           = require('text!templates/tab_row.tpl');
-  var vent               = require('vent');
-
-  var TabEditorView      = require('views/tab_editor');
-
-  var Media              = require('models/media');
-  var Game               = require('models/game');
-  var Tab                = require('models/tab');
-
-  var Plaque             = require('models/plaque');
-  var Item               = require('models/item');
-  var Dialog             = require('models/dialog');
-  var WebPage            = require('models/web_page');
-
-  var ItemsCollection    = require('collections/items');
-  var PlaquesCollection  = require('collections/plaques');
-  var WebPagesCollection = require('collections/web_pages');
-  var DialogsCollection  = require('collections/dialogs');
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap

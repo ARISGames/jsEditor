@@ -1,14 +1,22 @@
-define(
-function(require)
+define([
+  'views/editor_collection_base',
+  'underscore',
+  'text!templates/quests.tpl',
+  'views/quest_row',
+  'views/quest_editor',
+  'models/quest',
+  'vent',
+],
+function(
+  EditorCollectionView,
+  _,
+  Template,
+  QuestRowView,
+  QuestEditorView,
+  Quest,
+  vent
+)
 {
-  var EditorCollectionView = require('views/editor_collection_base');
-
-  var _               = require('underscore');
-  var Template        = require('text!templates/quests.tpl');
-  var QuestRowView    = require('views/quest_row');
-  var QuestEditorView = require('views/quest_editor');
-  var Quest           = require('models/quest');
-  var vent            = require('vent');
 
   return EditorCollectionView.extend({
     template: _.template(Template),

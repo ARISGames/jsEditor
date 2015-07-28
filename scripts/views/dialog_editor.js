@@ -1,35 +1,56 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!templates/dialog_editor.tpl',
+  'vent',
+  'storage',
+  'collections/characters',
+  'collections/media',
+  'collections/dialog_scripts',
+  'collections/dialog_options',
+  'collections/plaques',
+  'collections/items',
+  'collections/web_pages',
+  'collections/dialogs',
+  'collections/tabs',
+  'models/media',
+  'models/game',
+  'models/character',
+  'models/dialog_script',
+  'models/dialog_option',
+  'views/media_chooser',
+  'views/conversation_editor',
+  'views/character_organizer',
+],
+function(
+  _,
+  $,
+  Backbone,
+  Template,
+  vent,
+  storage,
+  CharactersCollection,
+  MediaCollection,
+  DialogScriptsCollection,
+  DialogOptionsCollection,
+  PlaquesCollection,
+  ItemsCollection,
+  WebPagesCollection,
+  DialogsCollection,
+  TabsCollection,
+  Media,
+  Game,
+  Character,
+  DialogScript,
+  DialogOption,
+  MediaChooserView,
+  ConversationEditorView,
+  CharactersOrganizerView
+)
 {
-  var _                       = require('underscore');
-  var $                       = require('jquery');
-  var Backbone                = require('backbone');
-  var Template                = require('text!templates/dialog_editor.tpl');
-  var vent                    = require('vent');
-  var storage                 = require('storage');
-
-  var CharactersCollection    = require('collections/characters');
-  var MediaCollection         = require('collections/media');
-  var DialogScriptsCollection = require('collections/dialog_scripts');
-  var DialogOptionsCollection = require('collections/dialog_options');
-  var PlaquesCollection       = require('collections/plaques');
-  var ItemsCollection         = require('collections/items');
-  var WebPagesCollection      = require('collections/web_pages');
-  var DialogsCollection       = require('collections/dialogs');
-  var TabsCollection          = require('collections/tabs');
-
-  var Media                   = require('models/media');
-  var Game                    = require('models/game');
-  var Character               = require('models/character');
-  var DialogScript            = require('models/dialog_script');
-  var DialogOption            = require('models/dialog_option');
-
-  var MediaChooserView        = require('views/media_chooser');
-  var ConversationEditorView  = require('views/conversation_editor');
-  var CharactersOrganizerView = require('views/character_organizer');
-
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     /* View */

@@ -1,17 +1,28 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/web_page_chooser.tpl',
+  'models/web_page',
+  'models/trigger',
+  'models/instance',
+  'models/media',
+  'views/web_page_chooser_row',
+  'views/trigger_creator',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  WebPage,
+  Trigger,
+  Instance,
+  Media,
+  WebPageChooserRowView,
+  TriggerCreatorView,
+  vent
+)
 {
-  var Backbone              = require('backbone');
-  var Template              = require('text!templates/web_page_chooser.tpl');
-  var WebPage               = require('models/web_page');
-  var Trigger               = require('models/trigger');
-  var Instance              = require('models/instance');
-  var Media                 = require('models/media');
-  var WebPageChooserRowView = require('views/web_page_chooser_row');
-  var TriggerCreatorView    = require('views/trigger_creator');
-  var vent                  = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: WebPageChooserRowView,

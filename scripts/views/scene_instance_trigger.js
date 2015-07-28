@@ -1,24 +1,38 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/scene_instance_trigger.tpl',
+  'vent',
+  'models/instance',
+  'models/dialog',
+  'models/plaque',
+  'models/item',
+  'models/web_page',
+  'models/media',
+  'models/scene',
+  'models/factory',
+  'models/event',
+  'views/trigger_editor',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  vent,
+  Instance,
+  Dialog,
+  Plaque,
+  Item,
+  WebPage,
+  Media,
+  Scene,
+  Factory,
+  Event,
+  TriggerEditorView
+)
 {
-  var _        = require('underscore');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/scene_instance_trigger.tpl');
-  var vent     = require('vent');
-
-  var Instance = require('models/instance');
-  var Dialog   = require('models/dialog');
-  var Plaque   = require('models/plaque');
-  var Item     = require('models/item');
-  var WebPage  = require('models/web_page');
-  var Media    = require('models/media');
-  var Scene    = require('models/scene');
-  var Factory  = require('models/factory');
-  var Event    = require('models/event');
-
-  var TriggerEditorView = require('views/trigger_editor');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     tagName: 'li',

@@ -1,23 +1,35 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/factory_chooser.tpl',
+  'models/factory',
+  'models/trigger',
+  'models/instance',
+  'models/media',
+  'views/factory_chooser_row',
+  'views/trigger_creator',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  Factory,
+  Trigger,
+  Instance,
+  Media,
+  FactoryChooserRowView,
+  TriggerCreatorView,
+  vent
+)
 {
-  var Backbone              = require('backbone');
-  var Template              = require('text!templates/factory_chooser.tpl');
-  var Factory               = require('models/factory');
-  var Trigger               = require('models/trigger');
-  var Instance              = require('models/instance');
-  var Media                 = require('models/media');
-  var FactoryChooserRowView = require('views/factory_chooser_row');
-  var TriggerCreatorView    = require('views/trigger_creator');
-  var vent                  = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: FactoryChooserRowView,
     itemViewContainer: ".factorys",
 
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return {
         parent: this.options.parent
       }

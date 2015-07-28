@@ -1,16 +1,24 @@
-define(
-function(require)
+define([
+  'underscore',
+  'underscore.string',
+  'jquery',
+  'views/editor_base',
+  'text!templates/event_inference_row.tpl',
+  'models/instance',
+  'vent',
+  'storage',
+],
+function(
+  _,
+  _S,
+  $,
+  EditorView,
+  Template,
+  Instance,
+  vent,
+  storage
+)
 {
-  var _                = require('underscore');
-  var _S               = require('underscore.string');
-  var $                = require('jquery');
-  var EditorView       = require('views/editor_base');
-  var Template         = require('text!templates/event_inference_row.tpl');
-  var Instance         = require('models/instance');
-
-  var vent             = require('vent');
-  var storage          = require('storage');
-
   return EditorView.extend(
   {
     template:_.template(Template),

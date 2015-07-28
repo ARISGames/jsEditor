@@ -1,16 +1,24 @@
-define(
-function(require)
+define([
+  'views/editor_collection_base',
+  'underscore',
+  'text!templates/tags.tpl',
+  'views/tag_row',
+  'views/tag_editor',
+  'models/tag',
+  'vent',
+],
+function(
+  EditorCollectionView,
+  _,
+  Template,
+  TagRowView,
+  TagEditorView,
+  Tag,
+  vent
+)
 {
-  var EditorCollectionView = require('views/editor_collection_base');
-
-  var _             = require('underscore');
-  var Template      = require('text!templates/tags.tpl');
-  var TagRowView    = require('views/tag_row');
-  var TagEditorView = require('views/tag_editor');
-  var Tag           = require('models/tag');
-  var vent          = require('vent');
-
-  return EditorCollectionView.extend({
+  return EditorCollectionView.extend(
+  {
     template: _.template(Template),
 
     itemView: TagRowView,

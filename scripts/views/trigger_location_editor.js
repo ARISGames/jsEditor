@@ -1,33 +1,50 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'views/editor_base',
+  'text!templates/trigger_location_editor.tpl',
+  'vent',
+  'models/item',
+  'views/requirements',
+  'views/media_chooser',
+  'collections/media',
+  'collections/and_packages',
+  'collections/atoms',
+  'collections/items',
+  'collections/tags',
+  'collections/plaques',
+  'collections/dialogs',
+  'collections/game_dialog_scripts',
+  'collections/web_pages',
+  'collections/quests',
+  'collections/web_hooks',
+  'models/requirement_package',
+],
+function(
+  _,
+  $,
+  EditorView,
+  Template,
+  vent,
+  Item,
+  RequirementsEditorView,
+  MediaChooserView,
+  MediaCollection,
+  AndPackagesCollection,
+  AtomsCollection,
+  ItemsCollection,
+  TagsCollection,
+  PlaquesCollection,
+  DialogsCollection,
+  DialogScriptsCollection,
+  WebPagesCollection,
+  QuestsCollection,
+  WebHooksCollection,
+  RequirementPackage
+)
 {
-  var _          = require('underscore');
-  var $          = require('jquery');
-  var EditorView = require('views/editor_base');
-  var Template   = require('text!templates/trigger_location_editor.tpl');
-  var vent       = require('vent');
-
-  var Item = require('models/item');
-
-  var RequirementsEditorView  = require('views/requirements');
-  var MediaChooserView        = require('views/media_chooser');
-
-  var MediaCollection         = require('collections/media');
-  var AndPackagesCollection   = require('collections/and_packages');
-  var AtomsCollection         = require('collections/atoms');
-  var ItemsCollection         = require('collections/items');
-  var TagsCollection          = require('collections/tags');
-  var PlaquesCollection       = require('collections/plaques');
-  var DialogsCollection       = require('collections/dialogs');
-  var DialogScriptsCollection = require('collections/game_dialog_scripts');
-  var WebPagesCollection      = require('collections/web_pages');
-  var QuestsCollection        = require('collections/quests');
-  var WebHooksCollection      = require('collections/web_hooks');
-
-  var RequirementPackage      = require('models/requirement_package');
-
-  return EditorView.extend({
-
+  return EditorView.extend(
+  {
     /* View */
 
     template: _.template(Template),

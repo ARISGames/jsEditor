@@ -1,21 +1,30 @@
-define(
-function(require)
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!templates/game_editor.tpl',
+  'qrcode',
+  'collections/media',
+  'views/media_chooser',
+  'views/alert_dialog',
+  'models/game',
+  'vent',
+],
+function(
+  _,
+  $,
+  Backbone,
+  Template,
+  QRCode,
+  MediaCollection,
+  MediaChooserView,
+  AlertDialog,
+  Game,
+  vent
+)
 {
-  var _        = require('underscore');
-  var $        = require('jquery');
-  var Backbone = require('backbone');
-  var Template = require('text!templates/game_editor.tpl');
-
-  var QRCode           = require('qrcode');
-  var MediaCollection  = require('collections/media');
-  var MediaChooserView = require('views/media_chooser');
-  var AlertDialog      = require('views/alert_dialog');
-
-  var Game = require('models/game');
-  var vent = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
-
+  return Backbone.Marionette.CompositeView.extend(
+  {
     /* View */
 
     template: _.template(Template),

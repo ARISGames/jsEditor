@@ -1,17 +1,28 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/scene_chooser.tpl',
+  'models/scene',
+  'models/trigger',
+  'models/instance',
+  'models/media',
+  'views/scene_chooser_row',
+  'views/trigger_creator',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  Scene,
+  Trigger,
+  Instance,
+  Media,
+  SceneChooserRowView,
+  TriggerCreatorView,
+  vent
+)
 {
-  var Backbone             = require('backbone');
-  var Template             = require('text!templates/scene_chooser.tpl');
-  var Scene                = require('models/scene');
-  var Trigger              = require('models/trigger');
-  var Instance             = require('models/instance');
-  var Media                = require('models/media');
-  var SceneChooserRowView  = require('views/scene_chooser_row');
-  var TriggerCreatorView   = require('views/trigger_creator');
-  var vent                 = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: SceneChooserRowView,

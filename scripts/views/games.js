@@ -1,16 +1,26 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/games.tpl',
+  'views/game_row',
+  'views/game_create',
+  'models/game',
+  'vent',
+  'config',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  GameRowView,
+  GameCreateView,
+  Game,
+  vent,
+  config
+)
 {
-  var _              = require('underscore');
-  var Backbone       = require('backbone');
-  var Template       = require('text!templates/games.tpl');
-  var GameRowView    = require('views/game_row');
-  var GameCreateView = require('views/game_create');
-  var Game           = require('models/game');
-  var vent           = require('vent');
-  var config         = require('config');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: GameRowView,

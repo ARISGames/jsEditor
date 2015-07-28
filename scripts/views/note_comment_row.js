@@ -1,18 +1,25 @@
-define(
-function(require)
+define([
+  'underscore',
+  'backbone',
+  'text!templates/note_comment_row.tpl',
+  'vent',
+],
+function(
+  _,
+  Backbone,
+  Template,
+  vent
+)
 {
-  var _        = require('underscore'),
-    Backbone = require('backbone'),
-    Template = require('text!templates/note_comment_row.tpl'),
-    vent     = require('vent');
-
-  return Backbone.Marionette.ItemView.extend({
+  return Backbone.Marionette.ItemView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap
     className: "list-group-item",
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         user_name: this.model.user ().get("display_name"),
       }

@@ -1,12 +1,18 @@
-define(
-function(require)
+define([
+  "underscore",
+  'views/editor_base',
+  "text!templates/atom.tpl",
+  "vent",
+],
+function(
+  _,
+  EditorView,
+  Template,
+  vent
+)
 {
-  var _          = require("underscore");
-  var EditorView = require('views/editor_base');
-  var Template   = require("text!templates/atom.tpl");
-  var vent       = require("vent");
-
-  return EditorView.extend({
+  return EditorView.extend(
+  {
     template: _.template(Template),
 
     templateHelpers: function() {

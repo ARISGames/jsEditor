@@ -1,12 +1,18 @@
-define(
-function(require)
+define([
+  'backbone',
+  'text!templates/plaque_organizer_row.tpl',
+  'views/plaque_editor',
+  'vent',
+],
+function(
+  Backbone,
+  Template,
+  PlaqueEditorView,
+  vent
+)
 {
-  var Backbone         = require('backbone');
-  var Template         = require('text!templates/plaque_organizer_row.tpl');
-  var PlaqueEditorView = require('views/plaque_editor');
-  var vent             = require('vent');
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     events:
@@ -14,13 +20,15 @@ function(require)
       "click .edit": "onClickEdit"
     },
 
-    initialize: function() {
+    initialize: function()
+    {
       this.listenTo(this.model, "update", this.render);
     },
 
     tagName: 'tr',
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var plaque_editor = new PlaqueEditorView({model: this.model});
       vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
     }

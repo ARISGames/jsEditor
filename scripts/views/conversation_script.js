@@ -1,17 +1,25 @@
-define(
-function(require)
+define([
+  'jquery',
+  'backbone',
+  'text!templates/conversation_script.tpl',
+  'models/dialog_option',
+  'models/dialog_script',
+  'views/conversation_option',
+  'views/dialog_script_editor',
+  'vent',
+],
+function(
+  $,
+  Backbone,
+  Template,
+  DialogOption,
+  DialogScript,
+  ConversationOptionView,
+  DialogScriptEditorView,
+  vent
+)
 {
-  var $                      = require('jquery');
-  var Backbone               = require('backbone');
-  var Template               = require('text!templates/conversation_script.tpl');
-  var DialogOption           = require('models/dialog_option');
-  var DialogScript           = require('models/dialog_script');
-  var ConversationOptionView = require('views/conversation_option');
-  var DialogScriptEditorView = require('views/dialog_script_editor');
-  var vent                   = require('vent');
-
-
-  var ConversationScriptView = Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
     templateHelpers: function() {
       return {
@@ -22,13 +30,15 @@ function(require)
     itemView: ConversationOptionView,
     itemViewContainer: '.script_options',
 
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
+      var self = this;
       return {
         scripts: this.scripts,
         script_options: this.script_options,
         dialog: this.dialog,
         characters: this.characters,
-        conversation_script_view: ConversationScriptView,
+        conversation_script_view: self,
         contents: this.contents
       }
     },
@@ -118,7 +128,5 @@ function(require)
     }
 
   });
-
-  return ConversationScriptView;
 });
 

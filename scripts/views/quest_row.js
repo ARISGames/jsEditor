@@ -1,13 +1,20 @@
-define(
-function(require)
+define([
+  'underscore',
+  'views/editor_base',
+  'text!templates/quest_row.tpl',
+  'views/quest_editor',
+  'vent',
+],
+function(
+  _,
+  EditorView,
+  Template,
+  QuestEditorView,
+  vent
+)
 {
-  var _               = require('underscore');
-  var EditorView      = require('views/editor_base');
-  var Template        = require('text!templates/quest_row.tpl');
-  var QuestEditorView = require('views/quest_editor');
-  var vent            = require('vent');
-
-  return EditorView.extend({
+  return EditorView.extend(
+  {
     template: _.template(Template),
 
     // Bootstrap

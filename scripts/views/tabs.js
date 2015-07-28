@@ -1,23 +1,38 @@
-define(
-function(require)
+define([
+  'views/editor_collection_base',
+  'underscore',
+  'jquidrag',
+  'text!templates/tabs.tpl',
+  'views/tab_row',
+  'views/tab_editor',
+  'models/tab',
+  'models/media',
+  'models/game',
+  'collections/items',
+  'collections/plaques',
+  'collections/web_pages',
+  'collections/dialogs',
+  'vent',
+],
+function(
+  EditorCollectionView,
+  _,
+  jQueryUiDraggable,
+  Template,
+  TabRowView,
+  TabEditorView,
+  Tab,
+  Media,
+  Game,
+  ItemsCollection,
+  PlaquesCollection,
+  WebPagesCollection,
+  DialogsCollection,
+  vent
+)
 {
-  var EditorCollectionView = require('views/editor_collection_base');
-
-  var _                  = require('underscore');
-  var jQueryUiDraggable  = require('jquidrag');
-  var Template           = require('text!templates/tabs.tpl');
-  var TabRowView         = require('views/tab_row');
-  var TabEditorView      = require('views/tab_editor');
-  var Tab                = require('models/tab');
-  var Media              = require('models/media');
-  var Game               = require('models/game');
-  var ItemsCollection    = require('collections/items');
-  var PlaquesCollection  = require('collections/plaques');
-  var WebPagesCollection = require('collections/web_pages');
-  var DialogsCollection  = require('collections/dialogs');
-  var vent               = require('vent');
-
-  return EditorCollectionView.extend({
+  return EditorCollectionView.extend(
+  {
     template: _.template(Template),
 
     itemView: TabRowView,
