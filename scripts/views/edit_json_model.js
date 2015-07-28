@@ -18,7 +18,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template:  _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         model: this.model,
         gettext: i18n.gettext
@@ -32,17 +33,20 @@ function(
     },
 
 
-    onClickSave: function(event) {
+    onClickSave: function(event)
+    {
       var view = this;
 
       // loop over attributes and set values from input ids.
       //
-      _.each(this.model.editable_attributes(), function(attribute) {
+      _.each(this.model.editable_attributes(), function(attribute)
+      {
         view.model.set(attribute, view.$el.find("#"+attribute).val());
       });
 
       this.model.save({}, {
-        success: function() {
+        success: function()
+        {
           Backbone.history.navigate('#games', {trigger: true});
         }
       });
@@ -51,10 +55,12 @@ function(
     },
 
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       if( confirm("Are you sure you want to delete this?") ) {
         this.model.destroy({
-          success: function() {
+          success: function()
+          {
             Backbone.history.navigate('#games', {trigger: true});
           }
         });

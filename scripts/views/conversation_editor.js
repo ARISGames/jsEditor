@@ -28,7 +28,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         no_intro_script: !this.model
       }
@@ -44,7 +45,8 @@ function(
       'click .add-intro-script': "onClickNew"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.incoming_options = options;
       this.game   = options.game;
       this.dialog = options.dialog;
@@ -52,7 +54,8 @@ function(
       vent.on("conversation:update", this.render);
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       var view = this;
 
       // re-wire up children, characters, and media
@@ -98,7 +101,8 @@ function(
         }
                         }
 
-      /*setTimeout(function() {
+      /*setTimeout(function()
+      {
         view.$el.find('.conversation_pan_region').panzoom({
           contain: 'invert'
         });
@@ -106,7 +110,8 @@ function(
       }, 300);*/
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var view = this;
 
       // Add them to collection for saving

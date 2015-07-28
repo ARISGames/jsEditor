@@ -26,7 +26,8 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var plaque  = new Plaque({game_id: this.model.get("game_id")});
 
       var plaque_editor = new PlaqueEditorView({model: plaque});

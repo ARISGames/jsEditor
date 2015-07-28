@@ -21,7 +21,8 @@ function(
     tagName: 'a',
     className: "list-group-item",
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         media_thumb_url: this.model.media_thumbnail()
       }
@@ -54,7 +55,8 @@ function(
       if(model) { this.render(); }
     },
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var tag_editor = new TagEditorView({model: this.model});
       vent.trigger("application:popup:show", tag_editor, "Edit Tag");
     }

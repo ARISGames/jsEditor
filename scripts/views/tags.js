@@ -31,14 +31,16 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var view = this;
 
       var tag = new Tag({game_id: this.model.get("game_id")});
 
       var tag_editor = new TagEditorView({model: tag});
 
-      tag_editor.on("tag:add", function(tag) {
+      tag_editor.on("tag:add", function(tag)
+      {
         view.collection.add(tag);
       });
 

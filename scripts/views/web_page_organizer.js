@@ -28,7 +28,8 @@ function(
     },
 
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var web_page  = new WebPage({game_id: this.model.get("game_id")});
 
       var web_page_editor = new WebPageEditorView({model: web_page});

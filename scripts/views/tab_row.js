@@ -53,7 +53,8 @@ function(
       "change": "render"
     },
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         display_type: this.should_display_type(),
         tab_type: this.model.tab_type_name(),
@@ -64,7 +65,8 @@ function(
 
     /* Name display logic */
 
-    should_display_type: function() {
+    should_display_type: function()
+    {
       return (this.model.get("name") || this.model.get("content_id") !== "0") && this.model.get("name") !== this.model.tab_type_name();
     },
 
@@ -102,7 +104,8 @@ function(
 
     /* Crud */
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var view = this;
 
       var game = this.model.game();
@@ -124,7 +127,8 @@ function(
 
     /* Association Binding */
 
-    loadAssociation: function() {
+    loadAssociation: function()
+    {
       this.unbindAssociation();
 
       var content_class = {
@@ -146,11 +150,13 @@ function(
       }
     },
 
-    unbindAssociation: function() {
+    unbindAssociation: function()
+    {
       this.stopListening(this.model.game_object());
     },
 
-    bindAssociation: function() {
+    bindAssociation: function()
+    {
       if(this.model.game_object())
       {
         this.listenTo(this.model.game_object(), 'change', this.render);// function() { console.log("got it", arguments) ;});

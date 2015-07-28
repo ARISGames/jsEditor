@@ -15,7 +15,8 @@ function(
   {
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         player_item_list_selection: this.hasPlayerItemListSelection(),
         group_item_list_selection:  this.hasGroupItemListSelection(),
@@ -48,7 +49,8 @@ function(
     tagName: 'li',
     className: "list-group-item",
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.items          = options.contents.items;
       this.tags           = options.contents.tags;
       this.plaques        = options.contents.plaques;
@@ -82,7 +84,8 @@ function(
 
     /* Model bindings */
 
-    onChangeBooleanOperator: function() {
+    onChangeBooleanOperator: function()
+    {
       var value = this.ui.operator.find("option:selected").val();
       var type  = this.ui.operator.find("option:selected").data("set");
 
@@ -134,7 +137,8 @@ function(
       this.render();
     },
 
-    onChangeRequirement: function() {
+    onChangeRequirement: function()
+    {
       var value = this.ui.requirement.find("option:selected").val();
       this.model.set("requirement", value);
 
@@ -143,7 +147,8 @@ function(
       this.render();
     },
 
-    onChangeContent: function() {
+    onChangeContent: function()
+    {
       var value = this.ui.content.find("option:selected").val();
       this.model.set("content_id", value);
     },
@@ -153,13 +158,15 @@ function(
     onChangeLongitude: function() { this.model.set("longitude", this.ui.longitude.val()); },
     onChangeDistance:  function() { this.model.set("distance",  this.ui.distance.val ()); },
 
-    onClickDeleteAtom: function() {
+    onClickDeleteAtom: function()
+    {
       this.trigger("atom:remove", this.model);
     },
 
     /* Visibility Logic */
 
-    hasPlayerItemListSelection: function() {
+    hasPlayerItemListSelection: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_ITEM":
         case "PLAYER_HAS_TAGGED_ITEM":
@@ -169,7 +176,8 @@ function(
       }
     },
 
-    hasGroupItemListSelection: function() {
+    hasGroupItemListSelection: function()
+    {
       switch(this.model.get("requirement")) {
         case "GROUP_HAS_ITEM":
         case "GROUP_HAS_TAGGED_ITEM":
@@ -179,7 +187,8 @@ function(
       }
     },
 
-    hasWorldItemListSelection: function() {
+    hasWorldItemListSelection: function()
+    {
       switch(this.model.get("requirement")) {
         case "GAME_HAS_ITEM":
         case "GAME_HAS_TAGGED_ITEM":
@@ -189,11 +198,13 @@ function(
       }
     },
 
-    hasActionListSelection: function() {
+    hasActionListSelection: function()
+    {
       return !(this.hasPlayerItemListSelection() || this.hasGroupItemListSelection() || this.hasWorldItemListSelection())
     },
 
-    isQuantityVisible: function() {
+    isQuantityVisible: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_ITEM":
         case "PLAYER_HAS_TAGGED_ITEM":
@@ -218,7 +229,8 @@ function(
       }
     },
 
-    isContentVisible: function() {
+    isContentVisible: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_ITEM":
         case "PLAYER_HAS_TAGGED_ITEM":
@@ -241,7 +253,8 @@ function(
       }
     },
 
-    isLocationVisible: function() {
+    isLocationVisible: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_UPLOADED_MEDIA_ITEM":
         case "PLAYER_HAS_UPLOADED_MEDIA_ITEM_IMAGE":
@@ -255,7 +268,8 @@ function(
     },
 
     /* Content lists visibility logic */
-    isContentItems: function() {
+    isContentItems: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_ITEM":
         case "PLAYER_VIEWED_ITEM":
@@ -268,7 +282,8 @@ function(
       }
     },
 
-    isContentTags: function() {
+    isContentTags: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_TAGGED_ITEM":
         case "GROUP_HAS_TAGGED_ITEM":
@@ -281,7 +296,8 @@ function(
       }
     },
 
-    isContentPlaques: function() {
+    isContentPlaques: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_PLAQUE":
           return true;
@@ -291,7 +307,8 @@ function(
       }
     },
 
-    isContentDialogs: function() {
+    isContentDialogs: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_DIALOG":
           return true;
@@ -301,7 +318,8 @@ function(
       }
     },
 
-    isContentDialogScripts: function() {
+    isContentDialogScripts: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_DIALOG_SCRIPT":
           return true;
@@ -311,7 +329,8 @@ function(
       }
     },
 
-    isContentWebPages: function() {
+    isContentWebPages: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_WEB_PAGE":
           return true;
@@ -321,7 +340,8 @@ function(
       }
     },
 
-    isContentQuests: function() {
+    isContentQuests: function()
+    {
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_COMPLETED_QUEST":
           return true;

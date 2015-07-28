@@ -49,7 +49,8 @@ function(
 
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         // Using views icon since we are not directly changing the model until save.
         icon_thumbnail_url: this.icon.thumbnail_for(this.model),
@@ -86,26 +87,31 @@ function(
 
     /* Dom manipulation */
 
-    set_icon: function(media) {
+    set_icon: function(media)
+    {
       this.ui.icon.attr("src", media.thumbnail_for(this.model));
     },
 
-    syncLatitude: function(model, value) {
+    syncLatitude: function(model, value)
+    {
       this.ui.latitude.val(value);
     },
 
-    syncLongitude: function(model, value) {
+    syncLongitude: function(model, value)
+    {
       this.ui.longitude.val(value);
     },
 
-    syncDistance: function(model, value) {
+    syncDistance: function(model, value)
+    {
       this.ui.distance.val(value);
     },
 
 
     /* Initialization and Rendering */
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.game_object = this.model.game_object();
       this.instance    = this.model.instance();
       this.icon        = this.model.icon();
@@ -115,7 +121,8 @@ function(
       this.bindIconAssociation();
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
 
       // FIXME remove
@@ -157,25 +164,29 @@ function(
 
     /* Crud */
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
 
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           view.model.trigger("remove_marker");
           view.close();
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       // FIXME undo all model attributes since view (minus lat/long).
       // currently avoiding setting attributes on model until save.
       // See dialog option editor for example of 'undo' with cleaner rendering.
       this.close();
     },
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view     = this;
       var trigger  = this.model;
       var instance = this.instance;
@@ -209,12 +220,14 @@ function(
 
     /* Association Binding */
 
-    unbindIconAssociation: function() {
+    unbindIconAssociation: function()
+    {
       this.stopListening(this.icon);
       this.stopListening(this.game_object.icon());
     },
 
-    bindIconAssociation: function() {
+    bindIconAssociation: function()
+    {
       this.listenTo(this.icon,               'change', this.set_icon);
       this.listenTo(this.game_object.icon(), 'change', this.set_icon);
     },
@@ -222,7 +235,8 @@ function(
 
     /* Radio Logic */
 
-    onChangeInfinity: function() {
+    onChangeInfinity: function()
+    {
       if(this.ui.infinite.is(":checked"))
       {
 
@@ -236,7 +250,8 @@ function(
       }
     },
 
-    onChangeQuantity: function() {
+    onChangeQuantity: function()
+    {
       if(this.ui.quantity.is(":checked"))
       {
         this.ui.quantity_container.hide();
@@ -247,7 +262,8 @@ function(
       }
     },
 
-    onChangeShowTitle: function() {
+    onChangeShowTitle: function()
+    {
       if(this.ui.show_title.is(":checked"))
       {
         this.ui.title.show();
@@ -258,7 +274,8 @@ function(
       }
     },
 
-    renderTriggerRadio: function() {
+    renderTriggerRadio: function()
+    {
       var view = this;
 
       // Hide radio buttons and add bootstrap classes
@@ -277,7 +294,8 @@ function(
       $(display_tab).show();
     },
 
-    onChangeTriggerEnter: function() {
+    onChangeTriggerEnter: function()
+    {
       var view = this;
 
       // Hide radio buttons and add bootstrap classes
@@ -309,7 +327,8 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
           vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindIconAssociation();
             view.icon = media;
             view.bindIconAssociation();
@@ -317,7 +336,8 @@ function(
             vent.trigger("application:popup:hide");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:hide");
           });
         }
@@ -327,7 +347,8 @@ function(
 
     /* Requirements Editor */
 
-    onClickEditRequirements: function() {
+    onClickEditRequirements: function()
+    {
       var view = this;
 
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
@@ -353,7 +374,8 @@ function(
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
 
-        and_packages.each(function(and_package) {
+        and_packages.each(function(and_package)
+        {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });

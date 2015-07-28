@@ -28,7 +28,8 @@ function(
     },
 
     // TODO how to bubble up? or get scene passed to us
-    onClickNewInstance: function() {
+    onClickNewInstance: function()
+    {
       var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
       var instance = new Instance ({game_id: this.options.parent.get("game_id")});
       var dialog   = this.model;
@@ -38,7 +39,8 @@ function(
       instance.set("object_type", Instance.type_for(dialog));
 
       instance.save({}, {
-        create: function() {
+        create: function()
+        {
           storage.add_game_object(instance);
 
           // Save Trigger

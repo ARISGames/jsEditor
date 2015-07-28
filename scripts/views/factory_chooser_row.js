@@ -43,7 +43,8 @@ function(
       instance.set("object_type", Instance.type_for(factory));
 
       instance.save({}, {
-        create: function() {
+        create: function()
+        {
           storage.add_game_object(instance);
 
           // Save Trigger

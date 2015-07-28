@@ -26,7 +26,8 @@ function(
     tagName: 'li',
     className: "list-group-item",
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.items = options.items;
     },
 
@@ -51,16 +52,19 @@ function(
       this.model.set("event", value);
     },
 
-    onChangeContent: function() {
+    onChangeContent: function()
+    {
       var value = this.ui.content.find("option:selected").val();
       this.model.set("content_id", value);
     },
 
-    onChangeQuantity: function() {
+    onChangeQuantity: function()
+    {
       this.model.set("qty", this.ui.quantity.val());
     },
 
-    onClickDeleteEvent: function() {
+    onClickDeleteEvent: function()
+    {
       this.trigger("event:remove", this.model);
     }
 

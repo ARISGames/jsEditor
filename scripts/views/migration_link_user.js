@@ -37,7 +37,8 @@ function(
       password: "#password"
     },
 
-    onClickLink: function() {
+    onClickLink: function()
+    {
       console.log("saving");
       var view = this;
 
@@ -51,7 +52,8 @@ function(
           type: 'POST',
           data: JSON.stringify(link_data),
           processData: false,
-          success: function(data) {
+          success: function(data)
+          {
             var link_response = JSON.parse(data);
 
             console.log("link_response", link_response);

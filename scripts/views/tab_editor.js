@@ -66,7 +66,8 @@ function(
 
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
 
@@ -78,11 +79,13 @@ function(
         tab_options_visible: _.contains(["DIALOG", "ITEM", "PLAQUE", "WEB_PAGE"], this.model.get("type")),
         tab_content_options: this.tab_content_options(),
 
-        option_selected: function(boolean_statement) {
+        option_selected: function(boolean_statement)
+        {
           return boolean_statement ? "selected" : "";
         },
 
-        radio_selected: function(boolean_statement) {
+        radio_selected: function(boolean_statement)
+        {
           return boolean_statement ? "checked" : "";
         },
 
@@ -114,7 +117,8 @@ function(
 
     /* Constructor */
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       // Dropdown lists FIXME replace with storage.
       this.plaques   = options.contents.plaques;
       this.items     = options.contents.items;
@@ -134,7 +138,8 @@ function(
 
     /* View Events */
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -157,24 +162,28 @@ function(
 
     /* Dom manipulation */
 
-    set_icon: function(media) {
+    set_icon: function(media)
+    {
       this.ui.icon.attr("src", media.thumbnail_for(this.model));
     },
 
 
     /* Crud */
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view  = this;
 
       view.model.save({}, {
-        create: function() {
+        create: function()
+        {
           view.storePreviousAttributes();
 
           view.trigger("tab:add", view.model);
         },
 
-        success: function() {
+        success: function()
+        {
           view.storePreviousAttributes();
 
           vent.trigger("application:popup:hide");
@@ -182,14 +191,17 @@ function(
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       delete this.previous_attributes.requirement_root_package_id;
       this.model.set(this.previous_attributes);
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
@@ -200,7 +212,8 @@ function(
 
     tab_types: Tab.tab_types,
 
-    tab_content_options: function() {
+    tab_content_options: function()
+    {
       // TODO add section headers
       switch(this.model.get("type")) {
         case "DIALOG":
@@ -219,7 +232,8 @@ function(
       }
     },
 
-    parent_name: function() {
+    parent_name: function()
+    {
 
       if(this.model.get("content_id") === "0")
       {
@@ -237,7 +251,8 @@ function(
     onChangeInfo: function() { this.model.set("info", this.ui.info.val()); },
 
 
-    onChangeType:   function() {
+    onChangeType:   function()
+    {
       var type = this.ui.type_select.val();
       this.model.set("type", type)
 
@@ -250,7 +265,8 @@ function(
       this.render();
     },
 
-    onChangeContent:   function() {
+    onChangeContent:   function()
+    {
       this.model.set("content_id", this.ui.content_select.val())
 
       var content_collections = {
@@ -272,7 +288,8 @@ function(
     },
 
 
-    onChangeQuestLayout: function() {
+    onChangeQuestLayout: function()
+    {
       var selected_radio = this.$el.find(".quest-tab-layout:checked");
       this.model.set("info", selected_radio.val());
     },
@@ -280,11 +297,13 @@ function(
 
     /* Undo and Association Binding */
 
-    storePreviousAttributes: function() {
+    storePreviousAttributes: function()
+    {
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-    unbindAssociations: function() {
+    unbindAssociations: function()
+    {
       this.stopListening(this.model.icon());
 
       if(this.model.game_object())
@@ -293,7 +312,8 @@ function(
       }
     },
 
-    bindAssociations: function() {
+    bindAssociations: function()
+    {
       this.listenTo(this.model.icon(), 'change', this.set_icon);
 
       if(this.model.game_object())
@@ -305,7 +325,8 @@ function(
 
     /* Media Selection */
 
-    onClickIcon: function(event) {
+    onClickIcon: function(event)
+    {
       var view = this;
       event.preventDefault();
 
@@ -313,7 +334,8 @@ function(
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -321,14 +343,16 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model, back_view: view});
           vent.trigger("application:popup:show", icon_chooser, "Tab Icon");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("icon_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Tab");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Tab");
           });
         }
@@ -338,7 +362,8 @@ function(
 
     /* Requirements Editors */
 
-    onClickRequirements: function() {
+    onClickRequirements: function()
+    {
       var view = this;
 
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
@@ -365,7 +390,8 @@ function(
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
 
-        and_packages.each(function(and_package) {
+        and_packages.each(function(and_package)
+        {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });

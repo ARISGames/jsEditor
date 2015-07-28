@@ -14,7 +14,8 @@ function(
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    initialize: function() {
+    initialize: function()
+    {
       this.reader = new FileReader();
       this.reader.onload = this.onReadFile.bind(this);
     },
@@ -34,7 +35,8 @@ function(
 
 
     /* File selected from browser file picker */
-    onChangeFile: function(event) {
+    onChangeFile: function(event)
+    {
       var input_file = event.target.files[0];
 
       this.model.set("file_name", input_file.name.toLowerCase());
@@ -43,7 +45,8 @@ function(
 
 
     /* FileReader onload callback */
-    onReadFile: function(event) {
+    onReadFile: function(event)
+    {
       var data = event.target.result;
 
       // Preview
@@ -59,13 +62,15 @@ function(
     },
 
 
-    onClickSave: function(event) {
+    onClickSave: function(event)
+    {
       var view = this;
 
       this.model.set("name", this.ui.name.val());
 
       this.model.save({}, {
-        success: function() {
+        success: function()
+        {
           vent.trigger("media:update", view.model);
           vent.trigger("application:popup:hide");
         }
@@ -74,19 +79,23 @@ function(
       event.preventDefault();
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       this.switchMediaPreviewer();
     },
 
-    switchMediaPreviewer: function() {
+    switchMediaPreviewer: function()
+    {
       this.$el.find('.media-previewer').hide();
 
       if     (this.model.is_video()) { this.$el.find('.video-preview').show(); }

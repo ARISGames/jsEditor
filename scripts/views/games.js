@@ -30,7 +30,8 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       if(window.running_migrations && Object.keys(window.running_migrations).length > 0) {
         alert(window.onbeforeunload.call());
         return;
@@ -41,12 +42,14 @@ function(
     },
 
     // Marionette override
-    appendBuffer: function(compositeView, buffer) {
+    appendBuffer: function(compositeView, buffer)
+    {
       var $container = this.getItemViewContainer(compositeView);
       $container.find(".foot").before(buffer);
     },
 
-    appendHtml: function(compositeView, itemView, index){
+    appendHtml: function(compositeView, itemView, index)
+    {
       if (compositeView.isBuffering) {
         compositeView.elBuffer.appendChild(itemView.el);
       }

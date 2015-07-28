@@ -25,7 +25,8 @@ function(
   {
     template: _.template(Template),
 
-    className: function() {
+    className: function()
+    {
       var panel_color = "default";
 
       if(this.is_intro_scene())
@@ -38,7 +39,8 @@ function(
 
     itemView: SceneInstanceTriggerView,
     itemViewContainer: ".scene-triggers",
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return {
         scene: this.model
       }
@@ -46,13 +48,15 @@ function(
 
     emptyView: EmptySceneView,
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_intro_scene: this.is_intro_scene()
       }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       var view = this;
 
       // Track to adjust intro scene
@@ -60,12 +64,14 @@ function(
       this.listenTo(this.model, "update", this.render);
     },
 
-    is_intro_scene: function() {
+    is_intro_scene: function()
+    {
       // FIXME can just compare models if we load all scenes into storage.
       return this.model.id === this.model.game().get("intro_scene_id");
     },
 
-    onChangeIntroScene: function() {
+    onChangeIntroScene: function()
+    {
       this.render();
 
       if(this.is_intro_scene())
@@ -79,7 +85,8 @@ function(
     },
 
     /* Listen to children asking to be removed */
-    onItemviewTriggerRemove: function(item_view, trigger) {
+    onItemviewTriggerRemove: function(item_view, trigger)
+    {
       this.collection.remove(trigger);
     },
 
@@ -89,15 +96,18 @@ function(
       "click .new-trigger": "onClickNewTrigger"
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       $(this.$el).draggable({ containment: "parent" });
     },
 
-    onClickName: function() {
+    onClickName: function()
+    {
       vent.trigger("application:info:show", new SceneEditorView({model: this.model}));
     },
 
-    onClickNewTrigger: function() {
+    onClickNewTrigger: function()
+    {
       vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model: this.model, game: this.model.game()}), "Add Trigger to Scene");
     },
 

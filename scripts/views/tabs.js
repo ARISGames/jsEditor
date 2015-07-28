@@ -45,7 +45,8 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var view = this;
 
       var game = this.model;
@@ -62,7 +63,8 @@ function(
       {
         var tab_editor = new TabEditorView({model: tab, contents: contents});
 
-        tab_editor.on("tab:add", function(tab) {
+        tab_editor.on("tab:add", function(tab)
+        {
           view.collection.add(tab);
         });
 

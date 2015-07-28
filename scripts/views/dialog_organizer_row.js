@@ -20,13 +20,15 @@ function(
       "click .edit": "onClickEditDialog"
     },
 
-    initialize: function() {
+    initialize: function()
+    {
       this.listenTo(this.model, "update", this.render);
     },
 
     tagName: 'tr',
 
-    onClickEditDialog: function() {
+    onClickEditDialog: function()
+    {
       var dialog_editor = new DialogEditorView({model: this.model});
       vent.trigger("application:popup:show", dialog_editor, "Edit Conversation");
     }

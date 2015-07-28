@@ -33,13 +33,15 @@ function(
       "click .edit": "onClickEdit"
     },
 
-    initialize: function() {
+    initialize: function()
+    {
       this.listenTo(this.model, "update", this.render);
     },
 
     tagName: 'tr',
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var view = this;
 
       var contents = {
@@ -49,7 +51,8 @@ function(
         web_pages: storage.web_pages
       };
 
-      $.when(contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function() {
+      $.when(contents.items.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.web_pages.fetch()).done(function()
+      {
         var factory_editor = new FactoryEditorView({model: view.model, contents: contents});
         vent.trigger("application:popup:show", factory_editor, "Edit Factory", true);
       });

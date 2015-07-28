@@ -55,7 +55,8 @@ function(
     tagName: 'a',
     className: "list-group-item",
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         icon_thumb_url: this.model.icon_thumbnail()
       }
@@ -89,7 +90,8 @@ function(
 
 
     // TODO convert to storage collection references
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var game = new Game({game_id: this.model.get("game_id")});
 
       var dialog     = this.model;

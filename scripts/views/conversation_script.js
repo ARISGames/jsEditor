@@ -21,7 +21,8 @@ function(
 {
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         root_node: this.model.has('root_node')
       }
@@ -43,7 +44,8 @@ function(
       }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.scripts = options.scripts;
       this.dialog  = options.dialog;
       this.instance_parent_option = options.instance_parent_option;
@@ -58,7 +60,8 @@ function(
       this.listenTo(this.model.get("character"), "change:media_id", this.change_media);
     },
 
-    change_media: function() {
+    change_media: function()
+    {
       if(this.character_media) {
         this.stopListening(this.character_media);
       }
@@ -74,17 +77,20 @@ function(
       "click .add-option": "onClickAdd",
     },
 
-    set_media: function() {
+    set_media: function()
+    {
       var element = $(this.$el.find('.thumbnail img').get(0));
       element.attr('src', this.model.get("character").media_thumbnail());
     },
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var script_editor = new DialogScriptEditorView({model: this.model, scripts:this.scripts, characters: this.characters, script_options:this.script_options, instance_parent_option:this.instance_parent_option});
       vent.trigger("application:info:show", script_editor);
       return false;
     },
-    onClickAdd: function() {
+    onClickAdd: function()
+    {
       var view = this;
 
       var script = new DialogScript();
@@ -92,7 +98,8 @@ function(
       script.set("dialog_id",view.model.get("dialog_id"));
       script.set("text","Hello");
       script.save({}, {
-        success: function() {
+        success: function()
+        {
           view.scripts.push(script);
 
           var option = new DialogOption();
@@ -103,7 +110,8 @@ function(
           option.set("link_id",script.get("dialog_script_id"));
           option.set("prompt","Continue");
           option.save({}, {
-            success:function() {
+            success:function()
+            {
               view.script_options.push(option);
 
               option = new DialogOption();
@@ -113,7 +121,8 @@ function(
               option.set("link_type","EXIT");
               option.set("prompt","Exit");
               option.save({}, {
-                success:function() {
+                success:function()
+                {
                   view.script_options.push(option);
 
                   vent.trigger("conversation:update");

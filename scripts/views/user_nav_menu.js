@@ -16,7 +16,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template:  _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         username: session.username()
       };
@@ -27,12 +28,14 @@ function(
       "click .games":  "onClickGames"
     },
 
-    onClickLogout: function() {
+    onClickLogout: function()
+    {
       // just listen for event on session
       session.logout();
     },
 
-    onClickGames: function() {
+    onClickGames: function()
+    {
       Backbone.history.navigate("#games", {trigger: true});
     }
   });

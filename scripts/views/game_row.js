@@ -36,7 +36,8 @@ function(
       "click": "onClickShow"
     },
 
-    onClickShow: function() {
+    onClickShow: function()
+    {
       // Fixme, move into own module for migration managing
       if(window.running_migrations && Object.keys(window.running_migrations).length > 0) {
         alert(window.onbeforeunload.call());

@@ -19,9 +19,11 @@ function(
 
     className: 'media-organizer',
 
-    initialize: function() {
+    initialize: function()
+    {
       var view = this;
-      vent.on("media:upload", function(media) {
+      vent.on("media:upload", function(media)
+      {
         view.collection.add(media);
       });
     }

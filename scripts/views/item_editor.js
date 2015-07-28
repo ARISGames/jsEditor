@@ -68,7 +68,8 @@ function(
 
     /* Constructor */
 
-    initialize: function() {
+    initialize: function()
+    {
       // Allow returning to original attributes
       this.storePreviousAttributes();
 
@@ -122,7 +123,8 @@ function(
       // Save Object
 
       item.save({}, {
-        create: function() {
+        create: function()
+        {
           view.storePreviousAttributes();
 
           storage.add_game_object(item);
@@ -139,14 +141,17 @@ function(
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.model.set(this.previous_attributes);
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
@@ -192,16 +197,19 @@ function(
 
     /* Undo and Association Binding */
 
-    storePreviousAttributes: function() {
+    storePreviousAttributes: function()
+    {
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-    unbindAssociations: function() {
+    unbindAssociations: function()
+    {
       this.stopListening(this.model.icon());
       this.stopListening(this.model.media());
     },
 
-    bindAssociations: function() {
+    bindAssociations: function()
+    {
       this.listenTo(this.model.icon(),  'change', this.render);
       this.listenTo(this.model.media(), 'change', this.render);
     },
@@ -209,28 +217,32 @@ function(
 
     /* Media Selectors */
 
-    onClickChangeIcon: function() {
+    onClickChangeIcon: function()
+    {
       var view = this;
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
           /* Icon */
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("icon_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Item");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Item");
           });
 
@@ -239,14 +251,16 @@ function(
       });
     },
 
-    onClickChangeMedia: function() {
+    onClickChangeMedia: function()
+    {
       var view = this;
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -254,14 +268,16 @@ function(
           var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
           vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
-          media_chooser.on("media:choose", function(media) {
+          media_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Item");
           });
 
-          media_chooser.on("cancel", function() {
+          media_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Item");
           });
         }

@@ -28,10 +28,12 @@ function(
       "click .notes":        "onClickNotes",
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       var view = this;
 
-      vent.on("application:active_nav", function(tab_name) {
+      vent.on("application:active_nav", function(tab_name)
+      {
         view.options.active = tab_name;
         view.$el.find('li').removeClass("active");
         view.$el.find(tab_name).parent().addClass("active");
@@ -40,47 +42,19 @@ function(
 
     // TODO replace all of these with controller actions
     //
-    onRender: function() {
-      this.$el.find(this.options.active).parent().addClass("active");
-    },
+    onRender: function() { this.$el.find(this.options.active).parent().addClass("active"); }, 
+    onClickSettings: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/edit", {trigger: true}); }, 
+    onClickSharing: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/share", {trigger: true}); }, 
+    onClickTabs: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/tabs", {trigger: true}); }, 
+    onClickTags: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/tags", {trigger: true}); }, 
+    onClickNotes: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/notes", {trigger: true}); }, 
+    onClickLocations: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations", {trigger: true}); }, 
+    onClickQuests: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/quests", {trigger: true}); },
+    onClickMedia: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/media", {trigger: true}); },
+    onClickScenes: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true}); },
 
-    onClickSettings: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/edit", {trigger: true});
-    },
-
-    onClickSharing: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/share", {trigger: true});
-    },
-
-    onClickTabs: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/tabs", {trigger: true});
-    },
-
-    onClickTags: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/tags", {trigger: true});
-    },
-
-    onClickNotes: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/notes", {trigger: true});
-    },
-
-    onClickLocations: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations", {trigger: true});
-    },
-
-    onClickQuests: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/quests", {trigger: true});
-    },
-
-    onClickMedia: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/media", {trigger: true});
-    },
-
-    onClickScenes: function() {
-      Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
-    },
-
-    onClickConversations: function() {
+    onClickConversations: function()
+    {
       // FIXME quick fix for back navigation to same tab
       var scene_url = "#games/"+this.model.get('game_id')+"/conversations";
 

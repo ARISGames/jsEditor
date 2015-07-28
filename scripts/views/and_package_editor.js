@@ -21,11 +21,13 @@ function(
     itemView: AtomEditorView,
     itemViewContainer: ".atoms",
 
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return { contents: this.contents }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.contents = options.contents;
     },
 
@@ -34,17 +36,20 @@ function(
       "click .delete-and-package": "onClickDeleteAndPackage"
     },
 
-    onClickNewAtom: function() {
+    onClickNewAtom: function()
+    {
       var atom = new Atom();
       this.collection.add(atom);
     },
 
-    onClickDeleteAndPackage: function() {
+    onClickDeleteAndPackage: function()
+    {
       this.trigger("andpackage:remove", this.model);
     },
 
     // Child View Events
-    onItemviewAtomRemove: function(item_view, atom) {
+    onItemviewAtomRemove: function(item_view, atom)
+    {
       this.collection.remove(atom);
     }
   });

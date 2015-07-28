@@ -16,7 +16,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         thumb_url: this.model.thumbnail()
       }
@@ -33,7 +34,8 @@ function(
     },
 
 
-    onClickShow: function() {
+    onClickShow: function()
+    {
       // side bar view
       vent.trigger("application:popup:show", new MediaEditView({model: this.model}), "Edit Media");
     },

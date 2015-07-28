@@ -30,7 +30,8 @@ function(
   var LoginView = Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         gettext: function(text) { return i18n.gettext(text); },
         available_languages: i18n.available_languages,
@@ -39,7 +40,8 @@ function(
       }
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -55,7 +57,8 @@ function(
       password: "#password"
     },
 
-    onClickLogin: function() {
+    onClickLogin: function()
+    {
       // TODO add field validation
       // and trigger event instead of relying on session.
 
@@ -70,19 +73,22 @@ function(
       }
     },
 
-    onClickRegister: function() {
+    onClickRegister: function()
+    {
       var register_view = new RegisterView({login_view: LoginView});
 
       vent.trigger("application.show", register_view);
     },
 
-    onClickForgot: function() {
+    onClickForgot: function()
+    {
       var forgot_view = new ForgotView({login_view: LoginView});
 
       vent.trigger("application.show", forgot_view);
     },
 
-    onClickChangeLanguage: function(event) {
+    onClickChangeLanguage: function(event)
+    {
       var button = this.$el.find(".current_language")
       var requested_language = $(event.target)
       button.text(requested_language.text());

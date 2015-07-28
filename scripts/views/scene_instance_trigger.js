@@ -38,7 +38,8 @@ function(
     tagName: 'li',
 
     // Remove after upgrading to Marionette 2.0.x with `filter`
-    className: function() {
+    className: function()
+    {
       // Hide triggers not from scene, user notes and factory triggers.
       if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE" || this.model.instance().get("factory_id") !== "0")
       {
@@ -47,7 +48,8 @@ function(
       return 'scene-trigger'
     },
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         object_name: this.object_name,
         object_icon: this.object_icon,
@@ -56,7 +58,8 @@ function(
       }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       // Remove after upgrading to Marionette 2.0.x with `filter`
       if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE")
       {
@@ -78,14 +81,16 @@ function(
 
     /* Model Event Binding */
 
-    bindModelEvents: function() {
+    bindModelEvents: function()
+    {
       this.listenTo(this.model,       "update",  this.update_icon);
       this.listenTo(this.model,       "update",  this.update_game_object);
       this.listenTo(this.game_object, "update",  this.update_icon);
       this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
     },
 
-    triggerRemove: function() {
+    triggerRemove: function()
+    {
       // Alert parent they should remove me.
       this.trigger("trigger:remove", this.model);
     },
@@ -106,7 +111,8 @@ function(
       "click .show": "onClickShow"
     },
 
-    onClickShow: function() {
+    onClickShow: function()
+    {
       var view = this;
       var trigger_editor = null;
 

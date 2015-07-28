@@ -26,13 +26,15 @@ function(
       scenes_region:  "#scene-region"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       var instances = options.instances;
       var locations = options.locations;
 
       // TODO load game objects to have the name of object being referenced
       //
-      _.each(locations.models, function(location) {
+      _.each(locations.models, function(location)
+      {
         location.set("instance", instances.findWhere({"instance_id": location.get("instance_id")}));
       });
 
@@ -52,7 +54,8 @@ function(
       this.scene_locations = new TriggersCollection(scene_selection);
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.dialogs_region.show(new LocationsGroupOrganizerView({title: "Conversations",   object_icon: "comment",  collection: this.dialog_locations}));
       this.plaques_region.show(new LocationsGroupOrganizerView({title: "Plaques",   object_icon: "align-justify", collection: this.plaque_locations}));
       this.items_region.show  (new LocationsGroupOrganizerView({title: "Items & Player Attributes",     object_icon: "stop",    collection: this.item_locations  }));

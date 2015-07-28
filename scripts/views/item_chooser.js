@@ -28,7 +28,8 @@ function(
     itemView: ItemChooserRowView,
     itemViewContainer: ".items",
 
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return {
         parent: this.options.parent
       }
@@ -39,7 +40,8 @@ function(
     },
 
     /* TODO move complex sets like this into a controller */
-    onClickNewItem: function() {
+    onClickNewItem: function()
+    {
       var item     = new Item     ({game_id: this.options.parent.get("game_id")});
       var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
       var instance = new Instance ({game_id: this.options.parent.get("game_id")});
@@ -49,12 +51,14 @@ function(
     },
 
     // Marionette override
-    appendBuffer: function(compositeView, buffer) {
+    appendBuffer: function(compositeView, buffer)
+    {
       var $container = this.getItemViewContainer(compositeView);
       $container.find(".foot").before(buffer);
     },
 
-    appendHtml: function(compositeView, itemView, index){
+    appendHtml: function(compositeView, itemView, index)
+    {
       if (compositeView.isBuffering) {
         compositeView.elBuffer.appendChild(itemView.el);
       }

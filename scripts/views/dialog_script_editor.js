@@ -27,11 +27,13 @@ function(
 
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
 
-        option_selected: function(boolean_statement) {
+        option_selected: function(boolean_statement)
+        {
           return boolean_statement ? "selected" : "";
         },
 
@@ -39,7 +41,8 @@ function(
       }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.characters = options.characters;
       this.scripts = options.scripts;
       this.script_options = options.script_options;
@@ -54,7 +57,8 @@ function(
       this.characters.on("add", this.render);
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
     },
 
@@ -72,31 +76,37 @@ function(
       "click .delete":        "onClickDelete"
     },
 
-    onChangeText: function() {
+    onChangeText: function()
+    {
       this.model.set("text", this.ui.text.val());
     },
 
-    onChangeCharacter: function() {
+    onChangeCharacter: function()
+    {
       var value = this.ui.character.find("option:selected").val();
       this.model.set("dialog_character_id", value);
     },
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       this.model.save({}, {
-        success: function() {
+        success: function()
+        {
           vent.trigger("conversation:update");
           vent.trigger("application:info:hide");
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       delete this.previous_attributes.event_package_id;
       this.model.set(this.previous_attributes);
       vent.trigger("application:info:hide");
     },
 
-    onClickEditEvents: function() {
+    onClickEditEvents: function()
+    {
       var view = this;
 
       var event_package = new EventPackage({event_package_id: view.model.get("event_package_id"), game_id: view.model.get("game_id")});
@@ -134,7 +144,8 @@ function(
       );
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       if(!this.instance_parent_option) return; //actually should do something else
       var view = this;
 
@@ -156,7 +167,8 @@ function(
       {
         if(copied_child_options.length > 0) {
           copied_child_options[0].save({}, {
-            success: function() {
+            success: function()
+            {
               view.script_options.push(copied_child_options[0]);
               copied_child_options.splice(0,1);
               saveRemainingChildOptions();
@@ -166,7 +178,8 @@ function(
         else {
           view.script_options.remove(view.instance_parent_option);
           view.instance_parent_option.destroy({
-            success: function() {
+            success: function()
+            {
               vent.trigger("conversation:update");
               vent.trigger("application:info:hide");
             }
@@ -178,7 +191,8 @@ function(
       return false;
     },
 
-    onClickDeleteAll: function() {
+    onClickDeleteAll: function()
+    {
       var child_options = this.script_options.where({parent_dialog_script_id:this.model.get("dialog_script_id")});
       for(var i = 0; i < child_options.length; i++)
       {
@@ -195,7 +209,8 @@ function(
 
       this.scripts.remove(this.model);
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("conversation:update");
           vent.trigger("application:info:hide");
         }

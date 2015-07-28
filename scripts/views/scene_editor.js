@@ -18,7 +18,8 @@ function(
     template: _.template(Template),
 
     // TODO move into a base view
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
         in_modal: this.options.in_modal,
@@ -36,7 +37,8 @@ function(
       intro_scene: '#scene-intro'
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -47,22 +49,26 @@ function(
       "click .delete-scene": "onClickDelete",
     },
 
-    is_intro_scene: function() {
+    is_intro_scene: function()
+    {
       // FIXME can just compare models if we load all scenes into storage.
       return this.model.id === this.model.game().get("intro_scene_id");
     },
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
 
       var set_intro = view.ui.intro_scene.is(":checked");
       this.model.set('name', this.ui.name.val());
 
       this.model.save({}, {
-          create: function() {
+          create: function()
+          {
             storage.add_game_object(view.model);
           },
-          success: function() {
+          success: function()
+          {
 
             if(set_intro)
             {
@@ -82,16 +88,19 @@ function(
     },
 
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.close();
       vent.trigger("application:popup:hide");
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
 
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           view.model.game().fetch();
           view.close();
         }

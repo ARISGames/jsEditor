@@ -46,7 +46,8 @@ function(
     template: _.template(Template),
 
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       //These are essentially the classes, not actual properties (can't include via require- circular reqs)
       this.DialogScript = options.DialogScript;
       this.DialogOption = options.DialogOption;
@@ -65,11 +66,13 @@ function(
     },
 
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
 
-        option_selected: function(boolean_statement) {
+        option_selected: function(boolean_statement)
+        {
           return boolean_statement ? "selected" : "";
         },
         link_types: this.link_types,
@@ -122,7 +125,8 @@ function(
       'EXIT_TO_TAB':      "Exit to Tab"
     },
 
-    onChangeLinkType: function() {
+    onChangeLinkType: function()
+    {
       var value = this.ui.link_type.find("option:selected").val();
       this.model.set("link_type", value);
 
@@ -131,16 +135,19 @@ function(
       this.render();
     },
 
-    onChangeLinkId: function() {
+    onChangeLinkId: function()
+    {
       var value = this.ui.link_id.find("option:selected").val();
       this.model.set("link_id", value);
     },
 
-    onChangePrompt: function() {
+    onChangePrompt: function()
+    {
       this.model.set("prompt", this.ui.prompt.val());
     },
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
 
       if(this.model.get("link_type") == "DIALOG_SCRIPT" && this.model.get("link_id") == 0) {
@@ -151,7 +158,8 @@ function(
         script.set("dialog_id",view.model.get("dialog_id"));
         script.set("text","Hello");
         script.save({}, {
-          success: function() {
+          success: function()
+          {
             view.scripts.push(script);
 
             var option = new view.DialogOption();
@@ -162,14 +170,16 @@ function(
             option.set("prompt","Exit");
 
             option.save({}, {
-              success:function() {
+              success:function()
+              {
                 view.script_options.push(option);
 
                 view.model.set("link_type","DIALOG_SCRIPT");
                 view.model.set("link_id",script.get("dialog_script_id"));
 
                 view.model.save({}, {
-                  success:function() {
+                  success:function()
+                  {
                     vent.trigger("conversation:update");
                     vent.trigger("application:info:hide");
                   }
@@ -181,7 +191,8 @@ function(
       }
       else {
         this.model.save({}, {
-          success: function() {
+          success: function()
+          {
             vent.trigger("conversation:update");
             vent.trigger("application:info:hide");
           }
@@ -189,13 +200,15 @@ function(
       }
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       delete this.previous_attributes.requirement_root_package_id;
       this.model.set(this.previous_attributes);
       vent.trigger("application:info:hide");
     },
 
-    onClickEditRequirements: function() {
+    onClickEditRequirements: function()
+    {
       var view = this;
 
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
@@ -221,7 +234,8 @@ function(
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
 
-        and_packages.each(function(and_package) {
+        and_packages.each(function(and_package)
+        {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });
@@ -294,7 +308,8 @@ function(
   return TBD;
                 },
 
-                findOptionlessScripts: function() {
+                findOptionlessScripts: function()
+                {
   var view = this;
   //Find option-less scripts and give them an exit option
   var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
@@ -312,18 +327,21 @@ function(
   return TBA;
                 },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
 
       var TBD = view.findCascadingScriptDeletesFromPruningOption();
       if(TBD.length > 0) {
         var alert_dialog = new AlertDialog({text: "Deleting this option will result in the permanent deletion of <b>"+TBD.length+"</b> lines. Continue?", danger_button: true });
 
-        alert_dialog.on("danger", function() {
+        alert_dialog.on("danger", function()
+        {
           vent.trigger("application:popup:hide");
           view.script_options.remove(view.model);
           view.model.destroy({
-            success: function() {
+            success: function()
+            {
               vent.trigger("conversation:update");
               vent.trigger("application:info:hide");
             }
@@ -344,7 +362,8 @@ function(
             option.set("link_type","EXIT");
             option.set("prompt","Exit");
             option.save({}, {
-              success:function() {
+              success:function()
+              {
                 view.script_options.push(option);
                 vent.trigger("conversation:update");
               }
@@ -357,7 +376,8 @@ function(
       else {
         view.script_options.remove(view.model);
         view.model.destroy({
-          success: function() {
+          success: function()
+          {
             vent.trigger("conversation:update");
             vent.trigger("application:info:hide");
           }
@@ -373,7 +393,8 @@ function(
           option.set("link_type","EXIT");
           option.set("prompt","Exit");
           option.save({}, {
-            success:function() {
+            success:function()
+            {
               view.script_options.push(option);
               vent.trigger("conversation:update");
             }

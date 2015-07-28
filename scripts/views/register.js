@@ -24,7 +24,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         gettext: function(text) { return i18n.gettext(text); },
         available_languages: i18n.available_languages,
@@ -32,7 +33,8 @@ function(
       }
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -48,7 +50,8 @@ function(
       password_confirm: "#password-confirm"
     },
 
-    onClickRegister: function() {
+    onClickRegister: function()
+    {
       if(this.ui.username.val() === "" || this.ui.password.val() === "") {
         vent.trigger("application:alert", {text: "Username and Password can't be blank"});
       }
@@ -64,7 +67,8 @@ function(
       }
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       // gross
       vent.trigger("application.show", new this.options.login_view);
     }

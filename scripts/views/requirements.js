@@ -25,7 +25,8 @@ function(
     itemView: AndPackageEditorView,
     itemViewContainer: ".and_packages",
 
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return {
         collection: model.get("atoms"),
         contents: this.contents
@@ -44,7 +45,8 @@ function(
       "click .cancel":    "onClickCancel"
     },
 
-    onClickNewAndPackage: function() {
+    onClickNewAndPackage: function()
+    {
       var atom = new Atom();
       var atoms = new AtomsCollection([atom]);
       var and_package = new AndPackage({atoms:atoms});
@@ -52,7 +54,8 @@ function(
       this.collection.add(and_package);
     },
 
-    onClickSaveAll: function(event) {
+    onClickSaveAll: function(event)
+    {
       var view = this;
       event.preventDefault();
 
@@ -62,19 +65,22 @@ function(
       }
 
       view.model.save({}, {
-        success: function() {
+        success: function()
+        {
           view.trigger("requirement_package:save", view.model);
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.trigger("cancel");
     },
 
 
     // Child View Events
-    onItemviewAndpackageRemove: function(item_view, and_package) {
+    onItemviewAndpackageRemove: function(item_view, and_package)
+    {
       this.collection.remove(and_package);
     }
   });

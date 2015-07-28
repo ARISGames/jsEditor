@@ -35,7 +35,8 @@ function(
       "click .remove": "onClickRemove"
     },
 
-    onClickRemove: function() {
+    onClickRemove: function()
+    {
       this.model.destroy();
     }
   });

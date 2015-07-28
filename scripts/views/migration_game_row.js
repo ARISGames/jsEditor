@@ -45,7 +45,8 @@ function(
       "click": "onClickMigrate"
     },
 
-    onClickMigrate: function() {
+    onClickMigrate: function()
+    {
       var view = this;
       var game = this.model;
 
@@ -74,7 +75,8 @@ function(
         view.alert_dialog.on("confirm", function()
         {
           // Keep track of migrations to prevent navigation
-          window.onbeforeunload = function() {
+          window.onbeforeunload = function()
+          {
             return "Your game is still importing, please wait until it finishes.";
           }
           window.running_migrations || (window.running_migrations = {});
@@ -83,7 +85,8 @@ function(
           view.show_spinner_alert(migrating_text);
 
           game.migrate({
-            success: function() {
+            success: function()
+            {
               // Clear navigation warning
               delete window.running_migrations[game.id];
               if(Object.keys(window.running_migrations).length === 0)
@@ -97,7 +100,8 @@ function(
           });
         });
 
-        this.alert_dialog.on("cancel", function() {
+        this.alert_dialog.on("cancel", function()
+        {
           vent.trigger("application:popup:hide");
         });
       }
@@ -105,7 +109,8 @@ function(
       vent.trigger("application:popup:show", view.alert_dialog, "Import Legacy Game");
     },
 
-    show_spinner_alert: function(migrating_text) {
+    show_spinner_alert: function(migrating_text)
+    {
       this.alert_dialog.set_text(migrating_text);
       this.alert_dialog.hide_controls();
     }

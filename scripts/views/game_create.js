@@ -25,7 +25,8 @@ function(
       "description": "#game-description"
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -36,20 +37,23 @@ function(
     },
 
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
 
       this.model.set("name",        this.ui.name.val());
       this.model.set("description", this.ui.description.val());
 
       this.model.save({}, {
-        create: function() {
+        create: function()
+        {
           Backbone.history.navigate("#games/"+view.model.get('game_id')+"/scenes", {trigger: true});
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       if(window.location.hash === "#games") {
         window.location.reload();
       }

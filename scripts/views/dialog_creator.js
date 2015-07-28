@@ -34,7 +34,8 @@ function(
       "click .save": "onClickSave",
     },
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view   = this;
       var dialog = this.model;
 
@@ -42,31 +43,36 @@ function(
       dialog.set("name",          view.ui.name.val());
 
       dialog.save({}, {
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
           view.trigger("dialog:create");
         }
       });
     },
 
-    onClickChangeIcon: function() {
+    onClickChangeIcon: function()
+    {
       var view = this;
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Icon */
           var icon_chooser = new MediaChooserView({collection: media});
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.icon = media;
             view.model.set("icon_media_id", media.id);
             vent.trigger("application:popup:show", view, "Edit Conversation");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Conversation");
           });
 

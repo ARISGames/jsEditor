@@ -18,9 +18,11 @@ function(
       "click .edit": "onClickEditDialog"
     },
 
-    initialize: function() {
+    initialize: function()
+    {
       var view = this;
-      vent.on("media:update", function(media) {
+      vent.on("media:update", function(media)
+      {
         if(media.id === view.model.id) {
           view.model = media;
           view.render();
@@ -30,7 +32,8 @@ function(
 
     tagName: 'tr',
 
-    onClickEditDialog: function() {
+    onClickEditDialog: function()
+    {
       vent.trigger("application:popup:show", new MediaEditView({model: this.model}), "Edit Media");
     }
   });

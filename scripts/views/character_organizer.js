@@ -27,15 +27,18 @@ function(
       "click .new": "onClickNew"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       var view = this;
 
-      vent.on("character:add", function(character) {
+      vent.on("character:add", function(character)
+      {
         view.collection.add(character);
       });
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var character = new Character({game_id: this.model.get("game_id")});
 
       var character_editor = new CharacterEditorView({model: character});

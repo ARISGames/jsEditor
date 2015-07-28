@@ -16,7 +16,8 @@ function(
       $container.find(".foot").before(buffer);
     },
 
-    appendHtml: function(compositeView, itemView, index){
+    appendHtml: function(compositeView, itemView, index)
+    {
       if (compositeView.isBuffering) {
         compositeView.elBuffer.appendChild(itemView.el);
       }

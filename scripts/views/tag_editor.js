@@ -29,13 +29,15 @@ function(
 
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
 
         media_thumbnail_url: this.model.media_thumbnail(),
 
-        is_checked: function(value) {
+        is_checked: function(value)
+        {
           return value === "1" ? "checked" : "";
         },
       };
@@ -49,7 +51,8 @@ function(
 
     /* Constructor */
 
-    initialize: function() {
+    initialize: function()
+    {
       // Allow returning to original attributes
       this.storePreviousAttributes();
 
@@ -63,7 +66,8 @@ function(
 
     /* View Events */
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -82,17 +86,20 @@ function(
 
     /* Crud */
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view  = this;
 
       view.model.save({}, {
-        create: function() {
+        create: function()
+        {
           view.storePreviousAttributes();
 
           view.trigger("tag:add", view.model);
         },
 
-        success: function() {
+        success: function()
+        {
           view.storePreviousAttributes();
 
           vent.trigger("application:popup:hide");
@@ -100,13 +107,16 @@ function(
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.model.set(this.previous_attributes);
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
@@ -121,22 +131,26 @@ function(
 
     /* Undo and Association Binding */
 
-    storePreviousAttributes: function() {
+    storePreviousAttributes: function()
+    {
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-    unbindAssociations: function() {
+    unbindAssociations: function()
+    {
       this.stopListening(this.model.media());
     },
 
-    bindAssociations: function() {
+    bindAssociations: function()
+    {
       this.listenTo(this.model.media(), 'change', this.render);
     },
 
 
     /* Media Selection */
 
-    onClickMedia: function(event) {
+    onClickMedia: function(event)
+    {
       var view = this;
       event.preventDefault();
 
@@ -144,7 +158,8 @@ function(
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -152,14 +167,16 @@ function(
           var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
           vent.trigger("application:popup:show", media_chooser, "Tag Media");
 
-          media_chooser.on("media:choose", function(media) {
+          media_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Tag");
           });
 
-          media_chooser.on("cancel", function() {
+          media_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Tag");
           });
         }

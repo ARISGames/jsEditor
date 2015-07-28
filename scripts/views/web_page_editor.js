@@ -27,7 +27,8 @@ function(
 
     /* View */
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
         icon_thumbnail_url: this.model.icon_thumbnail()
@@ -49,7 +50,8 @@ function(
 
     /* Constructor */
 
-    initialize: function() {
+    initialize: function()
+    {
       // Allow returning to original attributes
       this.storePreviousAttributes();
 
@@ -63,7 +65,8 @@ function(
 
     /* View Events */
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -81,15 +84,18 @@ function(
       "change @ui.url":   "onChangeUrl"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
     },
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view   = this;
       var web_page = this.model;
 
       web_page.save({}, {
-        create: function() {
+        create: function()
+        {
           view.storePreviousAttributes();
 
           storage.add_game_object(web_page);
@@ -106,14 +112,17 @@ function(
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.model.set(this.previous_attributes);
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
@@ -129,42 +138,49 @@ function(
 
     /* Undo and Association Binding */
 
-    storePreviousAttributes: function() {
+    storePreviousAttributes: function()
+    {
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-    unbindAssociations: function() {
+    unbindAssociations: function()
+    {
       this.stopListening(this.model.icon());
     },
 
-    bindAssociations: function() {
+    bindAssociations: function()
+    {
       this.listenTo(this.model.icon(), 'change', this.render);
     },
 
     /* Media Selector */
 
-    onClickChangeIcon: function() {
+    onClickChangeIcon: function()
+    {
       var view = this;
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
           /* Icon */
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("icon_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Conversation");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Conversation");
           });
 

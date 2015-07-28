@@ -12,7 +12,8 @@ function(
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         text: this.options.text
       }

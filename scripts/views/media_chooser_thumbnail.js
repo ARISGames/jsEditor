@@ -14,7 +14,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_selected: this.options.is_selected,
         thumb_url:   this.thumbnail_url(),
@@ -49,7 +50,8 @@ function(
       "click .choose": "onClickChoose",
     },
 
-    onClickChoose: function() {
+    onClickChoose: function()
+    {
       this.trigger("media:choose", this.model);
     },
   });

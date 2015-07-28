@@ -21,7 +21,8 @@ function(
     tagName: 'a',
     className: "list-group-item draggable-quest",
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         active_icon_thumbnail_url: this.model.active_icon_thumbnail()
       }
@@ -56,7 +57,8 @@ function(
       if(model) { this.render(); }
     },
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var view = this;
 
       var quest_editor = new QuestEditorView({model: view.model});

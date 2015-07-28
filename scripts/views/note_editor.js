@@ -19,7 +19,8 @@ function(
   {
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new:       this.model.isNew(),
            has_media:    this.media.id !== "0",
@@ -34,7 +35,8 @@ function(
     itemView: NoteCommentRowView,
     itemViewContainer: '.note_comments',
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -49,23 +51,28 @@ function(
       "remove": function(model, collection) { if(collection.length === 0) { this.$el.find(".comments-header").hide() } }
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.media      = this.model.media();
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           vent.trigger("application:popup:hide");
         }
       });
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       this.switchMediaPreviewer();
     },
 
-    switchMediaPreviewer: function() {
+    switchMediaPreviewer: function()
+    {
       this.$el.find('.media-previewer').hide();
 
       if     (this.media.is_video()) { this.$el.find('.video-preview').show(); }

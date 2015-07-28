@@ -86,7 +86,8 @@ function(
         }
       );
 
-      _.each(this.collection.models, function(trigger) {
+      _.each(this.collection.models, function(trigger)
+      {
         // Add Trigger Location to map
         var location_position = new google.maps.LatLng(trigger.get("latitude"), trigger.get("longitude"));
 
@@ -123,7 +124,8 @@ function(
 
         // Map Boundaries
 
-        var extend_map = function(circle) {
+        var extend_map = function(circle)
+        {
           // Add circle radius to map boundary
           boundary = boundary.union(circle.getBounds());
 
@@ -139,12 +141,14 @@ function(
 
         // Track drag and resize
 
-        google.maps.event.addListener(circle_marker, 'radius_changed', function() {
+        google.maps.event.addListener(circle_marker, 'radius_changed', function()
+        {
           // Quick Save to allow the cancel button to work.
           trigger.save({"distance": String(circle_marker.getRadius())}, {patch: true});
         });
 
-        google.maps.event.addListener(drag_marker, 'dragend', function() {
+        google.maps.event.addListener(drag_marker, 'dragend', function()
+        {
           var center = circle_marker.getCenter();
 
           // Quick Save to allow the cancel button to work.
@@ -154,7 +158,8 @@ function(
 
         // Edit side bar
 
-        google.maps.event.addListener(circle_marker, 'mousedown', function() {
+        google.maps.event.addListener(circle_marker, 'mousedown', function()
+        {
 
           // Don't re-open on drag
           vent.trigger("application:info:current_view", function(current_view)
@@ -166,7 +171,8 @@ function(
           });
         });
 
-        google.maps.event.addListener(drag_marker, 'mousedown', function() {
+        google.maps.event.addListener(drag_marker, 'mousedown', function()
+        {
 
           // Don't re-open on drag
           vent.trigger("application:info:current_view", function(current_view)
@@ -180,12 +186,14 @@ function(
 
         // Hover
 
-        google.maps.event.addListener(circle_marker, 'mouseover', function() {
+        google.maps.event.addListener(circle_marker, 'mouseover', function()
+        {
           circle_marker.setOptions({fillColor: '#5bc0de'});
           circle_marker.setOptions({strokeColor: '#5bc0de'});;
         });
 
-        google.maps.event.addListener(circle_marker, 'mouseout', function() {
+        google.maps.event.addListener(circle_marker, 'mouseout', function()
+        {
           circle_marker.setOptions({fillColor: '#428bca'});
           circle_marker.setOptions({strokeColor: '#428bca'});;
         });
@@ -193,17 +201,20 @@ function(
 
         // Events triggered by other views
 
-        trigger.on("show_range", function() {
+        trigger.on("show_range", function()
+        {
           drag_marker.setIcon();
           circle_marker.setVisible(true);
         });
 
-        trigger.on("hide_range", function() {
+        trigger.on("hide_range", function()
+        {
           drag_marker.setIcon("images/marker-green.png");
           circle_marker.setVisible(false);
         });
 
-        trigger.on("update_map", function() {
+        trigger.on("update_map", function()
+        {
           circle_marker.setCenter(new google.maps.LatLng(trigger.get("latitude"), trigger.get("longitude")));
           circle_marker.setRadius(parseFloat(trigger.get("distance")));
 
@@ -218,12 +229,14 @@ function(
           }
         });
 
-        trigger.on("center_map", function() {
+        trigger.on("center_map", function()
+        {
           map.setCenter(circle_marker.getBounds().getCenter());
           map.fitBounds(circle_marker.getBounds());
         });
 
-        trigger.on("remove_marker", function() {
+        trigger.on("remove_marker", function()
+        {
           circle_marker.setMap (null);
           drag_marker.setMap   (null);
 

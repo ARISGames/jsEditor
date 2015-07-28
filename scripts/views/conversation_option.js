@@ -27,7 +27,8 @@ function(
       "click .inject-option": "onClickInject"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.scripts = options.scripts;
       this.dialog  = options.dialog;
       this.script_options = options.script_options;
@@ -45,7 +46,8 @@ function(
     },
 
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         model: this.model,
         scripts: this.scripts,
@@ -57,13 +59,15 @@ function(
       }
     },
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var option_editor = new DialogOptionEditor({model: this.model, dialog: this.dialog, scripts: this.scripts, script_options: this.script_options, contents: this.contents, DialogScript: DialogScript, DialogOption: DialogOption});
       vent.trigger("application:info:show", option_editor);
       return false;
     },
 
-    onClickInject: function() {
+    onClickInject: function()
+    {
       var view = this;
 
       var script = new DialogScript();
@@ -71,7 +75,8 @@ function(
       script.set("dialog_id",this.model.get("dialog_id"));
       script.set("text","Hello");
       script.save({}, {
-        success: function() {
+        success: function()
+        {
           var option = new DialogOption();
           option.set("game_id",view.model.get("game_id"));
           option.set("dialog_id",view.model.get("dialog_id"));
@@ -81,10 +86,12 @@ function(
           option.set("prompt","Continue");
           option.set("sort_index",view.model.get("sort_index"));
           option.save({},{
-            success: function() {
+            success: function()
+            {
               view.model.set("parent_dialog_script_id",script.get("dialog_script_id"));
               view.model.save({},{
-                success: function() {
+                success: function()
+                {
                   view.scripts.push(script);
                   view.script_options.push(option);
                   vent.trigger("conversation:update");
@@ -99,7 +106,8 @@ function(
       return false;
     },
 
-    linkIcon: function() {
+    linkIcon: function()
+    {
       switch(this.model.get("link_type")) {
         case "DIALOG_SCRIPT":
           return "arrow-down";
@@ -118,7 +126,8 @@ function(
       }
     },
 
-    linkColor: function() {
+    linkColor: function()
+    {
       switch(this.model.get("link_type")) {
         case "DIALOG_SCRIPT":
           return "info";
@@ -139,7 +148,8 @@ function(
 
 
     /* Nested rendering */
-    onRender: function() {
+    onRender: function()
+    {
       if(this.model.get("link_type") === "DIALOG_SCRIPT") {
 
         var dialog_script = this.scripts.findWhere({dialog_script_id: this.model.get("link_id")});

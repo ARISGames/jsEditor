@@ -26,7 +26,8 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var dialog = new Dialog({game_id: this.model.get("game_id")});
 
       var dialog_editor = new DialogEditorView({model: dialog});

@@ -27,7 +27,8 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       var item  = new Item({game_id: this.model.get("game_id")});
 
       var item_editor = new ItemEditorView({model: item});

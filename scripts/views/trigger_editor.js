@@ -82,7 +82,8 @@ function(
       "autofocus":  "input[autofocus]"
     },
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new: this.model.isNew(),
         in_modal: this.options.in_modal,
@@ -104,7 +105,8 @@ function(
 
     /* Dom manipulation */
 
-    set_icon: function(media) {
+    set_icon: function(media)
+    {
       // if not 0 use this, else thumb for this.game_model
       if(this.model.get("icon_media_id") === "0")
       {
@@ -116,21 +118,24 @@ function(
       }
     },
 
-    set_name: function(game_object) {
+    set_name: function(game_object)
+    {
       var name = game_object.get("name");
       this.ui.object_name.text(name);
       this.ui.title.attr('placeholder', name);
     },
 
     // FIXME bug where new view is created before previous is reset if clicking on same object. (Need to use proxy objects for edit views)
-    onClose: function() {
+    onClose: function()
+    {
       this.instance.attributes = _.clone(this.previous_instance_attributes);
     },
 
 
     /* Initialization and Rendering */
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.icon        = this.model.icon();
 
       this.scene       = options.scene;
@@ -146,11 +151,13 @@ function(
       this.bindGameObjectAssociation();
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.ui.autofocus.focus();
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       this.object_selector_view = new TriggerObjectSelectorView({model: this.model, el: this.$el.find('#trigger_object_selector')});
       this.object_selector_view.render();
 
@@ -188,7 +195,8 @@ function(
 
     /* Crud */
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
       var instance    = this.instance;
       var game_object = this.game_object;
@@ -197,10 +205,12 @@ function(
 
       // TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
       game_object.save({}, {
-        create: function() {
+        create: function()
+        {
           storage.add_game_object(game_object);
         },
-        success: function() {
+        success: function()
+        {
           // Save Instance
 
           instance.set("object_id",   game_object.id);
@@ -212,11 +222,13 @@ function(
           }
 
           instance.save({}, {
-            create: function() {
+            create: function()
+            {
               storage.add_game_object(instance);
             },
 
-            success: function() {
+            success: function()
+            {
               // For undo
               view.previous_instance_attributes = _.clone(instance.attributes);
 
@@ -251,17 +263,20 @@ function(
       }); /* Game Object save */
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
 
       this.model.destroy({
-        success: function() {
+        success: function()
+        {
           view.close();
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.close();
       vent.trigger("application:popup:hide");
     },
@@ -269,17 +284,20 @@ function(
 
     /* Association Binding */
 
-    unbindIconAssociation: function() {
+    unbindIconAssociation: function()
+    {
       this.stopListening(this.icon);
       this.stopListening(this.game_object.icon());
     },
 
-    bindIconAssociation: function() {
+    bindIconAssociation: function()
+    {
       this.listenTo(this.icon,               'change', this.set_icon);
       this.listenTo(this.game_object.icon(), 'change', this.set_icon);
     },
 
-    bindGameObjectAssociation: function() {
+    bindGameObjectAssociation: function()
+    {
       var view = this;
       this.listenTo(this.game_object, "update", function(game_object)
       {
@@ -292,12 +310,14 @@ function(
       this.listenTo(this.game_object, "destroy", view.close);
     },
 
-    unbindGameObjectAssociation: function() {
+    unbindGameObjectAssociation: function()
+    {
       this.stopListening(this.game_object);
       this.unbindIconAssociation();
     },
 
-    onChangeGameObject: function(game_object) {
+    onChangeGameObject: function(game_object)
+    {
       this.unbindGameObjectAssociation();
 
       this.instance.set("object_id",   game_object.id);
@@ -338,7 +358,8 @@ function(
     },
 
 
-    hide_type_tabs: function() {
+    hide_type_tabs: function()
+    {
       if(this.instance.get("object_type") === "SCENE" || this.instance.get("object_type") === "FACTORY")
       {
         this.$el.find('.trigger-type').parent().addClass('hidden');
@@ -350,7 +371,8 @@ function(
 
     /* Radio Logic */
 
-    onChangeType: function() {
+    onChangeType: function()
+    {
       var view = this;
 
       // Hide radio buttons and add bootstrap classes
@@ -372,7 +394,8 @@ function(
       setTimeout(function() {view.renderMap()}, 300);
     },
 
-    onChangeTriggerEnter: function() {
+    onChangeTriggerEnter: function()
+    {
       var view = this;
 
       // Hide radio buttons and add bootstrap classes
@@ -394,7 +417,8 @@ function(
 
     /* Checkbox Logic */
 
-    onChangeInfinity: function() {
+    onChangeInfinity: function()
+    {
       if(this.ui.infinite.is(":checked"))
       {
         this.drag_marker.setIcon("images/marker-green.png");
@@ -407,7 +431,8 @@ function(
       }
     },
 
-    onChangeQuantity: function() {
+    onChangeQuantity: function()
+    {
       if(this.ui.quantity.is(":checked"))
       {
         this.ui.quantity_container.hide();
@@ -418,7 +443,8 @@ function(
       }
     },
 
-    onChangeShowTitle: function() {
+    onChangeShowTitle: function()
+    {
       if(this.ui.show_title.is(":checked"))
       {
         this.ui.title_container.show();
@@ -449,7 +475,8 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
           vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindIconAssociation();
             view.icon = media;
             view.bindIconAssociation();
@@ -457,7 +484,8 @@ function(
             vent.trigger("application:popup:hide");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:hide");
           });
         }
@@ -467,7 +495,8 @@ function(
 
     /* Requirements Editor */
 
-    onClickEditRequirements: function() {
+    onClickEditRequirements: function()
+    {
       var view = this;
 
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
@@ -494,7 +523,8 @@ function(
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
 
-        and_packages.each(function(and_package) {
+        and_packages.each(function(and_package)
+        {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });
@@ -526,17 +556,20 @@ function(
 
 
     /* QR */
-    initializeQR: function() {
+    initializeQR: function()
+    {
       this.qr_code = new QRCode(this.ui.qr_image.get(0), this.model.get("qr_code"));
     },
 
-    onChangeCode: function() {
+    onChangeCode: function()
+    {
       this.qr_code.makeCode(this.ui.code.val());
     },
 
     /* Map */
 
-    renderMap: function() {
+    renderMap: function()
+    {
       var view = this;
 
       // Render Map
@@ -588,7 +621,8 @@ function(
       circle_marker.bindTo('center', drag_marker, 'position');
 
 
-      var center_on = function(circle) {
+      var center_on = function(circle)
+      {
         // Add circle radius to map boundary
         boundary = circle.getBounds();
 

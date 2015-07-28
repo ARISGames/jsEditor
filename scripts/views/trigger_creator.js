@@ -33,7 +33,8 @@ function(
       "autofocus":  "input[autofocus]"
     },
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
       }
     },
@@ -41,13 +42,15 @@ function(
 
     /* Initialization and Rendering */
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.scene       = options.scene;
       this.game_object = options.game_object;
       this.instance    = options.instance;
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.ui.autofocus.focus();
     },
 
@@ -62,7 +65,8 @@ function(
 
     /* Crud */
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
       var instance    = this.instance;
       var game_object = this.game_object;
@@ -71,21 +75,25 @@ function(
       game_object.set("name", view.ui.name.val());
 
       game_object.save({}, {
-        create: function() {
+        create: function()
+        {
           storage.add_game_object(game_object);
         },
-        success: function() {
+        success: function()
+        {
           // Save Instance
 
           instance.set("object_id",   game_object.id);
           instance.set("object_type", Instance.type_for(game_object));
 
           instance.save({}, {
-            create: function() {
+            create: function()
+            {
               storage.add_game_object(instance);
             },
 
-            success: function() {
+            success: function()
+            {
 
               // Save Trigger
               trigger.set("instance_id", instance.id);
@@ -105,7 +113,8 @@ function(
       }); /* Game Object save */
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       this.close();
       vent.trigger("application:popup:hide");
     }

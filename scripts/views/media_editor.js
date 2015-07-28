@@ -40,7 +40,8 @@ function(
     initialize: function()
     {
       var view = this;
-      vent.on("media:upload", function(media) {
+      vent.on("media:upload", function(media)
+      {
         view.collection.add(media);
       });
 
@@ -48,42 +49,49 @@ function(
       this.reader.onload = this.onReadFile.bind(this);
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       //this.$el.find(".media-drop-target").on("drop", this.onDrop.bind(this));
     },
 
 
-    onClickUpload: function() {
+    onClickUpload: function()
+    {
       var media = new Media({game_id: this.model.get("game_id"), name: ""});
       vent.trigger("application:popup:show", new MediaUploadView({model: media}), "Upload Media");
     },
 
 
-    onDragEnter: function(event) {
+    onDragEnter: function(event)
+    {
       this.$el.find(".media-drop-target").addClass("media-hover");
       event.preventDefault();
       return false;
     },
 
-    onDragOver: function(event) {
+    onDragOver: function(event)
+    {
       this.$el.find(".media-drop-target").addClass("media-hover");
       event.preventDefault();
       return false;
     },
 
-    onDragEnd: function(event) {
+    onDragEnd: function(event)
+    {
       this.$el.find(".media-drop-target").addClass("media-hover");
       event.preventDefault();
       return false;
     },
 
-    onDragLeave: function(event) {
+    onDragLeave: function(event)
+    {
       this.$el.find(".media-drop-target").removeClass("media-hover");
       event.preventDefault();
       return false;
     },
 
-    onDrop: function(event) {
+    onDrop: function(event)
+    {
       this.$el.find(".media-drop-target").removeClass("media-hover");
       event.preventDefault();
 
@@ -99,7 +107,8 @@ function(
     },
 
     // TODO or pop up editor? single vs multiple file workflow.
-    onReadFile: function(event) {
+    onReadFile: function(event)
+    {
       var view = this;
 
       var data = event.target.result;
@@ -111,7 +120,8 @@ function(
       this.model.set("data", data);
 
       this.model.save({}, {
-        success: function() {
+        success: function()
+        {
           vent.trigger("media:upload", view.model);
         }
       });

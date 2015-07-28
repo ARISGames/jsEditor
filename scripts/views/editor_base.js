@@ -12,25 +12,31 @@ function(
     templateBaseHelpers:
     {
       // Field logic
-      is_checked: function(value) {
+      is_checked: function(value)
+      {
         return value === "1" ? "checked" : "";
       },
 
-      radio_selected: function(boolean_statement) {
+      radio_selected: function(boolean_statement)
+      {
         return boolean_statement ? "checked" : "";
       },
 
-      tab_selected: function(boolean_statement) {
+      tab_selected: function(boolean_statement)
+      {
         return boolean_statement ? "active" : "";
       },
 
-      tab_visible: function(boolean_statement) {
+      tab_visible: function(boolean_statement)
+      {
         return boolean_statement ? "" : "style='display: none;'";
       },
-      option_selected: function(boolean_statement) {
+      option_selected: function(boolean_statement)
+      {
         return boolean_statement ? "selected" : "";
       },
-      sanitize_html: function(html) {
+      sanitize_html: function(html)
+      {
         var div = document.createElement('div');
         div.innerHTML = html;
         var scripts = div.getElementsByTagName('script');
@@ -50,7 +56,8 @@ function(
 
     },
 
-    mixinTemplateHelpers: function(target){
+    mixinTemplateHelpers: function(target)
+    {
       target = target || {};
 
       // View helpers for bootstrap fields

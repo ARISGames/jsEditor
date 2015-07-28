@@ -58,7 +58,8 @@ function(
       "click .new": "onClickNew"
     },
 
-    onClickNew: function() {
+    onClickNew: function()
+    {
       // Prompt for name
 
       var view = this;
@@ -67,12 +68,14 @@ function(
       var dialog_creator = new DialogCreatorView({model: dialog});
       vent.trigger("application:popup:show", dialog_creator, "Create Conversation");
 
-      dialog_creator.on("dialog:create", function() {
+      dialog_creator.on("dialog:create", function()
+      {
         view.editConversation(dialog);
       });
     },
 
-    editConversation: function(dialog) {
+    editConversation: function(dialog)
+    {
       var game = this.model;
 
       var characters = new CharactersCollection   ([], {parent: game});

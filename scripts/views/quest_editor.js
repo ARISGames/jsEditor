@@ -266,7 +266,8 @@ function(
       });
     },
 
-    onClickActiveMedia: function(event) {
+    onClickActiveMedia: function(event)
+    {
       var view = this;
       event.preventDefault();
 
@@ -274,7 +275,8 @@ function(
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -282,14 +284,16 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.active_media(), context: view.model, back_view: view});
           vent.trigger("application:popup:show", icon_chooser, "Start Quest Media");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("active_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Quest");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Quest");
           });
         }
@@ -297,7 +301,8 @@ function(
     },
 
 
-    onClickCompleteIcon: function(event) {
+    onClickCompleteIcon: function(event)
+    {
       var view = this;
       event.preventDefault();
 
@@ -305,7 +310,8 @@ function(
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -313,21 +319,24 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.complete_icon(), context: view.model, back_view: view});
           vent.trigger("application:popup:show", icon_chooser, "Complete Quest Icon");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("complete_icon_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Quest");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Quest");
           });
         }
       });
     },
 
-    onClickCompleteMedia: function(event) {
+    onClickCompleteMedia: function(event)
+    {
       var view = this;
       event.preventDefault();
 
@@ -335,7 +344,8 @@ function(
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -343,14 +353,16 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.model.complete_media(), context: view.model, back_view: view});
           vent.trigger("application:popup:show", icon_chooser, "Complete Quest Media");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindAssociations();
             view.model.set("complete_media_id", media.id);
             view.bindAssociations();
             vent.trigger("application:popup:show", view, "Edit Quest");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:show", view, "Edit Quest");
           });
         }
@@ -406,7 +418,8 @@ function(
       var game   = new Game({game_id: view.model.get("game_id")});
       var items  = new ItemsCollection([], {parent: game});
 
-      $.when(items.fetch(), events.fetch()).done(function() {
+      $.when(items.fetch(), events.fetch()).done(function()
+      {
 
         // launch editor
         var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});

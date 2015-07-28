@@ -22,7 +22,8 @@ function(
 
     itemView: EditorRowView,
     itemViewContainer: '.editors',
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return {
         editors: this.collection
       }
@@ -34,16 +35,19 @@ function(
       "click .add": "onClickAdd"
     },
 
-    onClickAdd: function() {
+    onClickAdd: function()
+    {
       var view = this;
 
       var user_search = new UserSearchView();
 
-      user_search.on("add", function(user) {
+      user_search.on("add", function(user)
+      {
         var editor = new Editor({user_id: user.get("user_id"), game_id: view.model.get("game_id"), display_name: user.get("display_name"), user_name: user.get("user_name")});
 
         editor.save({}, {
-          success: function() {
+          success: function()
+          {
             view.collection.add(editor);
             vent.trigger("application:popup:hide");
           }
@@ -56,12 +60,14 @@ function(
 
 
     // Marionette override
-    appendBuffer: function(compositeView, buffer) {
+    appendBuffer: function(compositeView, buffer)
+    {
       var $container = this.getItemViewContainer(compositeView);
       $container.find(".foot").before(buffer);
     },
 
-    appendHtml: function(compositeView, itemView, index){
+    appendHtml: function(compositeView, itemView, index)
+    {
       if (compositeView.isBuffering) {
         compositeView.elBuffer.appendChild(itemView.el);
       }

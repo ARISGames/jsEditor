@@ -21,7 +21,8 @@ function(
 
     /* View */
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       var view = this;
 
       return {
@@ -40,7 +41,8 @@ function(
         scenes:    new Backbone.Collection(storage.scenes.filter(function(scene) { return scene !== view.model.scene(); })),
 
         // Helpers
-        option_selected: function(boolean_statement) {
+        option_selected: function(boolean_statement)
+        {
           return boolean_statement ? "selected" : "";
         },
       }
@@ -57,7 +59,8 @@ function(
 
     /* Constructor */
 
-    initialize: function() {
+    initialize: function()
+    {
       this.listenTo(storage.items,     "change add remove", this.render);
       this.listenTo(storage.plaques,   "change add remove", this.render);
       this.listenTo(storage.dialogs,   "change add remove", this.render);
@@ -70,7 +73,8 @@ function(
 
     /* Events */
 
-    onChangeGameObject: function() {
+    onChangeGameObject: function()
+    {
       var id   = this.ui.game_object_select.find("option:selected").val();
       var type = this.ui.game_object_select.find("option:selected").data("object-type");
 

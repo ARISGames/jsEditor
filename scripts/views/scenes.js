@@ -31,7 +31,8 @@ function(
 
     itemView: SceneView,
     itemViewContainer: ".scenes",
-    itemViewOptions: function(model, index) {
+    itemViewOptions: function(model, index)
+    {
       return
       {
         collection: this.triggers
@@ -91,7 +92,8 @@ function(
       var link_starts = this.$el.find('.link-start');
       var link_lines  = this.$el.find('.link-line' );
 
-      this.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui) {
+      this.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui)
+      {
         //view.drawLinks(link_starts, link_ends, link_lines, scene_container);
       });
 

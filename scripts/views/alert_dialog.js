@@ -14,7 +14,8 @@ function(
   return Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         text: this.text,
         confirm_button: this.confirm_button,
@@ -33,7 +34,8 @@ function(
       "click .cancel":  "cancel"
     },
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.text = options.text;
 
       this.confirm_button = options.confirm_button;
@@ -45,19 +47,22 @@ function(
       this.danger_text  = options.danger_text;
     },
 
-    set_text: function(text) {
+    set_text: function(text)
+    {
       this.text = text;
       this.render();
     },
 
-    hide_controls: function() {
+    hide_controls: function()
+    {
       this.confirm_button = false;
       this.danger_button  = false;
       this.cancel_button  = false;
       this.render();
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       // gross
       setTimeout(function() { this.$el.find('button[autofocus]').focus()}.bind(this), 300);
     }

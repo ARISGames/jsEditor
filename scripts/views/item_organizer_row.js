@@ -19,13 +19,15 @@ function(
       "click .edit": "onClickEdit"
     },
 
-    initialize: function() {
+    initialize: function()
+    {
       this.listenTo(this.model, "update", this.render);
     },
 
     tagName: 'tr',
 
-    onClickEdit: function() {
+    onClickEdit: function()
+    {
       var view  = this;
 
       var item_editor = new ItemEditorView({model: view.model});

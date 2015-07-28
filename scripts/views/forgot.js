@@ -26,7 +26,8 @@ function(
   return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         gettext: function(text) { return i18n.gettext(text); },
         available_languages: i18n.available_languages,
@@ -34,7 +35,8 @@ function(
       }
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.$el.find('input[autofocus]').focus();
     },
 
@@ -48,7 +50,8 @@ function(
       email:    "#email"
     },
 
-    onClickSend: function() {
+    onClickSend: function()
+    {
       var view = this;
 
       if(this.ui.username.val() === "" && this.ui.email.val() === "") {
@@ -62,7 +65,8 @@ function(
 
         var alert_dialog = new AlertDialog({text: "If an account exists with this username or email address an email will be sent with a link to reset your account password.", confirm_button: true});
 
-        alert_dialog.on("confirm", function() {
+        alert_dialog.on("confirm", function()
+        {
           vent.trigger("application:popup:hide");
           view.onClickCancel();
         });
@@ -71,7 +75,8 @@ function(
       }
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       // gross
       vent.trigger("application.show", new this.options.login_view);
     }

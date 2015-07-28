@@ -31,31 +31,18 @@ function(
 
     className: "games-list-container",
 
-    templateHelpers: function() {
+    templateHelpers: function()
+    {
       return {
         is_new : this.model.isNew(),
         icon_thumbnail_url:  this.icon.thumbnail_for(this.model),
         media_thumbnail_url: this.media.thumbnail_for(),
 
-        option_selected: function(boolean_statement) {
-          return boolean_statement ? "selected" : "";
-        },
-
-        is_checked: function(value) {
-          return value === "1" ? "checked" : "";
-        },
-
-        radio_selected: function(boolean_statement) {
-          return boolean_statement ? "checked" : "";
-        },
-
-        tab_selected: function(boolean_statement) {
-          return boolean_statement ? "active" : "";
-        },
-
-        tab_visible: function(boolean_statement) {
-          return boolean_statement ? "" : "style='display: none;'";
-        },
+        option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; }, 
+        is_checked: function(value) { return value === "1" ? "checked" : ""; }, 
+        radio_selected: function(boolean_statement) { return boolean_statement ? "checked" : ""; }, 
+        tab_selected: function(boolean_statement) { return boolean_statement ? "active" : ""; }, 
+        tab_visible: function(boolean_statement) { return boolean_statement ? "" : "style='display: none;'"; }, 
 
         scenes: this.scenes
       };
@@ -102,22 +89,26 @@ function(
 
     /* Dom manipulation */
 
-    set_icon: function(media) {
+    set_icon: function(media)
+    {
       this.ui.icon.attr("src", media.thumbnail_for(this.model));
     },
 
-    set_media: function(media) {
+    set_media: function(media)
+    {
       this.ui.media.attr("src", media.thumbnail_for());
     },
 
-    onShow: function() {
+    onShow: function()
+    {
       this.ui.autofocus.focus();
     },
 
 
     /* Initialization and Rendering */
 
-    initialize: function(options) {
+    initialize: function(options)
+    {
       this.icon   = this.model.icon();
       this.media  = this.model.media();
       this.scenes = options.scenes;
@@ -132,25 +123,29 @@ function(
       this.qr_disable_leave = "0";
     },
 
-    onRender: function() {
+    onRender: function()
+    {
       this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
       this.initializeQR();
     },
 
 
     /* QR */
-    initializeQR: function() {
+    initializeQR: function()
+    {
       this.qr_code = new QRCode(this.ui.qr_image.get(0), this.loginQrString());
     },
 
-    onChangeLoginOptions: function() {
+    onChangeLoginOptions: function()
+    {
       this.qr_group_name    = this.ui.login_group.val();
       this.qr_disable_leave = this.ui.login_disable_exit.is(":checked") ? "1" : "0";
 
       this.qr_code.makeCode(this.loginQrString());
     },
 
-    loginQrString: function() {
+    loginQrString: function()
+    {
       var qr_string = "1,"+this.qr_group_name+","+this.model.id+","+this.qr_disable_leave;
       return qr_string;
     },
@@ -177,7 +172,8 @@ function(
 
     /* Crud */
 
-    onClickSave: function() {
+    onClickSave: function()
+    {
       var view = this;
 
       this.model.set("name",           this.ui.name.val());
@@ -203,18 +199,21 @@ function(
       this.model.set("inventory_weight_cap",       this.ui.inventory_weight_cap.val());
 
       this.model.save({}, {
-        update: function() {
+        update: function()
+        {
           Backbone.history.navigate("#games/"+view.model.get('game_id')+"/scenes", {trigger: true});
         }
       });
     },
 
-    onClickCancel: function() {
+    onClickCancel: function()
+    {
       Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
     },
 
 
-    onClickDuplicate: function() {
+    onClickDuplicate: function()
+    {
       var view = this;
       var game = this.model;
 
@@ -243,7 +242,8 @@ function(
         view.alert_dialog.on("confirm", function()
         {
           // Keep track of duplication to prevent navigation
-          window.onbeforeunload = function() {
+          window.onbeforeunload = function()
+          {
             return "Your game is still duplicating, please wait until it finishes.";
           }
           window.running_duplications || (window.running_duplications = {});
@@ -252,7 +252,8 @@ function(
           view.show_spinner_alert(duplicating_text);
 
            game.duplicate({
-            success: function() {
+            success: function()
+            {
               // Clear navigation warning
               delete window.running_duplications[game.id];
               if(Object.keys(window.running_duplications).length === 0)
@@ -266,7 +267,8 @@ function(
           });
         });
 
-        this.alert_dialog.on("cancel", function() {
+        this.alert_dialog.on("cancel", function()
+        {
           vent.trigger("application:popup:hide");
         });
       }
@@ -274,26 +276,31 @@ function(
       vent.trigger("application:popup:show", view.alert_dialog, "Duplicate Game");
     },
 
-    show_spinner_alert: function(duplicating_text) {
+    show_spinner_alert: function(duplicating_text)
+    {
       this.alert_dialog.set_text(duplicating_text);
       this.alert_dialog.hide_controls();
     },
 
-    onClickDelete: function() {
+    onClickDelete: function()
+    {
       var view = this;
 
       var alert_dialog = new AlertDialog({text: "Are you sure you want to delete this game? All data will be lost.", danger_button: true, cancel_button: true});
 
-      alert_dialog.on("danger", function() {
+      alert_dialog.on("danger", function()
+      {
         view.model.destroy({
-          success: function() {
+          success: function()
+          {
             Backbone.history.navigate("#games", {trigger: true});
           }
         });
         vent.trigger("application:popup:hide");
       });
 
-      alert_dialog.on("cancel", function() {
+      alert_dialog.on("cancel", function()
+      {
         vent.trigger("application:popup:hide");
       });
 
@@ -302,12 +309,14 @@ function(
 
     /* Association Binding */
 
-    unbindIconAssociation: function() {
+    unbindIconAssociation: function()
+    {
       this.stopListening(this.icon);
       this.stopListening(this.media);
     },
 
-    bindIconAssociation: function() {
+    bindIconAssociation: function()
+    {
       this.listenTo(this.icon,  'change', this.set_icon);
       this.listenTo(this.media, 'change', this.set_media);
     },
@@ -315,7 +324,8 @@ function(
 
     /* Radio Logic */
 
-    onChangePublished: function() {
+    onChangePublished: function()
+    {
       var view = this;
 
       // Hide radio buttons and add bootstrap classes
@@ -329,14 +339,16 @@ function(
 
     /* Media Selectors */
 
-    onClickIcon: function(event) {
+    onClickIcon: function(event)
+    {
       var view = this;
       event.preventDefault();
 
       var media = new MediaCollection([], {parent: this.model});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -344,7 +356,8 @@ function(
           var icon_chooser = new MediaChooserView({collection: media, selected: view.icon, context: view.model});
           vent.trigger("application:popup:show", icon_chooser, "Game Icon");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindIconAssociation();
             view.icon = media;
             view.bindIconAssociation();
@@ -352,21 +365,24 @@ function(
             vent.trigger("application:popup:hide");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:hide");
           });
         }
       });
     },
 
-    onClickMedia: function(event) {
+    onClickMedia: function(event)
+    {
       var view = this;
       event.preventDefault();
 
       var media = new MediaCollection([], {parent: this.model});
 
       media.fetch({
-        success: function() {
+        success: function()
+        {
           /* Add default */
           media.unshift(view.model.default_icon());
 
@@ -375,7 +391,8 @@ function(
 
           vent.trigger("application:popup:show", icon_chooser, "Game Media");
 
-          icon_chooser.on("media:choose", function(media) {
+          icon_chooser.on("media:choose", function(media)
+          {
             view.unbindIconAssociation();
             view.media = media;
             view.bindIconAssociation();
@@ -383,7 +400,8 @@ function(
             vent.trigger("application:popup:hide");
           });
 
-          icon_chooser.on("cancel", function() {
+          icon_chooser.on("cancel", function()
+          {
             vent.trigger("application:popup:hide");
           });
         }
