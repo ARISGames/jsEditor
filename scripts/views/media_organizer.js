@@ -11,7 +11,8 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: MediaOrganizerRowView,
@@ -26,6 +27,8 @@ function(
       {
         view.collection.add(media);
       });
-    }
+    },
+
   });
 });
+

@@ -61,7 +61,8 @@ function(
       this.items_region.show  (new LocationsGroupOrganizerView({title: "Items & Player Attributes",     object_icon: "stop",    collection: this.item_locations  }));
       this.pages_region.show  (new LocationsGroupOrganizerView({title: "Web Pages", object_icon: "globe",    collection: this.page_locations  }));
       this.scenes_region.show (new LocationsGroupOrganizerView({title: "Scenes",    object_icon: "film",     collection: this.scene_locations }));
-    }
+    },
+
   });
 });
 

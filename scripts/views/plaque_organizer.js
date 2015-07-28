@@ -22,17 +22,26 @@ function(
     itemView: PlaqueOrganizerRowView,
     itemViewContainer: ".plaques",
 
-    events: {
+    initialize: function(options)
+    {
+      var self = this;
+      self.storage = options.storage;
+    },
+
+    events:
+    {
       "click .new": "onClickNew"
     },
 
     onClickNew: function()
     {
-      var plaque  = new Plaque({game_id: this.model.get("game_id")});
+      var self = this;
+      var plaque  = new Plaque({game_id: self.storage.game.get("game_id")});
 
-      var plaque_editor = new PlaqueEditorView({model: plaque});
+      var plaque_editor = new PlaqueEditorView({model:plaque});
       vent.trigger("application:popup:show", plaque_editor, "Create Plaque");
-    }
+    },
+
   });
 });
 

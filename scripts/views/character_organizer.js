@@ -43,7 +43,8 @@ function(
 
       var character_editor = new CharacterEditorView({model: character});
       vent.trigger("application:popup:show", character_editor, "Create Character");
-    }
+    },
+
   });
 });
 

@@ -24,9 +24,14 @@ function(
   return Backbone.Marionette.CompositeView.extend(
   {
     template: _.template(Template),
-
     itemView: EventPackageOrganizerRowView,
     itemViewContainer: ".event_packages",
+
+    initialize: function(options)
+    {
+      var self = this;
+      self.storage = options.storage;
+    },
 
     events:
     {
@@ -36,18 +41,19 @@ function(
     onClickNew: function()
     {
       var self = this;
-      var items  = new ItemsCollection([], {parent: self.model});
+      var items  = new ItemsCollection([], {parent:self.storage.game});
 
       $.when(items.fetch()).done(
         function()
         {
-          var eventPackage = new EventPackage({game_id:self.model.id});
+          var eventPackage = new EventPackage({game_id:self.storage.game.id});
           var events = new EventsCollection([], {parent:eventPackage});
           var event_package_editor = new EventPackageEditorView({model:eventPackage, collection:events, items:items});
           vent.trigger("application:popup:show", event_package_editor, "Create Event", true);
         }
       );
-    }
+    },
+
   });
 });
 

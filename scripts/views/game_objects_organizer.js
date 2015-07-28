@@ -21,7 +21,8 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.Layout.extend({
+  return Backbone.Marionette.Layout.extend(
+  {
     template: _.template(Template),
 
     regions:
@@ -36,23 +37,21 @@ function(
 
     initialize: function(options)
     {
-      this.dialog_collection        = options.dialogs;
-      this.plaque_collection        = options.plaques;
-      this.item_collection          = options.items;
-      this.page_collection          = options.pages;
-      this.factory_collection       = options.factories;
-      this.event_package_collection = options.event_packages;
+      var self = this;
+      self.storage = options.storage;
     },
 
     onShow: function()
     {
-      this.dialogs_region.show       (new DialogOrganizerView      ({model: this.model, collection: this.dialog_collection       }));
-      this.plaques_region.show       (new PlaqueOrganizerView      ({model: this.model, collection: this.plaque_collection       }));
-      this.items_region.show         (new ItemOrganizerView        ({model: this.model, collection: this.item_collection         }));
-      this.pages_region.show         (new WebPageOrganizerView     ({model: this.model, collection: this.page_collection         }));
-      this.factories_region.show     (new FactoryOrganizerView     ({model: this.model, collection: this.factory_collection      }));
-      this.event_packages_region.show(new EventPackageOrganizerView({model: this.model, collection: this.event_package_collection}));
-    }
+      var self = this;
+      self.dialogs_region.show       (new DialogOrganizerView      ({collection:self.storage.dialog_collection,        storage:self.storage}));
+      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:self.storage.plaque_collection,        storage:self.storage}));
+      self.items_region.show         (new ItemOrganizerView        ({collection:self.storage.item_collection,          storage:self.storage}));
+      self.pages_region.show         (new WebPageOrganizerView     ({collection:self.storage.page_collection,          storage:self.storage}));
+      self.factories_region.show     (new FactoryOrganizerView     ({collection:self.storage.factory_collection,       storage:self.storage}));
+      self.event_packages_region.show(new EventPackageOrganizerView({collection:self.storage.event_package_collection, storage:self.storage}));
+    },
+
   });
 });
-
+ 

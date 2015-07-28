@@ -22,17 +22,26 @@ function(
     itemView: DialogsOrganizerRowView,
     itemViewContainer: ".dialogs",
 
-    events: {
+    initialize: function(options)
+    {
+      var self = this;
+      self.storage = options.storage;
+    },
+
+    events:
+    {
       "click .new": "onClickNew"
     },
 
     onClickNew: function()
     {
-      var dialog = new Dialog({game_id: this.model.get("game_id")});
+      var self = this;
+      var dialog = new Dialog({game_id: self.storage.game.get("game_id")});
 
-      var dialog_editor = new DialogEditorView({model: dialog});
+      var dialog_editor = new DialogEditorView({model:dialog});
       vent.trigger("application:popup:show", dialog_editor, "Create Conversation");
-    }
+    },
+
   });
 });
 

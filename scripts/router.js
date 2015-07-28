@@ -168,19 +168,9 @@ function(require)
           // then 'intro scene' test can just be if this.model.is(game.intro_scene())
           var intro_scene = storage.scenes.get(game.get("intro_scene_id"));
 
-          vent.trigger("application.show",      new ScenesView  ({model: game, collection: storage.scenes, triggers: storage.triggers, intro_scene: intro_scene}));
-          vent.trigger("application:nav:show",  new GameNavMenu ({model: game, active: ".scenes"}));
-          vent.trigger("application:list:show", new GameObjectsOrganizerView(
-                                                  {
-                                                    model:game,
-                                                    dialogs:storage.dialogs,
-                                                    plaques:storage.plaques,
-                                                    items:storage.items,
-                                                    pages:storage.web_pages,
-                                                    factories:storage.factories,
-                                                    event_packages:storage.event_packages,
-                                                  }
-                                                ));
+          vent.trigger("application.show",      new ScenesView  ({model:game, collection:storage.scenes, triggers:storage.triggers, intro_scene:intro_scene}));
+          vent.trigger("application:nav:show",  new GameNavMenu ({model:game, active:".scenes"}));
+          vent.trigger("application:list:show", new GameObjectsOrganizerView({storage:storage}));
           vent.trigger("application:info:hide");
         }
       );
@@ -195,8 +185,8 @@ function(require)
         game.fetch(), storage.scenes.fetch()).done(
         function()
         {
-          vent.trigger("application.show",     new GameEditorView ({model: game, scenes: storage.scenes}));
-          vent.trigger("application:nav:show", new GameNavMenu    ({model: game, active: ".game"}));
+          vent.trigger("application.show",     new GameEditorView ({model:game, scenes:storage.scenes}));
+          vent.trigger("application:nav:show", new GameNavMenu    ({model:game, active:".game"}));
           vent.trigger("application:info:hide");
           vent.trigger("application:list:hide");
         }

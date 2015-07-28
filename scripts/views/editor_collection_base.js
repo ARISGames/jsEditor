@@ -9,6 +9,7 @@ function(
 {
   return Backbone.Marionette.CompositeView.extend(
   {
+
     // Marionette override
     appendBuffer: function(compositeView, buffer)
     {
@@ -18,16 +19,19 @@ function(
 
     appendHtml: function(compositeView, itemView, index)
     {
-      if (compositeView.isBuffering) {
+      if(compositeView.isBuffering)
+      {
         compositeView.elBuffer.appendChild(itemView.el);
       }
-      else {
+      else
+      {
         // If we've already rendered the main collection, just
         // append the new items directly into the element.
         var $container = this.getItemViewContainer(compositeView);
         $container.find(".foot").before(itemView.el);
       }
     }
+
   });
 });
 

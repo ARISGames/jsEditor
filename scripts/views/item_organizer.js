@@ -22,6 +22,12 @@ function(
     itemView: ItemOrganizerRowView,
     itemViewContainer: ".items",
 
+    initialize: function(options)
+    {
+      var self = this;
+      self.storage = options.storage;
+    },
+
     events:
     {
       "click .new": "onClickNew"
@@ -29,11 +35,13 @@ function(
 
     onClickNew: function()
     {
-      var item  = new Item({game_id: this.model.get("game_id")});
+      var self = this;
+      var item  = new Item({game_id: self.storage.game.get("game_id")});
 
       var item_editor = new ItemEditorView({model: item});
       vent.trigger("application:popup:show", item_editor, "Create Item");
-    }
+    },
+
   });
 });
 

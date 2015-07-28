@@ -25,25 +25,31 @@ function(
   storage
 )
 {
-
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
 
     itemView: FactoryOrganizerRowView,
     itemViewContainer: ".factories",
 
+    initialize: function(options)
+    {
+      var self = this;
+      self.storage = options.storage;
+    },
 
     events:
     {
       "click .new": "onClickNew"
     },
 
-
     onClickNew: function()
     {
-      var factory = new Factory({game_id: this.model.id});
+      var self = this;
+      var factory = new Factory({game_id:self.storage.game.id});
 
-      var contents = {
+      var contents =
+      {
         items:     storage.items,
         plaques:   storage.plaques,
         dialogs:   storage.dialogs,
@@ -55,6 +61,8 @@ function(
         var factory_editor = new FactoryEditorView({model: factory, contents: contents});
         vent.trigger("application:popup:show", factory_editor, "Create Factory", true);
       });
-    }
+    },
+
   });
 });
+

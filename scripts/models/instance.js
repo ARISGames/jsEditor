@@ -7,6 +7,7 @@ define([
   'models/web_page',
   'models/scene',
   'models/factory',
+  'models/event_package',
   'storage'
 ],
 function(
@@ -18,6 +19,7 @@ function(
   WebPage,
   Scene,
   Factory,
+  EventPackage,
   storage
 )
 {
@@ -25,42 +27,43 @@ function(
   {
     idAttribute: 'instance_id',
 
-    amfphp_url_templates: {
+    amfphp_url_templates:
+    {
       read:   "instances.getInstance",
       update: "instances.updateInstance",
       create: "instances.createInstance",
       delete: "instances.deleteInstance"
     },
 
-    amfphp_url_attributes: [
+    amfphp_url_attributes:
+    [
       "instance_id",
       "game_id",
       "object_id",
       "object_type",
       "qty",
       "infinite_qty"
-        ],
+    ],
 
-    defaults: {
+    defaults:
+    {
       "qty": "1",
       "infinite_qty": "1"
     },
 
-    // For loading the right class from the instance
-    object_class: function() {
+    object_class: function()
+    {
       var type = this.get("object_type");
 
-      if(type === "DIALOG")   { return Dialog  }
-      if(type === "PLAQUE")   { return Plaque  }
-      if(type === "ITEM")     { return Item    }
-      if(type === "WEB_PAGE") { return WebPage }
-      if(type === "SCENE")    { return Scene   }
-      if(type === "FACTORY")  { return Factory }
+      if(type === "DIALOG")        { return Dialog       }
+      if(type === "PLAQUE")        { return Plaque       }
+      if(type === "ITEM")          { return Item         }
+      if(type === "WEB_PAGE")      { return WebPage      }
+      if(type === "SCENE")         { return Scene        }
+      if(type === "FACTORY")       { return Factory      }
+      if(type === "EVENT_PACKAGE") { return EventPackage }
       throw "cant determine class of: " + type
     },
-
-
-    /* Associations */
 
     game_object: function()
     {
@@ -70,16 +73,18 @@ function(
       return storage.retrieve_with_type(id, type);
     }
   },
+
   // Static methods
   {
-    // For creating new instances.
-    type_for: function(object) {
-      if(object instanceof Dialog)  { return "DIALOG"   }
-      if(object instanceof Item)    { return "ITEM"     }
-      if(object instanceof Plaque)  { return "PLAQUE"   }
-      if(object instanceof WebPage) { return "WEB_PAGE" }
-      if(object instanceof Scene)   { return "SCENE"    }
-      if(object instanceof Factory) { return "FACTORY"  }
+    type_for: function(object)
+    {
+      if(object instanceof Dialog)       { return "DIALOG"         }
+      if(object instanceof Item)         { return "ITEM"           }
+      if(object instanceof Plaque)       { return "PLAQUE"         }
+      if(object instanceof WebPage)      { return "WEB_PAGE"       }
+      if(object instanceof Scene)        { return "SCENE"          }
+      if(object instanceof Factory)      { return "FACTORY"        }
+      if(object instanceof EventPackage) { return "EVENT_PACKAGE"  }
 
       else { throw "cant determine type of " + object.idAttribute + ": " + object.id; }
     }

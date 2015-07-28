@@ -20,7 +20,7 @@ function(
       return {
         object_icon: this.object_icon,
         title: this.title
-      }
+      };
     },
 
     itemView: LocationsOrganizerRowView,
@@ -30,6 +30,8 @@ function(
     {
       this.object_icon = options.object_icon;
       this.title = options.title;
-    }
+    },
+
   });
 });
+
