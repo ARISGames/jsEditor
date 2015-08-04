@@ -29,12 +29,12 @@ function(
         web_items:       new Backbone.Collection(storage.items.where({type: "URL"})),
         items:           new Backbone.Collection(storage.items.where({type: "NORMAL"})),
         hidden_items:    new Backbone.Collection(storage.items.where({type: "HIDDEN"})),
-        plaques:   storage.plaques,
-        dialogs:   storage.dialogs,
-        web_pages: storage.web_pages,
-        factories: storage.factories,
-        events:    storage.events,
-        scenes:    new Backbone.Collection(storage.scenes.filter(function(scene) { return scene !== self.model.scene(); })),
+        plaques:         storage.plaques,
+        dialogs:         storage.dialogs,
+        web_pages:       storage.web_pages,
+        factories:       storage.factories,
+        event_packages:  storage.event_packages,
+        scenes:          new Backbone.Collection(storage.scenes.filter(function(scene) { return scene !== self.model.scene(); })),
 
         option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
       }
@@ -52,13 +52,14 @@ function(
 
     initialize: function()
     {
-      this.listenTo(storage.items,     "change add remove", this.render);
-      this.listenTo(storage.plaques,   "change add remove", this.render);
-      this.listenTo(storage.dialogs,   "change add remove", this.render);
-      this.listenTo(storage.web_pages, "change add remove", this.render);
-      this.listenTo(storage.factories, "change add remove", this.render);
-      this.listenTo(storage.events,    "change add remove", this.render);
-      this.listenTo(storage.scenes,    "change add remove", this.render);
+      var self = this;
+      self.listenTo(storage.items,          "change add remove", self.render);
+      self.listenTo(storage.plaques,        "change add remove", self.render);
+      self.listenTo(storage.dialogs,        "change add remove", self.render);
+      self.listenTo(storage.web_pages,      "change add remove", self.render);
+      self.listenTo(storage.factories,      "change add remove", self.render);
+      self.listenTo(storage.event_packages, "change add remove", self.render);
+      self.listenTo(storage.scenes,         "change add remove", self.render);
     },
 
     onChangeGameObject: function()

@@ -298,7 +298,7 @@ function(
 
       $.when(contents.dialog_scripts.fetch(), contents.quests.fetch()).done(function()
       {
-        var item_events = storage.events.filter(function(event)
+        var item_events = storage.event_packages.filter(function(event)
         {
           return event.get("content_id") === item.id && event.modified_by() !== null
         });

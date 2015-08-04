@@ -50,7 +50,6 @@ function(
 
       self.intro_scene = options.intro_scene;
       self.triggers    = options.triggers;
-      console.log(self.triggers);
 
       // This fails with undefined when .fetch is passed without a closure.
       self.listenTo(self.collection, "remove", function() { view.model.fetch()});

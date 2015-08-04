@@ -134,13 +134,13 @@ function(
       };
 
       // launch based on type
-      if(self.game_object instanceof Dialog ) { trigger_editor = new TriggerEditorself(options); }
-      if(self.game_object instanceof Item   ) { trigger_editor = new TriggerEditorself(options); }
-      if(self.game_object instanceof Plaque ) { trigger_editor = new TriggerEditorself(options); }
-      if(self.game_object instanceof WebPage) { trigger_editor = new TriggerEditorself(options); }
-      if(self.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorself(options); }
-      if(self.game_object instanceof Factory) { trigger_editor = new TriggerEditorself(options); }
-      if(self.game_object instanceof Event  ) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof Dialog ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Item   ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Plaque ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof WebPage) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Factory) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Event  ) { trigger_editor = new TriggerEditorView(options); }
 
       if(trigger_editor === null)
       {

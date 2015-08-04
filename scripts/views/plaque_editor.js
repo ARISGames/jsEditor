@@ -236,7 +236,7 @@ function(
             function(event_package)
             {
               view.model.set("event_package_id", event_package.id);
-              storage.events.fetch();
+              storage.event_packages.fetch();
 
               if(!view.model.isNew() && view.model.hasChanged("event_package_id"))
               {
