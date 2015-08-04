@@ -21,12 +21,14 @@ function(
     [
       "game_id",
       "event_package_id",
+      "name",
       "events" // Nested attribute
     ],
 
     defaults:
     {
-      events: []
+      name:"",
+      events:[]
     }
   });
 });

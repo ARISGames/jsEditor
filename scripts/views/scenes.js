@@ -9,6 +9,7 @@ define([
   'views/scene_editor',
   'models/scene',
   'collections/triggers',
+  'storage',
   'vent',
 ],
 function(
@@ -22,6 +23,7 @@ function(
   SceneEditorView,
   Scene,
   TriggersCollection,
+  storage,
   vent
 )
 {
@@ -48,8 +50,8 @@ function(
     {
       var self = this;
 
-      self.intro_scene = options.intro_scene;
-      self.triggers    = options.triggers;
+      self.intro_scene = storage.scenes.get(storage.game.get("intro_scene_id"));
+      self.triggers    = storage.triggers;
 
       // This fails with undefined when .fetch is passed without a closure.
       self.listenTo(self.collection, "remove", function() { view.model.fetch()});

@@ -7,7 +7,8 @@ define([
   'views/web_page_organizer',
   'views/factory_organizer',
   'views/event_package_organizer',
-  'vent'
+  'storage',
+  'vent',
 ],
 function(
   Backbone,
@@ -18,6 +19,7 @@ function(
   WebPageOrganizerView,
   FactoryOrganizerView,
   EventPackageOrganizerView,
+  storage,
   vent
 )
 {
@@ -38,18 +40,17 @@ function(
     initialize: function(options)
     {
       var self = this;
-      self.storage = options.storage;
     },
 
     onShow: function()
     {
       var self = this;
-      self.dialogs_region.show       (new DialogOrganizerView      ({collection:self.storage.dialogs,             storage:self.storage}));
-      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:self.storage.plaques,             storage:self.storage}));
-      self.items_region.show         (new ItemOrganizerView        ({collection:self.storage.items,               storage:self.storage}));
-      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:self.storage.web_page_collection, storage:self.storage}));
-      self.factories_region.show     (new FactoryOrganizerView     ({collection:self.storage.factorys,            storage:self.storage}));
-      self.event_packages_region.show(new EventPackageOrganizerView({collection:self.storage.event_packages,      storage:self.storage}));
+      self.dialogs_region.show       (new DialogOrganizerView      ({collection:storage.dialogs,             storage:storage}));
+      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:storage.plaques,             storage:storage}));
+      self.items_region.show         (new ItemOrganizerView        ({collection:storage.items,               storage:storage}));
+      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_page_collection, storage:storage}));
+      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factorys,            storage:storage}));
+      self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages,      storage:storage}));
     },
 
   });

@@ -23,8 +23,9 @@ function(
 
     templateHelpers: function()
     {
+      var self = this;
       return {
-        is_new: true,
+        is_new: self.model.isNew(),
       };
     },
 
@@ -68,14 +69,14 @@ function(
       "change @ui.name":     "onChangeName",
     },
 
-    onClickNewEvent: function()
+    onClickNewEvent:function()
     {
       var self = this;
       var event = new Event({game_id: self.model.get("game_id")});
       self.collection.add(event);
     },
 
-    onClickSave: function(event)
+    onClickSave:function(event)
     {
       var self = this;
       event.preventDefault();
@@ -83,22 +84,24 @@ function(
       // Save Event Package with children json
       self.model.set("events", self.collection);
 
-      // Don't save package 0
-      if(self.model.get("event_package_id") === "0")
-      {
-        self.model.unset("event_package_id");
-      }
-
       self.model.save({},
       {
-        success: function()
+        create:function()
+        {
+
+        },
+        update:function()
+        {
+
+        },
+        success:function()
         {
           self.trigger("event_package:save", self.model);
         }
       });
     },
 
-    onClickCancel: function()
+    onClickCancel:function()
     {
       var self = this;
       self.trigger("cancel");
@@ -106,26 +109,26 @@ function(
       //self.model.set(self.previous_attributes);
     },
 
-    onClickDelete: function()
+    onClickDelete:function()
     {
       var self = this;
       self.model.destroy(
       {
-        success: function()
+        success:function()
         {
           vent.trigger("application:popup:hide");
         }
       });
     },
 
-    onChangeName: function()
+    onChangeName:function()
     {
       var self = this;
       self.model.set("name",self.ui.name.val());
     },
 
     // Child View Events
-    onItemviewEventRemove: function(item_view, event)
+    onItemviewEventRemove:function(item_view, event)
     {
       var self = this;
       self.collection.remove(event);

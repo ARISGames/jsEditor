@@ -196,9 +196,9 @@ function(
           // then 'intro scene' test can just be if this.model.is(game.intro_scene())
           var intro_scene = storage.scenes.get(game.get("intro_scene_id"));
 
-          vent.trigger("application.show",      new ScenesView  ({model:game, collection:storage.scenes, triggers:storage.triggers, intro_scene:intro_scene}));
-          vent.trigger("application:nav:show",  new GameNavMenu ({model:game, active:".scenes"}));
-          vent.trigger("application:list:show", new GameObjectsOrganizerView({storage:storage}));
+          vent.trigger("application.show",      new ScenesView  ({ model:game, collection:storage.scenes }));
+          vent.trigger("application:nav:show",  new GameNavMenu ({ model:game, active:".scenes" }));
+          vent.trigger("application:list:show", new GameObjectsOrganizerView({}));
           vent.trigger("application:info:hide");
         }
       );
