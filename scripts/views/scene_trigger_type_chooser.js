@@ -17,6 +17,7 @@ define([
   'collections/scenes',
   'collections/factories',
   'collections/event_packages',
+  'storage',
   'vent',
 ],
 function(
@@ -37,7 +38,8 @@ function(
   WebPagesCollection,
   ScenesCollection,
   FactoriesCollection,
-  EventsPackageCollection,
+  EventPackagesCollection,
+  storage,
   vent
 )
 {
@@ -45,7 +47,8 @@ function(
   {
     template: _.template(Template),
 
-    events: {
+    events:
+    {
       "click .add-dialog":        "onClickAddDialog",
       "click .add-plaque":        "onClickAddPlaque",
       "click .add-web-page":      "onClickAddWebPage",
@@ -158,12 +161,13 @@ function(
     {
       var scene = this.model;
 
-      var eventPackages = new EventPackagesCollection([], {parent: this.game});
+      var event_packages = storage.event_packages;
 
-      eventPackages.fetch({
+      event_packages.fetch(
+      {
         success: function()
         {
-          var event_package_chooser = new EventPackageChooserView({collection: eventPackages, parent: scene});
+          var event_package_chooser = new EventPackageChooserView({collection:event_packages, parent:scene});
           vent.trigger("application:popup:show", event_package_chooser, "Add Event to Scene");
         }
       });

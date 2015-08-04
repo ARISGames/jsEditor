@@ -17,7 +17,7 @@
 	<a class="list-group-item add-factory">
 		<span class="glyphicon glyphicon-home"></span>&nbsp; Run Factory
 	</a>
-	<a class="list-group-item add-event">
+	<a class="list-group-item add-event-package">
 		<span class="glyphicon glyphicon-home"></span>&nbsp; Event
 	</a>
 </div>

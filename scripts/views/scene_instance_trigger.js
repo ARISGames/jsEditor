@@ -11,7 +11,7 @@ define([
   'models/media',
   'models/scene',
   'models/factory',
-  'models/event',
+  'models/event_package',
   'views/trigger_editor',
 ],
 function(
@@ -27,7 +27,7 @@ function(
   Media,
   Scene,
   Factory,
-  Event,
+  EventPackage,
   TriggerEditorView
 )
 {
@@ -134,13 +134,13 @@ function(
       };
 
       // launch based on type
-      if(self.game_object instanceof Dialog ) { trigger_editor = new TriggerEditorView(options); }
-      if(self.game_object instanceof Item   ) { trigger_editor = new TriggerEditorView(options); }
-      if(self.game_object instanceof Plaque ) { trigger_editor = new TriggerEditorView(options); }
-      if(self.game_object instanceof WebPage) { trigger_editor = new TriggerEditorView(options); }
-      if(self.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorView(options); }
-      if(self.game_object instanceof Factory) { trigger_editor = new TriggerEditorView(options); }
-      if(self.game_object instanceof Event  ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Dialog      ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Item        ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Plaque      ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof WebPage     ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Scene       ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Factory     ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof EventPackage) { trigger_editor = new TriggerEditorView(options); }
 
       if(trigger_editor === null)
       {
@@ -178,13 +178,13 @@ function(
       if(self.model.get("infinite_distance") === "1" && type === "LOCATION") { self.type_color = "text-success"; }
 
       type = self.instance.get("object_type");
-      if(type === "DIALOG")   { self.object_icon = "comment"; }
-      if(type === "PLAQUE")   { self.object_icon = "align-justify"; }
-      if(type === "ITEM")     { self.object_icon = "stop";    }
-      if(type === "WEB_PAGE") { self.object_icon = "globe";   }
-      if(type === "SCENE")    { self.object_icon = "film";    }
-      if(type === "FACTORY")  { self.object_icon = "home";    }
-      if(type === "EVENT")    { self.object_icon = "globe";    }
+      if(type === "DIALOG")        { self.object_icon = "comment"; }
+      if(type === "PLAQUE")        { self.object_icon = "align-justify"; }
+      if(type === "ITEM")          { self.object_icon = "stop";    }
+      if(type === "WEB_PAGE")      { self.object_icon = "globe";   }
+      if(type === "SCENE")         { self.object_icon = "film";    }
+      if(type === "FACTORY")       { self.object_icon = "home";    }
+      if(type === "EVENT_PACKAGE") { self.object_icon = "globe";    }
 
       self.object_name = self.game_object.get("name");
 

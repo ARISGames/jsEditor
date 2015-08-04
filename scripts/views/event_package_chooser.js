@@ -28,7 +28,7 @@ function(
     itemView: EventPackageChooserRowView,
     itemViewContainer: ".event-packages",
 
-    itemViewOptions: function(model, index)
+    itemViewOptions:function(model, index)
     {
       return {
         parent: this.options.parent
@@ -40,7 +40,7 @@ function(
       "click .new-event-package": "onClickNewEventPackage"
     },
 
-    onClickNewEventPackage: function()
+    onClickNewEventPackage:function()
     {
       var eventPackage = new EventPackage({game_id: this.options.parent.get("game_id")});
       var trigger      = new Trigger     ({game_id: this.options.parent.get("game_id"),scene_id: this.options.parent.get("scene_id")});
