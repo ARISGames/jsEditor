@@ -1,9 +1,12 @@
-define(
-function(require)
+define([
+  'models/json_base',
+  'storage',
+],
+function(
+  JsonBaseModel,
+  storage
+)
 {
-  var JsonBaseModel = require('models/json_base');
-  var storage       = require('storage');
-
   return JsonBaseModel.extend(
   {
     idAttribute: 'plaque_id',
@@ -29,7 +32,8 @@ function(require)
       "event_package_id"
     ],
 
-    defaults: {
+    defaults:
+    {
       name: "",
       description: "",
       media_id: "0",
@@ -39,28 +43,13 @@ function(require)
 
 
     /* Associations */
-
-    icon: function() {
-      return storage.media.retrieve(this.get('icon_media_id'));
-    },
-
-    media: function() {
-      return storage.media.retrieve(this.get('media_id'));
-    },
-
-    default_icon: function() {
-      return storage.media.retrieve('0');
-    },
+    icon:  function() { return storage.media.retrieve(this.get('icon_media_id')); },
+    media: function() { return storage.media.retrieve(this.get('media_id')); },
+    default_icon: function() { return storage.media.retrieve('0'); },
 
     /* Helpers */
-
-    icon_thumbnail: function() {
-      return this.icon().thumbnail_for(this);
-    },
-
-    media_thumbnail: function() {
-      return this.media().thumbnail_for();
-    }
+    icon_thumbnail: function() { return this.icon().thumbnail_for(this); },
+    media_thumbnail: function() { return this.media().thumbnail_for(); }
 
   });
 });

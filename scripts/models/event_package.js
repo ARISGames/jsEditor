@@ -1,13 +1,17 @@
 define([
-  'models/json_base'
+  'models/json_base',
+  'storage',
 ],
 function(
-  JsonBaseModel
+  JsonBaseModel,
+  storage
 )
 {
   return JsonBaseModel.extend(
   {
     idAttribute: 'event_package_id',
+
+    type_name: 'EventPackage',
 
     amfphp_url_templates:
     {
@@ -31,7 +35,15 @@ function(
       name:"",
       icon_media_id:0,
       events:[]
-    }
+    },
+
+    /* Associations */
+    icon:  function() { return storage.media.retrieve(this.get('icon_media_id')); },
+    default_icon: function() { return storage.media.retrieve('0'); },
+
+    /* Helpers */
+    icon_thumbnail: function() { return this.icon().thumbnail_for(this); },
+
   });
 });
 
