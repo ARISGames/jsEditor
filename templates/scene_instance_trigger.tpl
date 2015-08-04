@@ -3,3 +3,4 @@
 	<span class="glyphicon glyphicon-<%= type_icon   %> <%= type_color %>"></span>
 </div>
 <p class="trigger-label show"><%= object_name %></p>
+

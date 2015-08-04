@@ -27,12 +27,10 @@ function(
 
     className: function()
     {
+      var self = this;
       var panel_color = "default";
 
-      if(this.is_intro_scene())
-      {
-        panel_color = "info";
-      }
+      if(self.is_intro_scene()) { panel_color = "info"; }
 
       return "panel panel-"+panel_color+" scene-panel"
     },
@@ -41,53 +39,54 @@ function(
     itemViewContainer: ".scene-triggers",
     itemViewOptions: function(model, index)
     {
-      return {
-        scene: this.model
-      }
+      var self = this;
+      return { scene:self.model };
     },
 
     emptyView: EmptySceneView,
 
     templateHelpers: function()
     {
-      return {
-        is_intro_scene: this.is_intro_scene()
-      }
+      var self = this;
+      return { is_intro_scene: self.is_intro_scene() };
     },
 
     initialize: function(options)
     {
-      var view = this;
+      var self = this;
 
       // Track to adjust intro scene
-      this.listenTo(this.model.game(), "change:intro_scene_id", this.onChangeIntroScene.bind(this));
-      this.listenTo(this.model, "update", this.render);
+      self.listenTo(self.model.game(), "change:intro_scene_id", self.onChangeIntroScene.bind(self));
+      self.listenTo(self.model, "update", self.render);
     },
 
     is_intro_scene: function()
     {
       // FIXME can just compare models if we load all scenes into storage.
-      return this.model.id === this.model.game().get("intro_scene_id");
+      var self = this;
+      return self.model.id === self.model.game().get("intro_scene_id");
     },
 
     onChangeIntroScene: function()
     {
-      this.render();
+      var self = this;
+      self.render();
 
-      if(this.is_intro_scene())
+      if(self.is_intro_scene())
       {
-        this.$el.removeClass("panel-default").addClass("panel-info");
+        self.$el.removeClass("panel-default").addClass("panel-info");
       }
       else
       {
-        this.$el.removeClass("panel-info").addClass("panel-default");
+        self.$el.removeClass("panel-info").addClass("panel-default");
       }
     },
 
     /* Listen to children asking to be removed */
     onItemviewTriggerRemove: function(item_view, trigger)
     {
-      this.collection.remove(trigger);
+      var self = this;
+      self.collection.remove(trigger);
     },
 
     events:
@@ -98,17 +97,20 @@ function(
 
     onRender: function()
     {
-      $(this.$el).draggable({ containment: "parent" });
+      var self = this;
+      $(self.$el).draggable({ containment: "parent" });
     },
 
     onClickName: function()
     {
-      vent.trigger("application:info:show", new SceneEditorView({model: this.model}));
+      var self = this;
+      vent.trigger("application:info:show", new SceneEditorView({model: self.model}));
     },
 
     onClickNewTrigger: function()
     {
-      vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model: this.model, game: this.model.game()}), "Add Trigger to Scene");
+      var self = this;
+      vent.trigger("application:popup:show", new SceneTriggerTypeChooserView({model:self.model, game:self.model.game()}), "Add Trigger to Scene");
     },
 
   });

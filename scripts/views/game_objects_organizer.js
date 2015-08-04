@@ -30,7 +30,7 @@ function(
       dialogs_region:        "#dialog-region",
       plaques_region:        "#plaque-region",
       items_region:          "#item-region",
-      pages_region:          "#page-region",
+      web_pages_region:      "#web-page-region",
       factories_region:      "#factory-region",
       event_packages_region: "#event-package-region",
     },
@@ -44,12 +44,12 @@ function(
     onShow: function()
     {
       var self = this;
-      self.dialogs_region.show       (new DialogOrganizerView      ({collection:self.storage.dialog_collection,        storage:self.storage}));
-      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:self.storage.plaque_collection,        storage:self.storage}));
-      self.items_region.show         (new ItemOrganizerView        ({collection:self.storage.item_collection,          storage:self.storage}));
-      self.pages_region.show         (new WebPageOrganizerView     ({collection:self.storage.page_collection,          storage:self.storage}));
-      self.factories_region.show     (new FactoryOrganizerView     ({collection:self.storage.factory_collection,       storage:self.storage}));
-      self.event_packages_region.show(new EventPackageOrganizerView({collection:self.storage.event_package_collection, storage:self.storage}));
+      self.dialogs_region.show       (new DialogOrganizerView      ({collection:self.storage.dialogs,             storage:self.storage}));
+      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:self.storage.plaques,             storage:self.storage}));
+      self.items_region.show         (new ItemOrganizerView        ({collection:self.storage.items,               storage:self.storage}));
+      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:self.storage.web_page_collection, storage:self.storage}));
+      self.factories_region.show     (new FactoryOrganizerView     ({collection:self.storage.factorys,            storage:self.storage}));
+      self.event_packages_region.show(new EventPackageOrganizerView({collection:self.storage.event_packages,      storage:self.storage}));
     },
 
   });

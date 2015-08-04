@@ -1,42 +1,70 @@
-define(
-function(require)
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'views/login',
+  'views/games_layout',
+  'views/games',
+  'views/migration_games',
+  'views/migration_link_user',
+  'views/scenes',
+  'views/game_nav_menu',
+  'views/locations',
+  'views/quests',
+  'views/media_editor',
+  'views/edit_json_model',
+  'views/game_editor',
+  'views/editors',
+  'views/game_objects_organizer',
+  'views/locations_organizer',
+  'views/media_organizer',
+  'views/conversations',
+  'views/tabs',
+  'views/tags',
+  'views/notes',
+  'collections/migration_games',
+  'collections/editors',
+  'collections/game_triggers',
+  'collections/notes',
+  'models/game',
+  'vent',
+  'models/session',
+  'storage',
+],
+function(
+  $,
+  _,
+  Backbone,
+  LoginView,
+  GamesLayoutView,
+  GamesView,
+  MigrationGamesView,
+  MigrationLinkUserView,
+  ScenesView,
+  GameNavMenu,
+  LocationsView,
+  QuestsView,
+  MediaEditorView,
+  EditJsonModelView,
+  GameEditorView,
+  EditorSharingView,
+  GameObjectsOrganizerView,
+  LocationsOrganizerView,
+  MediaOrganizerView,
+  ConversationsView,
+  TabsView,
+  TagsView,
+  NotesView,
+  MigrationGameCollection,
+  EditorsCollection,
+  GameTriggersCollection,
+  NotesCollection,
+  Game,
+  vent,
+  session,
+  storage
+)
 {
-  var $                        = require('jquery');
-  var _                        = require('underscore');
-  var Backbone                 = require('backbone');
-
-  var LoginView                = require('views/login');
-  var GamesLayoutView          = require('views/games_layout');
-  var GamesView                = require('views/games');
-  var MigrationGamesView       = require('views/migration_games');
-  var MigrationLinkUserView    = require('views/migration_link_user');
-  var ScenesView               = require('views/scenes');
-  var GameNavMenu              = require('views/game_nav_menu');
-  var LocationsView            = require('views/locations');
-  var QuestsView               = require('views/quests');
-  var MediaEditorView          = require('views/media_editor');
-  var EditJsonModelView        = require('views/edit_json_model');
-  var GameEditorView           = require('views/game_editor');
-  var EditorSharingView        = require('views/editors');
-  var GameObjectsOrganizerView = require('views/game_objects_organizer');
-  var LocationsOrganizerView   = require('views/locations_organizer');
-  var MediaOrganizerView       = require('views/media_organizer');
-  var ConversationsView        = require('views/conversations');
-  var TabsView                 = require('views/tabs');
-  var TagsView                 = require('views/tags');
-  var NotesView                = require('views/notes');
-
-  var MigrationGameCollection  = require('collections/migration_games');
-  var EditorsCollection        = require('collections/editors');
-  var GameTriggersCollection   = require('collections/game_triggers');
-  var NotesCollection          = require('collections/notes');
-
-  var Game                     = require('models/game');
-
-  var vent                     = require('vent');
-  var session                  = require('models/session');
-  var storage                  = require('storage');
-
   return Backbone.Router.extend(
   {
     initialize:function()

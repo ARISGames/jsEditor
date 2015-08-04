@@ -1,7 +1,6 @@
 /* Storage Singleton */
 /* The containers are injected from application.js to fix circular issues */
-define(
-[
+define([
   "backbone",
   "marionette"
 ],

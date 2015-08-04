@@ -40,68 +40,78 @@ function(
     // Remove after upgrading to Marionette 2.0.x with `filter`
     className: function()
     {
+      var self = this;
       // Hide triggers not from scene, user notes and factory triggers.
-      if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE" || this.model.instance().get("factory_id") !== "0")
+      if(
+        self.model.get("scene_id") != self.options.scene.get("scene_id") ||
+        self.model.instance().get("object_type") === "NOTE"
+        || self.model.instance().get("factory_id") !== "0"
+      )
       {
-        return 'hidden'
+        return 'hidden';
       }
-      return 'scene-trigger'
+      return 'scene-trigger';
     },
 
     templateHelpers: function()
     {
+      var self = this;
       return {
-        object_name: this.object_name,
-        object_icon: this.object_icon,
-        type_icon:   this.type_icon,
-        type_color:  this.type_color
-      }
+        object_name: self.object_name,
+        object_icon: self.object_icon,
+        type_icon:   self.type_icon,
+        type_color:  self.type_color
+      };
     },
 
     initialize: function(options)
     {
+      var self = this;
       // Remove after upgrading to Marionette 2.0.x with `filter`
-      if(this.model.get("scene_id") != this.options.scene.get("scene_id") || this.model.instance().get("object_type") === "NOTE")
+      if(self.model.get("scene_id") != self.options.scene.get("scene_id") || self.model.instance().get("object_type") === "NOTE")
       {
-        this.render = function() {};
+        self.render = function() {};
         return;
       }
 
-      this.scene       = options.scene;
-      this.instance    = this.model.instance();
-      this.game_object = this.instance.game_object();
+      self.scene       = options.scene;
+      self.instance    = self.model.instance();
+      self.game_object = self.instance.game_object();
 
       // Assign icon and name from instance and game object
-      this.loading_icon();
-      this.update_icon ();
+      self.loading_icon();
+      self.update_icon ();
 
       // Listen to association events on on instance and game object
-      this.bindModelEvents();
+      self.bindModelEvents();
     },
 
     /* Model Event Binding */
 
     bindModelEvents: function()
     {
-      this.listenTo(this.model,       "update",  this.update_icon);
-      this.listenTo(this.model,       "update",  this.update_game_object);
-      this.listenTo(this.game_object, "update",  this.update_icon);
-      this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
+      var self = this;
+      self.listenTo(self.model,       "update",  self.update_icon);
+      self.listenTo(self.model,       "update",  self.update_game_object);
+      self.listenTo(self.game_object, "update",  self.update_icon);
+      self.listenTo(self.game_object, "destroy", self.triggerRemove.bind(self));
     },
 
     triggerRemove: function()
     {
+      var self = this;
       // Alert parent they should remove me.
-      this.trigger("trigger:remove", this.model);
+      self.trigger("trigger:remove", self.model);
     },
 
     update_game_object: function()
     {
-      this.stopListening(this.game_object);
-      this.game_object = this.model.game_object();
-      this.listenTo(this.game_object, "update",  this.update_icon);
-      this.listenTo(this.game_object, "destroy", this.triggerRemove.bind(this));
-      this.update_icon ();
+      var self = this;
+      self.stopListening(self.game_object);
+      self.game_object = self.model.game_object();
+      self.listenTo(self.game_object, "update",  self.update_icon);
+      self.listenTo(self.game_object, "destroy", self.triggerRemove.bind(self));
+      self.update_icon ();
     },
 
     /* Events */
@@ -113,28 +123,28 @@ function(
 
     onClickShow: function()
     {
-      var view = this;
+      var self = this;
       var trigger_editor = null;
 
       var options = {
-        scene: view.scene,
-        game_object: view.game_object,
-        instance: view.instance,
-        model: view.model
+        scene: self.scene,
+        game_object: self.game_object,
+        instance: self.instance,
+        model: self.model
       };
 
       // launch based on type
-      if(view.game_object instanceof Dialog ) { trigger_editor = new TriggerEditorView(options); }
-      if(view.game_object instanceof Item   ) { trigger_editor = new TriggerEditorView(options); }
-      if(view.game_object instanceof Plaque ) { trigger_editor = new TriggerEditorView(options); }
-      if(view.game_object instanceof WebPage) { trigger_editor = new TriggerEditorView(options); }
-      if(view.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorView(options); }
-      if(view.game_object instanceof Factory) { trigger_editor = new TriggerEditorView(options); }
-      if(view.game_object instanceof Event  ) { trigger_editor = new TriggerEditorView(options); }
+      if(self.game_object instanceof Dialog ) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof Item   ) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof Plaque ) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof WebPage) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof Scene  ) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof Factory) { trigger_editor = new TriggerEditorself(options); }
+      if(self.game_object instanceof Event  ) { trigger_editor = new TriggerEditorself(options); }
 
       if(trigger_editor === null)
       {
-        throw "No editor for "+view.game_object.idAttribute+": "+view.game_object.id;
+        throw "No editor for "+self.game_object.idAttribute+": "+self.game_object.id;
       }
       else
       {
@@ -147,36 +157,38 @@ function(
 
     loading_icon: function()
     {
+      var self = this;
       // FIXME delegate to different views for each object?
-      this.object_name = "...";
-      this.object_icon = "refresh";
-      this.type_icon   = "question-sign";
-      this.type_color  = "text-warning";
+      self.object_name = "...";
+      self.object_icon = "refresh";
+      self.type_icon   = "question-sign";
+      self.type_color  = "text-warning";
 
     },
 
     update_icon: function()
     {
-      var type = this.model.get("type");
-      if(type === "QR")        { this.type_icon = "qrcode";     }
-      if(type === "LOCATION")  { this.type_icon = "map-marker"; }
-      if(type === "IMMEDIATE") { this.type_icon = "link"; }
+      var self = this;
+      var type = self.model.get("type");
+      if(type === "QR")        { self.type_icon = "qrcode";     }
+      if(type === "LOCATION")  { self.type_icon = "map-marker"; }
+      if(type === "IMMEDIATE") { self.type_icon = "link"; }
 
-      this.type_color  = "text-primary";
-      if(this.model.get("infinite_distance") === "1" && type === "LOCATION") { this.type_color = "text-success"; }
+      self.type_color  = "text-primary";
+      if(self.model.get("infinite_distance") === "1" && type === "LOCATION") { self.type_color = "text-success"; }
 
-      type = this.instance.get("object_type");
-      if(type === "DIALOG")   { this.object_icon = "comment"; }
-      if(type === "PLAQUE")   { this.object_icon = "align-justify"; }
-      if(type === "ITEM")     { this.object_icon = "stop";    }
-      if(type === "WEB_PAGE") { this.object_icon = "globe";   }
-      if(type === "SCENE")    { this.object_icon = "film";    }
-      if(type === "FACTORY")  { this.object_icon = "home";    }
-      if(type === "EVENT")    { this.object_icon = "globe";    }
+      type = self.instance.get("object_type");
+      if(type === "DIALOG")   { self.object_icon = "comment"; }
+      if(type === "PLAQUE")   { self.object_icon = "align-justify"; }
+      if(type === "ITEM")     { self.object_icon = "stop";    }
+      if(type === "WEB_PAGE") { self.object_icon = "globe";   }
+      if(type === "SCENE")    { self.object_icon = "film";    }
+      if(type === "FACTORY")  { self.object_icon = "home";    }
+      if(type === "EVENT")    { self.object_icon = "globe";    }
 
-      this.object_name = this.game_object.get("name");
+      self.object_name = self.game_object.get("name");
 
-      this.render();
+      self.render();
     }
 
   });

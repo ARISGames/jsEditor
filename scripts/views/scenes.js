@@ -33,10 +33,8 @@ function(
     itemViewContainer: ".scenes",
     itemViewOptions: function(model, index)
     {
-      return
-      {
-        collection: this.triggers
-      }
+      var self = this;
+      return { collection: self.triggers };
     },
 
     className: 'full-height',
@@ -48,19 +46,21 @@ function(
 
     initialize: function(options)
     {
-      var view = this;
+      var self = this;
 
-      this.intro_scene = options.intro_scene;
-      this.triggers    = options.triggers;
+      self.intro_scene = options.intro_scene;
+      self.triggers    = options.triggers;
+      console.log(self.triggers);
 
       // This fails with undefined when .fetch is passed without a closure.
-      this.listenTo(this.collection, "remove", function() { view.model.fetch()});
+      self.listenTo(self.collection, "remove", function() { view.model.fetch()});
     },
 
     onClickNewScene: function()
     {
-      var scene = new Scene({game_id: this.model.id});
-      vent.trigger("application:popup:show", new SceneEditorView({model: scene}), "Add Scene");
+      var self = this;
+      var scene = new Scene({game_id:self.model.id});
+      vent.trigger("application:popup:show", new SceneEditorView({model:scene}), "Add Scene");
     },
 
     /* Line Drawing Code */
@@ -82,32 +82,32 @@ function(
 
     onRender: function()
     {
-      var view = this;
+      var self = this;
       // make draggable
-      //$(this.$el.find(".scene")).draggable({ containment: "parent" });
-      //$(this.$el.find(".scene-item")).draggable({ containment: "parent", delay: 100 });
+      //$(self.$el.find(".scene")).draggable({ containment: "parent" });
+      //$(self.$el.find(".scene-item")).draggable({ containment: "parent", delay: 100 });
 
-      var scene_container = this.$el.find('.scenes').get(0);
-      var link_ends   = this.$el.find('.link-end'  );
-      var link_starts = this.$el.find('.link-start');
-      var link_lines  = this.$el.find('.link-line' );
+      var scene_container = self.$el.find('.scenes').get(0);
+      var link_ends   = self.$el.find('.link-end'  );
+      var link_starts = self.$el.find('.link-start');
+      var link_lines  = self.$el.find('.link-line' );
 
-      this.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui)
+      self.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui)
       {
-        //view.drawLinks(link_starts, link_ends, link_lines, scene_container);
+        //self.drawLinks(link_starts, link_ends, link_lines, scene_container);
       });
 
-      //setTimeout(function(){ view.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
+      //setTimeout(function(){ self.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
     },
 
     drawLinks: function(link_starts, link_ends, link_lines, scene_container)
     {
-      var view = this;
+      var self = this;
 
       link_starts.each(function(index, link_start)
       {
-        var end_pos   = view.getPos( link_ends.get(index), scene_container );
-        var start_pos = view.getPos( link_start,           scene_container );
+        var end_pos   = self.getPos( link_ends.get(index), scene_container );
+        var start_pos = self.getPos( link_start,           scene_container );
 
         $(link_lines.get(index)).attr("d", "M" + (start_pos[0] + 37) + " " + (start_pos[1] + 27) + " L" + (end_pos[0] + 37) + " " + (end_pos[1] + 27));
       });
