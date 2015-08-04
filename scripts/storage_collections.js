@@ -17,7 +17,7 @@ define([
   "collections/web_pages",
   "collections/factories",
   "collections/game_dialog_scripts",
-  "collections/event_packages"
+  "collections/event_packages",
 ],
 function(
   Backbone,

@@ -32,22 +32,27 @@ function(
 
     initialize: function()
     {
-      this.listenTo(this.model, "update", this.render);
+      var self = this;
+      self.listenTo(self.model, "update", self.render);
     },
 
     tagName:'tr',
 
     onClickEdit: function()
     {
-      var event_package = this.model;
-      var events = new EventsCollection([], {parent: event_package});
-      var items  = new ItemsCollection([], {parent: event_package.parent});
+      var self = this;
+      var event_package = self.model;
+      var events = new EventsCollection([], {parent:event_package});
+      var items  = new ItemsCollection([], {parent:event_package.parent});
 
-      $.when(items.fetch(), events.fetch()).done(
+      $.when(
+        items.fetch(),
+        events.fetch()
+      ).done(
         function()
         {
           var event_package_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
-          vent.trigger("application:popup:show", event_package_editor, "Edit Event", true);
+          vent.trigger("application:popup:show", event_package_editor, "Edit Event");
         }
       );
 

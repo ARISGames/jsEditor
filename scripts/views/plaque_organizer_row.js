@@ -22,14 +22,17 @@ function(
 
     initialize: function()
     {
-      this.listenTo(this.model, "update", this.render);
+      var self = this;
+      self.listenTo(self.model, "update", self.render);
     },
 
     tagName: 'tr',
 
     onClickEdit: function()
     {
-      var plaque_editor = new PlaqueEditorView({model: this.model});
+      var self = this;
+      var plaque = self.model;
+      var plaque_editor = new PlaqueEditorView({model:plaque});
       vent.trigger("application:popup:show", plaque_editor, "Edit Plaque");
     }
   });

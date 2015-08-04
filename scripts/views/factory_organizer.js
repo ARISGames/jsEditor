@@ -8,8 +8,8 @@ define([
   'collections/plaques',
   'collections/dialogs',
   'collections/web_pages',
+  'storage',
   'vent',
-  'storage'
 ],
 function(
   Backbone,
@@ -21,8 +21,8 @@ function(
   PlaquesCollection,
   DialogsCollection,
   WebPagesCollection,
-  vent,
-  storage
+  storage,
+  vent
 )
 {
   return Backbone.Marionette.CompositeView.extend(
@@ -35,7 +35,6 @@ function(
     initialize: function(options)
     {
       var self = this;
-      self.storage = options.storage;
     },
 
     events:
@@ -46,7 +45,7 @@ function(
     onClickNew: function()
     {
       var self = this;
-      var factory = new Factory({game_id:self.storage.game.id});
+      var factory = new Factory({game_id:storage.game.id});
 
       var contents =
       {

@@ -52,6 +52,7 @@ function(
       var self = this;
       self.items = options.items;
       self.back_view = options.back_view;
+      self.storePreviousAttributes();
       self.on("popup:hide", self.onClickCancel);
     },
 
@@ -79,7 +80,6 @@ function(
     onClickSave:function(event)
     {
       var self = this;
-      event.preventDefault();
 
       // Save Event Package with children json
       self.model.set("events", self.collection);
@@ -88,25 +88,22 @@ function(
       {
         create:function()
         {
-
+          self.storePreviousAttributes();
+          storage.add_game_object(self.model);
+          vent.trigger("application:popup:hide");
         },
         update:function()
         {
-
+          self.storePreviousAttributes();
+          vent.trigger("application:popup:hide");
         },
-        success:function()
-        {
-          self.trigger("event_package:save", self.model);
-        }
       });
     },
 
     onClickCancel:function()
     {
       var self = this;
-      self.trigger("cancel");
-      //delete self.previous_attributes.event_package_id;
-      //self.model.set(self.previous_attributes);
+      self.model.set(self.previous_attributes);
     },
 
     onClickDelete:function()
@@ -132,6 +129,12 @@ function(
     {
       var self = this;
       self.collection.remove(event);
+    },
+
+    storePreviousAttributes: function()
+    {
+      var self = this;
+      self.previous_attributes = _.clone(self.model.attributes)
     },
 
     // Marionette Collection Override

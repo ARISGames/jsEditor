@@ -45,12 +45,12 @@ function(
     onShow: function()
     {
       var self = this;
-      self.dialogs_region.show       (new DialogOrganizerView      ({collection:storage.dialogs,             storage:storage}));
-      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:storage.plaques,             storage:storage}));
-      self.items_region.show         (new ItemOrganizerView        ({collection:storage.items,               storage:storage}));
-      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_page_collection, storage:storage}));
-      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factorys,            storage:storage}));
-      self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages,      storage:storage}));
+      self.dialogs_region.show       (new DialogOrganizerView      ({collection:storage.dialogs}));
+      self.plaques_region.show       (new PlaqueOrganizerView      ({collection:storage.plaques}));
+      self.items_region.show         (new ItemOrganizerView        ({collection:storage.items}));
+      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_page_collection}));
+      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factorys}));
+      self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages}));
     },
 
   });

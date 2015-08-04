@@ -4,6 +4,7 @@ define([
   'views/dialog_organizer_row',
   'views/dialog_editor',
   'models/dialog',
+  'storage',
   'vent',
 ],
 function(
@@ -12,6 +13,7 @@ function(
   DialogsOrganizerRowView,
   DialogEditorView,
   Dialog,
+  storage,
   vent
 )
 {
@@ -25,7 +27,6 @@ function(
     initialize: function(options)
     {
       var self = this;
-      self.storage = options.storage;
     },
 
     events:
@@ -36,7 +37,7 @@ function(
     onClickNew: function()
     {
       var self = this;
-      var dialog = new Dialog({game_id: self.storage.game.get("game_id")});
+      var dialog = new Dialog({game_id:storage.game.get("game_id")});
 
       var dialog_editor = new DialogEditorView({model:dialog});
       vent.trigger("application:popup:show", dialog_editor, "Create Conversation");

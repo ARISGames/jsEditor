@@ -6,8 +6,8 @@ define([
   'models/event_package',
   'collections/events',
   'collections/items',
+  'storage',
   'vent',
-  'storage'
 ],
 function(
   Backbone,
@@ -17,8 +17,8 @@ function(
   EventPackage,
   EventsCollection,
   ItemsCollection,
-  vent,
-  storage
+  storage,
+  vent
 )
 {
   return Backbone.Marionette.CompositeView.extend(
@@ -30,7 +30,6 @@ function(
     initialize: function(options)
     {
       var self = this;
-      self.storage = options.storage;
     },
 
     events:
@@ -41,14 +40,16 @@ function(
     onClickNew: function()
     {
       var self = this;
-      var items  = new ItemsCollection([], {parent:self.storage.game});
+      var items  = new ItemsCollection([], {parent:storage.game});
 
-      $.when(items.fetch()).done(
+      $.when(
+        items.fetch()
+      ).done(
         function()
         {
-          var eventPackage = new EventPackage({game_id:self.storage.game.id});
-          var events = new EventsCollection([], {parent:eventPackage});
-          var event_package_editor = new EventPackageEditorView({model:eventPackage, collection:events, items:items});
+          var event_package = new EventPackage({game_id:storage.game.id});
+          var events = new EventsCollection([], {parent:event_package});
+          var event_package_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
           vent.trigger("application:popup:show", event_package_editor, "Create Event", true);
         }
       );
