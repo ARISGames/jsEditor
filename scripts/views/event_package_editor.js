@@ -5,6 +5,7 @@ define([
   'views/event_editor',
   'collections/events',
   'models/event',
+  'storage',
   'vent',
 ],
 function(
@@ -14,6 +15,7 @@ function(
   EventEditorView,
   EventsCollection,
   Event,
+  storage,
   vent
 )
 {
@@ -44,13 +46,13 @@ function(
     itemViewOptions: function(model, index)
     {
       var self = this;
-      return { items: self.items }
+      return { items:storage.items }
     },
 
     initialize: function(options)
     {
       var self = this;
-      self.items = options.items;
+
       self.back_view = options.back_view;
       self.storePreviousAttributes();
       self.on("popup:hide", self.onClickCancel);

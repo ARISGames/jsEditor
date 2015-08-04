@@ -43,7 +43,7 @@ function(
       var self = this;
       var event_package = self.model;
       var events = new EventsCollection([], {parent:event_package});
-      var items  = new ItemsCollection([], {parent:event_package.parent});
+      var items  = storage.items;
 
       $.when(
         items.fetch(),
@@ -51,7 +51,7 @@ function(
       ).done(
         function()
         {
-          var event_package_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+          var event_package_editor = new EventPackageEditorView({model:event_package, collection:events});
           vent.trigger("application:popup:show", event_package_editor, "Edit Event");
         }
       );
