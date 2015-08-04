@@ -1,16 +1,16 @@
 define([
   'collections/json_collection_base',
-  'models/event',
+  'models/event_package',
   'vent'
 ],
 function(
   JsonCollection,
-  Event
+  EventPackage
 )
 {
   return JsonCollection.extend({
-    model: Event,
-    amfphp_url: "events.getEventsForGame"
+    model: EventPackage,
+    amfphp_url: "events.getEventPackagesForGame"
   });
 });
 
