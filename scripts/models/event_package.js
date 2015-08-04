@@ -22,12 +22,14 @@ function(
       "game_id",
       "event_package_id",
       "name",
+      "icon_media_id",
       "events" // Nested attribute
     ],
 
     defaults:
     {
       name:"",
+      icon_media_id:0,
       events:[]
     }
   });
