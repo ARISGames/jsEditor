@@ -7,6 +7,7 @@ define([
   'collections/items',
   'models/game',
   'models/event_package',
+  'collections/events',
   'views/media_chooser',
   'views/event_package_editor',
   'vent',
@@ -21,6 +22,7 @@ function(
   ItemsCollection,
   Game,
   EventPackage,
+  EventsCollection,
   MediaChooserView,
   EventPackageEditorView,
   vent,
@@ -29,9 +31,9 @@ function(
 {
   return Backbone.Marionette.CompositeView.extend(
   {
-    template: _.template(Template),
+    template:_.template(Template),
 
-    templateHelpers: function()
+    templateHelpers:function()
     {
       var self = this;
       return {
@@ -43,14 +45,14 @@ function(
 
     ui:
     {
-      "save":   ".save",
-      "delete": ".delete",
-      "cancel": ".cancel",
+      "save":         ".save",
+      "delete":       ".delete",
+      "cancel":       ".cancel",
       "change_icon":  ".change-icon",
       "change_media": ".change-media",
       "edit_events":  ".edit-events",
-      "name": "#plaque-name",
-      "description":  "#plaque-description"
+      "name":         "#plaque-name",
+      "description":  "#plaque-description",
     },
 
     initialize: function(options)
@@ -69,15 +71,13 @@ function(
 
     events:
     {
-      "click @ui.save":   "onClickSave",
-      "click @ui.delete": "onClickDelete",
-      "click @ui.cancel": "onClickCancel",
+      "click @ui.save":         "onClickSave",
+      "click @ui.delete":       "onClickDelete",
+      "click @ui.cancel":       "onClickCancel",
       "click @ui.change_icon":  "onClickChangeIcon",
       "click @ui.change_media": "onClickChangeMedia",
       "click @ui.edit_events":  "onClickEditEvents",
-
-      // Field events
-      "change @ui.name": "onChangeName",
+      "change @ui.name":        "onChangeName",
       "change @ui.description": "onChangeDescription",
     },
 
@@ -180,16 +180,16 @@ function(
     {
       var self = this;
 
-      var game  = new Game({game_id: self.model.get("game_id")});
-      var media = new MediaCollection([], {parent: game});
+      var game  = new Game({game_id:self.model.get("game_id")});
+      var media = new MediaCollection([], {parent:game});
 
       media.fetch(
       {
-        success: function()
+        success:function()
         {
           media.unshift(self.model.default_icon());
 
-          var media_chooser = new MediaChooserView({collection: media, selected: self.model.media()});
+          var media_chooser = new MediaChooserView({collection:media, selected:self.model.media()});
           vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
           media_chooser.on("media:choose", function(media)
@@ -208,48 +208,52 @@ function(
       });
     },
 
-    /* Events Editor */
-
-    onClickEditEvents: function()
+    onClickEditEvents:function()
     {
       var self = this;
 
-      var event_package = new EventPackage({event_package_id: self.model.get("event_package_id"), game_id: self.model.get("game_id")});
-      var events = new EventsCollection([], {parent: event_package});
+      var game = new Game({game_id:self.model.get("game_id")});
 
-      var game   = new Game({game_id: self.model.get("game_id")});
-      var items  = new ItemsCollection([], {parent: game});
+      var event_package;
+      if(self.model.get("event_package_id") == 0) event_package = new EventPackage({game_id:game.id});
+      else                                        event_package = new EventPackage({game_id:game.id, event_package_id:self.model.get("event_package_id")});
+      var events = new EventsCollection([], {parent:event_package});
 
-      $.when(items.fetch(), events.fetch()).done(
+      var items  = new ItemsCollection([], {parent:game});
+
+      $.when(
+        items.fetch(),
+        event_package.fetch(),
+        events.fetch()
+      ).done(
         function()
         {
-          // launch editor
-          var events_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
-
-          events_editor.on("cancel",
-            function()
+          if(self.model.get("event_package_id") == 0)
+          {
+            event_package.save({},
             {
-              vent.trigger("application:popup:show", self, "Edit Plaque");
-            }
-          );
-
-          events_editor.on("event_package:save",
-            function(event_package)
-            {
-              self.model.set("event_package_id", event_package.id);
-              storage.event_packages.fetch();
-
-              if(!self.model.isNew() && self.model.hasChanged("event_package_id"))
+              success:function()
               {
-                // Quicksave if moving from 0 so user has consistent experience
-                self.model.save({"event_package_id": event_package.id}, {patch: true});
+                storage.add_game_object(event_package);
+                self.model.set("event_package_id", event_package.id);
+                self.model.save({}, {
+                  create:function()
+                  {
+                    storage.add_game_object(self.model);
+                  }
+                });
+                var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+                vent.trigger("application:popup:show", events_editor, "Player Modifier");
               }
+            });
+          }
+          else
+          {
+            self.model.save({}, {});
+            var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+            vent.trigger("application:popup:show", events_editor, "Player Modifier");
+          }
 
-              vent.trigger("application:popup:show", self, "Edit Plaque");
-            }
-          );
-
-          vent.trigger("application:popup:show", events_editor, "Player Modifier");
         }
       );
     }
