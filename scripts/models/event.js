@@ -7,7 +7,8 @@ function(
   storage
 )
 {
-  return JsonBaseModel.extend({
+  return JsonBaseModel.extend(
+  {
     idAttribute: 'event_id',
 
     amfphp_url_templates:
@@ -25,7 +26,8 @@ function(
       "name",
       "event",
       "content_id",
-      "qty"
+      "script",
+      "qty",
     ],
 
     defaults:
@@ -33,7 +35,8 @@ function(
       "name":"",
       "event": "GIVE_ITEM_PLAYER",
       "content_id": "0",
-      "qty": "1"
+      "script": "",
+      "qty": "1",
     },
 
     initialize: function(attributes)

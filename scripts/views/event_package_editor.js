@@ -75,7 +75,7 @@ function(
     onClickNewEvent:function()
     {
       var self = this;
-      var event = new Event({game_id: self.model.get("game_id")});
+      var event = new Event({game_id:self.model.get("game_id"),event_package_id:self.model.get("event_package_id")});
       self.collection.add(event);
     },
 
