@@ -6,7 +6,6 @@ define([
   'collections/media',
   'models/game',
   'views/media_chooser',
-  'collections/event_packages',
   'views/event_inference_row',
   'vent',
   'storage',
@@ -19,7 +18,6 @@ function(
   MediaCollection,
   Game,
   MediaChooserView,
-  EventPackagesCollection,
   EventInferenceRow,
   vent,
   storage
@@ -32,17 +30,15 @@ function(
     itemView: EventInferenceRow,
     itemViewContainer: ".events",
 
-    /* View */
-
     templateHelpers: function()
     {
+      var self = this;
       return {
-        is_new: this.model.isNew(),
-        icon_thumbnail_url:  this.model.icon_thumbnail(),
-        media_thumbnail_url: this.model.media_thumbnail()
+        is_new: self.model.isNew(),
+        icon_thumbnail_url:  self.model.icon_thumbnail(),
+        media_thumbnail_url: self.model.media_thumbnail()
       }
     },
-
 
     ui:
     {
@@ -65,30 +61,19 @@ function(
       "type_tabs":          ".type-tab"
     },
 
-
-    /* Constructor */
-
     initialize: function()
     {
-      // Allow returning to original attributes
-      this.storePreviousAttributes();
+      var self = this;
 
-      // Listen to association events on media
-      this.bindAssociations();
-
-      // Handle cancel from modal X or dark area
-      this.on("popup:hide", this.onClickCancel);
-
-      this.collection = new EventPackagesCollection;
-      // Load inferences
-      this.loadInferences();
+      self.storePreviousAttributes();
+      self.bindAssociations();
+      self.on("popup:hide", self.onClickCancel);
+      self.loadInferences();
     },
-
-    /* View Events */
 
     onShow: function()
     {
-      this.$el.find('input[autofocus]').focus();
+      self.$el.find('input[autofocus]').focus();
     },
 
     events:
@@ -117,25 +102,21 @@ function(
 
     onClickSave: function()
     {
-      var view = this;
-      var item = this.model;
+      var self = this;
+      var item = self.model;
 
-      // Save Object
-
-      item.save({}, {
+      item.save({},
+      {
         create: function()
         {
-          view.storePreviousAttributes();
-
+          self.storePreviousAttributes();
           storage.add_game_object(item);
-
           vent.trigger("application:popup:hide");
         },
 
         update: function()
         {
-          view.storePreviousAttributes();
-
+          self.storePreviousAttributes();
           vent.trigger("application:popup:hide");
         }
       });
@@ -143,13 +124,15 @@ function(
 
     onClickCancel: function()
     {
-      this.model.set(this.previous_attributes);
+      var self = this;
+      self.model.set(self.previous_attributes);
     },
 
     onClickDelete: function()
     {
-      var view = this;
-      this.model.destroy({
+      var self = this;
+      self.model.destroy(
+      {
         success: function()
         {
           vent.trigger("application:popup:hide");
@@ -157,38 +140,33 @@ function(
       });
     },
 
+    onChangeName:        function() { var self = this; self.model.set("name",        self.ui.name.val()); },
+    onChangeDescription: function() { var self = this; self.model.set("description", self.ui.description.val()); },
+    onChangeUrl:         function() { var self = this; self.model.set("url",         self.ui.url.val()); },
+    onChangeWeight:      function() { var self = this; self.model.set("weight",      self.ui.weight.val()); },
 
-    /* Field Changes */
+    onChangeDeltaNotification: function() { var self = this; self.model.set("delta_notification", self.ui.delta_notification.is(":checked") ? "1" : "0");   },
+    onChangeDroppable:         function() { var self = this; self.model.set("droppable",          self.ui.droppable.is(":checked")          ? "1" : "0");   },
+    onChangeDestroyable:       function() { var self = this; self.model.set("destroyable",        self.ui.destroyable.is(":checked")        ? "1" : "0"); },
 
-    onChangeName:        function() { this.model.set("name",        this.ui.name.val()); },
-    onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
-    onChangeUrl:         function() { this.model.set("url",         this.ui.url.val()); },
-    onChangeWeight:      function() { this.model.set("weight",      this.ui.weight.val()); },
-
-    onChangeDeltaNotification: function() { this.model.set("delta_notification", this.ui.delta_notification.is(":checked") ? "1" : "0");   },
-    onChangeDroppable:         function() { this.model.set("droppable",          this.ui.droppable.is(":checked")          ? "1" : "0");   },
-    onChangeDestroyable:       function() { this.model.set("destroyable",        this.ui.destroyable.is(":checked")        ? "1" : "0"); },
-
-    onChangeMaxQuantity: function() { this.model.set("max_qty_in_inventory", this.ui.max_qty.val()); },
-
-
-    /* Radio Button field logic */
+    onChangeMaxQuantity: function() { var self = this; self.model.set("max_qty_in_inventory", self.ui.max_qty.val()); },
 
     onChangeType: function()
     {
-      var selected_radio = this.$el.find(".item-type:checked");
+      var self = this;
+      var selected_radio = self.$el.find(".item-type:checked");
 
-      this.model.set("type", selected_radio.val());
+      self.model.set("type", selected_radio.val());
 
       // Hide radio buttons and add bootstrap classes
       //
-      this.ui.item_types.parent().removeClass("active");
+      self.ui.item_types.parent().removeClass("active");
       selected_radio.parent().addClass("active");
 
 
       // Hide all and open selected tab
       //
-      this.ui.type_tabs.hide();
+      self.ui.type_tabs.hide();
 
       var display_tab = "." + selected_radio.val() + "-fields";
       $(display_tab).show();
@@ -199,51 +177,53 @@ function(
 
     storePreviousAttributes: function()
     {
-      this.previous_attributes = _.clone(this.model.attributes)
+      var self = this;
+      self.previous_attributes = _.clone(self.model.attributes)
     },
 
     unbindAssociations: function()
     {
-      this.stopListening(this.model.icon());
-      this.stopListening(this.model.media());
+      var self = this;
+      self.stopListening(self.model.icon());
+      self.stopListening(self.model.media());
     },
 
     bindAssociations: function()
     {
-      this.listenTo(this.model.icon(),  'change', this.render);
-      this.listenTo(this.model.media(), 'change', this.render);
+      var self = this;
+      self.listenTo(self.model.icon(),  'change', self.render);
+      self.listenTo(self.model.media(), 'change', self.render);
     },
-
 
     /* Media Selectors */
 
     onClickChangeIcon: function()
     {
-      var view = this;
+      var self = this;
 
-      var game  = new Game({game_id: this.model.get("game_id")});
+      var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
       media.fetch({
         success: function()
         {
           /* Add default */
-          media.unshift(view.model.default_icon());
+          media.unshift(self.model.default_icon());
 
           /* Icon */
-          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
+          var icon_chooser = new MediaChooserView({collection:media, selected:self.model.icon(), context:self.model});
 
           icon_chooser.on("media:choose", function(media)
           {
-            view.unbindAssociations();
-            view.model.set("icon_media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Item");
+            self.unbindAssociations();
+            self.model.set("icon_media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Item");
           });
 
           icon_chooser.on("cancel", function()
           {
-            vent.trigger("application:popup:show", view, "Edit Item");
+            vent.trigger("application:popup:show", self, "Edit Item");
           });
 
           vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
@@ -253,32 +233,31 @@ function(
 
     onClickChangeMedia: function()
     {
-      var view = this;
+      var self = this;
 
-      var game  = new Game({game_id: this.model.get("game_id")});
+      var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
+      media.fetch(
+      {
         success: function()
         {
-          /* Add default */
-          media.unshift(view.model.default_icon());
+          media.unshift(self.model.default_icon());
 
-          /* Media */
-          var media_chooser = new MediaChooserView({collection: media, selected: view.model.media()});
+          var media_chooser = new MediaChooserView({collection:media, selected:self.model.media()});
           vent.trigger("application:popup:show", media_chooser, "Choose Media");
 
           media_chooser.on("media:choose", function(media)
           {
-            view.unbindAssociations();
-            view.model.set("media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Item");
+            self.unbindAssociations();
+            self.model.set("media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Item");
           });
 
           media_chooser.on("cancel", function()
           {
-            vent.trigger("application:popup:show", view, "Edit Item");
+            vent.trigger("application:popup:show", self, "Edit Item");
           });
         }
       });
@@ -286,13 +265,14 @@ function(
 
     loadInferences: function()
     {
-      var item = this.model;
-      var view = this;
+      var self = this;
+      var item = self.model;
 
       // FIXME Add easier event binding to new/missing models so no local prefetch is needed (or is done outside this)
       // Right now: Fetch these locally just so the association on event will work without re-rendering.
-      var contents = {
-        quests:    storage.quests,
+      var contents =
+      {
+        quests:         storage.quests,
         dialog_scripts: storage.dialog_scripts
       };
 
@@ -303,10 +283,10 @@ function(
           return event.get("content_id") === item.id && event.modified_by() !== null
         });
 
-        view.collection.reset(item_events);
+        self.collection.reset(item_events);
         if(item_events.length > 0)
         {
-          view.$el.find('.inference_label').removeClass('hidden');
+          self.$el.find('.inference_label').removeClass('hidden');
         }
       });
     }
