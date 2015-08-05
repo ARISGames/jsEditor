@@ -72,6 +72,7 @@ function(
 
     onShow: function()
     {
+      var self = this;
       self.$el.find('input[autofocus]').focus();
     },
 
@@ -262,7 +263,6 @@ function(
           return event.get("content_id") === item.id && event.modified_by() !== null
         });
 
-        self.collection.reset(item_events);
         if(item_events.length > 0)
         {
           self.$el.find('.inference_label').removeClass('hidden');
