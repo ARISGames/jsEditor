@@ -43,7 +43,7 @@
   <div class="form-group">
     <button type="button" class="btn btn-info btn-block edit-events">
       <span class="glyphicon glyphicon-user"></span>
-        Modify Player
+        Edit Events
     </button>
   </div>
 
