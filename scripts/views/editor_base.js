@@ -11,7 +11,6 @@ function(
   {
     templateBaseHelpers:
     {
-      // Field logic
       is_checked:      function(value) { return value === "1" ? "checked" : ""; }, 
       radio_selected:  function(boolean_statement) { return boolean_statement ? "checked" : ""; }, 
       tab_selected:    function(boolean_statement) { return boolean_statement ? "active" : ""; }, 
@@ -22,17 +21,14 @@ function(
       {
         var div = document.createElement('div');
         div.innerHTML = html;
+
         var scripts = div.getElementsByTagName('script');
-        var i = scripts.length;
-        while (i--) {
+        for(var i = scripts.length; i > 0; i--)
           scripts[i].parentNode.removeChild(scripts[i]);
-        }
 
         var styles = div.getElementsByTagName('style');
-        var i = styles.length;
-        while (i--) {
+        for(var i = styles.length; i > 0; i--)
           styles[i].parentNode.removeChild(styles[i]);
-        }
 
         return div.textContent || div.innerText;
       }

@@ -23,6 +23,7 @@ function(
   storage
 )
 {
+
   return EditorView.extend(
   {
     template: _.template(Template),
@@ -45,10 +46,8 @@ function(
       "save":   ".save",
       "delete": ".delete",
       "cancel": ".cancel",
-
       "change_icon":  ".change-icon",
       "change_media": ".change-media",
-
       "name":               "#item-name",
       "description":        "#item-description",
       "url":                "#item-url",
@@ -81,11 +80,8 @@ function(
       "click @ui.save":   "onClickSave",
       "click @ui.delete": "onClickDelete",
       "click @ui.cancel": "onClickCancel",
-
       "click @ui.change_icon":  "onClickChangeIcon",
       "click @ui.change_media": "onClickChangeMedia",
-
-      // Field events
       "change @ui.name":               "onChangeName",
       "change @ui.description":        "onChangeDescription",
       "change @ui.url":                "onChangeUrl",
@@ -94,11 +90,8 @@ function(
       "change @ui.droppable":          "onChangeDroppable",
       "change @ui.destroyable":        "onChangeDestroyable",
       "change @ui.max_qty":            "onChangeMaxQuantity",
-
       "change @ui.item_types":          "onChangeType"
     },
-
-    /* Crud */
 
     onClickSave: function()
     {
@@ -158,22 +151,14 @@ function(
 
       self.model.set("type", selected_radio.val());
 
-      // Hide radio buttons and add bootstrap classes
-      //
       self.ui.item_types.parent().removeClass("active");
       selected_radio.parent().addClass("active");
 
-
-      // Hide all and open selected tab
-      //
       self.ui.type_tabs.hide();
 
       var display_tab = "." + selected_radio.val() + "-fields";
       $(display_tab).show();
     },
-
-
-    /* Undo and Association Binding */
 
     storePreviousAttributes: function()
     {
@@ -195,8 +180,6 @@ function(
       self.listenTo(self.model.media(), 'change', self.render);
     },
 
-    /* Media Selectors */
-
     onClickChangeIcon: function()
     {
       var self = this;
@@ -204,13 +187,11 @@ function(
       var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
+      media.fetch(
+      {
         success: function()
         {
-          /* Add default */
           media.unshift(self.model.default_icon());
-
-          /* Icon */
           var icon_chooser = new MediaChooserView({collection:media, selected:self.model.icon(), context:self.model});
 
           icon_chooser.on("media:choose", function(media)
@@ -268,8 +249,6 @@ function(
       var self = this;
       var item = self.model;
 
-      // FIXME Add easier event binding to new/missing models so no local prefetch is needed (or is done outside this)
-      // Right now: Fetch these locally just so the association on event will work without re-rendering.
       var contents =
       {
         quests:         storage.quests,
@@ -290,6 +269,6 @@ function(
         }
       });
     }
-  }); /* class */
-}); /* define */
+  });
+});
 

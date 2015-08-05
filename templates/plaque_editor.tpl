@@ -1,4 +1,4 @@
-<form class="object-editor form" role="form" onsubmit="return false;">
+<form class="form object-editor" role="form" onsubmit="return false;">
 
   <h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
     <span class="object-id text-muted"><%= is_new ? "" : plaque_id %></span>

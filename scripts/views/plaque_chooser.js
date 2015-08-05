@@ -34,7 +34,8 @@ function(
       }
     },
 
-    events: {
+    events:
+    {
       "click .new-plaque": "onClickNewPlaque"
     },
 

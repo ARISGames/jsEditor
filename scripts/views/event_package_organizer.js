@@ -50,7 +50,7 @@ function(
           var event_package = new EventPackage({game_id:storage.game.id});
           var events = new EventsCollection([], {parent:event_package});
           var event_package_editor = new EventPackageEditorView({model:event_package, collection:events});
-          vent.trigger("application:popup:show", event_package_editor, "Create Event", true);
+          vent.trigger("application:popup:show", event_package_editor, "Create Event");
         }
       );
     },

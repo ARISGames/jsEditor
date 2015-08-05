@@ -19,11 +19,12 @@ function(
     template: _.template(Template),
 
     regions: {
-      dialogs_region: "#dialog-region",
-      plaques_region: "#plaque-region",
-      items_region:   "#item-region",
-      pages_region:   "#page-region",
-      scenes_region:  "#scene-region"
+      dialogs_region:        "#dialog-region",
+      plaques_region:        "#plaque-region",
+      items_region:          "#item-region",
+      web_pages_region:      "#web-page-region",
+      event_packages_region: "#event-package-region",
+      scenes_region:         "#scene-region"
     },
 
     initialize: function(options)
@@ -50,17 +51,21 @@ function(
       var page_selection  = locations.filter(function(location) { return location.get("instance").get("object_type") === "WEB_PAGE"; });
       this.page_locations = new TriggersCollection(page_selection);
 
+      var event_package_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "EVENT_PACKAGE"; });
+      this.event_package_locations = new TriggersCollection(event_package_selection);
+
       var scene_selection = locations.filter(function(location) { return location.get("instance").get("object_type") === "SCENE"; });
       this.scene_locations = new TriggersCollection(scene_selection);
     },
 
     onShow: function()
     {
-      this.dialogs_region.show(new LocationsGroupOrganizerView({title: "Conversations",   object_icon: "comment",  collection: this.dialog_locations}));
-      this.plaques_region.show(new LocationsGroupOrganizerView({title: "Plaques",   object_icon: "align-justify", collection: this.plaque_locations}));
-      this.items_region.show  (new LocationsGroupOrganizerView({title: "Items & Player Attributes",     object_icon: "stop",    collection: this.item_locations  }));
-      this.pages_region.show  (new LocationsGroupOrganizerView({title: "Web Pages", object_icon: "globe",    collection: this.page_locations  }));
-      this.scenes_region.show (new LocationsGroupOrganizerView({title: "Scenes",    object_icon: "film",     collection: this.scene_locations }));
+      this.dialogs_region.show       (new LocationsGroupOrganizerView({title: "Conversations",   object_icon: "comment",  collection: this.dialog_locations}));
+      this.plaques_region.show       (new LocationsGroupOrganizerView({title: "Plaques",   object_icon: "align-justify", collection: this.plaque_locations}));
+      this.items_region.show         (new LocationsGroupOrganizerView({title: "Items & Player Attributes",     object_icon: "stop",    collection: this.item_locations  }));
+      this.web_pages_region.show     (new LocationsGroupOrganizerView({title: "Web Pages", object_icon: "globe",    collection: this.page_locations  }));
+      this.event_packages_region.show(new LocationsGroupOrganizerView({title: "Events",   object_icon: "globe", collection: this.event_package_locations}));
+      this.scenes_region.show        (new LocationsGroupOrganizerView({title: "Scenes",    object_icon: "film",     collection: this.scene_locations }));
     },
 
   });

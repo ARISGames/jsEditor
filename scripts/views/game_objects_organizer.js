@@ -33,8 +33,8 @@ function(
       plaques_region:        "#plaque-region",
       items_region:          "#item-region",
       web_pages_region:      "#web-page-region",
-      factories_region:      "#factory-region",
       event_packages_region: "#event-package-region",
+      factories_region:      "#factory-region",
     },
 
     initialize: function(options)
@@ -49,8 +49,8 @@ function(
       self.plaques_region.show       (new PlaqueOrganizerView      ({collection:storage.plaques}));
       self.items_region.show         (new ItemOrganizerView        ({collection:storage.items}));
       self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_page_collection}));
-      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factorys}));
       self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages}));
+      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factorys}));
     },
 
   });

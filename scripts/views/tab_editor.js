@@ -207,76 +207,50 @@ function(
       });
     },
 
-
-    /* Tab name logic */
-
     tab_types: Tab.tab_types,
 
     tab_content_options: function()
     {
-      // TODO add section headers
-      switch(this.model.get("type")) {
-        case "DIALOG":
-          return this.dialogs.map(function(model)   { return {name: model.get("name"), value: model.id} });
-
-        case "ITEM":
-          return this.items.map(function(model)     { return {name: model.get("name"), value: model.id} });
-
-        case "PLAQUE":
-          return this.plaques.map(function(model)   { return {name: model.get("name"), value: model.id} });
-
-        case "WEB_PAGE":
-          return this.web_pages.map(function(model) { return {name: model.get("name"), value: model.id} });
-        default:
-          return [];
+      switch(this.model.get("type"))
+      {
+        case "DIALOG":   return this.dialogs.map(function(model)   { return {name:model.get("name"), value:model.id} });
+        case "ITEM":     return this.items.map(function(model)     { return {name:model.get("name"), value:model.id} });
+        case "PLAQUE":   return this.plaques.map(function(model)   { return {name:model.get("name"), value:model.id} });
+        case "WEB_PAGE": return this.web_pages.map(function(model) { return {name:model.get("name"), value:model.id} });
+        default: return [];
       }
     },
 
     parent_name: function()
     {
-
-      if(this.model.get("content_id") === "0")
-      {
-        return this.model.tab_type_name();
-      }
-      else
-      {
-        return this.model.game_object().get("name");
-      }
+      if(this.model.get("content_id") === "0") return this.model.tab_type_name();
+      else                                     return this.model.game_object().get("name");
     },
-
-    /* Field Changes */
 
     onChangeName: function() { this.model.set("name", this.ui.name.val()); },
     onChangeInfo: function() { this.model.set("info", this.ui.info.val()); },
 
-
-    onChangeType:   function()
+    onChangeType: function()
     {
       var type = this.ui.type_select.val();
       this.model.set("type", type)
-
-      // Reset Game Object Dropdown.
       this.model.set("content_id", "0");
-
-      // Reset info string
       this.model.set("info", "");
-
       this.render();
     },
 
-    onChangeContent:   function()
+    onChangeContent: function()
     {
       this.model.set("content_id", this.ui.content_select.val())
 
-      var content_collections = {
+      var content_collections =
+      {
         "DIALOG":   this.dialogs,
         "ITEM":     this.items,
         "PLAQUE":   this.plaques,
         "WEB_PAGE": this.web_pages
       }
 
-      // FIXME replace with set game_object_id and storage.
       var collection = content_collections[this.model.get("type")];
       var game_object = collection.get(this.model.get("content_id"));
 
@@ -287,15 +261,11 @@ function(
       this.render();
     },
 
-
     onChangeQuestLayout: function()
     {
       var selected_radio = this.$el.find(".quest-tab-layout:checked");
       this.model.set("info", selected_radio.val());
     },
-
-
-    /* Undo and Association Binding */
 
     storePreviousAttributes: function()
     {
@@ -307,9 +277,7 @@ function(
       this.stopListening(this.model.icon());
 
       if(this.model.game_object())
-      {
         this.stopListening(this.model.game_object().icon());
-      }
     },
 
     bindAssociations: function()
@@ -317,13 +285,8 @@ function(
       this.listenTo(this.model.icon(), 'change', this.set_icon);
 
       if(this.model.game_object())
-      {
         this.listenTo(this.model.game_object().icon(), 'change', this.set_icon);
-      }
     },
-
-
-    /* Media Selection */
 
     onClickIcon: function(event)
     {
@@ -333,7 +296,8 @@ function(
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
+      media.fetch(
+      {
         success: function()
         {
           /* Add default */
@@ -359,18 +323,14 @@ function(
       });
     },
 
-
-    /* Requirements Editors */
-
     onClickRequirements: function()
     {
       var view = this;
-
       var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("requirement_root_package_id"), game_id: view.model.get("game_id")});
 
-      var game   = new Game({game_id: view.model.get("game_id")});
-
-      var contents = {
+      var game = new Game({game_id: view.model.get("game_id")});
+      var contents =
+      {
         items:          new ItemsCollection         ([], {parent: game}),
         tags:           new TagsCollection          ([], {parent: game}),
         plaques:        new PlaquesCollection       ([], {parent: game}),
@@ -381,24 +341,19 @@ function(
         hooks:          new WebHooksCollection      ([], {parent: game})
       };
 
-      // Don't fetch non existent package
       if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
       $.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.tabs.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
       {
-        // Load associations into collections
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);
-
         and_packages.each(function(and_package)
         {
           var atoms = new AtomsCollection(and_package.get("atoms"));
           and_package.set("atoms", atoms);
         });
 
-        // launch editor
         var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
-
         requirements_editor.on("cancel", function()
         {
           vent.trigger("application:popup:show", view, "Edit Tab");
@@ -410,7 +365,6 @@ function(
 
           if(!view.model.isNew() && view.model.hasChanged("requirement_root_package_id"))
           {
-            // Quicksave if moving from 0 so user has consistent experience
             view.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
           }
 

@@ -39,7 +39,6 @@ function(
   {
     template: _.template(Template),
 
-    // Bootstrap
     tagName: 'a',
     className: "list-group-item draggable-game-tab",
 
@@ -62,9 +61,6 @@ function(
       }
     },
 
-
-    /* Name display logic */
-
     should_display_type: function()
     {
       return (this.model.get("name") || this.model.get("content_id") !== "0") && this.model.get("name") !== this.model.tab_type_name();
@@ -77,21 +73,10 @@ function(
 
     tab_object_name: function()
     {
-      if(this.model.get("content_id") === "0")
-      {
-        return this.model.tab_type_name() || "(no type set)";
-      }
-
-      if(this.model.game_object())
-      {
-        return this.model.game_object().get("name") || "(unnamed object)";
-      }
-
+      if(this.model.get("content_id") === "0") return this.model.tab_type_name()           || "(no type set)";
+      if(this.model.game_object())             return this.model.game_object().get("name") || "(unnamed object)";
       return "(n/a)";
     },
-
-
-    /* Constructor */
 
     initialize: function()
     {
@@ -101,16 +86,14 @@ function(
       this.listenTo(vent, 'tabrow:released', this.onRowReleased.bind(this));
     },
 
-
-    /* Crud */
-
     onClickEdit: function()
     {
       var view = this;
 
       var game = this.model.game();
 
-      var contents = {
+      var contents =
+      {
         plaques:    new PlaquesCollection  ([], {parent: game}),
         items:      new ItemsCollection    ([], {parent: game}),
         web_pages:  new WebPagesCollection ([], {parent: game}),
@@ -124,14 +107,12 @@ function(
       });
     },
 
-
-    /* Association Binding */
-
     loadAssociation: function()
     {
       this.unbindAssociation();
 
-      var content_class = {
+      var content_class =
+      {
         "DIALOG":   Dialog,
         "ITEM":     Item,
         "PLAQUE":   Plaque,
@@ -163,9 +144,6 @@ function(
       }
       this.listenTo(this.model, 'change:content_id', this.loadAssociation);
     },
-
-
-    /* Sorting */
 
     onRowReleased: function(element, position)
     {
