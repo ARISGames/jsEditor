@@ -1,4 +1,4 @@
-<div class="object-editor form event-package-editor">
+<form class="object-editor form" role="form" onsubmit="return false;">
    
   <h4 style="float:right; width: 3em; text-align: right; margin-top: 0;">
     <span class="object-id text-muted"><%= is_new ? "" : event_package_id %></span>
@@ -39,9 +39,9 @@
     </button>
   <% } %>
 
-  <button type="button" class="btn btn-default cancel">
+  <button type="button" class="btn btn-default cancel" data-dismiss="modal">
     Cancel
   </button>
 
-</div>
+</form>
 

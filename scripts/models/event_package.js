@@ -32,7 +32,7 @@ function(
 
     defaults:
     {
-      name:"",
+      name:"Event",
       icon_media_id:0,
       events:[]
     },

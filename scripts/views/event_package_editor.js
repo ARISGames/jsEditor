@@ -1,5 +1,6 @@
 define([
   'underscore',
+  'jquery',
   'backbone',
   'text!templates/event_package_editor.tpl',
   'views/event_editor',
@@ -10,6 +11,7 @@ define([
 ],
 function(
   _,
+  $,
   Backbone,
   Template,
   EventEditorView,
@@ -33,7 +35,7 @@ function(
 
     ui:
     {
-      "save": ".save",
+      "save":   ".save",
       "delete": ".delete",
       "cancel": ".cancel",
       "name": "#event-package-name",
@@ -53,7 +55,6 @@ function(
     {
       var self = this;
 
-      self.back_view = options.back_view;
       self.storePreviousAttributes();
       self.on("popup:hide", self.onClickCancel);
     },
@@ -66,9 +67,10 @@ function(
 
     events:
     {
+      "click @ui.save":   "onClickSave",
+      "click @ui.delete": "onClickDelete",
+      "click @ui.cancel": "onClickCancel",
       "click @ui.new-event": "onClickNewEvent",
-      "click @ui.save":      "onClickSave",
-      "click @ui.cancel":    "onClickCancel",
       "change @ui.name":     "onChangeName",
     },
 

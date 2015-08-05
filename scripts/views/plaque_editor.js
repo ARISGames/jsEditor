@@ -4,7 +4,6 @@ define([
   'backbone',
   'text!templates/plaque_editor.tpl',
   'collections/media',
-  'collections/event_packages',
   'collections/items',
   'models/game',
   'models/event_package',
@@ -19,7 +18,6 @@ function(
   Backbone,
   Template,
   MediaCollection,
-  EventPackagesCollection,
   ItemsCollection,
   Game,
   EventPackage,
@@ -48,16 +46,14 @@ function(
       "save":   ".save",
       "delete": ".delete",
       "cancel": ".cancel",
-
       "change_icon":  ".change-icon",
       "change_media": ".change-media",
       "edit_events":  ".edit-events",
-
       "name": "#plaque-name",
       "description":  "#plaque-description"
     },
 
-    initialize: function()
+    initialize: function(options)
     {
       var self = this;
       self.storePreviousAttributes();
@@ -76,7 +72,6 @@ function(
       "click @ui.save":   "onClickSave",
       "click @ui.delete": "onClickDelete",
       "click @ui.cancel": "onClickCancel",
-
       "click @ui.change_icon":  "onClickChangeIcon",
       "click @ui.change_media": "onClickChangeMedia",
       "click @ui.edit_events":  "onClickEditEvents",

@@ -32,7 +32,7 @@ function(
 
     defaults:
     {
-      "name":"",
+      "name":"Event",
       "event": "GIVE_ITEM_PLAYER",
       "content_id": "0",
       "script": "",
