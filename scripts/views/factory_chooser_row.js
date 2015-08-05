@@ -28,14 +28,14 @@ function(
       "click .new-instance": "onClickNewInstance",
     },
 
-    // TODO how to bubble up? or get scene passed to us
+    // TODO how to bubble up? or get factory passed to us
     onClickNewInstance: function()
     {
-      var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
-      var instance = new Instance ({game_id: this.options.parent.get("game_id")});
+      var trigger  = new Trigger  ({game_id:this.options.parent.get("game_id"), scene_id:this.options.parent.get("scene_id")});
+      var instance = new Instance ({game_id:this.options.parent.get("game_id")});
       var factory = this.model;
 
-      // Scenes can only be immediate for now.
+      // factories can only be immediate for now.
       trigger.set("type", "IMMEDIATE");
 
       // Save directly and insert into scene/show sidebar
@@ -43,7 +43,7 @@ function(
       instance.set("object_type", Instance.type_for(factory));
 
       instance.save({}, {
-        create: function()
+        create:function()
         {
           storage.add_game_object(instance);
 
@@ -52,7 +52,7 @@ function(
 
           trigger.save({},
           {
-            create: function()
+            create:function()
             {
               storage.add_game_object(trigger);
               vent.trigger("application:popup:hide");
