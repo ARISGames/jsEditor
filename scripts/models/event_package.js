@@ -27,14 +27,14 @@ function(
       "event_package_id",
       "name",
       "icon_media_id",
-      "events" // Nested attribute
+      "events", // Nested attribute
     ],
 
     defaults:
     {
       name:"Event",
       icon_media_id:0,
-      events:[]
+      events:[],
     },
 
     /* Associations */

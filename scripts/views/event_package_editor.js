@@ -115,18 +115,11 @@ function(
       var self = this;
       self.model.destroy(
       {
-        success:function()
-        {
-          vent.trigger("application:popup:hide");
-        }
+        success:function() { vent.trigger("application:popup:hide"); }
       });
     },
 
-    onChangeName:function()
-    {
-      var self = this;
-      self.model.set("name",self.ui.name.val());
-    },
+    onChangeName:function() { var self = this; self.model.set("name",self.ui.name.val()); },
 
     // Child View Events
     onItemviewEventRemove:function(item_view, event)
