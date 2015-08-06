@@ -24,7 +24,8 @@ define([
   'collections/web_pages',
   'collections/quests',
   'collections/web_hooks',
-  'vent'
+  'storage',
+  'vent',
 ],
 function(
   _,
@@ -52,34 +53,30 @@ function(
   WebPagesCollection,
   QuestsCollection,
   WebHooksCollection,
+  storage,
   vent
 )
 {
-  return Backbone.Marionette.CompositeView.extend({
+  return Backbone.Marionette.CompositeView.extend(
+  {
     template: _.template(Template),
-
-    /* View */
 
     templateHelpers: function()
     {
+      var self = this;
       return {
-        is_new: this.model.isNew(),
-
-        active_icon_thumbnail_url:    this.model.active_icon_thumbnail(),
-        active_media_thumbnail_url:   this.model.active_media_thumbnail(),
-        complete_icon_thumbnail_url:  this.model.complete_icon_thumbnail(),
-        complete_media_thumbnail_url: this.model.complete_media_thumbnail(),
-
-        option_selected: function(boolean_statement)
-        {
-          return boolean_statement ? "selected" : "";
-        },
-
+        is_new: self.model.isNew(),
+        active_icon_thumbnail_url:    self.model.active_icon_thumbnail(),
+        active_media_thumbnail_url:   self.model.active_media_thumbnail(),
+        complete_icon_thumbnail_url:  self.model.complete_icon_thumbnail(),
+        complete_media_thumbnail_url: self.model.complete_media_thumbnail(),
+        option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
         function_types: Quest.function_types
       };
     },
 
-    ui: {
+    ui:
+    {
       "name": "#name",
       "description": "#description",
 
@@ -92,74 +89,57 @@ function(
       "complete_function":"#complete-function",
     },
 
-
-    /* Constructor */
-
     initialize: function()
     {
-      // Allow returning to original attributes
-      this.storePreviousAttributes();
+      var self = this;
 
-      // Listen to association events on media
-      this.bindAssociations();
-
-      // Handle cancel from modal X or dark area
-      this.on("popup:hide", this.onClickCancel);
+      self.storePreviousAttributes();
+      self.bindAssociations();
+      self.on("popup:hide", self.onClickCancel);
     },
-
-
-    /* View Events */
 
     onShow: function()
     {
-      this.$el.find('input[autofocus]').focus();
+      var self = this;
+      self.$el.find('input[autofocus]').focus();
     },
 
-    events: {
-      "click .save": "onClickSave",
-      "click .delete": "onClickDelete",
-      "click .cancel": "onClickCancel",
-
-      "click .change-active-icon":    "onClickActiveIcon",
-      "click .change-active-media":   "onClickActiveMedia",
-      "click .change-complete-icon":  "onClickCompleteIcon",
-      "click .change-complete-media": "onClickCompleteMedia",
-
-      "click .edit-active-requirements":   "onClickActiveRequirements",
-      "click .edit-active-events":         "onClickActiveEvents",
-      "click .edit-complete-requirements": "onClickCompleteRequirements",
-      "click .edit-complete-events":       "onClickCompleteEvents",
-
-      // Field events
-      "change @ui.name":        "onChangeName",
-      "change @ui.description": "onChangeDescription",
-
-      "change @ui.active_description":       "onChangeActiveDescription",
-      "change @ui.active_notification_type": "onChangeActiveNotificationType",
-      "change @ui.active_function":          "onChangeActiveFunction",
-
+    events:
+    {
+      "click .save":                           "onClickSave",
+      "click .delete":                         "onClickDelete",
+      "click .cancel":                         "onClickCancel",
+      "click .change-active-icon":             "onClickActiveIcon",
+      "click .change-active-media":            "onClickActiveMedia",
+      "click .change-complete-icon":           "onClickCompleteIcon",
+      "click .change-complete-media":          "onClickCompleteMedia",
+      "click .edit-active-requirements":       "onClickActiveRequirements",
+      "click .edit-active-events":             "onClickActiveEvents",
+      "click .edit-complete-requirements":     "onClickCompleteRequirements",
+      "click .edit-complete-events":           "onClickCompleteEvents",
+      "change @ui.name":                       "onChangeName",
+      "change @ui.description":                "onChangeDescription",
+      "change @ui.active_description":         "onChangeActiveDescription",
+      "change @ui.active_notification_type":   "onChangeActiveNotificationType",
+      "change @ui.active_function":            "onChangeActiveFunction",
       "change @ui.complete_description":       "onChangeCompleteDescription",
       "change @ui.complete_notification_type": "onChangeCompleteNotificationType",
       "change @ui.complete_function":          "onChangeCompleteFunction"
     },
 
-    /* Crud */
-
     onClickSave: function()
     {
-      var view  = this;
+      var self = this;
 
-      view.model.save({},
+      self.model.save({},
       {
         create: function()
         {
-          view.storePreviousAttributes();
-          view.trigger("quest:add", view.model);
+          self.trigger("quest:add", self.model);
         },
-
         success: function()
         {
-          view.storePreviousAttributes();
+          self.storePreviousAttributes();
           vent.trigger("application:popup:hide");
         }
       });
@@ -167,16 +147,18 @@ function(
 
     onClickCancel: function()
     {
-      delete this.previous_attributes.active_requirement_root_package_id;
-      delete this.previous_attributes.complete_requirement_root_package_id;
-      delete this.previous_attributes.active_event_package_id;
-      delete this.previous_attributes.complete_event_package_id;
-      this.model.set(this.previous_attributes);
+      var self = this;
+      delete self.previous_attributes.active_requirement_root_package_id;
+      delete self.previous_attributes.complete_requirement_root_package_id;
+      delete self.previous_attributes.active_event_package_id;
+      delete self.previous_attributes.complete_event_package_id;
+      self.model.set(self.previous_attributes);
     },
 
     onClickDelete: function()
     {
-      this.model.destroy(
+      var self = this;
+      self.model.destroy(
       {
         success: function()
         {
@@ -185,50 +167,42 @@ function(
       });
     },
 
-    /* Field Changes */
-
-    onChangeName:        function() { this.model.set("name",        this.ui.name.val()); },
-    onChangeDescription: function() { this.model.set("description", this.ui.description.val()); },
-
-    onChangeActiveDescription:   function() { this.model.set("active_description",   this.ui.active_description.val()); },
-    onChangeCompleteDescription: function() { this.model.set("complete_description", this.ui.complete_description.val()); },
-
-    onChangeActiveNotificationType:   function() { this.model.set("active_notification_type", this.ui.active_notification_type.find("option:selected").val()) },
-    onChangeCompleteNotificationType: function() { this.model.set("complete_notification_type", this.ui.complete_notification_type.find("option:selected").val()) },
-
-    onChangeActiveFunction:   function() { this.model.set("active_function",   this.ui.active_function.find("option:selected").val()) },
-    onChangeCompleteFunction: function() { this.model.set("complete_function", this.ui.complete_function.find("option:selected").val()) },
-
-
-    /* Undo and Association Binding */
+    onChangeName:                     function() { var self = this; self.model.set("name",                       self.ui.name.val()); },
+    onChangeDescription:              function() { var self = this; self.model.set("description",                self.ui.description.val()); },
+    onChangeActiveDescription:        function() { var self = this; self.model.set("active_description",         self.ui.active_description.val()); },
+    onChangeCompleteDescription:      function() { var self = this; self.model.set("complete_description",       self.ui.complete_description.val()); },
+    onChangeActiveNotificationType:   function() { var self = this; self.model.set("active_notification_type",   self.ui.active_notification_type.find("option:selected").val()) },
+    onChangeCompleteNotificationType: function() { var self = this; self.model.set("complete_notification_type", self.ui.complete_notification_type.find("option:selected").val()) },
+    onChangeActiveFunction:           function() { var self = this; self.model.set("active_function",            self.ui.active_function.find("option:selected").val()) },
+    onChangeCompleteFunction:         function() { var self = this; self.model.set("complete_function",          self.ui.complete_function.find("option:selected").val()) },
 
     storePreviousAttributes: function()
     {
-      this.previous_attributes = _.clone(this.model.attributes)
+      var self = this;
+      self.previous_attributes = _.clone(self.model.attributes)
     },
 
     unbindAssociations: function()
     {
-      this.stopListening(this.model.active_icon());
-      this.stopListening(this.model.active_media());
-      this.stopListening(this.model.complete_icon());
-      this.stopListening(this.model.complete_media());
+      var self = this;
+      self.stopListening(self.model.active_icon());
+      self.stopListening(self.model.active_media());
+      self.stopListening(self.model.complete_icon());
+      self.stopListening(self.model.complete_media());
     },
 
     bindAssociations: function()
     {
-      this.listenTo(this.model.active_icon(),    'change', this.render);
-      this.listenTo(this.model.active_media(),   'change', this.render);
-      this.listenTo(this.model.complete_icon(),  'change', this.render);
-      this.listenTo(this.model.complete_media(), 'change', this.render);
+      var self = this;
+      self.listenTo(self.model.active_icon(),    'change', self.render);
+      self.listenTo(self.model.active_media(),   'change', self.render);
+      self.listenTo(self.model.complete_icon(),  'change', self.render);
+      self.listenTo(self.model.complete_media(), 'change', self.render);
     },
-
-
-    /* Media Selection */
 
     onClickActiveIcon: function(event)
     {
-      var view = this;
+      var self = this;
       event.preventDefault();
 
       var game  = new Game({game_id: this.model.get("game_id")});
@@ -238,28 +212,26 @@ function(
       {
         success:function()
         {
-
-          /* Add default */
-          media.unshift(view.model.default_icon());
+          media.unshift(self.model.default_icon());
 
           /* Icon */
-          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.active_icon(), context: view.model, back_view: view});
+          var icon_chooser = new MediaChooserView({collection: media, selected: self.model.active_icon(), context: self.model, back_view: self});
           vent.trigger("application:popup:show", icon_chooser, "Start Quest Icon");
 
           icon_chooser.on("media:choose",
             function(media)
             {
-              view.unbindAssociations();
-              view.model.set("active_icon_media_id", media.id);
-              view.bindAssociations();
-              vent.trigger("application:popup:show", view, "Edit Quest");
+              self.unbindAssociations();
+              self.model.set("active_icon_media_id", media.id);
+              self.bindAssociations();
+              vent.trigger("application:popup:show", self, "Edit Quest");
             }
           );
 
           icon_chooser.on("cancel",
             function()
             {
-              vent.trigger("application:popup:show", view, "Edit Quest");
+              vent.trigger("application:popup:show", self, "Edit Quest");
             }
           );
         }
@@ -268,68 +240,67 @@ function(
 
     onClickActiveMedia: function(event)
     {
-      var view = this;
+      var self = this;
       event.preventDefault();
 
-      var game  = new Game({game_id: this.model.get("game_id")});
+      var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
+      media.fetch(
+      {
         success: function()
         {
-          /* Add default */
-          media.unshift(view.model.default_icon());
+          media.unshift(self.model.default_icon());
 
           /* Icon */
-          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.active_media(), context: view.model, back_view: view});
+          var icon_chooser = new MediaChooserView({collection: media, selected: self.model.active_media(), context: self.model, back_view: self});
           vent.trigger("application:popup:show", icon_chooser, "Start Quest Media");
 
           icon_chooser.on("media:choose", function(media)
           {
-            view.unbindAssociations();
-            view.model.set("active_media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Quest");
+            self.unbindAssociations();
+            self.model.set("active_media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Quest");
           });
 
           icon_chooser.on("cancel", function()
           {
-            vent.trigger("application:popup:show", view, "Edit Quest");
+            vent.trigger("application:popup:show", self, "Edit Quest");
           });
         }
       });
     },
 
-
     onClickCompleteIcon: function(event)
     {
-      var view = this;
+      var self = this;
       event.preventDefault();
 
-      var game  = new Game({game_id: this.model.get("game_id")});
+      var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
+      media.fetch(
+      {
         success: function()
         {
-          /* Add default */
-          media.unshift(view.model.default_icon());
+          media.unshift(self.model.default_icon());
 
           /* Icon */
-          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.complete_icon(), context: view.model, back_view: view});
+          var icon_chooser = new MediaChooserView({collection: media, selected: self.model.complete_icon(), context: self.model, back_view: self});
           vent.trigger("application:popup:show", icon_chooser, "Complete Quest Icon");
 
           icon_chooser.on("media:choose", function(media)
           {
-            view.unbindAssociations();
-            view.model.set("complete_icon_media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Quest");
+            self.unbindAssociations();
+            self.model.set("complete_icon_media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Quest");
           });
 
           icon_chooser.on("cancel", function()
           {
-            vent.trigger("application:popup:show", view, "Edit Quest");
+            vent.trigger("application:popup:show", self, "Edit Quest");
           });
         }
       });
@@ -337,124 +308,145 @@ function(
 
     onClickCompleteMedia: function(event)
     {
-      var view = this;
+      var self = this;
       event.preventDefault();
 
-      var game  = new Game({game_id: this.model.get("game_id")});
+      var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch({
+      media.fetch(
+      {
         success: function()
         {
-          /* Add default */
-          media.unshift(view.model.default_icon());
+          media.unshift(self.model.default_icon());
 
           /* Icon */
-          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.complete_media(), context: view.model, back_view: view});
+          var icon_chooser = new MediaChooserView({collection: media, selected: self.model.complete_media(), context: self.model, back_view: self});
           vent.trigger("application:popup:show", icon_chooser, "Complete Quest Media");
 
           icon_chooser.on("media:choose", function(media)
           {
-            view.unbindAssociations();
-            view.model.set("complete_media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Quest");
+            self.unbindAssociations();
+            self.model.set("complete_media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Quest");
           });
 
           icon_chooser.on("cancel", function()
           {
-            vent.trigger("application:popup:show", view, "Edit Quest");
+            vent.trigger("application:popup:show", self, "Edit Quest");
           });
         }
       });
     },
 
-    /* Event Editors */
-
-    onClickActiveEvents: function()
+    onClickActiveEvents:function()
     {
-      var view = this;
+      var self = this;
 
-      var event_package = new EventPackage({event_package_id: view.model.get("active_event_package_id"), game_id: view.model.get("game_id")});
-      var events = new EventsCollection([], {parent: event_package});
+      var game = new Game({game_id:self.model.get("game_id")});
 
-      var game   = new Game({game_id: view.model.get("game_id")});
-      var items  = new ItemsCollection([], {parent: game});
+      var event_package;
+      if(self.model.get("active_event_package_id") == 0) event_package = new EventPackage({game_id:game.id});
+      else                                               event_package = new EventPackage({game_id:game.id, event_package_id:self.model.get("active_event_package_id")});
+      var events = new EventsCollection([], {parent:event_package});
 
-      $.when(items.fetch(), events.fetch()).done(function()
-      {
-        // launch editor
-        var events_editor = new EventsEditorView({model:event_package, collection:events, items:items});
+      var items  = new ItemsCollection([], {parent:game});
 
-        events_editor.on("cancel", function()
+      $.when(
+        items.fetch(),
+        event_package.fetch(),
+        events.fetch()
+      ).done(
+        function()
         {
-          vent.trigger("application:popup:show", view, "Edit Quest");
-        });
-
-        events_editor.on("event_package:save", function(event_package)
-        {
-          view.model.set("active_event_package_id", event_package.id);
-
-          if(!view.model.isNew() && view.model.hasChanged("active_event_package_id"))
+          if(self.model.get("active_event_package_id") == 0)
           {
-            // Quicksave if moving from 0 so user has consistent experience
-            view.model.save({"active_event_package_id": event_package.id}, {patch: true});
+            event_package.save({},
+            {
+              success:function()
+              {
+                storage.add_game_object(event_package);
+                self.model.set("active_event_package_id", event_package.id);
+                self.model.save({}, {
+                  create:function()
+                  {
+                    storage.add_game_object(self.model);
+                  }
+                });
+                var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+                vent.trigger("application:popup:show", events_editor, "Player Modifier");
+              }
+            });
+          }
+          else
+          {
+            self.model.save({}, {});
+            var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+            vent.trigger("application:popup:show", events_editor, "Player Modifier");
           }
 
-          vent.trigger("application:popup:show", view, "Edit Quest");
-        });
-
-        vent.trigger("application:popup:show", events_editor, "Player Modifier");
-      });
+        }
+      );
     },
 
-    onClickCompleteEvents: function()
+    onClickCompleteEvents:function()
     {
-      var view = this;
+      var self = this;
 
-      var event_package = new EventPackage({event_package_id: view.model.get("complete_event_package_id"), game_id: view.model.get("game_id")});
-      var events = new EventsCollection([], {parent: event_package});
+      var game = new Game({game_id:self.model.get("game_id")});
 
-      var game   = new Game({game_id: view.model.get("game_id")});
-      var items  = new ItemsCollection([], {parent: game});
+      var event_package;
+      if(self.model.get("complete_event_package_id") == 0) event_package = new EventPackage({game_id:game.id});
+      else                                               event_package = new EventPackage({game_id:game.id, event_package_id:self.model.get("complete_event_package_id")});
+      var events = new EventsCollection([], {parent:event_package});
 
-      $.when(items.fetch(), events.fetch()).done(function()
-      {
+      var items  = new ItemsCollection([], {parent:game});
 
-        // launch editor
-        var events_editor = new EventsEditorView({model: event_package, collection: events, items: items});
-
-        events_editor.on("cancel", function()
+      $.when(
+        items.fetch(),
+        event_package.fetch(),
+        events.fetch()
+      ).done(
+        function()
         {
-          vent.trigger("application:popup:show", view, "Edit Quest");
-        });
-
-        events_editor.on("event_package:save", function(event_package)
-        {
-          view.model.set("complete_event_package_id", event_package.id);
-
-          if(!view.model.isNew() && view.model.hasChanged("complete_event_package_id"))
+          if(self.model.get("complete_event_package_id") == 0)
           {
-            // Quicksave if moving from 0 so user has consistent experience
-            view.model.save({"complete_event_package_id": event_package.id}, {patch: true});
+            event_package.save({},
+            {
+              success:function()
+              {
+                storage.add_game_object(event_package);
+                self.model.set("complete_event_package_id", event_package.id);
+                self.model.save({}, {
+                  create:function()
+                  {
+                    storage.add_game_object(self.model);
+                  }
+                });
+                var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+                vent.trigger("application:popup:show", events_editor, "Player Modifier");
+              }
+            });
+          }
+          else
+          {
+            self.model.save({}, {});
+            var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+            vent.trigger("application:popup:show", events_editor, "Player Modifier");
           }
 
-          vent.trigger("application:popup:show", view, "Edit Quest");
-        });
-
-        vent.trigger("application:popup:show", events_editor, "Player Modifier");
-      });
+        }
+      );
     },
-
-    /* Requirements Editors */
 
     onClickActiveRequirements: function()
     {
-      var view = this;
+      var self = this;
 
-      var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("active_requirement_root_package_id"), game_id: view.model.get("game_id")});
+      var requirement_package = new RequirementPackage({requirement_root_package_id: self.model.get("active_requirement_root_package_id"), game_id: self.model.get("game_id")});
 
-      var game   = new Game({game_id: view.model.get("game_id")});
+      var game   = new Game({game_id: self.model.get("game_id")});
 
       var contents = {
         items:          new ItemsCollection         ([], {parent: game}),
@@ -487,20 +479,20 @@ function(
 
         requirements_editor.on("cancel", function()
         {
-          vent.trigger("application:popup:show", view, "Edit Quest");
+          vent.trigger("application:popup:show", self, "Edit Quest");
         });
 
         requirements_editor.on("requirement_package:save", function(requirement_package)
         {
-          view.model.set("active_requirement_root_package_id", requirement_package.id);
+          self.model.set("active_requirement_root_package_id", requirement_package.id);
 
-          if(!view.model.isNew() && view.model.hasChanged("active_requirement_root_package_id"))
+          if(!self.model.isNew() && self.model.hasChanged("active_requirement_root_package_id"))
           {
             // Quicksave if moving from 0 so user has consistent experience
-            view.model.save({"active_requirement_root_package_id": requirement_package.id}, {patch: true});
+            self.model.save({"active_requirement_root_package_id": requirement_package.id}, {patch: true});
           }
 
-          vent.trigger("application:popup:show", view, "Edit Quest");
+          vent.trigger("application:popup:show", self, "Edit Quest");
         });
 
         vent.trigger("application:popup:show", requirements_editor, "Locks Editor");
@@ -509,11 +501,11 @@ function(
 
     onClickCompleteRequirements: function()
     {
-      var view = this;
+      var self = this;
 
-      var requirement_package = new RequirementPackage({requirement_root_package_id: view.model.get("complete_requirement_root_package_id"), game_id: view.model.get("game_id")});
+      var requirement_package = new RequirementPackage({requirement_root_package_id: self.model.get("complete_requirement_root_package_id"), game_id: self.model.get("game_id")});
 
-      var game   = new Game({game_id: view.model.get("game_id")});
+      var game   = new Game({game_id: self.model.get("game_id")});
 
       var contents =
       {
@@ -546,20 +538,20 @@ function(
         var requirements_editor = new RequirementsEditorView({model: requirement_package, collection: and_packages, contents: contents});
         requirements_editor.on("cancel", function()
         {
-          vent.trigger("application:popup:show", view, "Edit Quest");
+          vent.trigger("application:popup:show", self, "Edit Quest");
         });
 
         requirements_editor.on("requirement_package:save", function(requirement_package)
         {
-          view.model.set("complete_requirement_root_package_id", requirement_package.id);
+          self.model.set("complete_requirement_root_package_id", requirement_package.id);
 
-          if(!view.model.isNew() && view.model.hasChanged("complete_requirement_root_package_id"))
+          if(!self.model.isNew() && self.model.hasChanged("complete_requirement_root_package_id"))
           {
             // Quicksave if moving from 0 so user has consistent experience
-            view.model.save({"complete_requirement_root_package_id": requirement_package.id}, {patch: true});
+            self.model.save({"complete_requirement_root_package_id": requirement_package.id}, {patch: true});
           }
 
-          vent.trigger("application:popup:show", view, "Edit Quest");
+          vent.trigger("application:popup:show", self, "Edit Quest");
         });
 
         vent.trigger("application:popup:show", requirements_editor, "Locks Editor");

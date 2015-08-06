@@ -4,22 +4,24 @@ function(require)
   var JsonBaseModel = require('models/json_base');
   var storage       = require('storage');
 
-  return JsonBaseModel.extend({
+  return JsonBaseModel.extend(
+  {
     idAttribute: 'quest_id',
 
-    amfphp_url_templates: {
+    amfphp_url_templates:
+    {
       read:   "quests.getQuest",
       update: "quests.updateQuest",
       create: "quests.createQuest",
       delete: "quests.deleteQuest"
     },
 
-    amfphp_url_attributes: [
+    amfphp_url_attributes:
+    [
       "game_id",
       "quest_id",
       "name",
       "description",
-
       "active_icon_media_id",
       "active_media_id",
       "active_description",
@@ -27,7 +29,6 @@ function(require)
       "active_function",
       "active_event_package_id",
       "active_requirement_root_package_id",
-
       "complete_icon_media_id",
       "complete_media_id",
       "complete_description",
@@ -35,12 +36,12 @@ function(require)
       "complete_function",
       "complete_event_package_id",
       "complete_requirement_root_package_id",
-        ],
+    ],
 
-    defaults: {
+    defaults:
+    {
       name: "",
       description: "",
-
       active_description: "",
       active_icon_media_id: "0",
       active_media_id: "0",
@@ -48,8 +49,6 @@ function(require)
       active_function: "NONE",
       active_event_package_id: "0",
       active_requirement_root_package_id: "0",
-
-
       complete_description: "",
       complete_icon_media_id: "0",
       complete_media_id: "0",
@@ -59,63 +58,32 @@ function(require)
       complete_requirement_root_package_id: "0"
     },
 
-    /* Associations */
-
-    active_icon: function() {
-      return storage.media.retrieve(this.get('active_icon_media_id'));
-    },
-
-    active_media: function() {
-      return storage.media.retrieve(this.get('active_media_id'));
-    },
-
-    complete_icon: function() {
-      return storage.media.retrieve(this.get('complete_icon_media_id'));
-    },
-
-    complete_media: function() {
-      return storage.media.retrieve(this.get('complete_media_id'));
-    },
-
-    default_icon: function() {
-      return storage.media.retrieve('0');
-    },
-
-
-    /* Helpers */
-
-    active_icon_thumbnail: function() {
-      return this.active_icon().thumbnail_for(this);
-    },
-
-    active_media_thumbnail: function() {
-      return this.active_media().thumbnail_for();
-    },
-
-    complete_icon_thumbnail: function() {
-      return this.complete_icon().thumbnail_for(this);
-    },
-
-    complete_media_thumbnail: function() {
-      return this.complete_media().thumbnail_for();
-    }
+    active_icon:    function() { return storage.media.retrieve(this.get('active_icon_media_id')); },
+    active_media:   function() { return storage.media.retrieve(this.get('active_media_id')); },
+    complete_icon:  function() { return storage.media.retrieve(this.get('complete_icon_media_id')); },
+    complete_media: function() { return storage.media.retrieve(this.get('complete_media_id')); },
+    default_icon:   function() { return storage.media.retrieve('0'); },
+    active_icon_thumbnail:    function() { return this.active_icon().thumbnail_for(this); },
+    active_media_thumbnail:   function() { return this.active_media().thumbnail_for(); },
+    complete_icon_thumbnail:  function() { return this.complete_icon().thumbnail_for(this); },
+    complete_media_thumbnail: function() { return this.complete_media().thumbnail_for(); }
 
   },
+
   // Static
   {
-    function_types: {
-            'NONE':       'None',
-
-            'MAP':        'Map',
-            'DECODER':    'Decoder',
-            'SCANNER':    'Scanner',
-            'QUESTS':     'Quests',
-            'INVENTORY':  'Inventory',
-            'PLAYER':     'Player',
-            'NOTEBOOK':   'Notebook',
-
-            'PICKGAME':   'Game List',
-            'JAVASCRIPT': 'Javascript'
+    function_types:
+    {
+      'NONE':       'None',
+      'MAP':        'Map',
+      'DECODER':    'Decoder',
+      'SCANNER':    'Scanner',
+      'QUESTS':     'Quests',
+      'INVENTORY':  'Inventory',
+      'PLAYER':     'Player',
+      'NOTEBOOK':   'Notebook',
+      'PICKGAME':   'Game List',
+      'JAVASCRIPT': 'Javascript'
     }
   });
 });
