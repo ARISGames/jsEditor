@@ -8,7 +8,8 @@ define([
   'models/game',
   'models/dialog_option',
   'views/event_package_editor',
-  'vent'
+  'storage',
+  'vent',
 ],
 function(
   _,
@@ -20,6 +21,7 @@ function(
   Game,
   DialogOption,
   EventPackageEditorView,
+  storage,
   vent
 )
 {
@@ -105,41 +107,52 @@ function(
       vent.trigger("application:info:hide");
     },
 
-    onClickEditEvents: function()
+    onClickEditEvents:function()
     {
-      var view = this;
+      var self = this;
 
-      var event_package = new EventPackage({event_package_id: view.model.get("event_package_id"), game_id: view.model.get("game_id")});
-      var events = new EventsCollection([], {parent: event_package});
+      var game = new Game({game_id:self.model.get("game_id")});
 
-      var game   = new Game({game_id: view.model.get("game_id")});
-      var items  = new ItemsCollection([], {parent: game});
+      var event_package;
+      if(self.model.get("event_package_id") == 0) event_package = new EventPackage({game_id:game.id});
+      else                                        event_package = new EventPackage({game_id:game.id, event_package_id:self.model.get("event_package_id")});
+      var events = new EventsCollection([], {parent:event_package});
 
-      $.when(items.fetch(), events.fetch()).done(
+      var items  = new ItemsCollection([], {parent:game});
+
+      $.when(
+        items.fetch(),
+        event_package.fetch(),
+        events.fetch()
+      ).done(
         function()
         {
-          // launch editor
-          var event_package_editor = new EventPackageEditorView({model: event_package, collection: events, items: items});
-
-          event_package_editor.on("cancel", function()
+          if(self.model.get("event_package_id") == 0)
           {
-            vent.trigger("application:popup:hide");
-          });
-
-          event_package_editor.on("event_package:save", function(event_package)
-          {
-            view.model.set("event_package_id", event_package.id);
-
-            if(view.model.hasChanged("event_package_id"))
+            event_package.save({},
             {
-              // Quicksave if moving from 0 so user has consistent experience
-              view.model.save({"event_package_id": event_package.id}, {patch: true});
-            }
+              success:function()
+              {
+                storage.add_game_object(event_package);
+                self.model.set("event_package_id", event_package.id);
+                self.model.save({}, {
+                  create:function()
+                  {
+                    storage.add_game_object(self.model);
+                  }
+                });
+                var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+                vent.trigger("application:popup:show", events_editor, "Player Modifier");
+              }
+            });
+          }
+          else
+          {
+            self.model.save({}, {});
+            var events_editor = new EventPackageEditorView({model:event_package, collection:events, items:items});
+            vent.trigger("application:popup:show", events_editor, "Player Modifier");
+          }
 
-            vent.trigger("application:popup:hide");
-          });
-
-          vent.trigger("application:popup:show", event_package_editor, "Player Modifier");
         }
       );
     },
