@@ -40,12 +40,24 @@ html:
 	@bin/render_index.sh >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
-dev:
+beta:
+	@echo "Merging build."
+	@git checkout build >/dev/null
+	@git merge master >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Pushing to Github."
 	@git push >/dev/null
+	@git checkout master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
-	@echo "Deploying to dev."
-	@ssh -t aris-dev "cd /var/www/html/editor2/ && sudo git checkout master && sudo git pull"
+	@echo "Deploying to server 1."
+	@deploy/deploy.sh $(arisprod1) --beta >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 2."
+	@deploy/deploy.sh $(arisprod2) --beta >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 3."
+	@deploy/deploy.sh $(arisprod3) --beta >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 prod:
 	@echo "Merging build."
