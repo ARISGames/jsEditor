@@ -4,7 +4,7 @@ BETAEDITOR=/var/www/html/beta-editor/
 PRODBRANCH=build
 BETABRANCH=master
 
-if [ $# -gt 1 ] && [ $2 == "--beta" ]; then
+if [ $# -gt 1 ] && [ "$2" == "--beta" ]; then
   EDITOR=$BETAEDITOR
   BRANCH=$BETABRANCH
 else
