@@ -15,19 +15,15 @@ function(
   vent
 )
 {
+
   return Backbone.Model.extend(
   {
     parse:function(json, options)
     {
       if(!options) options = {};
-
-      // Ignore attributes returned by patch.
       if(options.patch){ return {}; }
 
-      // Remove the outer json attribute {data: ...} on CRUD operations
       if(this.collection == undefined || json.data) { return json.data; }
-
-      // Being called from collection which has already parsed.
       else { return json; }
     },
 
@@ -38,7 +34,7 @@ function(
       create: "",
       read:   "",
       update: "",
-      delete: ""
+      delete: "",
     },
 
     // Allow editable attributes to be defined conditionally for new/existing.
@@ -51,11 +47,11 @@ function(
     // Fields to iterate over for quick form building
     editable_attributes: function()
     {
-      var model = this;
+      var self = this;
 
       return _.reject(this.get_amfphp_url_attributes(), function(attribute_name)
       {
-        return attribute_name === "game_id" || attribute_name === model.idAttribute;
+        return attribute_name === "game_id" || attribute_name === self.idAttribute;
       });
     },
 
@@ -82,22 +78,22 @@ function(
     {
       if(!options) options = {};
 
-      var model = this;
+      var self = this;
       var success_callback = options.success;
       var create_callback = options.create;
       var update_callback = options.update;
 
       options.success = function()
       {
-        if(model.changedAttributes()[model.idAttribute])
+        if(self.changedAttributes()[self.idAttribute])
         {
           if(create_callback) create_callback.apply(this, arguments);
-          model.trigger("create", model);
+          self.trigger("create", self);
         }
         else
         {
           if(update_callback) update_callback.apply(this, arguments);
-          model.trigger("update", model);
+          self.trigger("update", self);
         }
 
         if(success_callback) success_callback.apply(this, arguments);

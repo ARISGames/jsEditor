@@ -4,47 +4,49 @@ function(require)
   var JsonBaseModel = require('models/json_base');
   var storage       = require('storage');
 
-
-  return JsonBaseModel.extend({
+  return JsonBaseModel.extend(
+  {
     idAttribute: 'tag_id',
 
-    amfphp_url_templates: {
+    amfphp_url_templates:
+    {
       read:   "tags.getTag",
       update: "tags.updateTag",
       create: "tags.createTag",
-      delete: "tags.deleteTag"
+      delete: "tags.deleteTag",
     },
 
-    amfphp_url_attributes: [
+    amfphp_url_attributes:
+    [
       "tag_id",
-         "game_id",
+      "game_id",
       "tag",
       "visible",
-         "media_id"
+      "media_id",
     ],
 
-    defaults: {
+    defaults:
+    {
       tag: "",
-         media_id: "0",
-      visible: "1"
+      media_id: "0",
+      visible: "1",
     },
 
-
-    /* Associations */
-
-    media: function() {
+    media: function()
+    {
       return storage.media.retrieve(this.get('media_id'));
     },
 
-    default_icon: function() {
+    default_icon: function()
+    {
       return storage.media.retrieve('0');
     },
 
-    /* Helpers */
-
-    media_thumbnail: function() {
+    media_thumbnail: function()
+    {
       return this.media().thumbnail_for();
     }
+
   });
 });
 

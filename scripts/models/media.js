@@ -36,34 +36,22 @@ function(require)
       return attribute_list;
     },
 
-    defaults: {
+    defaults:
+    {
       "name": "Default",
       "file_name": ""
     },
 
-    is_video: function() {
-      return this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v|3gp)/);
-    },
-
-    is_audio: function() {
-      return this.get("file_name").match(/\.(wav|mp3|alac|flac|caf|m4a)/);
-    },
+    is_video: function() { return this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v|3gp)/); },
+    is_audio: function() { return this.get("file_name").match(/\.(wav|mp3|alac|flac|caf|m4a)/); },
 
     // TODO show video in place!
     thumbnail: function()
     {
-      if(this.id === "0") {
-        return "images/default128.png";
-      }
-      else if(this.is_video()) {
-        return "images/video128.png";
-      }
-      else if(this.is_audio()) {
-        return "images/audio128.png";
-      }
-      else {
-        return this.get("thumb_url");
-      }
+           if(this.id === "0") return "images/default128.png";
+      else if(this.is_video()) return "images/video128.png";
+      else if(this.is_audio()) return "images/audio128.png";
+      else                     return this.get("thumb_url");
     },
 
     thumbnail_for: function(object)
@@ -82,12 +70,12 @@ function(require)
           if(object.idAttribute === "game_id")     { icon_name = "aris"         }
           if(object.idAttribute === "note_id")     { icon_name = "notebook"     }
 
-          if(object.idAttribute === "trigger_id")  {
+          if(object.idAttribute === "trigger_id") 
             // NOTE this only works in scene triggers until storage is fixed.
             return object.game_object().icon_thumbnail();
-          }
 
-          if(object.idAttribute === "tab_id") {
+          if(object.idAttribute === "tab_id")
+          {
             if(object.get("type") === "QUESTS")    { icon_name = "quests"    }
             if(object.get("type") === "MAP")       { icon_name = "map"       }
             if(object.get("type") === "INVENTORY") { icon_name = "inventory" }
@@ -97,40 +85,35 @@ function(require)
             if(object.get("type") === "NOTEBOOK")  { icon_name = "notebook"  }
 
             if(object.game_object())
-            {
               return object.game_object().icon_thumbnail();
-            }
           }
 
-          if(object.idAttribute === "factory_id") {
+          if(object.idAttribute === "factory_id")
+          {
             if(object.game_object())
-            {
               return object.game_object().icon_thumbnail();
-            }
           }
         }
 
         return "images/"+icon_name+"_icon_120.png"
       }
       else
-      {
         return this.thumbnail();
-      }
     },
 
-    name_for: function(object) {
+    name_for: function(object)
+    {
       if(object && object.idAttribute === "trigger_id" && this.id === "0")
       {
         var name = object.game_object().get('name') || 'Parent'
         return _.str.truncate(name, 7) + "'s Icon"
       }
       else
-      {
         return this.get("name");
-      }
     },
 
-    content: function() {
+    content: function()
+    {
       return this.get("url");
     }
   });
