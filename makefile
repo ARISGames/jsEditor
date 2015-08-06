@@ -41,10 +41,6 @@ html:
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 beta:
-	@echo "Merging build."
-	@git checkout build >/dev/null
-	@git merge master >/dev/null
-	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Pushing to Github."
 	@git push >/dev/null
 	@git checkout master >/dev/null
