@@ -40,10 +40,10 @@ html:
 	@bin/render_index.sh >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
-beta:
+beta_make:
 	@echo "Pushing to Github."
-	@git push >/dev/null
 	@git checkout master >/dev/null
+	@git push >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 	@echo "Deploying to server 1."
 	@deploy/deploy.sh $(arisprod1) --beta >/dev/null
@@ -55,7 +55,7 @@ beta:
 	@deploy/deploy.sh $(arisprod3) --beta >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
-prod:
+prod_make:
 	@echo "Merging build."
 	@git checkout build >/dev/null
 	@git merge master >/dev/null
@@ -88,6 +88,22 @@ unhack_config:
 	@echo "Restoring local config.."
 	@mv ./scripts/config.js.local ./scripts/config.js >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+
+beta_precompile: hack_config build unhack_config #hack->build->unhack order is intentional
+	@echo "Pushing to Github."
+	@git checkout master >/dev/null
+	@git push >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 1."
+	@deploy/precompile_deploy.sh $(arisprod1) --beta >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 2."
+	@deploy/precompile_deploy.sh $(arisprod2) --beta >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+	@echo "Deploying to server 3."
+	@deploy/precompile_deploy.sh $(arisprod3) --beta >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+
 prod_precompile: hack_config build unhack_config #hack->build->unhack order is intentional
 	@echo "Merging build."
 	@git checkout build >/dev/null
@@ -109,5 +125,6 @@ prod_precompile: hack_config build unhack_config #hack->build->unhack order is i
 
 build: css js html
 
-deploy: prod_precompile #switch to just 'prod' if you want a simpler, less volatile (but slower) deploy
+prod: prod_precompile #switch to just 'prod_make' if you want a simpler, less volatile (but slower) deploy
+beta: beta_precompile
 

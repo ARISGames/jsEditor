@@ -1,5 +1,5 @@
-PRODEDITOR=/var/www/html/editor/ 
-BETAEDITOR=/var/www/html/beta-editor/ 
+PRODEDITOR=/var/www/html/editor/
+BETAEDITOR=/var/www/html/beta-editor/
 
 PRODBRANCH=build
 BETABRANCH=master
