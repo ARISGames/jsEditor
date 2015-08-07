@@ -24,12 +24,14 @@
 
 define([
   'aris_req',
+  'aris_do',
 ],
 function(
-  req
+  req,
+  aris_do
 )
 {
-  return new function()
+  return new (function()
   {
     var self = this;
 
@@ -72,6 +74,16 @@ function(
       }
     }
 
+    // Generates member. Don't know how to express via function name that:
+    // "this is a free-floating object- it's not part of this model or anything",
+    // which is valuable info!
+    self.genMember = function()
+    {
+      var m = new aris_do();
+      aris_do.merge_in(self.defaultObject,Object.keys(self.defaultObject));
+      return m;
+    }
+
     self.getById = function(id)
     {
       for(var i = 0; i < self.members.length; i++)
@@ -101,6 +113,8 @@ function(
     self.reqGetById = function(id, callbacks)
     {
       var reqData = {};
+      reqData[self.idAttribute] = id;
+
       req.request(self.getMethod,reqData,
         {
           success:function(response)
@@ -116,6 +130,10 @@ function(
     self.reqCreate = function(member, callbacks)
     {
       var reqData = {};
+      var keys = Object.keys(self.defaultObject);
+      for(var i= 0; i < keys.length; i++)
+        reqData[keys[i]] = member[keys[i]];
+
       req.request(self.createMethod,reqData,
         {
           success:function(response)
@@ -131,6 +149,10 @@ function(
     self.reqUpdate = function(member, callbacks)
     {
       var reqData = {};
+      var keys = Object.keys(self.defaultObject);
+      for(var i= 0; i < keys.length; i++)
+        reqData[keys[i]] = member[keys[i]];
+
       req.request(self.updateMethod,reqData,
         {
           success:function(response)
@@ -146,12 +168,16 @@ function(
     self.reqDelete = function(member, callbacks)
     {
       var reqData = {};
+      reqData[self.idAttribute] = member[self.idAttribute];
+
       req.request(self.updateMethod,reqData,callbacks); //can pass callbacks directly
     }
 
     self.reqGetAllForGame = function(id, callbacks)
     {
       var reqData = {};
+      reqData.game_id = id;
+      
       req.request(self.getForGameMethod,reqData,
         {
           success:function(response)
@@ -164,6 +190,6 @@ function(
       );
     }
 
-  }();
+  })();
 });
 

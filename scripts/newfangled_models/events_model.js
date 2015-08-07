@@ -5,13 +5,15 @@
 */
 
 define([
+  'underscore',
   'models/aris_model',
 ],
 function(
+  _,
   aris_model
 )
 {
-  var self = aris_model;
+  var self = _.clone(aris_model);
 
   self.getMethod        = "events.getEvent";
   self.createMethod     = "events.createEvent";
@@ -26,7 +28,7 @@ function(
     "name":"Event",
     "event":"GIVE_ITEM_PLAYER",
     "content_id":0,
-    "script""",
+    "script":"",
     "qty":1,
   };
 

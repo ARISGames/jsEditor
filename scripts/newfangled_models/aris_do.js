@@ -1,3 +1,11 @@
+/*
+  ARIS Data Object
+  Really, just has a generalized-ish "mergeIn" function that assumes a flat object,
+  which fulfills two of the requirements for being a member of a model.
+
+  Include/Require DOES NOT return an instantiated object!
+*/
+
 define([
 ],
 function(

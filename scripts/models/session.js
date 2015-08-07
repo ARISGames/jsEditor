@@ -71,7 +71,8 @@ function(
       });
     },
 
-    send_reset_link: function(options) {
+    send_reset_link: function(options)
+    {
       if(options.user_name === "") { delete options.username }
       if(options.email    === "") { delete options.email    }
 
@@ -92,7 +93,8 @@ function(
       });
     },
 
-    logout: function() {
+    logout: function()
+    {
       $.removeCookie('username');
       $.removeCookie('editor_id');
       $.removeCookie('auth_token');
@@ -100,21 +102,10 @@ function(
       vent.trigger('session.logout');
     },
 
-    username: function() {
-      return $.cookie('username');
-    },
-
-    editor_id: function() {
-      return $.cookie('editor_id');
-    },
-
-    auth_token: function () {
-      return $.cookie('auth_token');
-    },
-
-    auth_json: function() {
-      return {"key": this.auth_token(), "user_id": this.editor_id()};
-    }
+    username: function() { return $.cookie('username'); },
+    editor_id: function() { return $.cookie('editor_id'); },
+    auth_token: function () { return $.cookie('auth_token'); },
+    auth_json: function() { return {"key": this.auth_token(), "user_id": this.editor_id()}; }
   });
 
   return new Session();

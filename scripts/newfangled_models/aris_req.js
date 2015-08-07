@@ -9,15 +9,19 @@
 
 define([
   'config',
+  'aris_session',
 ],
 function(
-  config
+  config,
+  aris_session
 )
 {
-  return new function() //'new' means no need to reinstantiate every time (well, it auto-reinstantiates it on require...)
+  return new (function() //'new' means no need to reinstantiate every time (well, it auto-reinstantiates it on require...)
   {
     self.request = function(method, data, callbacks)
     {
+      if(aris_session.loggedIn()) data.auth = aris_session.authPackage();
+
       var xhr = new XmlHttpRequest();
       xhr.onreadystatechange = function()
       {
@@ -51,6 +55,6 @@ function(
       xhr.open("POST",config.aris_api_url+method,true);
       xhr.send(data);
     }
-  };
+  });
 });
 
