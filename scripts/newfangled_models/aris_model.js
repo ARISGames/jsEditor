@@ -1,14 +1,17 @@
 /*
-  The "base class" of an ARIS model.
+  ARIS Model
+  The "base class" of any ARIS model.
   An ARIS model is simply a canonical array of known objects of a certain type*.
   It has the ability to CRUD these objects, which will result in their merging into this array.
 
   It's goal is to be INCREDIBLY simple. An array of objects with some simple helpful accessors.
   It is NOT smart. It's just an array with some functionality to sync explicit parts of it with a server. 
 
+  Include/Requre returns an instantiated object.
+
   * These objects must conform to a few simple rules:
     - they must be flat. there is NO management of any web of references, and will not maintain itself according to anything external
-    - they will be assumed to have properties conforming to this model's "self.attributes" array
+    - they will be assumed to have attributes conforming to that of this model's "self.defaultObject"
     - they will be assumed to have an identifying attribute conforming to this model's "self.idAttribute"
     - they need a function "mergeIn" that must:
     - - take in another object and a list of attributes as arguments: mergeIn(obj,attribs)
@@ -26,7 +29,7 @@ function(
   req
 )
 {
-  return function()
+  return new function()
   {
     var self = this;
 
@@ -36,13 +39,12 @@ function(
     self.deleteMethod = "model.deleteModel";
     self.getForGameMethod = "model.getModelsForGame";
 
-    self.attributes =
+    self.defaultObject =
     {
       "attributeName":"attributeDefaultVal",
     };
 
     self.idAttribute = "model_id";
-
 
     self.members = [];
     self.mergeIntoMembers = function(new_members)
@@ -56,7 +58,7 @@ function(
           if(self.new_members[i][self.idAttribute] == self.members[j][self.idAttribute])
           {
             found = true;
-            if(self.members[j].mergeIn(self.new_members[i],self.attributes))
+            if(self.members[j].mergeIn(self.new_members[i],Object.keys(self.defaultObject)))
             {
               //notify of delta
             }
@@ -162,6 +164,6 @@ function(
       );
     }
 
-  };
+  }();
 });
 
