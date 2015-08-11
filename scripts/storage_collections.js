@@ -4,6 +4,7 @@ define([
   "collections/users",
   "collections/tags",
   "collections/tabs",
+  "collections/groups",
   "collections/quests",
   "collections/media",
   "collections/web_hooks",
@@ -25,6 +26,7 @@ function(
   UsersCollection,
   TagsCollection,
   TabsCollection,
+  GroupsCollection,
   QuestsCollection,
   MediaCollection,
   WebhooksCollection,
@@ -50,6 +52,7 @@ function(
       storage.users          = new UsersCollection();
       storage.tags           = new TagsCollection();
       storage.tabs           = new TabsCollection();
+      storage.groups         = new GroupsCollection();
       storage.quests         = new QuestsCollection();
       storage.media          = new MediaCollection();
       storage.web_hooks      = new WebhooksCollection();

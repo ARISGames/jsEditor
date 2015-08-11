@@ -17,6 +17,7 @@ function(
       self.users.parent          = game;
       self.tags.parent           = game;
       self.tabs.parent           = game;
+      self.groups.parent         = game;
       self.quests.parent         = game;
       self.media.parent          = game;
       self.web_hooks.parent      = game;

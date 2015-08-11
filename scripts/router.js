@@ -20,6 +20,7 @@ define([
   'views/media_organizer',
   'views/conversations',
   'views/tabs',
+  'views/groups',
   'views/tags',
   'views/notes',
   'collections/migration_games',
@@ -53,6 +54,7 @@ function(
   MediaOrganizerView,
   ConversationsView,
   TabsView,
+  GroupsView,
   TagsView,
   NotesView,
   MigrationGameCollection,
@@ -87,12 +89,13 @@ function(
       "": "listGames",
       "login": "showLogin",
 
-      "games":               "listGames",
-      "games/:game_id/edit":  "editGame",
-      "games/:game_id/share": "editSharing",
-      "games/:game_id/tabs":  "editTabs",
-      "games/:game_id/tags":  "editTags",
-      "games/:game_id/notes": "editNotes",
+      "games":                 "listGames",
+      "games/:game_id/edit":   "editGame",
+      "games/:game_id/share":  "editSharing",
+      "games/:game_id/tabs":   "editTabs",
+      "games/:game_id/groups": "editGroups",
+      "games/:game_id/tags":   "editTags",
+      "games/:game_id/notes":  "editNotes",
 
       "games/:game_id/scenes":       "showSceneEditor",
       "games/:game_id/locations":    "listLocations",
@@ -251,6 +254,23 @@ function(
         function()
         {
           vent.trigger("application.show",     new TabsView    ({model: game, collection: storage.tabs}));
+          vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+          vent.trigger("application:list:hide");
+          vent.trigger("application:info:hide");
+        }
+      );
+    },
+
+    editGroups: function(game_id)
+    {
+      var game  = new Game({game_id: game_id});
+      storage.for(game);
+
+      $.when(
+        storage.groups.fetch()).done(
+        function()
+        {
+          vent.trigger("application.show",     new GroupsView  ({model: game, collection: storage.groups}));
           vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
