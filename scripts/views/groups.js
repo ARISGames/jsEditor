@@ -39,10 +39,9 @@ function(
     {
       var self = this;
 
-      var game = this.model;
+      var game = self.model;
       var group  = new Group({game_id:game.id});
-
-      var group_editor = new GroupEditorView({model: group, contents: contents});
+      var group_editor = new GroupEditorView({model:group});
 
       group_editor.on("group:add", function(group)
       {
