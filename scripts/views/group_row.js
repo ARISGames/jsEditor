@@ -60,7 +60,6 @@ function(
     {
       var self = this;
 
-      var game = self.model.game();
       var group_editor = new GroupEditorView({model:self.model});
       vent.trigger("application:popup:show", group_editor, "Edit Group");
     },

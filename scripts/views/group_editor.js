@@ -3,9 +3,6 @@ define([
   'jquery',
   'backbone',
   'text!templates/group_editor.tpl',
-  'text!images/phone-grid.svg',
-  'text!images/phone-list.svg',
-  'models/game',
   'models/group',
   'vent',
 ],
@@ -14,10 +11,7 @@ function(
   $,
   Backbone,
   Template,
-  PhoneGridSVG,
-  PhoneListSVG,
-  Game,
-  group,
+  Group,
   vent
 )
 {
@@ -29,12 +23,6 @@ function(
     {
       return {
         is_new: this.model.isNew(),
-        icon_thumbnail_url:  this.model.icon_thumbnail(),
-        parent_name: this.parent_name(),
-        option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
-        radio_selected: function(boolean_statement) { return boolean_statement ? "checked" : ""; },
-        phone_grid_svg: PhoneGridSVG,
-        phone_list_svg: PhoneListSVG,
       };
     },
 

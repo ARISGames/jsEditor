@@ -5,7 +5,7 @@
 
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" autofocus class="form-control" id="name" placeholder="<%= parent_name %>" value="<%= name %>">
+        <input type="text" autofocus class="form-control" id="name" placeholder="New Group" value="<%= name %>">
       </div>
 
     </div>
