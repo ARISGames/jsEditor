@@ -17,8 +17,8 @@
     <div class="row">
       <div class="col-sm-12 padded">
         <div class="checkbox">
-          <input type="checkbox" id="dialog-enable_back_button" <%= is_checked(enable_back_button) %>>
-          <label for="dialog-enable_back_button">
+          <input type="checkbox" id="dialog-back_button_enabled" <%= is_checked(back_button_enabled) %>>
+          <label for="dialog-back_button_enabled">
             Back Button Enabled
           </label>
         </div>

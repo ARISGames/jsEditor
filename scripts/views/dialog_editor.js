@@ -72,7 +72,7 @@ function(
       "edit_script": ".edit-script",
       "name":        "#dialog-name",
       "description": "#dialog-description",
-      "enable_back_button": "#dialog-enable_back_button",
+      "back_button_enabled": "#dialog-back_button_enabled",
     },
 
     initialize: function()
@@ -96,7 +96,7 @@ function(
       "click @ui.edit_script": "onClickEditConversation",
       "change @ui.name":        "onChangeName",
       "change @ui.description": "onChangeDescription",
-      "change @ui.enable_back_button": "onChangeEnableBackButton",
+      "change @ui.back_button_enabled": "onChangeBackButtonEnabled",
     },
 
     onClickSave: function()
@@ -138,9 +138,9 @@ function(
       });
     },
 
-    onChangeName:             function() { var self = this; self.model.set("name",               self.ui.name.val()); },
-    onChangeDescription:      function() { var self = this; self.model.set("description",        self.ui.description.val()); },
-    onChangeEnableBackButton: function() { var self = this; self.model.set("enable_back_button", self.ui.enable_back_button.is(":checked") ? "1" : "0");   },
+    onChangeName:              function() { var self = this; self.model.set("name",               self.ui.name.val()); },
+    onChangeDescription:       function() { var self = this; self.model.set("description",        self.ui.description.val()); },
+    onChangeBackButtonEnabled: function() { var self = this; self.model.set("back_button_enabled", self.ui.back_button_enabled.is(":checked") ? "1" : "0");   },
 
     storePreviousAttributes: function()
     {

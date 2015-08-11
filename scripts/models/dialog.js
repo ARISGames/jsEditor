@@ -26,7 +26,7 @@ function(require)
       "description",
       "icon_media_id",
       "intro_dialog_script_id",
-      "enable_back_button",
+      "back_button_enabled",
     ],
 
     defaults:
@@ -35,7 +35,7 @@ function(require)
       description: "",
       icon_media_id: "0",
       intro_dialog_script_id: "0",
-      enable_back_button: "1",
+      back_button_enabled: "1",
     },
 
     icon: function() { return storage.media.retrieve(this.get('icon_media_id')); },
