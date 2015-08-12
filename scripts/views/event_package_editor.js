@@ -48,7 +48,7 @@ function(
     itemViewOptions: function(model, index)
     {
       var self = this;
-      return { items:storage.items }
+      return { }
     },
 
     initialize: function(options)
@@ -85,7 +85,6 @@ function(
     {
       var self = this;
 
-      // Save Event Package with children json
       self.model.set("events", self.collection);
 
       self.model.save({},
@@ -121,7 +120,6 @@ function(
 
     onChangeName:function() { var self = this; self.model.set("name",self.ui.name.val()); },
 
-    // Child View Events
     onItemviewEventRemove:function(item_view, event)
     {
       var self = this;

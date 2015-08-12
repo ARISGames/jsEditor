@@ -79,15 +79,8 @@ function(
         tab_options_visible: _.contains(["DIALOG", "ITEM", "PLAQUE", "WEB_PAGE"], this.model.get("type")),
         tab_content_options: this.tab_content_options(),
 
-        option_selected: function(boolean_statement)
-        {
-          return boolean_statement ? "selected" : "";
-        },
-
-        radio_selected: function(boolean_statement)
-        {
-          return boolean_statement ? "checked" : "";
-        },
+        option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
+        radio_selected: function(boolean_statement) { return boolean_statement ? "checked" : ""; },
 
         phone_grid_svg: PhoneGridSVG,
         phone_list_svg: PhoneListSVG,

@@ -182,16 +182,20 @@ function(
       // TODO catch errors if any fail (since its a non-standard failure)
       $.when(
         game.fetch(),
+        storage.groups.fetch(),
+        storage.tags.fetch(),
+        storage.tabs.fetch(),
+        storage.scenes.fetch(),
         storage.instances.fetch(),
         storage.triggers.fetch(),
-        storage.scenes.fetch(),
-        storage.dialogs.fetch(),
         storage.plaques.fetch(),
         storage.items.fetch(),
+        storage.dialogs.fetch(),
+        storage.dialog_scripts.fetch(),
         storage.web_pages.fetch(),
+        storage.event_packages.fetch(),
         storage.factories.fetch(),
-        storage.media.fetch(),
-        storage.event_packages.fetch()
+        storage.media.fetch()
       ).done(
         function()
         {
