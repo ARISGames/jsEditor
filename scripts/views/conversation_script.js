@@ -19,28 +19,26 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.CompositeView.extend({
+  var ConversationScriptView = Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
     templateHelpers: function()
     {
-      return {
-        root_node: this.model.has('root_node')
-      }
+      return { root_node: this.model.has('root_node') }
     },
 
-    itemView: ConversationOptionView,
-    itemViewContainer: '.script_options',
+    itemView:ConversationOptionView,
+    itemViewContainer:'.script_options',
 
     itemViewOptions: function(model, index)
     {
       var self = this;
       return {
-        scripts: this.scripts,
-        script_options: this.script_options,
-        dialog: this.dialog,
-        characters: this.characters,
-        conversation_script_view: self,
-        contents: this.contents
+        scripts:self.scripts,
+        script_options:self.script_options,
+        dialog:self.dialog,
+        characters:self.characters,
+        contents:self.contents,
+        conversation_script_view:ConversationScriptView,
       }
     },
 
@@ -62,9 +60,7 @@ function(
 
     change_media: function()
     {
-      if(this.character_media) {
-        this.stopListening(this.character_media);
-      }
+      if(this.character_media) { this.stopListening(this.character_media); }
 
       this.character_media = this.model.get("character").media();
 
@@ -72,7 +68,8 @@ function(
       this.listenTo(this.character_media, "change", this.set_media);
     },
 
-    events: {
+    events:
+    {
       "click .edit-script": "onClickEdit",
       "click .add-option": "onClickAdd",
     },
@@ -134,8 +131,9 @@ function(
       });
 
       return false;
-    }
+    },
 
   });
+  return ConversationScriptView;
 });
 
