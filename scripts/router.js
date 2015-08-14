@@ -192,6 +192,8 @@ function(
         storage.items.fetch(),
         storage.dialogs.fetch(),
         storage.dialog_scripts.fetch(),
+        storage.dialog_options.fetch(),
+        storage.dialog_characters.fetch(),
         storage.web_pages.fetch(),
         storage.event_packages.fetch(),
         storage.factories.fetch(),

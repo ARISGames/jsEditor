@@ -8,8 +8,10 @@ function(
   DialogScript
 )
 {
-  return JsonCollection.extend({
+  return JsonCollection.extend(
+  {
     model: DialogScript,
     amfphp_url: "dialogs.getDialogScriptsForDialog"
   });
 });
+

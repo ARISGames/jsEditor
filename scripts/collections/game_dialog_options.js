@@ -1,16 +1,16 @@
 define([
   'collections/json_collection_base',
-  'models/dialog_script',
+  'models/dialog_option',
 ],
 function(
   JsonCollection,
-  DialogScript
+  DialogOption
 )
 {
   return JsonCollection.extend(
   {
-    model: DialogScript,
-    amfphp_url: "dialogs.getDialogScriptsForGame"
+    model: DialogOption,
+    amfphp_url: "dialogs.getDialogOptionsForGame"
   });
 });
 

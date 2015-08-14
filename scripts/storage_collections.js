@@ -18,6 +18,8 @@ define([
   "collections/web_pages",
   "collections/factories",
   "collections/game_dialog_scripts",
+  "collections/game_dialog_options",
+  "collections/game_dialog_characters",
   "collections/event_packages",
 ],
 function(
@@ -40,6 +42,8 @@ function(
   WebPagesCollection,
   FactoriesCollection,
   DialogScriptsCollection,
+  DialogOptionsCollection,
+  DialogCharactersCollection,
   EventPackagesCollection
 )
 {
@@ -64,6 +68,8 @@ function(
       storage.items          = new ItemsCollection();
       storage.dialogs        = new DialogsCollection();
       storage.dialog_scripts = new DialogScriptsCollection();
+      storage.dialog_options = new DialogOptionsCollection();
+      storage.dialog_characters = new DialogCharactersCollection();
       storage.web_pages      = new WebPagesCollection();
       storage.event_packages = new EventPackagesCollection();
       storage.factories      = new FactoriesCollection();

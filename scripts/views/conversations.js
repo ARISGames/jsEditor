@@ -5,13 +5,13 @@ define([
   'vent',
   'storage',
   'views/conversation_row',
-  'views/dialog_creator',
+  'views/conversation_creator',
   'views/conversation_editor',
   'views/character_organizer',
   'models/dialog',
   'models/media',
-  'models/character',
-  'collections/characters',
+  'models/dialog_character',
+  'collections/dialog_characters',
   'collections/media',
   'collections/dialog_scripts',
   'collections/dialog_options',
@@ -28,7 +28,7 @@ function(
   vent,
   storage,
   ConversationRowView,
-  DialogCreatorView,
+  ConversationCreatorView,
   ConversationEditorView,
   CharactersOrganizerView,
   Dialog,
@@ -65,10 +65,10 @@ function(
       var view = this;
 
       var dialog = new Dialog({game_id: this.model.get("game_id")});
-      var dialog_creator = new DialogCreatorView({model: dialog});
-      vent.trigger("application:popup:show", dialog_creator, "Create Conversation");
+      var conversation_creator = new ConversationCreatorView({model: dialog});
+      vent.trigger("application:popup:show", conversation_creator, "Create Conversation");
 
-      dialog_creator.on("dialog:create", function()
+      conversation_creator.on("dialog:create", function()
       {
         view.editConversation(dialog);
       });

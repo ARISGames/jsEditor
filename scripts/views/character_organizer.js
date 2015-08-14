@@ -3,7 +3,7 @@ define([
   'text!templates/character_organizer.tpl',
   'views/character_organizer_row',
   'views/character_editor',
-  'models/character',
+  'models/dialog_character',
   'vent',
 ],
 function(
