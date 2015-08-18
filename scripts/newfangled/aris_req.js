@@ -9,7 +9,7 @@
 
 define([
   'config',
-  'aris_session',
+  'newfangled/aris_session',
 ],
 function(
   config,
@@ -24,7 +24,7 @@ function(
     {
       if(aris_session.loggedIn()) data.auth = aris_session.authPackage();
 
-      var xhr = new XmlHttpRequest();
+      var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function()
       {
         switch(xhr.readyState)
@@ -42,20 +42,20 @@ function(
             {
               console.log("Type :"+xhr.responseType);
               console.log("Text :"+xhr.responseText);
-              if(callbacks.success) callbacks.success(xhr.responseText);
+              if(callbacks.success) callbacks.success(JSON.parse(xhr.responseText));
             }
             else
             {
               console.log("Bad thing- "+xhr.statusText);
-              if(callbacks.fail) callbacks.fail(xhr.responseText);
+              if(callbacks.fail) callbacks.fail(JSON.parse(xhr.responseText));
             }
             break;
         }
       }
       xhr.timeout = 0;
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.open("POST",config.aris_api_url+method,true);
-      xhr.send(data);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send(JSON.stringify(data));
     }
   });
 });

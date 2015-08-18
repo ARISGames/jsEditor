@@ -6,7 +6,7 @@
 
 define([
   'underscore',
-  'models/aris_model',
+  'newfangled/aris_model',
 ],
 function(
   _,
