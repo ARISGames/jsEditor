@@ -3,7 +3,7 @@ define([
   'text!templates/dialog_organizer.tpl',
   'views/dialog_organizer_row',
   'views/dialog_editor',
-  'models/dialog',
+  'newfangled/dialogs_model',
   'storage',
   'vent',
 ],
@@ -12,7 +12,7 @@ function(
   Template,
   DialogsOrganizerRowView,
   DialogEditorView,
-  Dialog,
+  DialogsModel,
   storage,
   vent
 )
@@ -37,7 +37,8 @@ function(
     onClickNew: function()
     {
       var self = this;
-      var dialog = new Dialog({game_id:storage.game.get("game_id")});
+      var dialog = DialogsModel.genMember();
+      dialog.game_id = storage.game.get("game_id");
 
       var dialog_editor = new DialogEditorView({model:dialog});
       vent.trigger("application:popup:show", dialog_editor, "Create Conversation");

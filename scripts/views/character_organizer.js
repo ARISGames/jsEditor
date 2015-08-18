@@ -3,7 +3,7 @@ define([
   'text!templates/character_organizer.tpl',
   'views/character_organizer_row',
   'views/character_editor',
-  'models/dialog_character',
+  'newfangled/dialog_characters_model',
   'vent',
 ],
 function(
@@ -11,7 +11,7 @@ function(
   Template,
   CharactersOrganizerRowView,
   CharacterEditorView,
-  Character,
+  DialogCharactersModel,
   vent
 )
 {
@@ -39,7 +39,9 @@ function(
 
     onClickNew: function()
     {
-      var character = new Character({game_id: this.model.get("game_id")});
+      var self = this;
+      var character = DialogsCharacterModel.genMember();
+      character.game_id = self.model.get("game_id");
 
       var character_editor = new CharacterEditorView({model: character});
       vent.trigger("application:popup:show", character_editor, "Create Character");

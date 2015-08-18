@@ -1,7 +1,6 @@
 define([
   'models/json_base',
-  'models/dialog',
-  'models/dialog_script',
+  'newfangled/dialog_model'
   'models/plaque',
   'models/item',
   'models/web_page',
@@ -12,8 +11,7 @@ define([
 ],
 function(
   JsonBaseModel,
-  Dialog,
-  DialogScript,
+  DialogModel,
   Plaque,
   Item,
   WebPage,
@@ -55,7 +53,7 @@ function(
     {
       var type = this.get("object_type");
 
-      if(type === "DIALOG")        { return Dialog       }
+      if(type === "DIALOG")        { return DialogModel  }
       if(type === "PLAQUE")        { return Plaque       }
       if(type === "ITEM")          { return Item         }
       if(type === "WEB_PAGE")      { return WebPage      }
@@ -78,7 +76,7 @@ function(
   {
     type_for: function(object)
     {
-      if(object instanceof Dialog)       { return "DIALOG"         }
+      if(object instanceof DialogModel)  { return "DIALOG"         }
       if(object instanceof Item)         { return "ITEM"           }
       if(object instanceof Plaque)       { return "PLAQUE"         }
       if(object instanceof WebPage)      { return "WEB_PAGE"       }

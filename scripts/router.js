@@ -84,6 +84,34 @@ function(
       }
     },
 
+    populateStorageAnd: function(game_id,callback)
+    {
+      var game = storage.games.retrieve(game_id);
+      storage.for(game);
+
+      $.when(
+        game.fetch(),
+        storage.groups.fetch(),
+        storage.tags.fetch(),
+        storage.tabs.fetch(),
+        storage.scenes.fetch(),
+        storage.instances.fetch(),
+        storage.triggers.fetch(),
+        storage.plaques.fetch(),
+        storage.items.fetch(),
+        storage.dialogs.fetch(),
+        storage.dialog_scripts.fetch(),
+        storage.dialog_options.fetch(),
+        storage.dialog_characters.fetch(),
+        storage.web_pages.fetch(),
+        storage.event_packages.fetch(),
+        storage.factories.fetch(),
+        storage.media.fetch()
+      ).done(
+        callback()
+      );
+    },
+
     routes:
     {
       "": "listGames",
@@ -176,33 +204,11 @@ function(
 
     showSceneEditor: function(game_id)
     {
-      var game = storage.games.retrieve(game_id);
-      storage.for(game);
-
-      // TODO catch errors if any fail (since its a non-standard failure)
-      $.when(
-        game.fetch(),
-        storage.groups.fetch(),
-        storage.tags.fetch(),
-        storage.tabs.fetch(),
-        storage.scenes.fetch(),
-        storage.instances.fetch(),
-        storage.triggers.fetch(),
-        storage.plaques.fetch(),
-        storage.items.fetch(),
-        storage.dialogs.fetch(),
-        storage.dialog_scripts.fetch(),
-        storage.dialog_options.fetch(),
-        storage.dialog_characters.fetch(),
-        storage.web_pages.fetch(),
-        storage.event_packages.fetch(),
-        storage.factories.fetch(),
-        storage.media.fetch()
-      ).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
-          // TODO make game a promise and store it so we can access the same game instance in other tabs.
-          // then 'intro scene' test can just be if this.model.is(game.intro_scene())
+          var game = storage.games.retrieve(game_id);
           var intro_scene = storage.scenes.get(game.get("intro_scene_id"));
 
           vent.trigger("application.show",      new ScenesView  ({ model:game, collection:storage.scenes }));
@@ -215,13 +221,11 @@ function(
 
     editGame: function(game_id)
     {
-      var game = storage.games.retrieve(game_id);
-      storage.for(game);
-
-      $.when(
-        game.fetch(), storage.scenes.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",     new GameEditorView ({model:game, scenes:storage.scenes}));
           vent.trigger("application:nav:show", new GameNavMenu    ({model:game, active:".game"}));
           vent.trigger("application:info:hide");
@@ -232,14 +236,11 @@ function(
 
     editSharing: function(game_id)
     {
-      var game = new Game({game_id: game_id});
-
-      var editors = new EditorsCollection([], {parent: game});
-
-      $.when(
-        editors.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           editors.invoke('set', 'game_id', game.id);
 
           vent.trigger("application.show",     new EditorSharingView ({model: game, collection: editors}));
@@ -252,13 +253,11 @@ function(
 
     editTabs: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.tabs.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",     new TabsView    ({model: game, collection: storage.tabs}));
           vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
           vent.trigger("application:list:hide");
@@ -269,13 +268,11 @@ function(
 
     editGroups: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.groups.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",     new GroupsView  ({model: game, collection: storage.groups}));
           vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
           vent.trigger("application:list:hide");
@@ -286,13 +283,11 @@ function(
 
     editTags: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.tags.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",     new TagsView    ({model: game, collection: storage.tags}));
           vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
           vent.trigger("application:list:hide");
@@ -303,16 +298,11 @@ function(
 
     editNotes: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      // TODO should be a search module with pagination?
-      var notes = new NotesCollection([], {parent: game});
-
-      $.when(
-        notes.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",     new NotesView   ({model: game, collection: notes}));
           vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".notes"}));
           vent.trigger("application:list:hide");
@@ -321,22 +311,16 @@ function(
       );
     },
 
-    /* List Routes ************************/
-
     listLocations: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.triggers.fetch(), storage.instances.fetch(), storage.web_pages.fetch(), storage.plaques.fetch(), storage.dialogs.fetch(), storage.items.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
-          // Just give non-note location triggers to view (until we filtering view is created)
+          var game = storage.games.retrieve(game_id);
           var location_selection = storage.triggers.filter(function(trigger)
           {
             return trigger.get("type") === "LOCATION" && trigger.instance().get("object_type") !== "NOTE";
-
           });
           var locations = new GameTriggersCollection(location_selection, {parent: game});
 
@@ -350,13 +334,11 @@ function(
 
     listQuests: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.quests.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",     new QuestsView  ({model: game, collection: storage.quests}));
           vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".quests"}));
           vent.trigger("application:list:hide");
@@ -367,13 +349,11 @@ function(
 
     listMedia: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.media.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",      new MediaEditorView ({model: game, collection: storage.media}));
           vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
           vent.trigger("application:list:show", new MediaOrganizerView({collection: storage.media}));
@@ -384,13 +364,11 @@ function(
 
     listConversations: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
-      storage.for(game);
-
-      $.when(
-        storage.dialogs.fetch()).done(
+      var self = this;
+      self.populateStorageAnd(game_id,
         function()
         {
+          var game = storage.games.retrieve(game_id);
           vent.trigger("application.show",      new ConversationsView ({model: game, collection: storage.dialogs}));
           vent.trigger("application:nav:show",  new GameNavMenu       ({model: game, active: ".conversations"}));
           vent.trigger("application:list:hide");

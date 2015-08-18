@@ -6,10 +6,10 @@ define([
   'text!templates/dialog_editor.tpl',
   'vent',
   'storage',
-  'collections/dialog_characters',
+  'newfangled/dialog_characters_model',
+  'newfangled/dialog_scripts_model',
+  'newfangled/dialog_options_model',
   'collections/media',
-  'collections/dialog_scripts',
-  'collections/dialog_options',
   'collections/plaques',
   'collections/items',
   'collections/web_pages',
@@ -17,9 +17,6 @@ define([
   'collections/tabs',
   'models/media',
   'models/game',
-  'models/dialog_character',
-  'models/dialog_script',
-  'models/dialog_option',
   'views/media_chooser',
   'views/conversation_editor',
   'views/character_organizer',
@@ -32,10 +29,10 @@ function(
   Template,
   vent,
   storage,
-  CharactersCollection,
+  DialogCharactersModel,
+  DialogScriptsModel,
+  DialogOptionsModel,
   MediaCollection,
-  DialogScriptsCollection,
-  DialogOptionsCollection,
   PlaquesCollection,
   ItemsCollection,
   WebPagesCollection,
@@ -43,9 +40,6 @@ function(
   TabsCollection,
   Media,
   Game,
-  Character,
-  DialogScript,
-  DialogOption,
   MediaChooserView,
   ConversationEditorView,
   CharactersOrganizerView
@@ -57,9 +51,10 @@ function(
 
     templateHelpers: function()
     {
+      var self = this;
       return {
-        is_new: this.model.isNew(),
-        icon_thumbnail_url: this.model.icon_thumbnail()
+        is_new: self.model.isNew(),
+        icon_thumbnail_url: self.model.icon_thumbnail()
       }
     },
 
@@ -77,14 +72,16 @@ function(
 
     initialize: function()
     {
-      this.storePreviousAttributes();
-      this.bindAssociations();
-      this.on("popup:hide", this.onClickCancel);
+      var self = this;
+      self.storePreviousAttributes();
+      self.bindAssociations();
+      self.on("popup:hide", self.onClickCancel);
     },
 
     onShow: function()
     {
-      this.$el.find('input[autofocus]').focus();
+      var self = this;
+      self.$el.find('input[autofocus]').focus();
     },
 
     events:
@@ -101,21 +98,21 @@ function(
 
     onClickSave: function()
     {
-      var view   = this;
-      var dialog = this.model;
+      var self = this;
+      var dialog = self.model;
 
       dialog.save({},
       {
         create: function()
         {
-          view.storePreviousAttributes();
+          self.storePreviousAttributes();
           storage.add_game_object(dialog);
           vent.trigger("application:popup:hide");
         },
 
         update: function()
         {
-          view.storePreviousAttributes();
+          self.storePreviousAttributes();
           vent.trigger("application:popup:hide");
         }
       });
@@ -123,13 +120,14 @@ function(
 
     onClickCancel: function()
     {
-      this.model.set(this.previous_attributes);
+      var self = this;
+      self.model.set(self.previous_attributes);
     },
 
     onClickDelete: function()
     {
-      var view = this;
-      this.model.destroy(
+      var self = this;
+      self.model.destroy(
       {
         success: function()
         {
@@ -144,44 +142,47 @@ function(
 
     storePreviousAttributes: function()
     {
-      this.previous_attributes = _.clone(this.model.attributes)
+      var self = this;
+      self.previous_attributes = _.clone(self.model.attributes)
     },
 
     unbindAssociations: function()
     {
-      this.stopListening(this.model.icon());
+      var self = this;
+      self.stopListening(self.model.icon());
     },
 
     bindAssociations: function()
     {
-      this.listenTo(this.model.icon(), 'change', this.render);
+      var self = this;
+      self.listenTo(self.model.icon(), 'change', self.render);
     },
 
     onClickChangeIcon: function()
     {
-      var view = this;
+      var self = this;
 
-      var game  = new Game({game_id: this.model.get("game_id")});
+      var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
       media.fetch(
       {
         success: function()
         {
-          media.unshift(view.model.default_icon());
-          var icon_chooser = new MediaChooserView({collection: media, selected: view.model.icon(), context: view.model});
+          media.unshift(self.model.default_icon());
+          var icon_chooser = new MediaChooserView({collection: media, selected: self.model.icon(), context: self.model});
 
           icon_chooser.on("media:choose", function(media)
           {
-            view.unbindAssociations();
-            view.model.set("icon_media_id", media.id);
-            view.bindAssociations();
-            vent.trigger("application:popup:show", view, "Edit Conversation");
+            self.unbindAssociations();
+            self.model.set("icon_media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Conversation");
           });
 
           icon_chooser.on("cancel", function()
           {
-            vent.trigger("application:popup:show", view, "Edit Conversation");
+            vent.trigger("application:popup:show", self, "Edit Conversation");
           });
 
           vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
@@ -191,9 +192,10 @@ function(
 
     onClickEditConversation: function()
     {
-      var game = new Game({game_id: this.model.get("game_id")});
+      var self = this;
+      var game = new Game({game_id: self.model.get("game_id")});
 
-      var dialog     = this.model;
+      var dialog     = self.model;
       var characters = new CharactersCollection   ([], {parent:game});
       var media      = new MediaCollection        ([], {parent:game});
       var scripts    = new DialogScriptsCollection([], {parent:dialog, game:game});
@@ -241,11 +243,11 @@ function(
         vent.trigger("application:list:show", new CharactersOrganizerView({collection:characters, model:game}));
         vent.trigger("application:info:hide");
 
-        Backbone.history.navigate("#games/"+this.model.get('game_id')+"/conversations");
+        Backbone.history.navigate("#games/"+self.model.get('game_id')+"/conversations");
         vent.trigger("application:active_nav", ".conversations");
         vent.trigger("application:popup:hide");
 
-      }.bind(this));
+      }.bind(self));
     }
   });
 

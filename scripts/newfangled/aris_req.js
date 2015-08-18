@@ -18,6 +18,8 @@ function(
 {
   return new (function() //'new' means no need to reinstantiate every time (well, it auto-reinstantiates it on require...)
   {
+    var self = this;
+
     self.request = function(method, data, callbacks)
     {
       if(aris_session.loggedIn()) data.auth = aris_session.authPackage();

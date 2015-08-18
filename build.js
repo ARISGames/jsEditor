@@ -17,3 +17,4 @@
 	preserveLicenseComments: false,
 	generateSourceMaps: true
 })
+
