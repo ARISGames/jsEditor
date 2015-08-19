@@ -23,8 +23,8 @@
 */
 
 define([
-  'newfangled/aris_req',
-  'newfangled/aris_do',
+  'aris_req',
+  'aris_do',
 ],
 function(
   req,
@@ -33,38 +33,34 @@ function(
 {
   return new (function()
   {
-    // NOTE-
-    // use 'this' rather than 'self' (via 'var self = this;') at object level,
-    // as this object will get hijacked, and functions need to refer to the hijacker, not... er... this.
-    // 'self' is safe to use if self is grabbed from within a function.
+    var self = this;
 
-    this.getMethod    = "model.getModel";
-    this.createMethod = "model.createModel";
-    this.updateMethod = "model.updateModel";
-    this.deleteMethod = "model.deleteModel";
-    this.getForGameMethod = "model.getModelsForGame";
+    self.getMethod    = "model.getModel";
+    self.createMethod = "model.createModel";
+    self.updateMethod = "model.updateModel";
+    self.deleteMethod = "model.deleteModel";
+    self.getForGameMethod = "model.getModelsForGame";
 
-    this.defaultObject =
+    self.defaultObject =
     {
       "attributeName":"attributeDefaultVal",
     };
 
-    this.idAttribute = "model_id";
+    self.idAttribute = "model_id";
 
-    this.members = [];
-    this.mergeIntoMembers = function(new_members)
+    self.members = [];
+    self.mergeIntoMembers = function(new_members)
     {
-      var self = this;
       var found;
-      for(var i = 0; i < new_members.length; i++)
+      for(var i = 0; i < self.new_members.length; i++)
       {
         found = false;
         for(var j = 0; j < self.members.length; j++)
         {
-          if(new_members[i][self.idAttribute] == self.members[j][self.idAttribute])
+          if(self.new_members[i][self.idAttribute] == self.members[j][self.idAttribute])
           {
             found = true;
-            if(self.members[j].mergeIn(new_members[i],Object.keys(self.defaultObject)))
+            if(self.members[j].mergeIn(self.new_members[i],Object.keys(self.defaultObject)))
             {
               //notify of delta
             }
@@ -72,7 +68,7 @@ function(
         }
         if(!found)
         {
-          self.members.push(new_members[i]);
+          self.members.push(self.new_members[i]);
           //notify of addition
         }
       }
@@ -81,17 +77,15 @@ function(
     // Generates member. Don't know how to express via function name that:
     // "this is a free-floating object- it's not part of this model or anything",
     // which is valuable info!
-    this.genMember = function()
+    self.genMember = function()
     {
-      var self = this;
       var m = new aris_do();
       aris_do.merge_in(self.defaultObject,Object.keys(self.defaultObject));
       return m;
     }
 
-    this.getById = function(id)
+    self.getById = function(id)
     {
-      var self = this;
       for(var i = 0; i < self.members.length; i++)
       {
         if(self.members[i][self.idAttribute] == id)
@@ -100,9 +94,8 @@ function(
       return 0;
     }
 
-    this.getAllMatching = function(attributeName,attribute)
+    self.getAllMatching = function(attributeName,attribute)
     {
-      var self = this;
       var matching_members = [];
       for(var i = 0; i < self.members.length; i++)
       {
@@ -112,15 +105,13 @@ function(
       return matching_members;
     }
 
-    this.getAllForGame = function(id)
+    self.getAllForGame = function(id)
     {
-      var self = this;
       return self.getAllMatching("game_id",id);
     }
 
-    this.reqGetById = function(id, callbacks)
+    self.reqGetById = function(id, callbacks)
     {
-      var self = this;
       var reqData = {};
       reqData[self.idAttribute] = id;
 
@@ -129,16 +120,15 @@ function(
           success:function(response)
           {
             self.mergeIntoMembers([response.data]);
-            if(callbacks && callbacks.success) callbacks.success(self.getById(id));
+            if(callbacks && callbacks.success) callbacks.succes(self.getById(id));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
         }
       );
     }
 
-    this.reqCreate = function(member, callbacks)
+    self.reqCreate = function(member, callbacks)
     {
-      var self = this;
       var reqData = {};
       var keys = Object.keys(self.defaultObject);
       for(var i= 0; i < keys.length; i++)
@@ -149,16 +139,15 @@ function(
           success:function(response)
           {
             self.mergeIntoMembers([response.data]);
-            if(callbacks && callbacks.success) callbacks.success(self.getById(response.data[self.idAttribute]));
+            if(callbacks && callbacks.success) callbacks.succes(self.getById(response.data[self.idAttribute]));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
         }
       );
     }
 
-    this.reqUpdate = function(member, callbacks)
+    self.reqUpdate = function(member, callbacks)
     {
-      var self = this;
       var reqData = {};
       var keys = Object.keys(self.defaultObject);
       for(var i= 0; i < keys.length; i++)
@@ -169,25 +158,23 @@ function(
           success:function(response)
           {
             self.mergeIntoMembers([response.data]);
-            if(callbacks && callbacks.success) callbacks.success(self.getById(member[self.idAttribute]));
+            if(callbacks && callbacks.success) callbacks.succes(self.getById(member[self.idAttribute]));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
         }
       );
     }
 
-    this.reqDelete = function(member, callbacks)
+    self.reqDelete = function(member, callbacks)
     {
-      var self = this;
       var reqData = {};
       reqData[self.idAttribute] = member[self.idAttribute];
 
       req.request(self.updateMethod,reqData,callbacks); //can pass callbacks directly
     }
 
-    this.reqGetAllForGame = function(id, callbacks)
+    self.reqGetAllForGame = function(id, callbacks)
     {
-      var self = this;
       var reqData = {};
       reqData.game_id = id;
       
@@ -196,7 +183,7 @@ function(
           success:function(response)
           {
             self.mergeIntoMembers(response.data);
-            if(callbacks && callbacks.success) callbacks.success(self.getAllForGame(id));
+            if(callbacks && callbacks.success) callbacks.succes(self.getAllForGame(id));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
         }

@@ -1,6 +1,6 @@
 define([
   'models/json_base',
-  'newfangled/dialogs_model',
+  'newfangled/dialog_model'
   'models/plaque',
   'models/item',
   'models/web_page',

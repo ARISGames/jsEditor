@@ -31,7 +31,6 @@ define([
   'vent',
   'models/session',
   'storage',
-  'newfangled/app_model',
 ],
 function(
   $,
@@ -65,8 +64,7 @@ function(
   Game,
   vent,
   session,
-  storage,
-  AppModel
+  storage
 )
 {
   return Backbone.Router.extend(
@@ -88,8 +86,6 @@ function(
 
     populateStorageAnd: function(game_id,callback)
     {
-      AppModel.loadDataForGameId(game_id,{success:function(){console.log('succeed');},fail:function(){console.log('fail');}});
-
       var game = storage.games.retrieve(game_id);
       storage.for(game);
 
