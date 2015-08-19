@@ -40,8 +40,7 @@ function(
           case 4://DONE
             if(xhr.status == 200) //good
             {
-              console.log("Type :"+xhr.responseType);
-              console.log("Text :"+xhr.responseText);
+              //console.log("Text :"+xhr.responseText);
               if(callbacks.success) callbacks.success(JSON.parse(xhr.responseText));
             }
             else
@@ -54,7 +53,7 @@ function(
       }
       xhr.timeout = 0;
       xhr.open("POST",config.aris_api_url+method,true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(JSON.stringify(data));
     }
   });

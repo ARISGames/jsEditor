@@ -29,9 +29,8 @@ define([
   'collections/notes',
   'models/game',
   'vent',
-  'models/session',
-  'storage',
   'newfangled/app_model',
+  'newfangled/aris_session',
 ],
 function(
   $,
@@ -64,9 +63,8 @@ function(
   NotesCollection,
   Game,
   vent,
-  session,
-  storage,
-  AppModel
+  app_model,
+  aris_session
 )
 {
   return Backbone.Router.extend(
@@ -84,36 +82,6 @@ function(
         var path = Backbone.history.getFragment();
         ga('send', 'pageview', {page: "/" + path})
       }
-    },
-
-    populateStorageAnd: function(game_id,callback)
-    {
-      AppModel.loadDataForGameId(game_id,{success:function(){console.log('succeed');},fail:function(){console.log('fail');}});
-
-      var game = storage.games.retrieve(game_id);
-      storage.for(game);
-
-      $.when(
-        game.fetch(),
-        storage.groups.fetch(),
-        storage.tags.fetch(),
-        storage.tabs.fetch(),
-        storage.scenes.fetch(),
-        storage.instances.fetch(),
-        storage.triggers.fetch(),
-        storage.plaques.fetch(),
-        storage.items.fetch(),
-        storage.dialogs.fetch(),
-        storage.dialog_scripts.fetch(),
-        storage.dialog_options.fetch(),
-        storage.dialog_characters.fetch(),
-        storage.web_pages.fetch(),
-        storage.event_packages.fetch(),
-        storage.factories.fetch(),
-        storage.media.fetch()
-      ).done(
-        callback()
-      );
     },
 
     routes:
@@ -143,18 +111,20 @@ function(
       vent.trigger("application.show", new LoginView);
     },
 
-    /* Game Routes ************************/
+    populateStorageAnd: function(game_id,callback)
+    {
+      app_model.loadDataForGameId(game_id,{success:function(){console.log('succeed');},fail:function(){console.log('fail');}});
+    },
 
     listGames: function()
     {
-      // FIXME hack to prevent clicking the logo going to blank area when database is empty
-      if(!session.logged_in()) { return false; }
+      var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
 
-      var games           = storage.games;
       var migration_games = new MigrationGameCollection;
 
       var games_layout    = new GamesLayoutView();
-      var games_view      = new GamesView({collection: games});
+      var games_view      = new GamesView();
 
       vent.trigger("application.show", games_layout);
 
@@ -209,6 +179,8 @@ function(
     showSceneEditor: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -226,6 +198,8 @@ function(
     editGame: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -241,6 +215,8 @@ function(
     editSharing: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -258,6 +234,8 @@ function(
     editTabs: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -273,6 +251,8 @@ function(
     editGroups: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -288,6 +268,8 @@ function(
     editTags: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -303,6 +285,8 @@ function(
     editNotes: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -318,6 +302,8 @@ function(
     listLocations: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -339,6 +325,8 @@ function(
     listQuests: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -354,6 +342,8 @@ function(
     listMedia: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {
@@ -369,6 +359,8 @@ function(
     listConversations: function(game_id)
     {
       var self = this;
+      if(!aris_session.loggedIn()) { self.showLogin(); return; }
+
       self.populateStorageAnd(game_id,
         function()
         {

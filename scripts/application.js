@@ -3,23 +3,23 @@ define([
   'jquery',
   'backbone',
   'marionette',
-  'models/session',
   'vent',
   'router',
   'views/user_nav_menu',
   'storage',
-  'storage_collections'
+  'storage_collections',
+  'newfangled/aris_session',
 ],
 function(
   $,
   Backbone,
   Marionette,
-  session,
   vent,
   Router,
   UserNavMenuView,
   storage,
-  StorageCollections
+  StorageCollections,
+  aris_session
 )
 {
   var application = new Backbone.Marionette.Application();
@@ -44,7 +44,6 @@ function(
       // Add all game object collections to application storage.
       StorageCollections.inject(storage);
 
-      this.session = session;
       this.router  = new Router;
     }
   );
@@ -55,7 +54,7 @@ function(
     "initialize:after",
     function()
     {
-      if(!this.session.logged_in())
+      if(!aris_session.loggedIn())
       {
         if(window.location.hash === "#login")
         {
@@ -65,8 +64,8 @@ function(
         else
         {
           this.intended_destination = window.location.hash;
-          Backbone.history.start({silent: true});
-          Backbone.history.navigate("#login", {trigger: true});
+          Backbone.history.start({silent:true});
+          Backbone.history.navigate("#login", {trigger:true});
         }
       }
       else

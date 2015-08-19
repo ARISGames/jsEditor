@@ -117,7 +117,7 @@ function(
       _.extend(template_values, model.attributes);
       _.extend(template_values, {id: model.id});
 
-      _.extend(template_values, {editor_id: session.editor_id(), editor_token: session.auth_token()});
+      _.extend(template_values, {editor_id: session.editor_id(), editor_token: session.read_write_key()});
 
       // Build url from model attributes for update
       if(method === "update" || method === "create" || method === "delete") {
