@@ -36,9 +36,9 @@ function(
     onClickNew: function()
     {
       var self = this;
-      var item  = new Item({game_id: storage.game.get("game_id")});
+      var item  = new Item({game_id:storage.game.get("game_id")});
 
-      var item_editor = new ItemEditorView({model: item});
+      var item_editor = new ItemEditorView({model:item});
       vent.trigger("application:popup:show", item_editor, "Create Item");
     },
 
