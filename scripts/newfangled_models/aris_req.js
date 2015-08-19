@@ -51,7 +51,7 @@ function(
         }
       }
       xhr.timeout = 0;
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.setRequestHeader("Content-Type", "application/json");
       xhr.open("POST",config.aris_api_url+method,true);
       xhr.send(data);
     }

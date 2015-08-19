@@ -115,7 +115,7 @@ function(
       if(!options) options = {};
 
       // Make Aris happy with request.
-      options.contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+      options.contentType = "application/json; charset=UTF-8";
       options.data = null;
       options.type = "POST";
       options.jsonp = false;
