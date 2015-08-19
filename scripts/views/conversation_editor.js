@@ -32,58 +32,19 @@ function(
     className:'conversation-editor',
     ui: {
       conversation_pan_region:'.conversation_pan_region',
-    },
+      },
 
     initialize:function(options)
     {
       var self = this;
       
-      if(!self.model.get("intro_dialog_script_id"))
-      {
-        var dialog_script = new DialogScript({text:"Hello",     game_id:storage.game.id, dialog_id:self.model.id});
-        var dialog_option = new DialogOption({prompt:"Bye bye", game_id:storage.game.id, dialog_id:self.model.id});
-        dialog_script.set("dialog_options", new DialogOptionsCollection([dialog_option]));
-
-        var character = new DialogCharacter({name:"You"})
-        var media = new Media({media_id:"0"});
-
-        character.set("media", media);
-        dialog_script.set("character", character);
-
-        $.when(
-          dialog_script.save()
-        ).done(function()
-        {
-          self.model.set("intro_dialog_script_id", dialog_script.id);
-          dialog_option.set("parent_dialog_script_id", dialog_script.id);
-
-          self.incoming_options.scripts.add(dialog_script);
-          self.incoming_options.script_options.add(dialog_option);
-
-          $.when(
-            self.model.save(),
-            dialog_option.save()
-          ).done(
-            self.render
-          );
-        });
-      }
-
-
-
-
-
-
-
-
-
       self.intro_dialog_script = storage.dialog_scripts.findWhere({dialog_script_id:self.model.get("intro_dialog_script_id")});
       self.dialog_scripts = storage.dialog_scripts.where({dialog_id:self.model.id});
       self.dialog_options = storage.dialog_options.where({dialog_id:self.model.id});
       self.dialog_characters = storage.dialog_characters;
     },
 
-    getTreeWidth:function(option)
+    getWidth:function(option)
     {
       var self = this;
       var w = 0;
@@ -98,7 +59,7 @@ function(
         { 
           script.counted = true;
           for(var i = 0; i < self.dialog_options.length; i++)
-            if(self.dialog_options[i].get("parent_dialog_script_id") == script.id) w += self.getTreeWidth(self.dialog_options[i]);
+            if(self.dialog_options[i].get("parent_dialog_script_id") == script.id) w += self.getWidth(self.dialog_options[i]);
         }
       }
       else w += 1;
@@ -115,7 +76,7 @@ function(
 
     The edges rendered are calculated by a minimum spanning BF traversal, starting with the "intro_dialog_script" node.
 
-    This gets *slightly* more complicated, as every option MUST be rendered exactly once, even if an edge is redundant. (script = node, option = edge)
+    This is *slightly* more complicated, as every option MUST be rendered exactly once, even if an edge is redundant. (script = node, option = edge)
     However, every node must be rendered FULLY exactly once, but we can stub in dead-end notes for nodes that get accessed redundantly.
 
     The way we accomplish this is by rendering at least the "first half" of every edge.
@@ -139,7 +100,7 @@ function(
           self.dialog_scripts[i].counted = false;
           self.dialog_scripts[i].rendered = false;
         }
-        self.getTreeWidth(bogus_start_option);
+        self.getWidth(bogus_start_option);
         self.ui.conversation_pan_region[0].style.width = (bogus_start_option.known_width*300)+"px";
         self.renderOptionIntoDiv(bogus_start_option,self.ui.conversation_pan_region[0]);
       }
@@ -203,10 +164,26 @@ function(
       }
     },
 
+    makeEl:function(type, options, style)
+    {
+      var self = this;
+      var div = document.createElement(type);
+
+      var keys = Object.keys(options);
+      for(var i = 0; i < keys.length; i++)
+        div[keys[i]] = options[keys[i]];
+
+      var keys = Object.keys(style);
+      for(var i = 0; i < keys.length; i++)
+        div.style[keys[i]] = style[keys[i]];
+
+      return div;
+    },
+
     makeLine:function(len)
     {
       var self = this;
-      return self.makeEl('div',{},{display:"inline",height:len+"px",width:"0px",border:"1px solid black"});
+      return self.makeEl('div',{},{display:"inline-block",height:len+"px",width:"0px",border:"1px solid black"});
     },
 
     OptionView:function(makeEl)
@@ -260,16 +237,10 @@ function(
           display:"inline-block",
           position:"relative",
           width:"200px",
+          marginBottom:"5px",
         });
         var c2el = self.makeEl('div',{className:"panel-heading"},{});
-        var c3el = self.makeEl('div',
-        {
-          className:"option-text"
-        },
-        {
-          overflow:"hidden",
-          padding:"10px",
-        });
+        var c3el = self.makeEl('div',{className:"option-text"},{overflow:"hidden"});
         var c4el = self.makeEl('span',{className:"glyphicon glyphicon-"+linkIcon()},{});
         var c5el = self.makeEl('span',{},{});
         c5el.innerHTML = self.option.get("prompt");
@@ -305,6 +276,7 @@ function(
         {
           display:"inline-block",
           width:"300px",
+          marginBottom:"0px",
         });
 
         var c2el = self.makeEl('div',
@@ -321,6 +293,7 @@ function(
         },
         {
           width:"25%",
+          marginBottom:"0px",
         });
 
         if(!self.script.dialog_character_id || self.script.dialog_character_id == "0")
@@ -370,6 +343,39 @@ function(
         return div;
       }
     },
+
+    onClickAddIntroScript:function()
+    {
+      var self = this;
+
+      var dialog_script = new DialogScript({text:"Hello",     game_id:storage.game.id, dialog_id:self.model.id});
+      var dialog_option = new DialogOption({prompt:"Bye bye", game_id:storage.game.id, dialog_id:self.model.id});
+      dialog_script.set("dialog_options", new DialogOptionsCollection([dialog_option]));
+
+      var character = new DialogCharacter({name:"You"})
+      var media = new Media({media_id:"0"});
+
+      character.set("media", media);
+      dialog_script.set("character", character);
+
+      $.when(
+        dialog_script.save()
+      ).done(function()
+      {
+        self.model.set("intro_dialog_script_id", dialog_script.id);
+        dialog_option.set("parent_dialog_script_id", dialog_script.id);
+
+        self.incoming_options.scripts.add(dialog_script);
+        self.incoming_options.script_options.add(dialog_option);
+
+        $.when(
+          self.model.save(),
+          dialog_option.save()
+        ).done(
+          self.render
+        );
+      });
+    }
 
   });
 });

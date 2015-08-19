@@ -2,9 +2,9 @@ define([
   'jquery',
   'backbone',
   'text!templates/conversation_script.tpl',
-  'newfangled/dialog_options_model',
-  'newfangled/dialog_scripts_model',
-  'newfangled/dialog_characters_model',
+  'models/dialog_option',
+  'models/dialog_script',
+  'models/dialog_character',
   'models/media',
   'views/conversation_option',
   'views/dialog_script_editor',
@@ -15,9 +15,9 @@ function(
   $,
   Backbone,
   Template,
-  DialogOptionsModel,
-  DialogScriptsModel,
-  DialogCharactersModel,
+  DialogOption,
+  DialogScript,
+  DialogCharacter,
   Media,
   ConversationOptionView,
   DialogScriptEditorView,
@@ -54,7 +54,31 @@ function(
       self.model.set("rendered", true);
 
       //START GET/ORGANIZE DIALOG_OPTIONS
-      var dialog_options = DialogOptionsModel.getAllMatching("parent_dialog_script_id",self.model.id);
+      var dialog_options = storage.dialog_options.where({parent_dialog_script_id:self.model.id});
+      dialog_options.sort(
+        function(a,b)
+        {
+          if(parseInt(a.get("sort_index")) < parseInt(b.get("sort_index"))) return -1;
+          if(parseInt(a.get("sort_index")) > parseInt(b.get("sort_index"))) return 1;
+          return 0;
+        }
+      );
+      for(var i = 0; i < dialog_options.length; i++)
+      {
+        var oldindex = dialog_options[i].get("sort_index");
+        dialog_options[i].set("sort_index",i);
+
+        if(oldindex != dialog_options[i].get("sort_index")) dialog_options[i].save();
+
+        dialog_options[i].firstOption = false;
+        dialog_options[i].lastOption = false;
+      }
+      if(dialog_options.length > 0)
+      {
+        dialog_options[0].firstOption = true;
+        dialog_options[dialog_options.length-1].lastOption = true;
+      }
+      //END GET/ORGANIZE DIALOG_OPTIONS
       self.collection = dialog_options;
 
       self.change_media(); //force get of self.character/self.character_media
