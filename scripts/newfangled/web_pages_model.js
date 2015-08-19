@@ -15,11 +15,11 @@ function(
 {
   var self = _.clone(aris_model);
 
-  self.getMethod        = "web_pages.getWebPage";
-  self.createMethod     = "web_pages.createWebPage";
-  self.updateMethod     = "web_pages.updateWebPage";
-  self.deleteMethod     = "web_pages.deleteWebPage";
-  self.getForGameMethod = "web_pages.getWebPagesForGame";
+  self.getMethod        = "webPages.getWebPage";
+  self.createMethod     = "webPages.createWebPage";
+  self.updateMethod     = "webPages.updateWebPage";
+  self.deleteMethod     = "webPages.deleteWebPage";
+  self.getForGameMethod = "webPages.getWebPagesForGame";
 
   self.defaultObject =
   {

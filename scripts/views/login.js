@@ -4,14 +4,13 @@ define([
   'cookie',
   'backbone',
   'marionette',
+  'models/session',
   'text!templates/login.tpl',
   'views/register',
   'views/forgot',
   'i18n',
   'vent',
   'config',
-  'newfangled/aris_session',
-  'newfangled/app_model',
 ],
 function(
   _,
@@ -19,18 +18,16 @@ function(
   Cookie,
   Backbone,
   Marionette,
+  session,
   Template,
   RegisterView,
   ForgotView,
   i18n,
   vent,
-  config,
-  aris_session,
-  app_model
+  config
 )
 {
-  var LoginView = Backbone.Marionette.ItemView.extend(
-  {
+  var LoginView = Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
     templateHelpers: function()
@@ -48,36 +45,30 @@ function(
       this.$el.find('input[autofocus]').focus();
     },
 
-    events:
-    {
-       "click #login":           "onClickLogin",
-       "click #register":        "onClickRegister",
-       "click #forgot":          "onClickForgot",
-       "click .change-language": "onClickChangeLanguage"
+    events: {
+      "click #login":    "onClickLogin",
+      "click #register": "onClickRegister",
+      "click #forgot":   "onClickForgot",
+      "click .change-language": "onClickChangeLanguage"
     },
 
-    ui:
-    {
-      username:"#username",
-      password:"#password"
+    ui: {
+      username: "#username",
+      password: "#password"
     },
 
     onClickLogin: function()
     {
-      if(this.ui.username.val() === "" || this.ui.password.val() === "")
+      // TODO add field validation
+      // and trigger event instead of relying on session.
+
+      if(this.ui.username.val() === "" || this.ui.password.val() === "") {
         vent.trigger("application:alert", {text: "Username and Password can't be blank"});
-      else
-      {
-        app_model.logIn(this.ui.username.val(),this.ui.password.val(),
-        {
-          success:function()
-          {
-            vent.trigger('session.login');
-          },
-          fail:function()
-          {
-            vent.trigger("application:alert", {text:"log in failed"});
-          }
+      }
+      else {
+        session.login({
+          username: this.ui.username.val(),
+          password: this.ui.password.val()
         });
       }
     },
@@ -108,4 +99,3 @@ function(
 
   return LoginView;
 });
-

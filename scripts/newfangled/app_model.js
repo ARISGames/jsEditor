@@ -7,11 +7,8 @@
 */
 
 define([
-  'newfangled/aris_req',
-  'newfangled/aris_session',
   'newfangled/users_model',
   'newfangled/games_model',
-  'newfangled/user_games_model',
   'newfangled/groups_model',
   'newfangled/plaques_model',
   'newfangled/items_model',
@@ -35,11 +32,8 @@ define([
   'newfangled/tags_model',
 ],
 function(
-  aris_req,
-  aris_session,
   users_model,
   games_model,
-  user_games_model,
   groups_model,
   plaques_model,
   items_model,
@@ -66,37 +60,12 @@ function(
   return new (function()
   {
     var self = this;
-    var numGameLoadModels = 22;
-
-    self.users = users_model;
-    self.games = games_model;
-    self.user_games = user_games_model;
-    self.groups = groups_model;
-    self.plaques = plaques_model;
-    self.items = items_model;
-    self.dialogs = dialogs_model;
-    self.dialog_characters = dialog_characters_model;
-    self.dialog_scripts = dialog_scripts_model;
-    self.dialog_options = dialog_options_model;
-    self.web_pages = web_pages_model;
-    self.event_packages = event_packages_model;
-    self.events = events_model;
-    self.factories = factories_model;
-    self.scenes = scenes_model;
-    self.instances = instances_model;
-    self.triggers = triggers_model;
-    self.media = media_model;
-    self.quests = quests_model;
-    self.requirement_root_packages = requirement_root_packages_model;
-    self.requirement_and_packages = requirement_and_packages_model;
-    self.requirement_atoms = requirement_atoms_model;
-    self.tabs = tabs_model;
-    self.tags = tags_model;
+    var numModels = 22;
 
     self.loadDataForGameId = function(game_id,callbacks)
     {
       var n_success = 0;
-      function success(){ n_success++; if(n_success >= numGameLoadModels && callbacks && callbacks.success) callbacks.success(); }
+      function success(){ n_success++; if(n_success >= numModels && callbacks && callbacks.success) callbacks.success(); }
       function fail(){ if(callbacks && callbacks.fail) callbacks.fail(); }
 
       games_model.reqGetById(game_id,{success:success,fail:fail});
@@ -121,31 +90,7 @@ function(
       requirement_atoms_model.reqGetAllForGame(game_id,{success:success,fail:fail});
       tabs_model.reqGetAllForGame(game_id,{success:success,fail:fail});
       tags_model.reqGetAllForGame(game_id,{success:success,fail:fail});
-    };
-
-    self.logIn = function(name, pass,callbacks)
-    {
-      function fail()
-      {
-        if(callbacks && callbacks.fail) callbacks.fail();
-      }
-
-      aris_req.request('users.logIn',{user_name:name,password:pass,permission:"read_write"},{
-        success:function(response)
-        {
-          self.users_model.reqGetById(response.data.user_id,{
-            success:function()
-            {
-              aris_session.logIn(response.data.user_name, response.data.user_id, response.data.read_write_key);
-              if(callbacks && callbacks.success) callbacks.success();
-            },
-            fail:fail
-          });
-        },
-        fail:fail
-      });
-    };
-
+    }
   })();
 });
 

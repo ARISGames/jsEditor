@@ -4,6 +4,7 @@ define([
   'text!templates/games.tpl',
   'views/game_row',
   'views/game_create',
+  'models/game',
   'vent',
   'config',
 ],
@@ -13,45 +14,25 @@ function(
   Template,
   GameRowView,
   GameCreateView,
+  Game,
   vent,
   config
 )
 {
-  return Backbone.Marionette.ItemView.extend(
+  return Backbone.Marionette.CompositeView.extend(
   {
     template: _.template(Template),
 
-    itemView:GameRowView,
-    itemViewContainer:'.games',
+    itemView: GameRowView,
+    itemViewContainer: '.games',
 
-    initialize: function()
-    {
-      var self = this;
-          
-      self.collection = getUserGames;
-    },
-
-    getUserGames: function()
-    {
-      var user_games = [];
-      var games = app_model.games.members;
-      var user_game_pairs = app_model.user_games.getAllMatching("user_id",aris_session.user_id);
-      for(var i = 0; i < games.length; i++)
-        for(var j = 0; j < user_game_pairs.length; j++)
-          if(games[i].game_id = user_game_paris[j].game_id) user_games.push(games[i]);
-
-      return user_games;
-    }
-
-    events:
-    {
+    events: {
       "click .new": "onClickNew"
     },
 
     onClickNew: function()
     {
-      if(window.running_migrations && Object.keys(window.running_migrations).length > 0)
-      {
+      if(window.running_migrations && Object.keys(window.running_migrations).length > 0) {
         alert(window.onbeforeunload.call());
         return;
       }

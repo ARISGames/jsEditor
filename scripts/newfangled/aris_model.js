@@ -64,13 +64,6 @@ function(
           if(new_members[i][self.idAttribute] == self.members[j][self.idAttribute])
           {
             found = true;
-            if(!self.members[j] || !self.members[j].mergeIn)
-            {
-              console.log(self.members);
-              console.log(j);
-              console.log(self.members[j]);
-              console.log(self.members[j].mergeIn);
-            }
             if(self.members[j].mergeIn(new_members[i],Object.keys(self.defaultObject)))
             {
               //notify of delta
@@ -92,7 +85,7 @@ function(
     {
       var self = this;
       var m = new aris_do();
-      m.mergeIn(self.defaultObject,Object.keys(self.defaultObject));
+      aris_do.merge_in(self.defaultObject,Object.keys(self.defaultObject));
       return m;
     }
 
@@ -135,9 +128,7 @@ function(
         {
           success:function(response)
           {
-            var newMember = self.genMember();
-            newMember.mergeIn(response.data,Object.keys(self.defaultObject));
-            self.mergeIntoMembers([newMember]);
+            self.mergeIntoMembers([response.data]);
             if(callbacks && callbacks.success) callbacks.success(self.getById(id));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
@@ -157,9 +148,7 @@ function(
         {
           success:function(response)
           {
-            var newMember = self.genMember();
-            newMember.mergeIn(response.data,Object.keys(self.defaultObject));
-            self.mergeIntoMembers([newMember]);
+            self.mergeIntoMembers([response.data]);
             if(callbacks && callbacks.success) callbacks.success(self.getById(response.data[self.idAttribute]));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
@@ -179,9 +168,7 @@ function(
         {
           success:function(response)
           {
-            var newMember = self.genMember();
-            newMember.mergeIn(response.data,Object.keys(self.defaultObject));
-            self.mergeIntoMembers([newMember]);
+            self.mergeIntoMembers([response.data]);
             if(callbacks && callbacks.success) callbacks.success(self.getById(member[self.idAttribute]));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }
@@ -208,13 +195,7 @@ function(
         {
           success:function(response)
           {
-            var newMembers = [];
-            for(var i = 0; i < response.data.length; i++)
-            {
-              newMembers[i] = self.genMember();
-              newMembers[i].mergeIn(response.data[i],Object.keys(self.defaultObject));
-            }
-            self.mergeIntoMembers(newMembers);
+            self.mergeIntoMembers(response.data);
             if(callbacks && callbacks.success) callbacks.success(self.getAllForGame(id));
           },
           fail:function() { if(callbacks && callbacks.fail) callbacks.fail(); }

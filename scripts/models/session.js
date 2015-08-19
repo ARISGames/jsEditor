@@ -19,7 +19,7 @@ function(
 {
   var Session = Backbone.Model.extend({
     logged_in: function() {
-      if($.cookie('read_write_key') != undefined) {
+      if($.cookie('auth_token') != undefined) {
         return true;
       }
       else {
@@ -38,7 +38,7 @@ function(
           if(json.returnCode == 0) {
             $.cookie('username',   json.data.user_name);
             $.cookie('editor_id',  json.data.user_id);
-            $.cookie('read_write_key', json.data.read_write_key);
+            $.cookie('auth_token', json.data.read_write_key);
 
             vent.trigger('session.login');
           }
@@ -60,7 +60,7 @@ function(
           if(json.returnCode == 0) {
             $.cookie('username',   json.data.user_name);
             $.cookie('editor_id',  json.data.user_id);
-            $.cookie('read_write_key', json.data.read_write_key);
+            $.cookie('auth_token', json.data.read_write_key);
 
             vent.trigger('session.login');
           }
@@ -97,15 +97,15 @@ function(
     {
       $.removeCookie('username');
       $.removeCookie('editor_id');
-      $.removeCookie('read_write_key');
+      $.removeCookie('auth_token');
 
       vent.trigger('session.logout');
     },
 
     username: function() { return $.cookie('username'); },
     editor_id: function() { return $.cookie('editor_id'); },
-    read_write_key: function () { return $.cookie('read_write_key'); },
-    auth_json: function() { return {"key": this.read_write_key(), "user_id": this.editor_id()}; }
+    auth_token: function () { return $.cookie('auth_token'); },
+    auth_json: function() { return {"key": this.auth_token(), "user_id": this.editor_id()}; }
   });
 
   return new Session();

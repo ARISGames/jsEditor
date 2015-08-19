@@ -11,23 +11,23 @@ define([
 function(
 )
 {
-  var aris_do = function() { };
-  aris_do.prototype.mergeIn = function(obj,attribs)
+  return function()
   {
     var self = this;
 
-    var diff = false;
-    for(var i = 0; i < attribs.length; i++)
+    self.mergeIn = function(obj,attribs)
     {
-      if(self[attribs[i]] != obj[attribs[i]])
+      var diff = false;
+      for(var i = 0; i < attribs.length; i++)
       {
-        diff = true;
-        self[attribs[i]] = obj[attribs[i]];
+        if(self[attribs[i]] != obj[attribs[i]])
+        {
+          diff = true;
+          self[attribs[i]] = obj[attribs[i]];
+        }
       }
+      return diff;
     }
-    return diff;
-  }
-
-  return aris_do;
+  };
 });
 

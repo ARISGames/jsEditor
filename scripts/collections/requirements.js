@@ -22,7 +22,7 @@ function(
     model: Requirement,
     url: function() {
       // hard coded for location temporarily
-      return this.amfphp_url_root+"requirements.getRequirementsForObject/"+this.parent.get('game_id')+"/Location/"+this.parent.get('location_id')+"/"+session.editor_id()+"/"+session.read_write_key();
+      return this.amfphp_url_root+"requirements.getRequirementsForObject/"+this.parent.get('game_id')+"/Location/"+this.parent.get('location_id')+"/"+session.editor_id()+"/"+session.auth_token();
     },
   });
 });
