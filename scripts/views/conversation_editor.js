@@ -25,8 +25,7 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.ItemView.extend(
-  {
+  return Backbone.Marionette.ItemView.extend({
     template: _.template(Template),
 
     templateHelpers: function()
@@ -38,13 +37,11 @@ function(
 
     className: 'conversation-editor',
 
-    ui:
-    {
+    ui: {
       intro_script_region: '.intro_script_region'
     },
 
-    events:
-    {
+    events: {
       'click .add-intro-script': "onClickNew"
     },
 
@@ -59,7 +56,7 @@ function(
 
     onRender: function()
     {
-      var self = this;
+      var view = this;
 
       // re-wire up children, characters, and media
       this.incoming_options.scripts.each(function(script)
@@ -67,7 +64,7 @@ function(
         // Flag to prevent infinitely recursive rendering
         script.set("rendered", false);
 
-        var script_options = self.incoming_options.script_options.where({parent_dialog_script_id: script.id});
+        var script_options = view.incoming_options.script_options.where({parent_dialog_script_id: script.id});
 
         script_options.sort(function(a,b){ if(parseInt(a.get("sort_index")) < parseInt(b.get("sort_index"))) return -1; if(parseInt(a.get("sort_index")) > parseInt(b.get("sort_index"))) return 1; return 0; });
 
@@ -90,25 +87,23 @@ function(
 
         script.set("dialog_options", new DialogOptionsCollection(script_options));
 
-        var character = self.incoming_options.characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
+        var character = view.incoming_options.characters.findWhere({dialog_character_id: script.get("dialog_character_id")});
         script.set("character", character);
       });
 
-      if(this.model)
-      {
+      if(this.model) {
         this.model.set("root_node", true)
         var conversation_script = new ConversationScriptView(_.extend(this.incoming_options, {el: this.ui.intro_script_region, model: this.model, collection: this.model.get("dialog_options")}));
         conversation_script.render();
 
-        if(!this.centered_once)
-        {
-          setTimeout(function() { self.centered_once = true; self.$el.get(0).scrollLeft = (self.$el.get(0).scrollWidth - self.$el.get(0).clientWidth) / 2 }, 200);
+        if(!this.centered_once) {
+          setTimeout(function() { view.centered_once = true; view.$el.get(0).scrollLeft = (view.$el.get(0).scrollWidth - view.$el.get(0).clientWidth) / 2 }, 200);
         }
-      }
+                        }
 
       /*setTimeout(function()
       {
-        self.$el.find('.conversation_pan_region').panzoom({
+        view.$el.find('.conversation_pan_region').panzoom({
           contain: 'invert'
         });
 
@@ -117,33 +112,32 @@ function(
 
     onClickNew: function()
     {
-      var self = this;
+      var view = this;
 
       // Add them to collection for saving
       //
-      this.model = new DialogScript({text:"Hello", game_id:this.game.id, dialog_id:this.dialog.id});
+      this.model = new DialogScript({text: "Hello", game_id: this.game.id,
+        dialog_id: this.dialog.id});
 
-      var dialog_option = new DialogOption({prompt:"Bye bye", game_id:this.game.id, dialog_id:this.dialog.id});
+      var dialog_option = new DialogOption({prompt: "Bye bye", game_id: this.game.id, dialog_id: this.dialog.id});
       this.model.set("dialog_options", new DialogOptionsCollection([dialog_option]));
 
-      var character = new Character({name:"You"})
-      var media = new Media({media_id:"0"});
+      var character = new Character({name: "You"})
+      var media = new Media({media_id: "0"});
 
       character.set("media", media);
       this.model.set("character", character);
 
+
       // FIXME make them temporary until 'saved'
-      $.when(
-        this.model.save()
-      ).done(function()
-      {
-          self.dialog.set("intro_dialog_script_id", self.model.id);
-          dialog_option.set("parent_dialog_script_id", self.model.id);
+      $.when(this.model.save()).done(function () {
+          view.dialog.set("intro_dialog_script_id", view.model.id);
+          dialog_option.set("parent_dialog_script_id", view.model.id);
 
-          self.incoming_options.scripts.add(self.model);
-          self.incoming_options.script_options.add(dialog_option);
+          view.incoming_options.scripts.add(view.model);
+          view.incoming_options.script_options.add(dialog_option);
 
-          $.when(self.dialog.save(), dialog_option.save()).done(self.render);
+          $.when(view.dialog.save(), dialog_option.save()).done(view.render);
       });
     }
   });

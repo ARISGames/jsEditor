@@ -57,90 +57,89 @@ function(
 
     templateHelpers: function()
     {
-      return { icon_thumb_url: this.model.icon_thumbnail() }
+      return {
+        icon_thumb_url: this.model.icon_thumbnail()
+      }
     },
 
     events: {
-      "click":"onClickEdit"
+      "click": "onClickEdit"
     },
 
     initialize: function()
     {
-      var self = this;
-      self.listenTo(self.model, 'change', self.rebindEventsAndRender);
-      self.rebindEventsAndRender();
+      // Model events
+      this.listenTo(this.model, 'change', this.rebindEventsAndRender);
+      this.rebindEventsAndRender();
     },
 
     rebindEventsAndRender: function(model)
     {
-      var self = this;
       // Thumbnail
-      if(self.icon) { self.stopListening(self.icon); }
+      if(this.icon)
+      {
+        this.stopListening(this.icon);
+      }
 
-      self.icon = self.model.icon()
-      self.listenTo(self.icon, 'change', self.render);
+      this.icon = this.model.icon()
+      this.listenTo(this.icon, 'change', this.render);
 
       // Don't render while initializing
-      if(model) { self.render(); }
+      if(model) { this.render(); }
     },
 
+
+    // TODO convert to storage collection references
     onClickEdit: function()
     {
-      var self = this;
-      var game = new Game({game_id:self.model.get("game_id")});
+      var game = new Game({game_id: this.model.get("game_id")});
 
-      var dialog     = self.model;
-      var characters = new CharactersCollection   ([], {parent:game});
-      var media      = new MediaCollection        ([], {parent:game});
-      var scripts    = new DialogScriptsCollection([], {parent:dialog, game:game});
-      var options    = new DialogOptionsCollection([], {parent:dialog, game:game});
+      var dialog     = this.model;
+      var characters = new CharactersCollection   ([], {parent: game});
+      var media      = new MediaCollection        ([], {parent: game});
+      var scripts    = new DialogScriptsCollection([], {parent: dialog, game: game});
+      var options    = new DialogOptionsCollection([], {parent: dialog, game: game});
 
 
       var contents = {
-        plaques:    new PlaquesCollection  ([], {parent:game}),
-        items:      new ItemsCollection    ([], {parent:game}),
-        web_pages:  new WebPagesCollection ([], {parent:game}),
-        dialogs:    new DialogsCollection  ([], {parent:game}),
-        tabs:       new TabsCollection     ([], {parent:game})
+        plaques:    new PlaquesCollection  ([], {parent: game}),
+        items:      new ItemsCollection    ([], {parent: game}),
+        web_pages:  new WebPagesCollection ([], {parent: game}),
+        dialogs:    new DialogsCollection  ([], {parent: game}),
+        tabs:       new TabsCollection     ([], {parent: game})
       };
 
-      $.when(
-        characters.fetch(),
-        media.fetch(),
-        scripts.fetch(),
-        options.fetch(),
-        contents.plaques.fetch(),
-        contents.items.fetch(),
-        contents.web_pages.fetch(),
-        contents.dialogs.fetch(),
-        contents.tabs.fetch()
-      ).done(function()
+      $.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch(), contents.tabs.fetch()).done(function()
       {
-        var intro_script = scripts.findWhere({dialog_script_id:dialog.get("intro_dialog_script_id")});
 
-        var character = new Character({name:"You", dialog_character_id:"0", title:"The Player"})
+        // FIXME Load in null script like client does until migration is changed
+        var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
+
+        //add 'null' character
+        var character = new Character({name: "You", dialog_character_id: "0", title: "The Player"})
         characters.unshift(character);
 
-        var character_media = new Media({media_id:"0"});
+        //add 'null' media
+        var character_media = new Media({media_id: "0"});
         media.push(character_media);
 
         // TODO remove once we preload all objects in a controller/router
         storage.media.add(media.models);
 
         var conversations_editor = new ConversationEditorView(
-        {
-          model:intro_script,
-          dialog:dialog,
-          characters:characters,
-          scripts:scripts,
-          script_options:options,
-          contents:contents,
-          game:game
-        });
+          {
+            model: intro_script,
+            dialog: dialog,
+            characters: characters,
+            scripts: scripts,
+            script_options: options,
+            contents: contents,
+            game: game
+          });
         vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
-        vent.trigger("application:list:show", new CharactersOrganizerView({collection:characters, model:game}));
+        vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters, model: game}));
 
-      }.bind(self));
+      }.bind(this));
     }
 
   });

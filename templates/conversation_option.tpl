@@ -48,4 +48,3 @@
 	<div class="child_script_<%= cid %>">
 	</div>
 </div>
-
