@@ -1,0 +1,24 @@
+define(
+  [],
+  function()
+  {
+    var base_url = "http://localhost:10080/server/";
+
+    return {
+      "aris_api_url": base_url + "json.php/v2.",
+      "migration_api_url": base_url + "services/migration/",
+
+      /*
+        Note- the following lines will be parsed by a simple pre-processor
+        expecting simple, straightforward key-value pairs.
+
+        So please leave the values as simple strings (no arbitrary javascript)!
+      */
+
+      "google_analytics_key": "UA-10031673-5",
+      "google_maps_key": "AIzaSyAFwQCkB0PIXl2Z1aed49frgFcwZONwTuY",
+      "compress": true,
+    };
+  }
+);
+

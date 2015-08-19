@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+set -u
 
 # Helper for conditional inclusion of features.
 command_exists()
