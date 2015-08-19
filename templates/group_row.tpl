@@ -5,5 +5,5 @@
     </h4>
   </div>
 </div>
-<div class="tab-drag-handle">&equiv;</div>
+<div class="group-drag-handle">&equiv;</div>
 
