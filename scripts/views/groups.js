@@ -55,7 +55,7 @@ function(
     {
       var sort_options = {
         items: '.draggable-game-group',
-        handle: '.tab-drag-handle',
+        handle: '.group-drag-handle',
         stop: function( event, ui ) { vent.trigger("grouprow:released", ui.item, ui.item.index()); }
       };
 
