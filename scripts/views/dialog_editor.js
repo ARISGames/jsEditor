@@ -6,7 +6,7 @@ define([
   'text!templates/dialog_editor.tpl',
   'vent',
   'storage',
-  'collections/dialog_characters',
+  'collections/characters',
   'collections/media',
   'collections/dialog_scripts',
   'collections/dialog_options',
@@ -17,7 +17,7 @@ define([
   'collections/tabs',
   'models/media',
   'models/game',
-  'models/dialog_character',
+  'models/character',
   'models/dialog_script',
   'models/dialog_option',
   'views/media_chooser',
@@ -208,17 +208,7 @@ function(
         tabs:       new TabsCollection     ([], {parent:game})
       };
 
-      $.when(
-        characters.fetch(),
-        media.fetch(),
-        scripts.fetch(),
-        options.fetch(),
-        contents.plaques.fetch(),
-        contents.items.fetch(),
-        contents.web_pages.fetch(),
-        contents.dialogs.fetch(),
-        contents.tabs.fetch()
-      ).done(function()
+      $.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch(), contents.tabs.fetch()).done(function()
       {
         var intro_script = scripts.findWhere({dialog_script_id:dialog.get("intro_dialog_script_id")});
         var character = new Character({name:"You", dialog_character_id:"0", title:"The Player"})

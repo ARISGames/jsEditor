@@ -45,35 +45,31 @@ function(
 
     initialize: function(options)
     {
-      var self = this;
-      self.characters = options.characters;
-      self.scripts = options.scripts;
-      self.script_options = options.script_options;
-      self.instance_parent_option = options.instance_parent_option;
+      this.characters = options.characters;
+      this.scripts = options.scripts;
+      this.script_options = options.script_options;
+      this.instance_parent_option = options.instance_parent_option;
 
       // Undo abilities for cancel button
       //
-      self.previous_attributes = _.clone(self.model.attributes)
+      this.previous_attributes = _.clone(this.model.attributes)
 
       // Render when new characters created on left
       //
-      self.characters.on("add", self.render);
+      this.characters.on("add", this.render);
     },
 
     onRender: function()
     {
-      var self = this;
-      self.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
+      this.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
     },
 
-    ui:
-    {
+    ui: {
       text: ".text",
       character: ".character"
     },
 
-    events:
-    {
+    events: {
       "change @ui.text":      "onChangeText",
       "change @ui.character": "onChangeCharacter",
       "click .save":          "onClickSave",
@@ -84,21 +80,18 @@ function(
 
     onChangeText: function()
     {
-      var self = this;
-      self.model.set("text", self.ui.text.val());
+      this.model.set("text", this.ui.text.val());
     },
 
     onChangeCharacter: function()
     {
-      var self = this;
-      var value = self.ui.character.find("option:selected").val();
-      self.model.set("dialog_character_id", value);
+      var value = this.ui.character.find("option:selected").val();
+      this.model.set("dialog_character_id", value);
     },
 
     onClickSave: function()
     {
-      var self = this;
-      self.model.save({}, {
+      this.model.save({}, {
         success: function()
         {
           vent.trigger("conversation:update");
@@ -109,9 +102,8 @@ function(
 
     onClickCancel: function()
     {
-      var self = this;
-      delete self.previous_attributes.event_package_id;
-      self.model.set(self.previous_attributes);
+      delete this.previous_attributes.event_package_id;
+      this.model.set(this.previous_attributes);
       vent.trigger("application:info:hide");
     },
 
@@ -167,11 +159,11 @@ function(
 
     onClickDelete: function()
     {
-      var self = this;
-      if(!self.instance_parent_option) return; //actually should do something else
+      if(!this.instance_parent_option) return; //actually should do something else
+      var view = this;
 
       var copied_child_options = [];
-      var current_child_options = self.script_options.where({parent_dialog_script_id:self.model.get("dialog_script_id")});
+      var current_child_options = view.script_options.where({parent_dialog_script_id:view.model.get("dialog_script_id")});
       for(var i = 0; i < current_child_options.length; i++) {
         copied_child_options[i] = new DialogOption();
         copied_child_options[i].set("game_id",    current_child_options[i].get("game_id"));
@@ -180,29 +172,25 @@ function(
         copied_child_options[i].set("link_id",    current_child_options[i].get("link_id"));
         copied_child_options[i].set("prompt",     current_child_options[i].get("prompt"));
         copied_child_options[i].set("sort_index", current_child_options[i].get("sort_index"));
-        copied_child_options[i].set("parent_dialog_script_id", self.instance_parent_option.get("parent_dialog_script_id"));
+        copied_child_options[i].set("parent_dialog_script_id", view.instance_parent_option.get("parent_dialog_script_id"));
       }
 
       //poor man's map
       function saveRemainingChildOptions()
       {
-        if(copied_child_options.length > 0)
-        {
-          copied_child_options[0].save({},
-          {
+        if(copied_child_options.length > 0) {
+          copied_child_options[0].save({}, {
             success: function()
             {
-              self.script_options.push(copied_child_options[0]);
+              view.script_options.push(copied_child_options[0]);
               copied_child_options.splice(0,1);
               saveRemainingChildOptions();
             }
           });
         }
-        else
-        {
-          self.script_options.remove(self.instance_parent_option);
-          self.instance_parent_option.destroy(
-          {
+        else {
+          view.script_options.remove(view.instance_parent_option);
+          view.instance_parent_option.destroy({
             success: function()
             {
               vent.trigger("conversation:update");
@@ -233,8 +221,7 @@ function(
       }
 
       this.scripts.remove(this.model);
-      this.model.destroy(
-      {
+      this.model.destroy({
         success: function()
         {
           vent.trigger("conversation:update");
@@ -245,4 +232,3 @@ function(
 
   });
 });
-

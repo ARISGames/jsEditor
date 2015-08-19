@@ -27,8 +27,6 @@ function(
       self.items.parent          = game;
       self.dialogs.parent        = game;
       self.dialog_scripts.parent = game;
-      self.dialog_options.parent = game;
-      self.dialog_characters.parent = game;
       self.web_pages.parent      = game;
       self.event_packages.parent = game;
       self.factories.parent      = game;
@@ -57,8 +55,6 @@ function(
       else if(idAttribute === "item_id")           { self.items.add(game_object);          }
       else if(idAttribute === "dialog_id")         { self.dialogs.add(game_object);        }
       else if(idAttribute === "dialog_script_id")  { self.dialog_scripts.add(game_object); }
-      else if(idAttribute === "dialog_option_id")  { self.dialog_options.add(game_object); }
-      else if(idAttribute === "dialog_character_id")  { self.dialog_characters.add(game_object); }
       else if(idAttribute === "web_page_id")       { self.web_pages.add(game_object);      }
       else if(idAttribute === "event_package_id")  { self.event_packages.add(game_object); }
       else if(idAttribute === "factory_id")        { self.factories.add(game_object);      }
@@ -75,8 +71,6 @@ function(
       if(type === "ITEM")          { return self.items.retrieve(id);          }
       if(type === "DIALOG")        { return self.dialogs.retrieve(id);        }
       if(type === "DIALOG_SCRIPT") { return self.dialog_scripts.retrieve(id); }
-      if(type === "DIALOG_OPTION") { return self.dialog_options.retrieve(id); }
-      if(type === "DIALOG_CHARACTER") { return self.dialog_characters.retrieve(id); }
       if(type === "WEB_PAGE")      { return self.web_pages.retrieve(id);      }
       if(type === "SCENE")         { return self.scenes.retrieve(id);         }
       if(type === "FACTORY")       { return self.factories.retrieve(id);      }

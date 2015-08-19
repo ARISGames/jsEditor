@@ -3,14 +3,16 @@ define([
   'underscore',
   'backbone',
   'text!templates/conversation_row.tpl',
+  'vent',
+  'storage',
   'views/conversation_editor',
   'views/character_organizer',
   'models/media',
   'models/game',
-  'models/dialog_character',
+  'models/character',
   'models/dialog_script',
   'models/dialog_option',
-  'collections/dialog_characters',
+  'collections/characters',
   'collections/media',
   'collections/dialog_scripts',
   'collections/dialog_options',
@@ -19,14 +21,14 @@ define([
   'collections/web_pages',
   'collections/dialogs',
   'collections/tabs',
-  'storage',
-  'vent',
 ],
 function(
   $,
   _,
   Backbone,
   Template,
+  vent,
+  storage,
   ConversationEditorView,
   CharactersOrganizerView,
   Media,
@@ -42,15 +44,14 @@ function(
   ItemsCollection,
   WebPagesCollection,
   DialogsCollection,
-  TabsCollection,
-  storage,
-  vent
+  TabsCollection
 )
 {
   return Backbone.Marionette.ItemView.extend(
   {
     template: _.template(Template),
 
+    // Bootstrap
     tagName: 'a',
     className: "list-group-item",
 
@@ -59,36 +60,87 @@ function(
       return { icon_thumb_url: this.model.icon_thumbnail() }
     },
 
-    events:
-    {
+    events: {
       "click":"onClickEdit"
     },
 
     initialize: function()
     {
       var self = this;
-      //self.listenTo(self.model, 'change', self.rebindEventsAndRender);
+      self.listenTo(self.model, 'change', self.rebindEventsAndRender);
       self.rebindEventsAndRender();
     },
 
     rebindEventsAndRender: function(model)
     {
       var self = this;
-      //if(self.icon) { self.stopListening(self.icon); }
+      // Thumbnail
+      if(self.icon) { self.stopListening(self.icon); }
 
       self.icon = self.model.icon()
-      //self.listenTo(self.icon, 'change', self.render);
+      self.listenTo(self.icon, 'change', self.render);
 
+      // Don't render while initializing
       if(model) { self.render(); }
     },
 
     onClickEdit: function()
     {
       var self = this;
+      var game = new Game({game_id:self.model.get("game_id")});
 
-      var conversation_editor_view = new ConversationEditorView({model:self.model});
-      vent.trigger("application.show", conversation_editor_view, "Edit Conversation Script", true);
-      vent.trigger("application:list:show", new CharactersOrganizerView({collection:storage.dialog_characters, model:storage.game}));
+      var dialog     = self.model;
+      var characters = new CharactersCollection   ([], {parent:game});
+      var media      = new MediaCollection        ([], {parent:game});
+      var scripts    = new DialogScriptsCollection([], {parent:dialog, game:game});
+      var options    = new DialogOptionsCollection([], {parent:dialog, game:game});
+
+
+      var contents = {
+        plaques:    new PlaquesCollection  ([], {parent:game}),
+        items:      new ItemsCollection    ([], {parent:game}),
+        web_pages:  new WebPagesCollection ([], {parent:game}),
+        dialogs:    new DialogsCollection  ([], {parent:game}),
+        tabs:       new TabsCollection     ([], {parent:game})
+      };
+
+      $.when(
+        characters.fetch(),
+        media.fetch(),
+        scripts.fetch(),
+        options.fetch(),
+        contents.plaques.fetch(),
+        contents.items.fetch(),
+        contents.web_pages.fetch(),
+        contents.dialogs.fetch(),
+        contents.tabs.fetch()
+      ).done(function()
+      {
+        var intro_script = scripts.findWhere({dialog_script_id:dialog.get("intro_dialog_script_id")});
+
+        var character = new Character({name:"You", dialog_character_id:"0", title:"The Player"})
+        characters.unshift(character);
+
+        var character_media = new Media({media_id:"0"});
+        media.push(character_media);
+
+        // TODO remove once we preload all objects in a controller/router
+        storage.media.add(media.models);
+
+        var conversations_editor = new ConversationEditorView(
+        {
+          model:intro_script,
+          dialog:dialog,
+          characters:characters,
+          scripts:scripts,
+          script_options:options,
+          contents:contents,
+          game:game
+        });
+        vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
+        vent.trigger("application:list:show", new CharactersOrganizerView({collection:characters, model:game}));
+
+      }.bind(self));
     }
 
   });

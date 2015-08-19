@@ -14,4 +14,3 @@ function(
     amfphp_url: "dialogs.getDialogOptionsForDialog"
   });
 });
-
