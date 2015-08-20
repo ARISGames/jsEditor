@@ -7,6 +7,7 @@ define([
   'models/game',
   'views/media_chooser',
   'views/event_inference_row',
+  'models/session',
   'vent',
   'storage',
 ],
@@ -19,6 +20,7 @@ function(
   Game,
   MediaChooserView,
   EventInferenceRow,
+  session,
   vent,
   storage
 )
@@ -37,7 +39,8 @@ function(
       return {
         is_new: self.model.isNew(),
         icon_thumbnail_url:  self.model.icon_thumbnail(),
-        media_thumbnail_url: self.model.media_thumbnail()
+        media_thumbnail_url: self.model.media_thumbnail(),
+        tags: storage.tags
       }
     },
 
@@ -57,12 +60,25 @@ function(
       "weight":             "#item-weight",
       "max_qty":            "#item-max_qty_in_inventory",
       "item_types":         ".item-type",
+      "item_tag":           "#item-tag",
       "type_tabs":          ".type-tab"
     },
 
     initialize: function()
     {
       var self = this;
+
+      self.request("tags.getObjectTagsForObject", {"game_id":self.model.get("game_id"),"object_type":"ITEM","object_id":self.model.id}, 
+      {
+        success:function(response)
+        {
+          if(response.data && response.data[0])
+          {
+            self.model.set("tag_id",response.data[0].tag_id);
+            self.render();
+          }
+        }
+      });
 
       self.storePreviousAttributes();
       self.bindAssociations();
@@ -91,7 +107,8 @@ function(
       "change @ui.droppable":          "onChangeDroppable",
       "change @ui.destroyable":        "onChangeDestroyable",
       "change @ui.max_qty":            "onChangeMaxQuantity",
-      "change @ui.item_types":          "onChangeType"
+      "change @ui.item_types":         "onChangeType",
+      "change @ui.item_tag":           "onChangeTag",
     },
 
     onClickSave: function()
@@ -159,6 +176,63 @@ function(
 
       var display_tab = "." + selected_radio.val() + "-fields";
       $(display_tab).show();
+    },
+
+    //hack to just make a dang request rather than conform the "many to many" relationship between
+    //items and tags to backbone 'n friends' overarchitected limitations
+    request: function(method, data, callbacks)
+    {
+      data.auth = session.auth_json();
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function()
+      {
+        if(xhr.readyState == 4)
+        {
+            if(xhr.status == 200) //good
+            {
+              //console.log("Text :"+xhr.responseText);
+              if(callbacks && callbacks.success) callbacks.success(JSON.parse(xhr.responseText));
+            }
+            else
+            {
+              console.log("Bad thing- "+xhr.statusText);
+              if(callbacks && callbacks.fail) callbacks.fail(JSON.parse(xhr.responseText));
+            }
+        }
+      }
+      xhr.timeout = 0;
+      xhr.open("POST","http://www.arisgames.org/server/json.php/v2."+method,true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify(data));
+    },
+
+    onChangeTag: function()
+    {
+      var self = this;
+      self.model.set("tag_id",self.ui.item_tag.find("option:selected").val());
+      self.request("tags.deleteObjectTagsForObject",
+        {
+          "game_id":self.model.get("game_id"),
+          "object_type":"ITEM",
+          "object_id":self.model.id
+        },
+        {
+          success:function(response)
+          {
+            if(self.model.get("tag_id") != "0")
+            {
+              self.request("tags.createObjectTag",
+              {
+                "game_id":self.model.get("game_id"),
+                "object_type":"ITEM",
+                "object_id":self.model.id,
+                "tag_id":self.model.get("tag_id")
+              }, {});
+            }
+          }
+        }
+      );
     },
 
     storePreviousAttributes: function()

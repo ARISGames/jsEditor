@@ -74,6 +74,16 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <label for="item-tag">Tag</label>
+    <select class="form-control" id="item-tag">
+        <option value="0" <%= option_selected(tag_id === 0) %>>none</option>
+      <% tags.each(function(tag) { %>
+        <option value="<%= tag.id %>" <%= option_selected(tag.id === tag_id) %>><%= tag.get("tag") %></option>
+      <% }) %>
+    </select>
+  </div>
+
   <div class="row">
     <div class="col-xs-6 padded type-tab NORMAL-fields ATTRIB-fields URL-fields" <%= tab_visible(type === "ATTRIB" || type === "NORMAL" || type === "URL") %>>
       <div class="thumbnail change-icon">

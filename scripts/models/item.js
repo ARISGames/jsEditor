@@ -30,7 +30,9 @@ function(require)
       "max_qty_in_inventory",
       "weight",
       "url",
-      "type"
+      "type",
+
+      "tag_id"
         ],
 
     defaults: {
@@ -44,33 +46,18 @@ function(require)
       url: "",
       type: "NORMAL",
       icon_media_id: "0",
-      media_id: "0"
+      media_id: "0",
+
+      tag_id:"0"
     },
 
 
-    /* Associations */
+    icon: function() { return storage.media.retrieve(this.get('icon_media_id')); },
+    media: function() { return storage.media.retrieve(this.get('media_id')); },
+    default_icon: function() { return storage.media.retrieve('0'); },
 
-    icon: function() {
-      return storage.media.retrieve(this.get('icon_media_id'));
-    },
-
-    media: function() {
-      return storage.media.retrieve(this.get('media_id'));
-    },
-
-    default_icon: function() {
-      return storage.media.retrieve('0');
-    },
-
-    /* Helpers */
-
-    icon_thumbnail: function() {
-      return this.icon().thumbnail_for(this);
-    },
-
-    media_thumbnail: function() {
-      return this.media().thumbnail_for();
-    }
+    icon_thumbnail: function() { return this.icon().thumbnail_for(this); },
+    media_thumbnail: function() { return this.media().thumbnail_for(); }
   });
 });
 
