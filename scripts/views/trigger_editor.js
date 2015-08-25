@@ -489,6 +489,7 @@ function(
 
         dialog_scripts: storage.dialog_scripts
       };
+      contents.event_packages = storage.event_packages;
 
       if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 

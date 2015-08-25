@@ -34,6 +34,7 @@ function(
         content_dialog_scripts: this.isContentDialogScripts(),
         content_web_pages:      this.isContentWebPages(),
         content_quests:         this.isContentQuests(),
+        content_event_packages: this.isContentEventPackages(),
 
         items:          this.items,
         tags:           this.tags,
@@ -41,7 +42,8 @@ function(
         dialogs:        this.dialogs,
         dialog_scripts: this.dialog_scripts,
         web_pages:      this.web_pages,
-        quests:         this.quests
+        quests:         this.quests,
+        event_packages: this.event_packages,
       };
     },
 
@@ -58,6 +60,7 @@ function(
       this.dialog_scripts = options.contents.dialog_scripts;
       this.web_pages      = options.contents.web_pages;
       this.quests         = options.contents.quests;
+      this.event_packages = options.contents.event_packages;
     },
 
     ui: {
@@ -222,8 +225,6 @@ function(
         case "PLAYER_HAS_NOTE_WITH_COMMENTS":
         case "PLAYER_HAS_GIVEN_NOTE_COMMENTS":
           return true;
-
-
         default:
           return false;
       }
@@ -244,10 +245,10 @@ function(
         case "PLAYER_VIEWED_DIALOG_SCRIPT":
         case "PLAYER_VIEWED_WEB_PAGE":
         case "PLAYER_HAS_COMPLETED_QUEST":
+        case "PLAYER_RAN_EVENT_PACKAGE":
         case "PLAYER_HAS_RECEIVED_INCOMING_WEB_HOOK":
         case "PLAYER_HAS_NOTE_WITH_TAG":
           return true;
-
         default:
           return false;
       }
@@ -261,7 +262,6 @@ function(
         case "PLAYER_HAS_UPLOADED_MEDIA_ITEM_AUDIO":
         case "PLAYER_HAS_UPLOADED_MEDIA_ITEM_VIDEO":
           return true;
-
         default:
           return false;
       }
@@ -276,7 +276,6 @@ function(
         case "GROUP_HAS_ITEM":
         case "GAME_HAS_ITEM":
           return true;
-
         default:
           return false;
       }
@@ -290,7 +289,6 @@ function(
         case "GAME_HAS_TAGGED_ITEM":
         case "PLAYER_HAS_NOTE_WITH_TAG":
           return true;
-
         default:
           return false;
       }
@@ -301,7 +299,6 @@ function(
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_PLAQUE":
           return true;
-
         default:
           return false;
       }
@@ -312,7 +309,6 @@ function(
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_DIALOG":
           return true;
-
         default:
           return false;
       }
@@ -323,7 +319,6 @@ function(
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_DIALOG_SCRIPT":
           return true;
-
         default:
           return false;
       }
@@ -334,7 +329,6 @@ function(
       switch(this.model.get("requirement")) {
         case "PLAYER_VIEWED_WEB_PAGE":
           return true;
-
         default:
           return false;
       }
@@ -345,11 +339,21 @@ function(
       switch(this.model.get("requirement")) {
         case "PLAYER_HAS_COMPLETED_QUEST":
           return true;
-
         default:
           return false;
       }
-    }
+    },
+
+    isContentEventPackages: function()
+    {
+      switch(this.model.get("requirement")) {
+        case "PLAYER_RAN_EVENT_PACKAGE":
+          return true;
+        default:
+          return false;
+      }
+    },
+
   });
 });
 

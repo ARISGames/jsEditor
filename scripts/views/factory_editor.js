@@ -445,6 +445,7 @@ function(
         quests:         new QuestsCollection        ([], {parent: game}),
         hooks:          new WebHooksCollection      ([], {parent: game})
       };
+      contents.event_packages = storage.event_packages;
 
       if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 

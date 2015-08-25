@@ -78,6 +78,9 @@
 						<optgroup label="Quests">
 							<option value="PLAYER_HAS_COMPLETED_QUEST" <%= option_selected(requirement === "PLAYER_HAS_COMPLETED_QUEST") %>>Completed Quest</option>
 						</optgroup>
+						<optgroup label="Event Packages">
+							<option value="PLAYER_RAN_EVENT_PACKAGE" <%= option_selected(requirement === "PLAYER_RAN_EVENT_PACKAGE") %>>Ran Event Package</option>
+						</optgroup>
 					<% } %>
 				</select>
 				</div>
@@ -194,6 +197,15 @@
 						<!-- Quests -->
 						<% if(content_quests) { %>
 							<% quests.each(function(object) { %>
+								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
+									<%= object.get("name") %>
+								</option>
+							<% }); %>
+						<% } %>
+
+						<!-- Event Packages -->
+						<% if(content_event_packages) { %>
+							<% event_packages.each(function(object) { %>
 								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
 									<%= object.get("name") %>
 								</option>
