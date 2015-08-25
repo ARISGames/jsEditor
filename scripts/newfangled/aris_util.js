@@ -10,7 +10,7 @@ function(
   return new (function() //'new' means no need to reinstantiate every time (well, it auto-reinstantiates it on require...)
   {
     var self = this;
-    self.makeEl = function(type, options, style)
+    self.el = function(type, options, style, children)
     {
       var self = this;
       var div = document.createElement(type);
@@ -33,6 +33,9 @@ function(
       var keys = Object.keys(style);
       for(var i = 0; i < keys.length; i++)
         div.style[keys[i]] = style[keys[i]];
+
+      for(var i = 0; i < children.length; i++)
+        div.appendChild(children[i]);
 
       return div;
     };

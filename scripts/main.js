@@ -1,17 +1,11 @@
-/* application launcher */
 require(
 [
   'application',
-  'backbone',
-  'marionette'
 ],
 function(
-  application,
-  Backbone,
-  Marionette
+  application
 )
 {
-  Backbone.xrayViewDebugging = (typeof document !== 'undefined') ? document.URL.match(/xray-goggles/) : false;
   application.start();
 });
 

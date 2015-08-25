@@ -71,10 +71,10 @@ function(
   {
     initialize:function()
     {
-      this.bind('route', this._pageView);
+      var self = this;
+      self.on('route', self._pageView);
     },
 
-    // Hash based url tracking
     _pageView: function()
     {
       if(typeof ga != 'undefined')

@@ -6,8 +6,7 @@ define([
   'vent',
   'router',
   'views/user_nav_menu',
-  'storage',
-  'storage_collections',
+  'newfangled/app_model',
   'newfangled/aris_session',
 ],
 function(
@@ -17,15 +16,12 @@ function(
   vent,
   Router,
   UserNavMenuView,
-  storage,
-  StorageCollections,
+  app_model,
   aris_session
 )
 {
   var application = new Backbone.Marionette.Application();
 
-  // Application Layout
-  //
   application.addRegions(
   {
     main_region:   "#main",
@@ -36,34 +32,29 @@ function(
     dialog_region: "#modal-body"
   });
 
-  // Application Constructor
-  //
   application.addInitializer(
     function()
     {
-      // Add all game object collections to application storage.
-      StorageCollections.inject(storage);
-
-      this.router  = new Router;
+      var self = this;
+      self.router = new Router;
     }
   );
 
-  // Authorization Redirect
-  //
   application.on(
     "initialize:after",
     function()
     {
+      var self = this;
       if(!aris_session.loggedIn())
       {
         if(window.location.hash === "#login")
         {
-          this.intended_destination = "#";
+          self.intended_destination = "#";
           Backbone.history.start();
         }
         else
         {
-          this.intended_destination = window.location.hash;
+          self.intended_destination = window.location.hash;
           Backbone.history.start({silent:true});
           Backbone.history.navigate("#login", {trigger:true});
         }
@@ -76,8 +67,6 @@ function(
     }
   );
 
-  // Render Event receiver
-  //
   vent.on("application.show",              function(view)     { application.main_region.show(view); });
   vent.on("application:nav:show",          function(view)     { application.nav_region.show(view);  });
   vent.on("application:nav:hide",          function()         { application.nav_region.reset();     });
@@ -91,8 +80,6 @@ function(
     "application:popup:show",
     function(view, title, large)
     {
-      // TODO add a title property to views which is smart based on where its rendered
-
       // Reset
       $('#modal-title').text("");
       $('.modal-header').hide();

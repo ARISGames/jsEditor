@@ -4,6 +4,8 @@ define([
   'text!templates/games.tpl',
   'views/game_row',
   'views/game_create',
+  'newfangled/app_model',
+  'newfangled/aris_session',
   'vent',
   'config',
 ],
@@ -13,6 +15,8 @@ function(
   Template,
   GameRowView,
   GameCreateView,
+  app_model,
+  aris_session,
   vent,
   config
 )
@@ -22,13 +26,13 @@ function(
     template: _.template(Template),
 
     itemView:GameRowView,
-    itemViewContainer:'.games',
+    //itemViewContainer:'.games',
 
     initialize: function()
     {
       var self = this;
           
-      self.collection = getUserGames;
+      //self.collection = self.getUserGames();
     },
 
     getUserGames: function()
@@ -41,7 +45,12 @@ function(
           if(games[i].game_id = user_game_paris[j].game_id) user_games.push(games[i]);
 
       return user_games;
-    }
+    },
+
+    ui:
+    {
+      games: '.games',
+    },
 
     events:
     {
