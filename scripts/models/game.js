@@ -28,6 +28,8 @@ function(require)
       "published",
       "type",
       "intro_scene_id",
+      "latitude",
+      "longitude",
       "map_type",
       "map_latitude",
       "map_longitude",
@@ -38,7 +40,7 @@ function(require)
       "notebook_allow_comments",
       "notebook_allow_player_tags",
       "notebook_allow_likes",
-      "inventory_weight_cap"
+      "inventory_weight_cap",
     ],
 
     defaults: {
@@ -49,9 +51,11 @@ function(require)
       published: "0",
       type: "LOCATION",
       intro_scene_id: "0",
+      latitude:"43.073",
+      longitude:"-89.4012",
       map_type: "STREET",
-      map_latitude: "0.0",
-      map_longitude: "0.0",
+      map_latitude:"43.073",
+      map_longitude:"-89.4012",
       map_zoom_level: "0",
       map_show_player: "1",
       map_show_players: "1",
@@ -60,36 +64,16 @@ function(require)
       notebook_allow_player_tags: "1",
       notebook_allow_likes: "1",
       inventory_weight_cap: "0",
-      duplicating: "false"
+      duplicating: "false",
     },
 
+    icon: function() { return storage.media.retrieve(this.get('icon_media_id')); },
+    media: function() { return storage.media.retrieve(this.get('media_id')); },
+    default_icon: function() { return storage.media.retrieve('0'); },
 
-    /* Associations */
+    icon_thumbnail: function() { return this.icon().thumbnail_for(this); },
+    media_thumbnail: function() { return this.media().thumbnail_for(); },
 
-    icon: function() {
-      return storage.media.retrieve(this.get('icon_media_id'));
-    },
-
-    media: function() {
-      return storage.media.retrieve(this.get('media_id'));
-    },
-
-    default_icon: function() {
-      return storage.media.retrieve('0');
-    },
-
-    /* Helpers */
-
-    icon_thumbnail: function() {
-      return this.icon().thumbnail_for(this);
-    },
-
-    media_thumbnail: function() {
-      return this.media().thumbnail_for();
-    },
-
-
-    /* Duplication */
     duplicate: function(options) {
       options || (options = {});
 
@@ -118,6 +102,7 @@ function(require)
         }
       });
     }
+
   });
 });
 
