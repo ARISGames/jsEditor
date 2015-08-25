@@ -444,7 +444,6 @@ function(
 
       var drag_marker = new google.maps.Marker({
         position: location_position,
-        title: "hello",
         map: map,
         draggable: true
       });
@@ -456,14 +455,9 @@ function(
 
       circle_marker.bindTo('center', drag_marker, 'position');
 
-      var center_on = function(circle)
-      {
-        boundary = circle.getBounds();
-        map.setCenter(boundary.getCenter());
-        map.fitBounds(boundary);
-      }
-
-      center_on(circle_marker);
+      boundary = circle_marker.getBounds();
+      map.setCenter(boundary.getCenter());
+      map.fitBounds(boundary);
 
       google.maps.event.addListener(drag_marker, 'dragend', 
         function(event)
@@ -471,7 +465,8 @@ function(
           var center = circle_marker.getCenter();
           self.model.set("latitude",  center.lat());
           self.model.set("longitude", center.lng());
-          center_on(circle_marker);
+          boundary = circle_marker.getBounds();
+          map.setCenter(boundary.getCenter());
         }
       );
     },
