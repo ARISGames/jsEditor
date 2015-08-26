@@ -58,9 +58,10 @@ function(
 
     ui:
     {
-      event: ".event-select",
-      content: ".content-select",
-      quantity: ".quantity"
+      "event": ".event-select",
+      "content": ".content-select",
+      "quantity": ".quantity",
+      "script": "#script",
     },
 
     events:
@@ -68,7 +69,8 @@ function(
       "change @ui.event":    "onChangeEvent",
       "change @ui.content":  "onChangeContent",
       "change @ui.quantity": "onChangeQuantity",
-      "click .delete":       "onClickDeleteEvent"
+      "change @ui.script":   "onChangeScript",
+      "click .delete":       "onClickDeleteEvent",
     },
 
     onChangeEvent: function()
@@ -90,6 +92,12 @@ function(
     {
       var self = this;
       self.model.set("qty", self.ui.quantity.val());
+    },
+
+    onChangeScript: function()
+    {
+      var self = this;
+      self.model.set("script", self.ui.script.val());
     },
 
     onClickDeleteEvent: function()

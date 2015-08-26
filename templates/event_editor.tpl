@@ -98,14 +98,7 @@
         <% } %>
 
         <% if(selecting_type == "js") { %>
-          <select class="form-control content-select">
-
-            <option value="0" selected disabled>None</option>
-
-            <optgroup label="<Coming Soon>">
-            </optgroup>
-
-          </select>
+          <input type="text" class="form-control" id="script" value="<%= script %>">
         <% } %>
 
       </div>
