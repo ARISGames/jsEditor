@@ -65,6 +65,8 @@ function(
 
       "map_canvas": ".map-canvas",
 
+      "network_levels":".network_level",
+
       "map_type":         "#game-map_type",
       "map_latitude":     "#game-map_latitude",
       "map_longitude":    "#game-map_longitude",
@@ -166,6 +168,7 @@ function(
       "click @ui.change_media": "onClickMedia",
 
       "change @ui.game_published": "onChangePublished",
+      "change @ui.network_levels": "onChangeNetworkLevel",
 
       "change @ui.login_group":        "onChangeLoginOptions",
       "keyup @ui.login_group":         "onChangeLoginOptions",
@@ -409,6 +412,17 @@ function(
           });
         }
       });
+    },
+
+    onChangeNetworkLevel: function()
+    {
+      var self = this;
+      var selected_radio = self.$el.find(".network_level:checked");
+
+      self.model.set("network_level", selected_radio.val());
+
+      self.ui.network_levels.parent().removeClass("active");
+      selected_radio.parent().addClass("active");
     },
 
     renderMap: function()

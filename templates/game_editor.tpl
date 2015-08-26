@@ -139,6 +139,33 @@
       </select>
     </div>
 
+    <div class="form-group">
+      <label for="network_level">Network</label>
+
+      <div class="btn-group btn-group-sm btn-group-justified network_levels">
+        <label class="btn btn-info  <%= tab_selected(network_level === "LOCAL") %>">
+          <input type="radio" class="network_level item-type" name="network_level" value="LOCAL" <%= radio_selected(network_level === "LOCAL") %>>
+          <span class="glyphicon glyphicon-stats"></span>
+          &nbsp;Local
+        </label>
+        <label class="btn btn-info <%= tab_selected(network_level === "REMOTE_WRITE") %>">
+          <input type="radio" class="network_level item-type" name="network_level" value="REMOTE_WRITE" <%= radio_selected(network_level === "REMOTE_WRITE") %>>
+          <span class="glyphicon glyphicon-stats"></span>
+          &nbsp;Remote Write
+        </label>
+        <label class="btn btn-info <%= tab_selected(network_level === "HYBRID") %>">
+          <input type="radio" class="network_level item-type" name="network_level" value="HYBRID"    <%= radio_selected(network_level === "HYBRID") %>>
+          <span class="glyphicon glyphicon-stats"></span>
+          &nbsp;Hybrid
+        </label>
+        <label class="btn btn-info <%= tab_selected(network_level === "REMOTE") %>">
+          <input type="radio" class="network_level item-type" name="network_level" value="REMOTE" <%= radio_selected(network_level === "REMOTE") %>>
+          <span class="glyphicon glyphicon-stats"></span>
+          &nbsp;Remote
+        </label>
+      </div>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4>Map</h4>
