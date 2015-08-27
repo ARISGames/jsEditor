@@ -42,7 +42,7 @@ function(require)
         latitude: "43.073",
         longitude: "-89.4012",
         distance: "25",
-        infinite_distance: "0",
+        infinite_distance: "1",
         wiggle: "0",
         show_title: "1",
         hidden: "0",
