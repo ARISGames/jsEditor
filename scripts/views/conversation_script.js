@@ -19,7 +19,7 @@ function(
   vent
 )
 {
-  return Backbone.Marionette.CompositeView.extend({
+  var ConversationScriptView = Backbone.Marionette.CompositeView.extend({
     template: _.template(Template),
     templateHelpers: function()
     {
@@ -39,7 +39,7 @@ function(
         script_options: this.script_options,
         dialog: this.dialog,
         characters: this.characters,
-        conversation_script_view: self,
+        conversation_script_view: ConversationScriptView,
         contents: this.contents
       }
     },
@@ -137,5 +137,6 @@ function(
     }
 
   });
+  return ConversationScriptView;
 });
 

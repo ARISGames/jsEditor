@@ -50,7 +50,7 @@ function(
       self.items_region.show         (new ItemOrganizerView        ({collection:storage.items}));
       self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_page_collection}));
       self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages}));
-      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factorys}));
+      self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factories}));
     },
 
   });
