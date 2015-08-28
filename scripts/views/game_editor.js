@@ -66,6 +66,7 @@ function(
       "map_canvas": ".map-canvas",
 
       "network_levels":".network_level",
+      "preload_media":  "#game-preload_media",
 
       "map_type":         "#game-map_type",
       "map_latitude":     "#game-map_latitude",
@@ -191,6 +192,8 @@ function(
 
       this.model.set("icon_media_id", this.icon.id);
       this.model.set("media_id",      this.media.id);
+
+      this.model.set("preload_media",  this.ui.preload_media.is(":checked") ? "1" : "0");
 
       this.model.set("map_type",         this.ui.map_type.val());
       this.model.set("map_latitude",     this.ui.map_latitude.val());

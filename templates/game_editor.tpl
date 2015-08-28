@@ -164,6 +164,14 @@
           &nbsp;Remote
         </label>
       </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="game-preload_media" <%= is_checked(preload_media) %>>
+        <label for="game-preload_media">
+          Preload Media
+        </label>
+      </div>
+
     </div>
 
     <div class="panel panel-default">
@@ -244,7 +252,6 @@
       </div>
     </div> <!-- /notebook -->
 
-
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4>Player Inventory</h4>
@@ -261,9 +268,7 @@
       </div>
     </div> <!-- /inventory -->
 
-
   </div> <!-- /advanced -->
-
 
   <div class="form-group">
     <button type="submit" class="btn btn-primary save">
