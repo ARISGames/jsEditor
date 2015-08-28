@@ -525,14 +525,8 @@ function(
 
         requirements_editor.on("requirement_package:save", function(requirement_package)
         {
-          var self = this;
           self.model.set("requirement_root_package_id", requirement_package.id);
-
-          if(self.model.hasChanged("requirement_root_package_id"))
-          {
-            // Quicksave if moving from 0 so user has consistent experience
-            self.model.save({"requirement_root_package_id": requirement_package.id}, {patch: true});
-          }
+          self.model.save({"requirement_root_package_id": requirement_package.id});
 
           vent.trigger("application:popup:hide");
         });
