@@ -70,32 +70,40 @@ function(
 
     templateHelpers: function()
     {
+      var self = this;
       return {
-        is_new: this.model.isNew(),
+        is_new: self.model.isNew(),
 
         option_selected: function(boolean_statement)
         {
           return boolean_statement ? "selected" : "";
         },
-        link_types: this.link_types,
+        link_types: self.link_types,
 
-        scripts: this.scripts,
+        scripts: self.scripts,
+        speakerfromscriptid: function(id)
+        {
+          var script = storage.dialog_scripts.findWhere({"dialog_script_id":id});
+          if(script.get("dialog_character_id") == "0") return "You";
+          var charac = storage.dialog_characters.findWhere({"dialog_character_id":script.get("dialog_character_id")});
+          return charac.get("name");
+        },
 
         // game objects for option menu
-        plaques:   this.plaques,
-        items:     this.items,
-        web_pages: this.web_pages,
-        dialogs:   this.dialogs,
-        tabs:      this.tabs,
+        plaques:   self.plaques,
+        items:     self.items,
+        web_pages: self.web_pages,
+        dialogs:   self.dialogs,
+        tabs:      self.tabs,
 
-        link_options_visible: this.model.get("link_type") !== "EXIT",
+        link_options_visible: self.model.get("link_type") !== "EXIT",
 
-        link_scripts:   this.model.get("link_type") === "DIALOG_SCRIPT",
-        link_plaques:   this.model.get("link_type") === "EXIT_TO_PLAQUE",
-        link_items:     this.model.get("link_type") === "EXIT_TO_ITEM",
-        link_web_pages: this.model.get("link_type") === "EXIT_TO_WEB_PAGE",
-        link_dialogs:   this.model.get("link_type") === "EXIT_TO_DIALOG",
-        link_tabs:      this.model.get("link_type") === "EXIT_TO_TAB"
+        link_scripts:   self.model.get("link_type") === "DIALOG_SCRIPT",
+        link_plaques:   self.model.get("link_type") === "EXIT_TO_PLAQUE",
+        link_items:     self.model.get("link_type") === "EXIT_TO_ITEM",
+        link_web_pages: self.model.get("link_type") === "EXIT_TO_WEB_PAGE",
+        link_dialogs:   self.model.get("link_type") === "EXIT_TO_DIALOG",
+        link_tabs:      self.model.get("link_type") === "EXIT_TO_TAB"
       }
     },
 

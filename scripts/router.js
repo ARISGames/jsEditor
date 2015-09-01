@@ -84,6 +84,29 @@ function(
       }
     },
 
+    preloadStorage: function(game,callback)
+    {
+      $.when(
+        game.fetch(),
+        storage.groups.fetch(),
+        storage.tags.fetch(),
+        storage.tabs.fetch(),
+        storage.scenes.fetch(),
+        storage.instances.fetch(),
+        storage.triggers.fetch(),
+        storage.plaques.fetch(),
+        storage.items.fetch(),
+        storage.dialogs.fetch(),
+        storage.dialog_scripts.fetch(),
+        storage.dialog_options.fetch(),
+        storage.dialog_characters.fetch(),
+        storage.web_pages.fetch(),
+        storage.event_packages.fetch(),
+        storage.factories.fetch(),
+        storage.media.fetch()
+      ).done(callback);
+    },
+
     routes:
     {
       "": "listGames",
@@ -180,23 +203,7 @@ function(
       storage.for(game);
 
       // TODO catch errors if any fail (since its a non-standard failure)
-      $.when(
-        game.fetch(),
-        storage.groups.fetch(),
-        storage.tags.fetch(),
-        storage.tabs.fetch(),
-        storage.scenes.fetch(),
-        storage.instances.fetch(),
-        storage.triggers.fetch(),
-        storage.plaques.fetch(),
-        storage.items.fetch(),
-        storage.dialogs.fetch(),
-        storage.dialog_scripts.fetch(),
-        storage.web_pages.fetch(),
-        storage.event_packages.fetch(),
-        storage.factories.fetch(),
-        storage.media.fetch()
-      ).done(
+      this.preloadStorage(game,
         function()
         {
           // TODO make game a promise and store it so we can access the same game instance in other tabs.
@@ -216,8 +223,7 @@ function(
       var game = storage.games.retrieve(game_id);
       storage.for(game);
 
-      $.when(
-        game.fetch(), storage.scenes.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",     new GameEditorView ({model:game, scenes:storage.scenes}));
@@ -234,8 +240,7 @@ function(
 
       var editors = new EditorsCollection([], {parent: game});
 
-      $.when(
-        editors.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           editors.invoke('set', 'game_id', game.id);
@@ -253,8 +258,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.tabs.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",     new TabsView    ({model: game, collection: storage.tabs}));
@@ -270,8 +274,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.groups.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",     new GroupsView  ({model: game, collection: storage.groups}));
@@ -287,8 +290,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.tags.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",     new TagsView    ({model: game, collection: storage.tags}));
@@ -326,8 +328,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.triggers.fetch(), storage.instances.fetch(), storage.web_pages.fetch(), storage.plaques.fetch(), storage.dialogs.fetch(), storage.items.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           // Just give non-note location triggers to view (until we filtering view is created)
@@ -351,8 +352,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.quests.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",     new QuestsView  ({model: game, collection: storage.quests}));
@@ -368,8 +368,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.media.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",      new MediaEditorView ({model: game, collection: storage.media}));
@@ -385,8 +384,7 @@ function(
       var game  = new Game({game_id: game_id});
       storage.for(game);
 
-      $.when(
-        storage.dialogs.fetch()).done(
+      this.preloadStorage(game,
         function()
         {
           vent.trigger("application.show",      new ConversationsView ({model: game, collection: storage.dialogs}));

@@ -34,7 +34,7 @@
 			<!-- FIXME move logic into view like tabs -->
 			<% if(link_scripts) { %>
 				<% scripts.each(function(script) { %>
-					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(script.get("text"), 600) %></option>
+					<option value="<%= script.id %>" <%= option_selected(link_id === script.id) %>><%= _.str.prune(speakerfromscriptid(script.id)+": "+script.get("text")+" ("+script.id+")", 600) %></option>
 				<% }); %>
 				<option value="0">- Add New Line -</option>
 			<% } %>

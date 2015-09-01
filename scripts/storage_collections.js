@@ -18,6 +18,8 @@ define([
   "collections/web_pages",
   "collections/factories",
   "collections/game_dialog_scripts",
+  "collections/game_dialog_options",
+  "collections/game_dialog_characters",
   "collections/event_packages",
 ],
 function(
@@ -40,6 +42,8 @@ function(
   WebPagesCollection,
   FactoriesCollection,
   DialogScriptsCollection,
+  DialogOptionsCollection,
+  DialogCharactersCollection,
   EventPackagesCollection
 )
 {
@@ -49,24 +53,26 @@ function(
   {
     inject: function(storage)
     {
-      storage.users          = new UsersCollection();
-      storage.groups         = new GroupsCollection();
-      storage.tags           = new TagsCollection();
-      storage.tabs           = new TabsCollection();
-      storage.quests         = new QuestsCollection();
-      storage.media          = new MediaCollection();
-      storage.web_hooks      = new WebhooksCollection();
-      storage.games          = new GamesCollection();
-      storage.triggers       = new TriggersCollection();
-      storage.instances      = new InstancesCollection();
-      storage.scenes         = new ScenesCollection();
-      storage.plaques        = new PlaquesCollection();
-      storage.items          = new ItemsCollection();
-      storage.dialogs        = new DialogsCollection();
-      storage.dialog_scripts = new DialogScriptsCollection();
-      storage.web_pages      = new WebPagesCollection();
-      storage.event_packages = new EventPackagesCollection();
-      storage.factories      = new FactoriesCollection();
+      storage.users             = new UsersCollection();
+      storage.groups            = new GroupsCollection();
+      storage.tags              = new TagsCollection();
+      storage.tabs              = new TabsCollection();
+      storage.quests            = new QuestsCollection();
+      storage.media             = new MediaCollection();
+      storage.web_hooks         = new WebhooksCollection();
+      storage.games             = new GamesCollection();
+      storage.triggers          = new TriggersCollection();
+      storage.instances         = new InstancesCollection();
+      storage.scenes            = new ScenesCollection();
+      storage.plaques           = new PlaquesCollection();
+      storage.items             = new ItemsCollection();
+      storage.dialogs           = new DialogsCollection();
+      storage.dialog_scripts    = new DialogScriptsCollection();
+      storage.dialog_options    = new DialogOptionsCollection();
+      storage.dialog_characters = new DialogCharactersCollection();
+      storage.web_pages         = new WebPagesCollection();
+      storage.event_packages    = new EventPackagesCollection();
+      storage.factories         = new FactoriesCollection();
     }
   });
 });
