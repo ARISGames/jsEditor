@@ -2,12 +2,14 @@ define([
   "underscore",
   'views/editor_base',
   "text!templates/atom.tpl",
+  "storage",
   "vent",
 ],
 function(
   _,
   EditorView,
   Template,
+  storage,
   vent
 )
 {
@@ -44,6 +46,20 @@ function(
         web_pages:      this.web_pages,
         quests:         this.quests,
         event_packages: this.event_packages,
+
+        dialogfromscriptid: function(id)
+        {
+          var script = storage.dialog_scripts.findWhere({"dialog_script_id":id});
+          var dialog = storage.dialogs.findWhere({"dialog_id":script.get("dialog_id")});
+          return dialog.get("name");
+        },
+        speakerfromscriptid: function(id)
+        {
+          var script = storage.dialog_scripts.findWhere({"dialog_script_id":id});
+          if(script.get("dialog_character_id") == "0") return "You";
+          var charac = storage.dialog_characters.findWhere({"dialog_character_id":script.get("dialog_character_id")});
+          return charac.get("name");
+        },
       };
     },
 

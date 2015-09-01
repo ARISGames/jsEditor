@@ -177,8 +177,8 @@
 						<!-- Dialog Scripts -->
 						<% if(content_dialog_scripts) { %>
 							<% dialog_scripts.each(function(object) { %>
-								<option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
-									<%= sanitize_html(object.get("text")) %>
+					                        <option value="<%= object.id %>" <%= option_selected(content_id === object.id) %>>
+                                                                        <%= sanitize_html(_.str.prune(dialogfromscriptid(object.id)+" - "+speakerfromscriptid(object.id)+": "+object.get("text")+" ("+object.id+")", 600)) %>
 								</option>
 							<% }); %>
 						<% } %>
