@@ -60,6 +60,7 @@ function(
       "show_title":      "#trigger-show_title",
       "hidden":          "#trigger-hidden",
       "code":            "#trigger-code",
+      "seconds":         "#trigger-seconds",
       "quantity":        "#instance-infinite_quantity",
       "quantity_amount": "#instance-quantity",
 
@@ -177,6 +178,7 @@ function(
 
       "change @ui.code": "onChangeCode",
       "keyup  @ui.code": "onChangeCode"
+      "change @ui.seconds": "onChangeSeconds",
     },
 
     onClickSave: function()
@@ -234,6 +236,7 @@ function(
               trigger.set("trigger_on_enter",  self.$el.find(".trigger-enter:checked").val());
 
               trigger.set("icon_media_id", self.icon.get("media_id"));
+              trigger.set("seconds",       self.ui.seconds.val());
 
               trigger.save({},
               {
@@ -545,6 +548,11 @@ function(
     {
       var self = this;
       self.qr_code.makeCode(self.ui.code.val());
+    },
+
+    onChangeSeconds: function()
+    {
+      var self = this;
     },
 
     renderMap: function()
