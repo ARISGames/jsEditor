@@ -146,8 +146,8 @@
 
 <div id="TIMER-fields" class="type-trigger-tab" <%= tab_visible(type === "TIMER") %>>
   <div class="form-group">
-    <label for="trigger-code">Time between triggers</label>
-    <input type="number" class="form-control" id="trigger-timer" placeholder="10" min="0" value="<%= timer %>">
+    <label for="trigger-code">Seconds between triggers</label>
+    <input type="number" class="form-control" id="trigger-seconds" placeholder="10" min="0" value="<%= seconds %>">
   </div>
 </div>
 

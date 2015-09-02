@@ -32,7 +32,7 @@ function(require)
       "hidden",
       "trigger_on_enter",
       "qr_code",
-      "timer",
+      "seconds",
       "icon_media_id"
         ],
 
@@ -49,7 +49,7 @@ function(require)
         hidden: "0",
         trigger_on_enter: "0",
         qr_code: new Date().getTime(),
-        timer: "10",
+        seconds: "10",
         requirement_root_package_id: "0",
         icon_media_id: "0"
       }
