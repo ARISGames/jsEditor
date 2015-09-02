@@ -177,7 +177,7 @@ function(
       "change @ui.trigger_enter": "onChangeTriggerEnter",
 
       "change @ui.code": "onChangeCode",
-      "keyup  @ui.code": "onChangeCode"
+      "keyup  @ui.code": "onChangeCode",
       "change @ui.seconds": "onChangeSeconds",
     },
 
