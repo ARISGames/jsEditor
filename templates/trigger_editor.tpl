@@ -36,6 +36,11 @@
     <span class="glyphicon glyphicon-link"></span>
     Sequence
   </label>
+  <label class="btn btn-info  <%= tab_selected(type === "TIMER") %>">
+    <input type="radio" class="trigger-type" name="trigger-type" value="TIMER" <%= radio_selected(type === "TIMER") %>>
+    <span class="glyphicon glyphicon-link"></span>
+    Timer
+  </label>
 </div>
 
 <br>
@@ -137,6 +142,14 @@
   </div>
 </div>
 
+<!-- Trigger Timer Attributes -->
+
+<div id="TIMER-fields" class="type-trigger-tab" <%= tab_visible(type === "TIMER") %>>
+  <div class="form-group">
+    <label for="trigger-code">Time between triggers</label>
+    <input type="number" class="form-control" id="trigger-timer" placeholder="10" min="0" value="<%= timer %>">
+  </div>
+</div>
 
 <!-- Quantity of Instance -->
 <div id="instance-quantity-fields" class="<%= quantity_fields_visible ? "" : "hidden" %>">
