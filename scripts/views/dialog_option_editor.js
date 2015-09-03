@@ -80,6 +80,21 @@ function(
         },
         link_types: self.link_types,
 
+        //Function that will escape special characters like quotes.
+        //Specifically for rendering in the web view for editing a prompt
+        escaped_prompt:  function(text) {
+        	  var characters = {
+        	    '&': '&amp;',
+        	    '"': '&quot;',
+        	    "'": '&#039;',
+        	    '<': '&lt;',
+        	    '>': '&gt;'
+        	  };
+        	  return (text + "").replace(/[<>&"']/g, function(m){
+        	    return characters[m];
+        	  });
+        	},
+        	
         scripts: self.scripts,
         speakerfromscriptid: function(id)
         {
