@@ -26,7 +26,8 @@ define([
   'collections/web_pages',
   'collections/tabs',
   'collections/web_hooks',
-  'vent'
+  'storage',
+  'vent',
 ],
 function(
   _,
@@ -56,6 +57,7 @@ function(
   WebPagesCollection,
   TabsCollection,
   WebHooksCollection,
+  storage,
   vent
 )
 {
@@ -112,12 +114,6 @@ function(
 
     initialize: function(options)
     {
-      // Dropdown lists FIXME replace with storage.
-      this.plaques   = options.contents.plaques;
-      this.items     = options.contents.items;
-      this.web_pages = options.contents.web_pages;
-      this.dialogs   = options.contents.dialogs;
-
       // Allow returning to original attributes
       this.storePreviousAttributes();
 
@@ -206,10 +202,10 @@ function(
     {
       switch(this.model.get("type"))
       {
-        case "DIALOG":   return this.dialogs.map(function(model)   { return {name:model.get("name"), value:model.id} });
-        case "ITEM":     return this.items.map(function(model)     { return {name:model.get("name"), value:model.id} });
-        case "PLAQUE":   return this.plaques.map(function(model)   { return {name:model.get("name"), value:model.id} });
-        case "WEB_PAGE": return this.web_pages.map(function(model) { return {name:model.get("name"), value:model.id} });
+        case "DIALOG":   return storage.dialogs.map(function(model)   { return {name:model.get("name"), value:model.id} });
+        case "ITEM":     return storage.items.map(function(model)     { return {name:model.get("name"), value:model.id} });
+        case "PLAQUE":   return storage.plaques.map(function(model)   { return {name:model.get("name"), value:model.id} });
+        case "WEB_PAGE": return storage.web_pages.map(function(model) { return {name:model.get("name"), value:model.id} });
         default: return [];
       }
     },
@@ -238,10 +234,10 @@ function(
 
       var content_collections =
       {
-        "DIALOG":   this.dialogs,
-        "ITEM":     this.items,
-        "PLAQUE":   this.plaques,
-        "WEB_PAGE": this.web_pages
+        "DIALOG":   storage.dialogs,
+        "ITEM":     storage.items,
+        "PLAQUE":   storage.plaques,
+        "WEB_PAGE": storage.web_pages
       }
 
       var collection = content_collections[this.model.get("type")];
@@ -337,7 +333,17 @@ function(
 
       if(requirement_package.id === "0") { requirement_package.fetch = function() {}; }
 
-      $.when(contents.items.fetch(), contents.tags.fetch(), contents.plaques.fetch(), contents.dialogs.fetch(), contents.dialog_scripts.fetch(), contents.web_pages.fetch(), contents.tabs.fetch(), contents.hooks.fetch(), requirement_package.fetch()).done(function()
+      $.when(
+        contents.items.fetch(),
+        contents.tags.fetch(),
+        contents.plaques.fetch(),
+        contents.dialogs.fetch(),
+        contents.dialog_scripts.fetch(),
+        contents.web_pages.fetch(),
+        contents.tabs.fetch(),
+        contents.hooks.fetch(),
+        requirement_package.fetch()).done(
+      function()
       {
         var and_packages = new AndPackagesCollection(requirement_package.get("and_packages"));
         requirement_package.set("and_packages", and_packages);

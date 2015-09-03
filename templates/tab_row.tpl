@@ -1,4 +1,4 @@
-<div class="media">
+<div class="media" model-id="<%= model_id %>">
 	<div class="media-body">
 		<h4 class="media-heading">
 			<%= tab_name %>

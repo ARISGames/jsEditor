@@ -12,6 +12,7 @@ define([
   'collections/plaques',
   'collections/web_pages',
   'collections/dialogs',
+  'storage',
   'vent',
 ],
 function(
@@ -28,6 +29,7 @@ function(
   PlaquesCollection,
   WebPagesCollection,
   DialogsCollection,
+  storage,
   vent
 )
 {
@@ -47,37 +49,49 @@ function(
 
     onClickNew: function()
     {
-      var view = this;
+      var self = this;
 
       var game = this.model;
       var tab  = new Tab({game_id: game.id});
 
       var contents = {
-        plaques:    new PlaquesCollection  ([], {parent: game}),
-        items:      new ItemsCollection    ([], {parent: game}),
-        web_pages:  new WebPagesCollection ([], {parent: game}),
-        dialogs:    new DialogsCollection  ([], {parent: game}),
+        plaques:    storage.plaques,
+        items:      storage.items,
+        web_pages:  storage.web_pages,
+        dialogs:    storage.dialogs,
       };
 
-      $.when(contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch()).done(function()
-      {
-        var tab_editor = new TabEditorView({model: tab, contents: contents});
+      var tab_editor = new TabEditorView({model:tab, contents:contents});
 
-        tab_editor.on("tab:add", function(tab)
-        {
-          view.collection.add(tab);
-        });
+      tab_editor.on("tab:add", function(tab) { self.collection.add(tab); });
 
-        vent.trigger("application:popup:show", tab_editor, "Create Tab");
-      });
+      vent.trigger("application:popup:show", tab_editor, "Create Tab");
     },
 
     onRender: function()
     {
-      var sort_options = {
+      var sort_options =
+      {
         items: '.draggable-game-tab',
         handle: '.tab-drag-handle',
-        stop: function( event, ui ) { vent.trigger("tabrow:released", ui.item, ui.item.index()); }
+        stop: function(event, ui)
+        {
+          /* 
+          //phil is commenting this out to sidestep the overarchitected complexity of this,
+          //so he can just iterate over the elements and save whatever order they are in.
+          console.log(ui);
+          vent.trigger("tabrow:released", ui.item, ui.item.index());
+          */
+          var list_cells = document.getElementById("tab-cell-list").childNodes;
+          for(var i = 1; i < list_cells.length-2; i++) //starts at 1 and ends at length-2 because architecture is over architected
+          {
+            var list_cell_media_cell = list_cells[i].childNodes[0];
+            var id = list_cell_media_cell.getAttribute('model-id');
+
+            var tab = storage.tabs.findWhere({"tab_id":id});
+            tab.save({"sort_index":(i-1)});
+          }
+        }
       };
 
       this.$el.find('.list-group.tabs').sortable(sort_options);

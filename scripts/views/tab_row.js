@@ -56,6 +56,7 @@ function(
     {
       return {
         display_type: this.should_display_type(),
+        model_id: this.model.id,
         tab_type: this.model.tab_type_name(),
         tab_name: this.tab_name()
       }
