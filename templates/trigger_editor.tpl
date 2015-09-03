@@ -38,7 +38,7 @@
   </label>
   <label class="btn btn-info  <%= tab_selected(type === "TIMER") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="TIMER" <%= radio_selected(type === "TIMER") %>>
-    <span class="glyphicon glyphicon-link"></span>
+    <span class="glyphicon glyphicon-time"></span>
     Timer
   </label>
 </div>
@@ -145,6 +145,10 @@
 <!-- Trigger Timer Attributes -->
 
 <div id="TIMER-fields" class="type-trigger-tab" <%= tab_visible(type === "TIMER") %>>
+  <div class="alert alert-info">
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Will be triggered at a regular interval so long as all locks are satisfied.
+  </div>
   <div class="form-group">
     <label for="trigger-seconds">Seconds between triggers</label>
     <input type="number" class="form-control" id="trigger-seconds" placeholder="10" min="0" value="<%= seconds %>">
