@@ -2,8 +2,6 @@ define([
   'views/editor_collection_base',
   'underscore',
   'text!templates/conversations.tpl',
-  'vent',
-  'storage',
   'views/conversation_row',
   'views/dialog_creator',
   'views/conversation_editor',
@@ -20,13 +18,13 @@ define([
   'collections/web_pages',
   'collections/dialogs',
   'collections/tabs',
+  'storage',
+  'vent',
 ],
 function(
   EditorCollectionView,
   _,
   Template,
-  vent,
-  storage,
   ConversationRowView,
   DialogCreatorView,
   ConversationEditorView,
@@ -42,7 +40,9 @@ function(
   ItemsCollection,
   WebPagesCollection,
   DialogsCollection,
-  TabsCollection
+  TabsCollection,
+  storage,
+  vent
 )
 {
   return EditorCollectionView.extend(
@@ -76,53 +76,32 @@ function(
 
     editConversation: function(dialog)
     {
+      var self = this;
       var game = this.model;
 
-      var characters = new CharactersCollection   ([], {parent: game});
-      var media      = new MediaCollection        ([], {parent: game});
-      var scripts    = new DialogScriptsCollection([], {parent: dialog, game: game});
-      var options    = new DialogOptionsCollection([], {parent: dialog, game: game});
+      var scripts = new DialogScriptsCollection([], {parent: dialog, game: game});
+      var options = new DialogOptionsCollection([], {parent: dialog, game: game});
 
+      // FIXME Load in null script like client does until migration is changed
+      var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
 
-      var contents = {
-        plaques:    new PlaquesCollection  ([], {parent: game}),
-        items:      new ItemsCollection    ([], {parent: game}),
-        web_pages:  new WebPagesCollection ([], {parent: game}),
-        dialogs:    new DialogsCollection  ([], {parent: game}),
-        tabs:       new TabsCollection     ([], {parent: game})
-      };
+      //add 'null' character
+      var character = new Character({name: "You", dialog_character_id: "0", title: "The Player"})
+      storage.dialog_characters.unshift(character);
 
-      $.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch(), contents.tabs.fetch()).done(function()
-      {
+      //add 'null' media
+      var character_media = new Media({media_id: "0"});
+      storage.media.push(character_media);
 
-        // FIXME Load in null script like client does until migration is changed
-        var intro_script = scripts.findWhere({dialog_script_id: dialog.get("intro_dialog_script_id")});
-
-        //add 'null' character
-        var character = new Character({name: "You", dialog_character_id: "0", title: "The Player"})
-        characters.unshift(character);
-
-        //add 'null' media
-        var character_media = new Media({media_id: "0"});
-        media.push(character_media);
-
-        // TODO remove once we preload all objects in a controller/router
-        storage.media.add(media.models);
-
-        var conversations_editor = new ConversationEditorView(
-          {
-            model: intro_script,
-            dialog: dialog,
-            characters: characters,
-            scripts: scripts,
-            script_options: options,
-            contents: contents,
-            game: game
-          });
-        vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
-        vent.trigger("application:list:show", new CharactersOrganizerView({collection: characters, model: game}));
-
-      }.bind(this));
+      var conversations_editor = new ConversationEditorView(
+        {
+          model: intro_script,
+          dialog: dialog,
+          my_scripts: scripts,
+          my_options: options,
+        });
+      vent.trigger("application.show", conversations_editor, "Edit Conversation Script", true);
+      vent.trigger("application:list:show", new CharactersOrganizerView({collection:storage.dialog_characters, model: game}));
     }
   });
 });

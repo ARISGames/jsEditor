@@ -6,6 +6,7 @@ define([
   'models/dialog_script',
   'views/conversation_option',
   'views/dialog_script_editor',
+  'storage',
   'vent',
 ],
 function(
@@ -16,6 +17,7 @@ function(
   DialogScript,
   ConversationOptionView,
   DialogScriptEditorView,
+  storage,
   vent
 )
 {
@@ -35,41 +37,43 @@ function(
     {
       var self = this;
       return {
-        scripts: this.scripts,
-        script_options: this.script_options,
-        dialog: this.dialog,
-        characters: this.characters,
+        dialog: self.dialog,
+        scripts: self.my_scripts,
+        script_options: self.my_options,
+        characters: self.characters,
         conversation_script_view: ConversationScriptView,
-        contents: this.contents
       }
     },
 
     initialize: function(options)
     {
-      this.scripts = options.scripts;
-      this.dialog  = options.dialog;
-      this.instance_parent_option = options.instance_parent_option;
-      this.script_options = options.script_options;
-      this.characters = options.characters;
-      this.contents = options.contents;
+      var self = this;
+
+      self.my_scripts = options.my_scripts;
+      self.my_options = options.my_options;
+      self.dialog  = options.dialog;
+      self.instance_parent_option = options.instance_parent_option;
+      self.characters = storage.dialog_characters;
 
       // FIXME keep track of this in a parent view or controller/app
-      this.model.set("rendered", true);
+      self.model.set("rendered", true);
 
-      this.change_media();
-      this.listenTo(this.model.get("character"), "change:media_id", this.change_media);
+      self.change_media();
+      self.listenTo(self.model.get("character"), "change:media_id", self.change_media);
     },
 
     change_media: function()
     {
-      if(this.character_media) {
-        this.stopListening(this.character_media);
+      var self = this;
+      if(self.character_media)
+      {
+        self.stopListening(self.character_media);
       }
 
-      this.character_media = this.model.get("character").media();
+      self.character_media = self.model.get("character").media();
 
-      this.set_media(this.character_media);
-      this.listenTo(this.character_media, "change", this.set_media);
+      self.set_media(self.character_media);
+      self.listenTo(self.character_media, "change", self.set_media);
     },
 
     events: {
@@ -79,51 +83,56 @@ function(
 
     set_media: function()
     {
-      var element = $(this.$el.find('.thumbnail img').get(0));
-      element.attr('src', this.model.get("character").media_thumbnail());
+      var self = this;
+      var element = $(self.$el.find('.thumbnail img').get(0));
+      element.attr('src', self.model.get("character").media_thumbnail());
     },
 
     onClickEdit: function()
     {
-      var script_editor = new DialogScriptEditorView({model: this.model, scripts:this.scripts, characters: this.characters, script_options:this.script_options, instance_parent_option:this.instance_parent_option});
+      var self = this;
+      var script_editor = new DialogScriptEditorView({model:self.model, scripts:self.my_scripts, characters:self.characters, script_options:self.my_options, instance_parent_option:self.instance_parent_option});
       vent.trigger("application:info:show", script_editor);
       return false;
     },
     onClickAdd: function()
     {
-      var view = this;
+      var self = this;
 
       var script = new DialogScript();
-      script.set("game_id",view.model.get("game_id"));
-      script.set("dialog_id",view.model.get("dialog_id"));
+      script.set("game_id",self.model.get("game_id"));
+      script.set("dialog_id",self.model.get("dialog_id"));
       script.set("text","Hello");
       script.save({}, {
         success: function()
         {
-          view.scripts.push(script);
+          storage.dialog_scripts.push(script);
+          self.my_scripts.push(script);
 
           var option = new DialogOption();
-          option.set("game_id",view.model.get("game_id"));
-          option.set("dialog_id",view.model.get("dialog_id"));
-          option.set("parent_dialog_script_id",view.model.get("dialog_script_id"));
+          option.set("game_id",self.model.get("game_id"));
+          option.set("dialog_id",self.model.get("dialog_id"));
+          option.set("parent_dialog_script_id",self.model.get("dialog_script_id"));
           option.set("link_type","DIALOG_SCRIPT");
           option.set("link_id",script.get("dialog_script_id"));
           option.set("prompt","Continue");
           option.save({}, {
             success:function()
             {
-              view.script_options.push(option);
+              storage.dialog_options.push(option);
+              self.my_options.push(option);
 
               option = new DialogOption();
-              option.set("game_id",view.model.get("game_id"));
-              option.set("dialog_id",view.model.get("dialog_id"));
+              option.set("game_id",self.model.get("game_id"));
+              option.set("dialog_id",self.model.get("dialog_id"));
               option.set("parent_dialog_script_id",script.get("dialog_script_id"));
               option.set("link_type","EXIT");
               option.set("prompt","Exit");
               option.save({}, {
                 success:function()
                 {
-                  view.script_options.push(option);
+                  storage.dialog_options.push(option);
+                  self.my_options.push(option);
 
                   vent.trigger("conversation:update");
                 }

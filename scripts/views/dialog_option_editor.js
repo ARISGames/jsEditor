@@ -58,11 +58,11 @@ function(
       this.scripts = options.scripts;
       this.script_options = options.script_options;
 
-      this.plaques   = options.contents.plaques;
-      this.items     = options.contents.items;
-      this.web_pages = options.contents.web_pages;
-      this.dialogs   = options.contents.dialogs;
-      this.tabs      = options.contents.tabs;
+      this.plaques   = storage.plaques;
+      this.items     = storage.items;
+      this.web_pages = storage.web_pages;
+      this.dialogs   = storage.dialogs;
+      this.tabs      = storage.tabs;
 
       this.previous_attributes = _.clone(this.model.attributes)
     },
@@ -286,67 +286,67 @@ function(
       });
     },
 
-                findCascadingScriptDeletesFromPruningOption: function()
-                {
-  var view = this;
-  //Set up regular old arrays of nodes/edges
-  var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
-  var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
-  var scriptmap  = []; for(var i = 0; i < scripts.length;             i++) { scriptmap[parseInt(scripts[i].get("dialog_script_id"))] = scripts[i]; } //scripts map for access
+findCascadingScriptDeletesFromPruningOption: function()
+                                             {
+                                               var view = this;
+                                               //Set up regular old arrays of nodes/edges
+                                               var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
+                                               var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
+                                               var scriptmap  = []; for(var i = 0; i < scripts.length;             i++) { scriptmap[parseInt(scripts[i].get("dialog_script_id"))] = scripts[i]; } //scripts map for access
 
-  var vmap = []; for(var i = 0; i < scripts.length; i++) { vmap[parseInt(scripts[i].get("dialog_script_id"))] = false; } //visited map
+                                               var vmap = []; for(var i = 0; i < scripts.length; i++) { vmap[parseInt(scripts[i].get("dialog_script_id"))] = false; } //visited map
 
-  //traverse tree, marking vmap
-  var parents = [scriptmap[parseInt(view.dialog.get("intro_dialog_script_id"))]];
-  var children;
-  while(parents.length > 0)
-  {
-    //mark visited
-    vmap[parseInt(parents[0].get("dialog_script_id"))] = true;
+                                               //traverse tree, marking vmap
+                                               var parents = [scriptmap[parseInt(view.dialog.get("intro_dialog_script_id"))]];
+                                               var children;
+                                               while(parents.length > 0)
+                                               {
+                                                 //mark visited
+                                                 vmap[parseInt(parents[0].get("dialog_script_id"))] = true;
 
-    //find children
-    children = [];
-    for(var i = 0; i < opts.length; i++) if(parseInt(opts[i].get("parent_dialog_script_id")) == parseInt(parents[0].get("dialog_script_id"))) children.push(opts[i]);
+                                                 //find children
+                                                 children = [];
+                                                 for(var i = 0; i < opts.length; i++) if(parseInt(opts[i].get("parent_dialog_script_id")) == parseInt(parents[0].get("dialog_script_id"))) children.push(opts[i]);
 
-    for(var i = 0; i < children.length; i++)
-    {
-      //add children scripts to be visited iff
-      if(children[i].get("link_type") == "DIALOG_SCRIPT" && //link type is script (duh)
-         parseInt(children[i].get("dialog_option_id")) != parseInt(view.model.get("dialog_option_id")) && //and option ISN'T option to be deleted (THIS option)
-         !vmap[parseInt(scriptmap[parseInt(children[i].get("link_id"))].get("dialog_script_id"))]) //and script not yet visited
-        parents.push(scriptmap[parseInt(children[i].get("link_id"))]);
-    }
+                                                 for(var i = 0; i < children.length; i++)
+                                                 {
+                                                   //add children scripts to be visited iff
+                                                   if(children[i].get("link_type") == "DIALOG_SCRIPT" && //link type is script (duh)
+                                                       parseInt(children[i].get("dialog_option_id")) != parseInt(view.model.get("dialog_option_id")) && //and option ISN'T option to be deleted (THIS option)
+                                                       !vmap[parseInt(scriptmap[parseInt(children[i].get("link_id"))].get("dialog_script_id"))]) //and script not yet visited
+                                                     parents.push(scriptmap[parseInt(children[i].get("link_id"))]);
+                                                 }
 
-    parents.splice(0,1);
-  }
+                                                 parents.splice(0,1);
+                                               }
 
-  var TBD = []; //To Be Deleted (caps cuz important)
-  for(var i = 0; i < scripts.length; i++) if(!vmap[parseInt(scripts[i].get("dialog_script_id"))]) TBD.push(scripts[i]);
+                                               var TBD = []; //To Be Deleted (caps cuz important)
+                                               for(var i = 0; i < scripts.length; i++) if(!vmap[parseInt(scripts[i].get("dialog_script_id"))]) TBD.push(scripts[i]);
 
-  //for(var i = 0; i < TBD.length; i++) console.log("Q'd4Delete: "+TBD[i].get("dialog_script_id"));
+                                               //for(var i = 0; i < TBD.length; i++) console.log("Q'd4Delete: "+TBD[i].get("dialog_script_id"));
 
 
-  return TBD;
-                },
+                                               return TBD;
+                                             },
 
-                findOptionlessScripts: function()
-                {
-  var view = this;
-  //Find option-less scripts and give them an exit option
-  var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
-  var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
+findOptionlessScripts: function()
+                       {
+                         var view = this;
+                         //Find option-less scripts and give them an exit option
+                         var opts       = []; for(var i = 0; i < view.script_options.length; i++) { opts[i] = view.script_options.at(i); } //opts array for iteration
+                         var scripts    = []; for(var i = 0; i < view.scripts.length;        i++) { scripts[i] = view.scripts.at(i); } //scripts array for iteration
 
-  var cmap = []; for(var i = 0; i < scripts.length; i++) { cmap[parseInt(scripts[i].get("dialog_script_id"))] = 0; } //children count map
+                         var cmap = []; for(var i = 0; i < scripts.length; i++) { cmap[parseInt(scripts[i].get("dialog_script_id"))] = 0; } //children count map
 
-  for(var i = 0; i < opts.length; i++) cmap[parseInt(opts[i].get("parent_dialog_script_id"))]++;
+                         for(var i = 0; i < opts.length; i++) cmap[parseInt(opts[i].get("parent_dialog_script_id"))]++;
 
-  var TBA = []
-  for(var i = 0; i < scripts.length; i++) if(cmap[parseInt(scripts[i].get("dialog_script_id"))] == 0) TBA.push(scripts[i]);
+                         var TBA = []
+                           for(var i = 0; i < scripts.length; i++) if(cmap[parseInt(scripts[i].get("dialog_script_id"))] == 0) TBA.push(scripts[i]);
 
-  //for(var i = 0; i < TBA.length; i++) console.log("Q'd4AddExit: "+TBA[i].get("dialog_script_id"));
+                         //for(var i = 0; i < TBA.length; i++) console.log("Q'd4AddExit: "+TBA[i].get("dialog_script_id"));
 
-  return TBA;
-                },
+                         return TBA;
+                       },
 
     onClickDelete: function()
     {
