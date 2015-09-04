@@ -56,7 +56,22 @@ function(
         link_icon: self.linkIcon(),
         link_color: self.linkColor(),
         isFirst: self.model.firstOption,
-        isLast: self.model.lastOption
+        isLast: self.model.lastOption,
+        sanitize_html: function(html)
+        {
+          var div = document.createElement('div');
+          div.innerHTML = html;
+
+          var scripts = div.getElementsByTagName('script');
+          for(var i = scripts.length-1; i > 0; i--)
+            scripts[i].parentNode.removeChild(scripts[i]);
+
+          var styles = div.getElementsByTagName('style');
+          for(var i = styles.length-1; i > 0; i--)
+            styles[i].parentNode.removeChild(styles[i]);
+
+          return div.textContent || div.innerText;
+        }
       }
     },
 

@@ -25,7 +25,7 @@
 		<div class="panel-heading">
 			<div class="option-text" style="overflow: hidden;">
 				<span class="glyphicon glyphicon-<%= link_icon %>"></span>
-				<%= prompt %>
+				<%= sanitize_html(prompt) %>
 			</div>
 		</div>
 	</div>
