@@ -57,6 +57,7 @@ function(
       "edit_events":  ".edit-events",
       "name":         "#plaque-name",
       "description":  "#plaque-description",
+      "continue_function": "#continue-function",
     },
 
     initialize: function(options)
@@ -83,6 +84,7 @@ function(
       "click @ui.edit_events":  "onClickEditEvents",
       "change @ui.name":        "onChangeName",
       "change @ui.description": "onChangeDescription",
+      "change @ui.continue_function": "onChangeContinueFunction",
     },
 
     onClickSave:function()
@@ -127,6 +129,7 @@ function(
 
     onChangeName:        function() { var self = this; self.model.set("name",        self.ui.name.val());        },
     onChangeDescription: function() { var self = this; self.model.set("description", self.ui.description.val()); },
+    onChangeContinueFunction: function() { var self = this; self.model.set("continue_function", self.ui.continue_function.find("option:selected").val()) },
 
     storePreviousAttributes: function()
     {
