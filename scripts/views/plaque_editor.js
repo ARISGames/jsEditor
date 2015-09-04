@@ -6,6 +6,7 @@ define([
   'collections/media',
   'collections/items',
   'models/game',
+  'models/plaque',
   'models/event_package',
   'collections/events',
   'views/media_chooser',
@@ -21,6 +22,7 @@ function(
   MediaCollection,
   ItemsCollection,
   Game,
+  Plaque,
   EventPackage,
   EventsCollection,
   MediaChooserView,
@@ -40,6 +42,8 @@ function(
         is_new: self.model.isNew(),
         icon_thumbnail_url:  self.model.icon_thumbnail(),
         media_thumbnail_url: self.model.media_thumbnail(),
+        option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
+        function_types: Plaque.function_types,
       };
     },
 

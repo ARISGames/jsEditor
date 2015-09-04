@@ -81,7 +81,7 @@
         </div>
 
         <div class="col-xs-6 padded active-function-box">
-          <label for="active-function">Notification Button Destination</label>
+          <label for="active-function">Continue Button Function</label>
 
           <select class="form-control" id="active-function">
             <% _.each(function_types, function(name, value) { %>
@@ -161,7 +161,7 @@
         </div>
 
         <div class="col-xs-6 padded complete-function-box">
-          <label for="complete-function">Notification Button Destination</label>
+          <label for="complete-function">Continue Button Function</label>
 
           <select class="form-control" id="complete-function">
             <% _.each(function_types, function(name, value) { %>

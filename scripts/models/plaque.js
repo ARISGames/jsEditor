@@ -29,7 +29,8 @@ function(
       "description",
       "media_id",
       "icon_media_id",
-      "event_package_id"
+      "event_package_id",
+      "continue_function",
     ],
 
     defaults:
@@ -38,9 +39,9 @@ function(
       description: "",
       media_id: "0",
       icon_media_id: "0",
-      event_package_id: "0"
+      event_package_id: "0",
+      continue_function: "EXIT",
     },
-
 
     /* Associations */
     icon:  function() { return storage.media.retrieve(this.get('icon_media_id')); },
@@ -51,6 +52,16 @@ function(
     icon_thumbnail: function() { return this.icon().thumbnail_for(this); },
     media_thumbnail: function() { return this.media().thumbnail_for(); }
 
+  },
+
+  // Static
+  {
+    function_types:
+    {
+      'EXIT':       'Exit',
+      'JAVASCRIPT': 'Javascript',
+      'NONE':       'None',
+    }
   });
 });
 

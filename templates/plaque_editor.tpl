@@ -47,6 +47,20 @@
     </button>
   </div>
 
+  <div class="complete-function-box">
+    <label for="continue-function">Continue Button Function</label>
+
+    <select class="form-control" id="continue-function">
+      <% _.each(function_types, function(name, value) { %>
+        <option value="<%= value %>" <%= option_selected(continue_function === value) %>><%= name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div style="height:20px;">
+  </div>
+
+
   <button type="submit" class="btn btn-primary save">
     Save
   </button>
