@@ -12,7 +12,7 @@
 
 <div class="form-group">
   <label>Prompt</label>
-  <input autofocus type="text" class="form-control prompt" value="<%= escaped_prompt(strip_js(prompt)) %>">
+  <input autofocus type="text" class="form-control prompt" value="<%= escaped_prompt(prompt) %>">
 </div>
 
 <div class="form-group">
