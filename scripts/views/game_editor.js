@@ -33,18 +33,19 @@ function(
 
     templateHelpers: function()
     {
+      var self = this;
       return {
-        is_new : this.model.isNew(),
-        icon_thumbnail_url:  this.icon.thumbnail_for(this.model),
-        media_thumbnail_url: this.media.thumbnail_for(),
+        is_new : self.model.isNew(),
+        icon_thumbnail_url:  self.icon.thumbnail_for(self.model),
+        media_thumbnail_url: self.media.thumbnail_for(),
 
         option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; }, 
         is_checked: function(value) { return value === "1" ? "checked" : ""; }, 
         radio_selected: function(boolean_statement) { return boolean_statement ? "checked" : ""; }, 
         tab_selected: function(boolean_statement) { return boolean_statement ? "active" : ""; }, 
-        tab_visible: function(boolean_statement) { return boolean_statement ? "" : "style='display: none;'"; }, 
+        tab_visible: function(boolean_statement) { return boolean_statement ? "" : "style='display:none;'"; }, 
 
-        scenes: this.scenes
+        scenes: self.scenes
       };
     },
 
@@ -65,6 +66,7 @@ function(
 
       "game_map_canvas": ".game-map-canvas",
       "tab_map_canvas":  ".tab-map-canvas",
+      "tab_map_container": ".tab-map-container",
 
       "network_levels":".network_level",
       "preload_media":  "#game-preload_media",
@@ -177,7 +179,8 @@ function(
 
       "change @ui.login_group":        "onChangeLoginOptions",
       "keyup @ui.login_group":         "onChangeLoginOptions",
-      "change @ui.login_disable_exit": "onChangeLoginOptions"
+      "change @ui.login_disable_exit": "onChangeLoginOptions",
+      "change @ui.map_focus":          "onChangeMapFocus",
     },
 
 
@@ -487,6 +490,19 @@ function(
         }
       );
 
+    },
+
+    onChangeMapFocus: function()
+    {
+      var self = this;
+      this.model.set("map_focus", this.ui.map_focus.val());
+      if(self.model.get("map_focus") == "FIT_LOCATIONS")
+      {
+        self.ui.tab_map_container.get(0).style.display = 'block';
+        self.renderTabMap();
+      }
+      else
+        self.ui.tab_map_container.get(0).style.display = 'none';
     },
 
   });

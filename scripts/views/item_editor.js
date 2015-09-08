@@ -174,8 +174,7 @@ function(
 
       self.ui.type_tabs.hide();
 
-      var display_tab = "." + selected_radio.val() + "-fields";
-      $(display_tab).show();
+      $("."+selected_radio.val()+"-fields").show();
     },
 
     //hack to just make a dang request rather than conform the "many to many" relationship between
