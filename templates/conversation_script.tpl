@@ -20,7 +20,7 @@
       </div>
 
       <div class="script-text pull-left" style="width: 70%; white-space: normal; text-align: left; padding-left: 0.5em;">
-        <%= sanitize_html(text) %>
+        <%= strip_js(text) %>
       </div>
     </div>
   </div>

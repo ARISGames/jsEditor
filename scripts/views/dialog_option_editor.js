@@ -67,17 +67,13 @@ function(
       this.previous_attributes = _.clone(this.model.attributes)
     },
 
-
     templateHelpers: function()
     {
       var self = this;
       return {
         is_new: self.model.isNew(),
 
-        option_selected: function(boolean_statement)
-        {
-          return boolean_statement ? "selected" : "";
-        },
+        option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
         link_types: self.link_types,
 
         //Function that will escape special characters like quotes.
@@ -94,6 +90,22 @@ function(
         	    return characters[m];
         	  });
         	},
+
+        strip_js: function(html)
+        {
+          var div = document.createElement('div');
+          div.innerHTML = html;
+
+          var scripts = div.getElementsByTagName('script');
+          for(var i = scripts.length-1; i >= 0; i--)
+            scripts[i].parentNode.removeChild(scripts[i]);
+
+          var styles = div.getElementsByTagName('style');
+          for(var i = styles.length-1; i >= 0; i--)
+            styles[i].parentNode.removeChild(styles[i]);
+
+          return div.textContent || div.innerText;
+        },
         	
         scripts: self.scripts,
         speakerfromscriptid: function(id)

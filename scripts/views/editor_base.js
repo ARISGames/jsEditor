@@ -23,15 +23,15 @@ function(
         div.innerHTML = html;
 
         var scripts = div.getElementsByTagName('script');
-        for(var i = scripts.length-1; i > 0; i--)
+        for(var i = scripts.length-1; i >= 0; i--)
           scripts[i].parentNode.removeChild(scripts[i]);
 
         var styles = div.getElementsByTagName('style');
-        for(var i = styles.length-1; i > 0; i--)
+        for(var i = styles.length-1; i >= 0; i--)
           styles[i].parentNode.removeChild(styles[i]);
 
         return div.textContent || div.innerText;
-      }
+      },
     },
 
     mixinTemplateHelpers: function(target)
