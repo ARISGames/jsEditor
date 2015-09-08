@@ -63,14 +63,14 @@ function(
       "type":        "#game-type",
       "intro_scene": "#game-intro_scene_id",
 
-      "map_canvas": ".map-canvas",
+      "game_map_canvas": ".game-map-canvas",
+      "tab_map_canvas":  ".tab-map-canvas",
 
       "network_levels":".network_level",
       "preload_media":  "#game-preload_media",
 
       "map_type":         "#game-map_type",
-      "map_latitude":     "#game-map_latitude",
-      "map_longitude":    "#game-map_longitude",
+      "map_focus":        "#game-map_focus",
       "map_zoom_level":   "#game-map_zoom_level",
       "map_show_player":  "#game-map_show_player",
       "map_show_players": "#game-map_show_players",
@@ -132,7 +132,7 @@ function(
     {
       var self = this;
       self.$el.find('[data-toggle="popover"]').popover({trigger: 'hover',placement: 'top', delay: 400 });
-      setTimeout(function() {self.renderMap()}, 300);
+      setTimeout(function() {self.renderGameMap(); self.renderTabMap();}, 300);
       self.initializeQR();
     },
 
@@ -200,8 +200,7 @@ function(
       this.model.set("preload_media",  this.ui.preload_media.is(":checked") ? "1" : "0");
 
       this.model.set("map_type",         this.ui.map_type.val());
-      this.model.set("map_latitude",     this.ui.map_latitude.val());
-      this.model.set("map_longitude",    this.ui.map_longitude.val());
+      this.model.set("map_focus",        this.ui.map_focus.val());
       this.model.set("map_zoom_level",   this.ui.map_zoom_level.val());
       this.model.set("map_show_player",  this.ui.map_show_player.is(":checked") ? "1" : "0");
       this.model.set("map_show_players", this.ui.map_show_players.is(":checked") ? "1" : "0");
@@ -432,64 +431,62 @@ function(
       selected_radio.parent().addClass("active");
     },
 
-    renderMap: function()
+    renderGameMap: function()
     {
       var self = this;
 
-      var element = self.ui.map_canvas.get(0);
+      var loc = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
 
-      var default_location = new google.maps.LatLng(43.073, -89.4012);
-      var map_options =
-      {
-        zoom: 8,
-        center: default_location,
-        scrollwheel: false
-      };
-      var map = new google.maps.Map(element, map_options);
-      var boundary = new google.maps.LatLngBounds();
-
-      boundary.extend(default_location);
-
-      var location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
-
-      var circle_marker = new google.maps.Circle({
-        center: location_position,
-        draggable: true,
-        editable: true,
-        radius: 10,
-        suppressUndo: true,
-        map: map,
-        fillColor: '#428bca',
-        strokeColor: '#428bca'
+      var map = new google.maps.Map(self.ui.game_map_canvas.get(0), {
+        zoom:8,
+        center:loc,
+        scrollwheel:false
+      });
+      var marker = new google.maps.Marker({
+        position:loc,
+        map:map,
+        draggable:true
       });
 
-      var drag_marker = new google.maps.Marker({
-        position: location_position,
-        map: map,
-        draggable: true
-      });
-
-      self.range_marker = circle_marker;
-      self.drag_marker  = drag_marker;
-
-      circle_marker.setVisible(false);
-
-      circle_marker.bindTo('center', drag_marker, 'position');
-
-      boundary = circle_marker.getBounds();
-      map.setCenter(boundary.getCenter());
-      map.fitBounds(boundary);
-
-      google.maps.event.addListener(drag_marker, 'dragend', 
+      google.maps.event.addListener(marker, 'dragend', 
         function(event)
         {
-          var center = circle_marker.getCenter();
+          var center = marker.position;
           self.model.set("latitude",  center.lat());
           self.model.set("longitude", center.lng());
-          boundary = circle_marker.getBounds();
-          map.setCenter(boundary.getCenter());
+          map.setCenter(center);
         }
       );
+
+    },
+
+    renderTabMap: function()
+    {
+      var self = this;
+
+      var loc = new google.maps.LatLng(self.model.get("map_latitude"), self.model.get("map_longitude"));
+
+      var map = new google.maps.Map(self.ui.tab_map_canvas.get(0), {
+        zoom:8,
+        center:loc,
+        scrollwheel:false
+      });
+      var marker = new google.maps.Marker({
+        position:loc,
+        map:map,
+        draggable:true
+      });
+
+      google.maps.event.addListener(marker, 'dragend', 
+        function(event)
+        {
+          var center = marker.position;
+          self.model.set("map_latitude",  center.lat());
+          self.model.set("map_longitude", center.lng());
+          map.setCenter(center);
+        }
+      );
+
     },
 
   });

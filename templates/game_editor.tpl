@@ -1,4 +1,4 @@
-<div class="shrink-center well well-lg game-settings" style="max-width: 100%;">
+<div class="shrink-center well well-lg game-settings" style="max-width:100%;">
   <form class="form" role="form" onsubmit="return false;">
   <h4>
     Edit Game <span class="object-id text-muted"><%= game_id %></span>
@@ -29,27 +29,6 @@
         </select>
       </div>
 
-      <div class="form-group">
-        <label for="game-intro_scene_id">Game Location (Used to determine "Nearby Games")</label>
-        <div class="map-canvas" style="height: 150px; width: 100%"></div>
-      </div>
-
-      <div class="form-group">
-        <br>
-        <label for="game-intro_scene_id">Visibility To ARIS Client</label>
-        <div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong class='text-success'>Published</strong> your game will be listed as playable on the ARIS client to everyone. If <strong class='text-info'>Private</strong> it will appear under the 'mine' tab for all editors of the game.">
-          <label class="btn btn-success <%= tab_selected(published === "1") %>">
-            <input type="radio" class="game-published" name="game-published" value="1" <%= radio_selected(published === "1") %>>
-            <span class="glyphicon glyphicon-saved"></span>
-            Published
-          </label>
-          <label class="btn btn-info <%= tab_selected(published === "0") %>">
-            <input type="radio" class="game-published" name="game-published" value="0" <%= radio_selected(published === "0") %>>
-            <span class="glyphicon glyphicon-eye-close"></span>
-            Private
-          </label>
-        </div>
-      </div>
     </div> <!-- /fields col -->
 
 
@@ -81,99 +60,111 @@
     </div> <!-- /media col -->
   </div> <!-- /main form -->
 
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h5 class="panel-title collapsed" data-toggle="collapse" data-target="#login-codes">
-        <a>
-          Login QR Codes
-        </a>
-      </h5>
-    </div>
-  </div>
+  <div class="form-group">
 
 
-  <div id="login-codes" class="collapse">
-    <div class="form-group row">
-      <div class="col-xs-12 col-md-4 padded">
-        <div class="qr_image"></div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>Game Type</h4>
       </div>
+      <div class="panel-body">
 
-      <div class="col-xs-12 col-md-8 padded">
         <div class="form-group">
-          <label for="login-group">Player Group (optional)</label>
-          <input type="text" class="form-control" id="login-group" placeholder="Group Name" value="">
+          <label for="type">Category</label>
+          <select class="form-control" id="game-type">
+            <option value="LOCATION" <%= option_selected(type === "LOCATION") %>>To be played around a specific location</option>
+            <option value="ANYWHERE" <%= option_selected(type === "ANYWHERE") %>>Can be played anywhere</option>
+            <option value="QR"       <%= option_selected(type === "QR")       %>>Intended for play with QR Codes</option>
+          </select>
         </div>
 
-        <label for="login-group">Access to ARIS</label>
-        <div class="checkbox">
-          <input type="checkbox" id="login-disable-exit">
-          <label for="login-disable-exit">
-            Disable ability to leave this game.
+        <div class="form-group">
+          <label for="">Location (Used to determine "Nearby Games")</label>
+          <div class="game-map-canvas" style="height:150px; width:100%"></div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>Network</h4>
+      </div>
+      <div class="panel-body">
+
+        <div class="btn-group btn-group-sm btn-group-justified network_levels">
+          <label class="btn btn-info  <%= tab_selected(network_level === "LOCAL") %>">
+            <input type="radio" class="network_level item-type" name="network_level" value="LOCAL" <%= radio_selected(network_level === "LOCAL") %>>
+            <span class="glyphicon glyphicon-stats"></span>
+            &nbsp;Local
+          </label>
+          <label class="btn btn-info <%= tab_selected(network_level === "REMOTE_WRITE") %>">
+            <input type="radio" class="network_level item-type" name="network_level" value="REMOTE_WRITE" <%= radio_selected(network_level === "REMOTE_WRITE") %>>
+            <span class="glyphicon glyphicon-stats"></span>
+            &nbsp;Remote Write
+          </label>
+          <label class="btn btn-info <%= tab_selected(network_level === "HYBRID") %>">
+            <input type="radio" class="network_level item-type" name="network_level" value="HYBRID"    <%= radio_selected(network_level === "HYBRID") %>>
+            <span class="glyphicon glyphicon-stats"></span>
+            &nbsp;Hybrid
+          </label>
+          <label class="btn btn-info <%= tab_selected(network_level === "REMOTE") %>">
+            <input type="radio" class="network_level item-type" name="network_level" value="REMOTE" <%= radio_selected(network_level === "REMOTE") %>>
+            <span class="glyphicon glyphicon-stats"></span>
+            &nbsp;Remote
           </label>
         </div>
+
+        <div class="checkbox">
+          <input type="checkbox" id="game-preload_media" <%= is_checked(preload_media) %>>
+          <label for="game-preload_media">
+            Preload Media
+          </label>
+        </div>
+
       </div>
     </div>
+
   </div>
 
-
-  <!-- Advanced Section -->
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h5 class="panel-title collapsed" data-toggle="collapse" data-target="#advanced-settings">
-        <a>
-          Advanced Settings
-        </a>
-      </h5>
+      <h4>Login Codes</h4>
+    </div>
+    <div class="panel-body">
+
+      <div class="form-group">
+
+        <div id="login-codes">
+          <div class="form-group row">
+            <div class="col-xs-12 col-md-4 padded">
+              <div class="qr_image"></div>
+            </div>
+
+            <div class="col-xs-12 col-md-8 padded">
+              <div class="form-group">
+                <label for="login-group">Player Group (optional)</label>
+                <input type="text" class="form-control" id="login-group" placeholder="Group Name" value="">
+              </div>
+
+              <label for="login-group">Access to ARIS</label>
+              <div class="checkbox">
+                <input type="checkbox" id="login-disable-exit">
+                <label for="login-disable-exit">
+                  Disable ability to leave this game.
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div id="advanced-settings" class="collapse">
-    <div class="form-group">
-      <label for="type">Game Category</label>
-      <select class="form-control" id="game-type">
-        <option value="LOCATION" <%= option_selected(type === "LOCATION") %>>To be played around a specific location</option>
-        <option value="ANYWHERE" <%= option_selected(type === "ANYWHERE") %>>Can be played anywhere</option>
-        <option value="QR"       <%= option_selected(type === "QR")       %>>Intended for play with QR Codes</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="network_level">Network</label>
-
-      <div class="btn-group btn-group-sm btn-group-justified network_levels">
-        <label class="btn btn-info  <%= tab_selected(network_level === "LOCAL") %>">
-          <input type="radio" class="network_level item-type" name="network_level" value="LOCAL" <%= radio_selected(network_level === "LOCAL") %>>
-          <span class="glyphicon glyphicon-stats"></span>
-          &nbsp;Local
-        </label>
-        <label class="btn btn-info <%= tab_selected(network_level === "REMOTE_WRITE") %>">
-          <input type="radio" class="network_level item-type" name="network_level" value="REMOTE_WRITE" <%= radio_selected(network_level === "REMOTE_WRITE") %>>
-          <span class="glyphicon glyphicon-stats"></span>
-          &nbsp;Remote Write
-        </label>
-        <label class="btn btn-info <%= tab_selected(network_level === "HYBRID") %>">
-          <input type="radio" class="network_level item-type" name="network_level" value="HYBRID"    <%= radio_selected(network_level === "HYBRID") %>>
-          <span class="glyphicon glyphicon-stats"></span>
-          &nbsp;Hybrid
-        </label>
-        <label class="btn btn-info <%= tab_selected(network_level === "REMOTE") %>">
-          <input type="radio" class="network_level item-type" name="network_level" value="REMOTE" <%= radio_selected(network_level === "REMOTE") %>>
-          <span class="glyphicon glyphicon-stats"></span>
-          &nbsp;Remote
-        </label>
-      </div>
-
-      <div class="checkbox">
-        <input type="checkbox" id="game-preload_media" <%= is_checked(preload_media) %>>
-        <label for="game-preload_media">
-          Preload Media
-        </label>
-      </div>
-
-    </div>
-
+  <div id="advanced-settings">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4>Map</h4>
@@ -190,13 +181,18 @@
         </div>
 
         <div class="form-group">
-          <label for="game-map_latitude">Latitude</label>
-          <input type="text" class="form-control" id="game-map_latitude" placeholder="0.0" value="<%= map_latitude %>">
+          <label for="map_focus">Focus</label>
+
+          <select class="form-control" id="game-map_focus">
+            <option value="PLAYER"        <%= option_selected(map_focus === "PLAYER")        %>>Player</option>
+            <option value="LOCATION"      <%= option_selected(map_focus === "LOCATION")      %>>Location</option>
+            <option value="FIT_LOCATIONS" <%= option_selected(map_focus === "FIT_LOCATIONS") %>>Fit All Available Locations</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="game-map_longitude">Longitude</label>
-          <input type="text" class="form-control" id="game-map_longitude" placeholder="0.0" value="<%= map_longitude %>">
+          <label for="">Map Location</label>
+          <div class="tab-map-canvas" style="height:150px; width:100%"></div>
         </div>
 
         <div class="form-group">
@@ -269,6 +265,25 @@
     </div> <!-- /inventory -->
 
   </div> <!-- /advanced -->
+
+  <div class="form-group">
+    <br>
+    <label for="">Visibility To ARIS Client</label>
+    <div class="btn-group btn-group-lg btn-group-justified published-toggle" data-toggle="popover" data-html="true" title="Game Visibility to Players" data-content="If <strong class='text-success'>Published</strong> your game will be listed as playable on the ARIS client to everyone. If <strong class='text-info'>Private</strong> it will appear under the 'mine' tab for all editors of the game.">
+      <label class="btn btn-success <%= tab_selected(published === "1") %>">
+        <input type="radio" class="game-published" name="game-published" value="1" <%= radio_selected(published === "1") %>>
+        <span class="glyphicon glyphicon-saved"></span>
+        Published
+      </label>
+      <label class="btn btn-info <%= tab_selected(published === "0") %>">
+        <input type="radio" class="game-published" name="game-published" value="0" <%= radio_selected(published === "0") %>>
+        <span class="glyphicon glyphicon-eye-close"></span>
+        Private
+      </label>
+    </div>
+  </div>
+
+  </div>
 
   <div class="form-group">
     <button type="submit" class="btn btn-primary save">
