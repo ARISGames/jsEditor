@@ -91,6 +91,7 @@ function(
         storage.groups.fetch(),
         storage.tags.fetch(),
         storage.tabs.fetch(),
+        storage.quests.fetch(),
         storage.scenes.fetch(),
         storage.instances.fetch(),
         storage.triggers.fetch(),
@@ -236,17 +237,17 @@ function(
 
     editSharing: function(game_id)
     {
-      var game = new Game({game_id: game_id});
+      var game = new Game({game_id:game_id});
 
-      var editors = new EditorsCollection([], {parent: game});
+      var editors = new EditorsCollection([], {parent:game});
 
       this.preloadStorage(game,
         function()
         {
           editors.invoke('set', 'game_id', game.id);
 
-          vent.trigger("application.show",     new EditorSharingView ({model: game, collection: editors}));
-          vent.trigger("application:nav:show", new GameNavMenu       ({model: game, active: ".game"}));
+          vent.trigger("application.show",     new EditorSharingView ({model:game, collection:editors}));
+          vent.trigger("application:nav:show", new GameNavMenu       ({model:game, active:".game"}));
           vent.trigger("application:info:hide");
           vent.trigger("application:list:hide");
         }
@@ -255,14 +256,14 @@ function(
 
     editTabs: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          vent.trigger("application.show",     new TabsView    ({model: game, collection: storage.tabs}));
-          vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+          vent.trigger("application.show",     new TabsView    ({model:game, collection:storage.tabs}));
+          vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".game"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
         }
@@ -271,14 +272,14 @@ function(
 
     editGroups: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          vent.trigger("application.show",     new GroupsView  ({model: game, collection: storage.groups}));
-          vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+          vent.trigger("application.show",     new GroupsView  ({model:game, collection:storage.groups}));
+          vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".game"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
         }
@@ -287,14 +288,14 @@ function(
 
     editTags: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          vent.trigger("application.show",     new TagsView    ({model: game, collection: storage.tags}));
-          vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".game"}));
+          vent.trigger("application.show",     new TagsView    ({model:game, collection:storage.tags}));
+          vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".game"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
         }
@@ -303,18 +304,18 @@ function(
 
     editNotes: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       // TODO should be a search module with pagination?
-      var notes = new NotesCollection([], {parent: game});
+      var notes = new NotesCollection([], {parent:game});
 
       $.when(
         notes.fetch()).done(
         function()
         {
-          vent.trigger("application.show",     new NotesView   ({model: game, collection: notes}));
-          vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".notes"}));
+          vent.trigger("application.show",     new NotesView   ({model:game, collection:notes}));
+          vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".notes"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
         }
@@ -325,7 +326,7 @@ function(
 
     listLocations: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
@@ -337,11 +338,11 @@ function(
             return trigger.get("type") === "LOCATION" && trigger.instance().get("object_type") !== "NOTE";
 
           });
-          var locations = new GameTriggersCollection(location_selection, {parent: game});
+          var locations = new GameTriggersCollection(location_selection, {parent:game});
 
-          vent.trigger("application.show",      new LocationsView ({model: game, collection: locations}));
-          vent.trigger("application:nav:show",  new GameNavMenu   ({model: game, active: ".locations"}));
-          vent.trigger("application:list:show", new LocationsOrganizerView({locations: locations, instances: storage.instances}));
+          vent.trigger("application.show",      new LocationsView ({model:game, collection:locations}));
+          vent.trigger("application:nav:show",  new GameNavMenu   ({model:game, active:".locations"}));
+          vent.trigger("application:list:show", new LocationsOrganizerView({locations:locations, instances:storage.instances}));
           vent.trigger("application:info:hide");
         }
       );
@@ -349,14 +350,14 @@ function(
 
     listQuests: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          vent.trigger("application.show",     new QuestsView  ({model: game, collection: storage.quests}));
-          vent.trigger("application:nav:show", new GameNavMenu ({model: game, active: ".quests"}));
+          vent.trigger("application.show",     new QuestsView  ({model:game, collection:storage.quests}));
+          vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".quests"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
         }
@@ -365,15 +366,15 @@ function(
 
     listMedia: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          vent.trigger("application.show",      new MediaEditorView ({model: game, collection: storage.media}));
-          vent.trigger("application:nav:show",  new GameNavMenu     ({model: game, active: ".media"}));
-          vent.trigger("application:list:show", new MediaOrganizerView({collection: storage.media}));
+          vent.trigger("application.show",      new MediaEditorView ({model:game, collection:storage.media}));
+          vent.trigger("application:nav:show",  new GameNavMenu     ({model:game, active:".media"}));
+          vent.trigger("application:list:show", new MediaOrganizerView({collection:storage.media}));
           vent.trigger("application:info:hide");
         }
       );
@@ -381,14 +382,14 @@ function(
 
     listConversations: function(game_id)
     {
-      var game  = new Game({game_id: game_id});
+      var game  = new Game({game_id:game_id});
       storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          vent.trigger("application.show",      new ConversationsView ({model: game, collection: storage.dialogs}));
-          vent.trigger("application:nav:show",  new GameNavMenu       ({model: game, active: ".conversations"}));
+          vent.trigger("application.show",      new ConversationsView ({model:game, collection:storage.dialogs}));
+          vent.trigger("application:nav:show",  new GameNavMenu       ({model:game, active:".conversations"}));
           vent.trigger("application:list:hide");
           vent.trigger("application:info:hide");
         }
