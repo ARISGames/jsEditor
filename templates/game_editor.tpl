@@ -190,7 +190,7 @@
           </select>
         </div>
 
-        <div class="form-group tab-map-container" <%= tab_visible(map_focus === "FIT_LOCATIONS") %>>
+        <div class="form-group tab-map-container" <%= tab_visible(map_focus === "LOCATION") %>>
           <label for="">Map Location</label>
           <div class="tab-map-canvas" style="height:150px; width:100%"></div>
         </div>

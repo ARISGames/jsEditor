@@ -516,7 +516,7 @@ function(
     {
       var self = this;
       this.model.set("map_focus", this.ui.map_focus.val());
-      if(self.model.get("map_focus") == "FIT_LOCATIONS")
+      if(self.model.get("map_focus") == "LOCATION")
       {
         self.ui.tab_map_container.get(0).style.display = 'block';
         self.renderTabMap();
