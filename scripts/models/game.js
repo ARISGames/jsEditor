@@ -107,6 +107,32 @@ function(require)
           }
         }
       });
+    },
+
+    export: function(options) {
+      options || (options = {});
+
+      this.set("exporting", "true")
+
+      var view = this;
+      var export_data = {"game_id": this.get("game_id"), "auth": session.auth_json()};
+
+      $.ajax({
+        url: config.aris_api_url + "duplicate.exportGame",
+        type: 'POST',
+        data: JSON.stringify(export_data),
+        processData: false,
+        success: function(data) {
+          view.set("exporting", "false");
+          var json = JSON.parse(data);
+          if (json.returnCode === 0) {
+            var url = json.data;
+            if (options.success) {
+              options.success(url);
+            }
+          }
+        }
+      });
     }
 
   });

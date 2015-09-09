@@ -53,6 +53,7 @@ function(
       "save":      ".save",
       "delete":    ".delete",
       "duplicate": ".duplicate",
+      "export":    ".export",
       "cancel":    ".cancel",
 
       "change_icon":  ".change-icon",
@@ -169,6 +170,7 @@ function(
       "click @ui.save":      "onClickSave",
       "click @ui.cancel":    "onClickCancel",
       "click @ui.duplicate": "onClickDuplicate",
+      "click @ui.export":    "onClickExport",
       "click @ui.delete":    "onClickDelete",
 
       "click @ui.change_icon":  "onClickIcon",
@@ -226,6 +228,24 @@ function(
       Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true});
     },
 
+    onClickExport: function()
+    {
+      var view = this;
+      var game = this.model;
+
+      if (game.get("exporting") === "true") {
+        // do nothing
+      } else {
+        text = $('.export').text();
+        $('.export').text('Exporting...');
+        game.export({
+          success: function(url) {
+            $('.export').text(text);
+            window.location.href = url;
+          }
+        });
+      }
+    },
 
     onClickDuplicate: function()
     {

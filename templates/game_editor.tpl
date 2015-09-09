@@ -293,7 +293,10 @@
       Cancel
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-info duplicate">
+      <button type="button" class="btn btn-info export">
+        Export
+      </button>
+      <button type="button" class="btn btn-warning duplicate">
         Duplicate
       </button>
       <button type="button" class="btn btn-danger delete">
