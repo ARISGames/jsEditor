@@ -69,6 +69,9 @@ function(
             }, false);
             return xhr;
           },
+          error: function() {
+            $('.import-zip').text('Upload failed. Click to try again.');
+          },
           success: function(e) {
             var import_data = {
               auth: session.auth_json(),
@@ -81,6 +84,9 @@ function(
               type: 'POST',
               data: JSON.stringify(import_data),
               processData: false,
+              error: function() {
+                $('.import-zip').text('Import is in progress. Please wait a few minutes, then refresh the page.');
+              },
               success: function(result) {
                 var json = JSON.parse(result);
                 if (json.returnCode === 0) {
