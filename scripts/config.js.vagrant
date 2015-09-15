@@ -5,6 +5,7 @@ define(
     var base_url = "http://localhost:10080/server/";
 
     return {
+      "base_url": base_url,
       "aris_api_url": base_url + "json.php/v2.",
       "migration_api_url": base_url + "json.php/migration.",
 

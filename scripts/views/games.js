@@ -46,39 +46,50 @@ function(
 
     onClickImportZip: function()
     {
-      var fileInput = $('<input type="file" />');
+      var form = $('<form enctype="multipart/form-data" />');
+      var fileInput = $('<input type="file" name="raw_upload" />');
+      form.append(fileInput);
       fileInput.on('change', function(){
-        var file = fileInput[0].files[0];
-        if (file == null) return;
-        var reader = new FileReader();
-        reader.onload = function(evt)
-        {
-          var zip_data = evt.target.result;
-          zip_data = zip_data.substr(zip_data.indexOf(",")+1);
-
-          var import_data = {
-            auth: session.auth_json(),
-            zip_data: zip_data,
-            zip_name: file.name,
-          };
-
-          $('.import-zip').text('Importing, please wait...');
-          $.ajax({
-            url: config.aris_api_url + "duplicate.importGame",
-            type: 'POST',
-            data: JSON.stringify(import_data),
-            processData: false,
-            success: function(result) {
-              var json = JSON.parse(result);
-              if (json.returnCode === 0) {
-                //var game = new Game();
-                //game.attributes = json.data;
-                window.location.reload();
+        var formData = new FormData(form[0]);
+        $('.import-zip').text('Uploading...');
+        $.ajax({
+          url: config.base_url + 'rawupload.php',
+          type: 'POST',
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+              if (evt.lengthComputable) {
+                var percentComplete = Math.floor((evt.loaded / evt.total) * 100);
+                $('.import-zip').text('Uploading... (' + percentComplete + '%)');
               }
-            }
-          });
-        }
-        reader.readAsDataURL(file);
+            }, false);
+            return xhr;
+          },
+          success: function(e) {
+            var import_data = {
+              auth: session.auth_json(),
+              raw_upload_id: e,
+              zip_name: 'game_to_import.zip',
+            };
+            $('.import-zip').text('Upload complete. Importing...');
+            $.ajax({
+              url: config.aris_api_url + 'duplicate.importGame',
+              type: 'POST',
+              data: JSON.stringify(import_data),
+              processData: false,
+              success: function(result) {
+                var json = JSON.parse(result);
+                if (json.returnCode === 0) {
+                  window.location.reload();
+                }
+              },
+            });
+          },
+        });
       });
       fileInput.click();
     },
