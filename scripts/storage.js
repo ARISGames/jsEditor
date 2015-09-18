@@ -15,6 +15,7 @@ function(
     {
       var self = this;
       self.users.parent             = game;
+      self.editors.parent           = game;
       self.groups.parent            = game;
       self.tags.parent              = game;
       self.tabs.parent              = game;
@@ -44,12 +45,13 @@ function(
       var idAttribute = game_object.idAttribute;
 
       // These should call retrieve, just in case.
-           if(idAttribute === "user_id")             { self.users.add(game_object);  }
-      else if(idAttribute === "group_id")            { self.groups.add(game_object); }
-      else if(idAttribute === "tag_id")              { self.tags.add(game_object);   }
-      else if(idAttribute === "tab_id")              { self.tabs.add(game_object);   }
-      else if(idAttribute === "quest_id")            { self.quests.add(game_object); }
-      else if(idAttribute === "media_id")            { self.medias.add(game_object); }
+           if(idAttribute === "user_id")             { self.users.add(game_object);   }
+      else if(idAttribute === "user_id")             { self.editors.add(game_object); }
+      else if(idAttribute === "group_id")            { self.groups.add(game_object);  }
+      else if(idAttribute === "tag_id")              { self.tags.add(game_object);    }
+      else if(idAttribute === "tab_id")              { self.tabs.add(game_object);    }
+      else if(idAttribute === "quest_id")            { self.quests.add(game_object);  }
+      else if(idAttribute === "media_id")            { self.medias.add(game_object);  }
       else if(idAttribute === "scene_id")            { self.scenes.add(game_object);         }
       else if(idAttribute === "instance_id")         { self.instances.add(game_object);      }
       else if(idAttribute === "trigger_id")          { self.triggers.add(game_object);       }

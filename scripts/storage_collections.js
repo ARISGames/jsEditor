@@ -2,6 +2,7 @@ define([
   "backbone",
   "marionette",
   "collections/users",
+  "collections/editors",
   "collections/tags",
   "collections/tabs",
   "collections/groups",
@@ -26,6 +27,7 @@ function(
   Backbone,
   Marionette,
   UsersCollection,
+  EditorsCollection,
   TagsCollection,
   TabsCollection,
   GroupsCollection,
@@ -54,6 +56,7 @@ function(
     inject: function(storage)
     {
       storage.users             = new UsersCollection();
+      storage.editors           = new EditorsCollection();
       storage.groups            = new GroupsCollection();
       storage.tags              = new TagsCollection();
       storage.tabs              = new TabsCollection();

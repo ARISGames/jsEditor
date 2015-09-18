@@ -88,6 +88,7 @@ function(
     {
       $.when(
         game.fetch(),
+        storage.editors.fetch(),
         storage.groups.fetch(),
         storage.tags.fetch(),
         storage.tabs.fetch(),
@@ -238,15 +239,12 @@ function(
     editSharing: function(game_id)
     {
       var game = new Game({game_id:game_id});
-
-      var editors = new EditorsCollection([], {parent:game});
+      storage.for(game);
 
       this.preloadStorage(game,
         function()
         {
-          editors.invoke('set', 'game_id', game.id);
-
-          vent.trigger("application.show",     new EditorSharingView ({model:game, collection:editors}));
+          vent.trigger("application.show",     new EditorSharingView ({model:game, collection:storage.editors}));
           vent.trigger("application:nav:show", new GameNavMenu       ({model:game, active:".game"}));
           vent.trigger("application:info:hide");
           vent.trigger("application:list:hide");
