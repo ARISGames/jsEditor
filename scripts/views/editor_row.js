@@ -3,6 +3,7 @@ define([
   'backbone',
   'text!templates/editor_row.tpl',
   'views/alert_dialog',
+  'storage',
   'vent',
   'models/session'
 ],
@@ -11,6 +12,7 @@ function(
   Backbone,
   Template,
   AlertDialog,
+  storage,
   vent,
   session
 )
@@ -36,20 +38,21 @@ function(
 
     initialize: function(options)
     {
-      var view = this;
+      var self = this;
 
-      this.editors = options.editors;
 
-      this.editors.on("remove", function(model)
+      self.editors = options.editors;
+      _.each(self.editors.models, function(editor) { editor.set("game_id", storage.game.id); });
+
+      self.editors.on("remove", function(model)
       {
-        view.render();
+        self.render();
       });
 
-      this.editors.on("add", function(model)
+      self.editors.on("add", function(model)
       {
-        view.render();
+        self.render();
       });
-
     },
 
     onClickRemove: function()
