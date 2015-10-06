@@ -48,7 +48,7 @@ function(
       self.dialogs_region.show       (new DialogOrganizerView      ({collection:storage.dialogs}));
       self.plaques_region.show       (new PlaqueOrganizerView      ({collection:storage.plaques}));
       self.items_region.show         (new ItemOrganizerView        ({collection:storage.items}));
-      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_page_collection}));
+      self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_pages}));
       self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages}));
       self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factories}));
     },
