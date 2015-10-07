@@ -484,6 +484,7 @@ function(
           var center = marker.position;
           self.model.set("latitude",  center.lat());
           self.model.set("longitude", center.lng());
+          util.game_location = { latitude:center.lat(), longitude:center.lon() };
           map.setCenter(center);
         }
       );

@@ -2,11 +2,13 @@
 /* The containers are injected from application.js to fix circular issues */
 define([
   "backbone",
-  "marionette"
+  "marionette",
+  "util",
 ],
 function(
   Backbone,
-  Marionette
+  Marionette,
+  util
 )
 {
   var Storage = Marionette.Controller.extend(
@@ -36,6 +38,7 @@ function(
 
       self.games.add(game);
       self.game = game;
+      util.game_location = { latitude:game.get("latitude"), longitude:game.get("longitude") };
     },
 
     // Add into proper storage
