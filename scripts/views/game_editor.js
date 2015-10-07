@@ -462,13 +462,14 @@ function(
 
       var loc;
       if(self.model.get("latitude") == "0")
+        loc = new google.maps.LatLng(util.default_location.latitude, util.default_location.longitude);
+      else
         loc = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
-      else loc = util.default_location();
 
       var map = new google.maps.Map(self.ui.game_map_canvas.get(0), {
         zoom:8,
         center:loc,
-        scrollwheel:false,
+        scrollwheel:true,
         zoomControl:true,
       });
       var marker = new google.maps.Marker({
@@ -495,13 +496,14 @@ function(
 
       var loc;
       if(self.model.get("map_latitude") == "0")
+        loc = new google.maps.LatLng(util.default_location.latitude, util.default_location.longitude);
+      else
         loc = new google.maps.LatLng(self.model.get("map_latitude"), self.model.get("map_longitude"));
-      else loc = util.default_location();
 
       var map = new google.maps.Map(self.ui.tab_map_canvas.get(0), {
         zoom:8,
         center:loc,
-        scrollwheel:false,
+        scrollwheel:true,
         zoomControl:true,
       });
       var marker = new google.maps.Marker({

@@ -569,7 +569,8 @@ function(
       {
         zoom: 8,
         center: default_location,
-        scrollwheel: false
+        scrollwheel:false,
+        zoomControl:true,
       };
       var map = new google.maps.Map(element, map_options);
       var boundary = new google.maps.LatLngBounds();
@@ -579,9 +580,10 @@ function(
       // Add Trigger Location to map
       var location_position;
       if(self.model.get("latitude") == "0")
-        location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+        location_position = new google.maps.LatLng(util.default_location.latitude, util.default_location.longitude);
       else
-        location_position = util.default_location();
+        location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+
 
       var circle_marker = new google.maps.Circle({
         center: location_position,
