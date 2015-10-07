@@ -159,7 +159,7 @@ function(
       //var qr_string = "1,"+this.qr_group_name+","+this.model.id+","+this.qr_disable_leave;
 
       //v2.0 - // 2,pauto_profile_enabled,grgroup_name,ggame_id,lleave_game_enabled
-      var qr_string = "2,gr"+this.qr_group_name+",g"+this.model.id+",l"+this.qr_disable_leave;
+      var qr_string = "2,gr"+this.qr_group_name+",g"+this.model.id+",l"+(this.qr_disable_leave == "0" ? "1" : "0");
       return qr_string;
     },
 
