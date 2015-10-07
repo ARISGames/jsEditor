@@ -4,7 +4,8 @@ define([
   'backbone',
   'text!templates/game_create.tpl',
   'models/game',
-  'vent'
+  'util',
+  'vent',
 ],
 function(
   _,
@@ -12,6 +13,7 @@ function(
   Backbone,
   Template,
   Game,
+  util,
   vent
 )
 {
@@ -22,7 +24,8 @@ function(
 
     ui: {
       "name": "#game-name",
-      "description": "#game-description"
+      "description": "#game-description",
+      "game_map_canvas": ".game-map-canvas",
     },
 
     onShow: function()
@@ -36,6 +39,41 @@ function(
       "click .cancel": "onClickCancel"
     },
 
+    renderGameMap: function()
+    {
+      var self = this;
+
+      var loc = new google.maps.LatLng(util.default_location().latitude, util.default_location().longitude);
+
+      var map = new google.maps.Map(self.ui.game_map_canvas.get(0), {
+        zoom:8,
+        center:loc,
+        scrollwheel:true,
+        zoomControl:true,
+      });
+      var marker = new google.maps.Marker({
+        position:loc,
+        map:map,
+        draggable:true,
+      });
+
+      google.maps.event.addListener(marker, 'dragend', 
+        function(event)
+        {
+          var center = marker.position;
+          self.model.set("latitude",  center.lat());
+          self.model.set("longitude", center.lng());
+          map.setCenter(center);
+        }
+      );
+
+    },
+
+    onRender: function()
+    {
+      var self = this;
+      setTimeout(function() { self.renderGameMap(); }, 300);
+    },
 
     onClickSave: function()
     {
@@ -43,6 +81,7 @@ function(
 
       this.model.set("name",        this.ui.name.val());
       this.model.set("description", this.ui.description.val());
+      util.game_location = { latitude:parseFloat(this.model.get("latitude")), longitude:parseFloat(this.model.get("longitude")) };
 
       this.model.save({}, {
         create: function()

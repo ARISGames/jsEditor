@@ -564,26 +564,24 @@ function(
       // Render Map
       var element = self.ui.map_canvas.get(0);
 
-      var default_location = new google.maps.LatLng(43.073, -89.4012);
+      // Add Trigger Location to map
+      var location_position;
+      if(self.model.get("latitude") == "0")
+        location_position = new google.maps.LatLng(util.default_location().latitude, util.default_location().longitude);
+      else
+        location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+
       var map_options =
       {
         zoom: 8,
-        center: default_location,
+        center: location_position,
         scrollwheel:false,
         zoomControl:true,
       };
       var map = new google.maps.Map(element, map_options);
       var boundary = new google.maps.LatLngBounds();
 
-      boundary.extend(default_location);
-
-      // Add Trigger Location to map
-      var location_position;
-      if(self.model.get("latitude") == "0")
-        location_position = new google.maps.LatLng(util.default_location.latitude, util.default_location.longitude);
-      else
-        location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
-
+      boundary.extend(location_position);
 
       var circle_marker = new google.maps.Circle({
         center: location_position,

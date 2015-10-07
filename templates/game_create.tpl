@@ -14,6 +14,10 @@
 		<input type="text" class="form-control" id="game-description" placeholder="Description" value="<%= description %>">
 	</div>
 
+        <div class="form-group">
+          <label for="">Location</label>
+          <div class="game-map-canvas" style="height:150px; width:100%"></div>
+        </div>
 
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary save">

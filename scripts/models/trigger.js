@@ -40,8 +40,8 @@ function(require)
       return {
         title: "",
         type: "LOCATION",
-        latitude: "43.073",
-        longitude: "-89.4012",
+        latitude: "0",
+        longitude: "0",
         distance: "25",
         infinite_distance: "1",
         wiggle: "0",

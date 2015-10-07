@@ -38,7 +38,7 @@ function(
 
       self.games.add(game);
       self.game = game;
-      util.game_location = { latitude:game.get("latitude"), longitude:game.get("longitude") };
+      util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
     },
 
     // Add into proper storage

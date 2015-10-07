@@ -217,6 +217,7 @@ function(
       this.model.set("notebook_allow_likes",       this.ui.notebook_allow_likes.is(":checked") ? "1" : "0");
       this.model.set("inventory_weight_cap",       this.ui.inventory_weight_cap.val());
 
+      util.game_location = { latitude:parseFloat(this.model.get("latitude")), longitude:parseFloat(this.model.get("longitude")) };
       this.model.save({}, {
         update: function()
         {
@@ -462,7 +463,7 @@ function(
 
       var loc;
       if(self.model.get("latitude") == "0")
-        loc = new google.maps.LatLng(util.default_location.latitude, util.default_location.longitude);
+        loc = new google.maps.LatLng(util.default_location().latitude, util.default_location().longitude);
       else
         loc = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
 
@@ -484,7 +485,6 @@ function(
           var center = marker.position;
           self.model.set("latitude",  center.lat());
           self.model.set("longitude", center.lng());
-          util.game_location = { latitude:center.lat(), longitude:center.lon() };
           map.setCenter(center);
         }
       );
@@ -497,7 +497,7 @@ function(
 
       var loc;
       if(self.model.get("map_latitude") == "0")
-        loc = new google.maps.LatLng(util.default_location.latitude, util.default_location.longitude);
+        loc = new google.maps.LatLng(util.default_location().latitude, util.default_location().longitude);
       else
         loc = new google.maps.LatLng(self.model.get("map_latitude"), self.model.get("map_longitude"));
 
