@@ -15,6 +15,7 @@ define([
   'collections/and_packages',
   'collections/atoms',
   'views/trigger_editor_object_selector',
+  'util',
 ],
 function(
   _,
@@ -32,7 +33,8 @@ function(
   RequirementPackage,
   AndPackagesCollection,
   AtomsCollection,
-  TriggerObjectSelectorView
+  TriggerObjectSelectorView,
+  util
 )
 {
   return EditorView.extend(
@@ -575,7 +577,11 @@ function(
       boundary.extend(default_location);
 
       // Add Trigger Location to map
-      var location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+      var location_position;
+      if(self.model.get("latitude") == "0")
+        location_position = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+      else
+        location_position = util.default_location();
 
       var circle_marker = new google.maps.Circle({
         center: location_position,

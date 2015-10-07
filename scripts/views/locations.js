@@ -3,13 +3,15 @@ define([
   'backbone',
   'text!templates/locations.tpl',
   'views/trigger_location_editor',
-  'vent'
+  'util',
+  'vent',
 ],
 function(
   _,
   Backbone,
   Template,
   TriggerLocationEditorView,
+  util,
   vent
 )
 {
@@ -26,21 +28,8 @@ function(
     onRender: function()
     {
       var view = this;
-      if(navigator.geolocation)
-      {
-        setTimeout(function() { view.renderMap(43.073,-89.4012); }, 300); //pre-render @ madison while getting browser loc
-        navigator.geolocation.getCurrentPosition(
-          function(position)
-          {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            setTimeout(function() { view.renderMap(lat,lon); }, 300);
-          },
-          function(error)
-          {
-          }
-        );
-      }
+      var loc = util.default_location();
+      setTimeout(function() { view.renderMap(loc.latitude,loc.longitude); }, 300); //pre-render @ madison while getting browser loc
     },
 
     renderMap: function(lat,lon)

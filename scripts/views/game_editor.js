@@ -8,6 +8,7 @@ define([
   'views/media_chooser',
   'views/alert_dialog',
   'models/game',
+  'util',
   'vent',
 ],
 function(
@@ -20,6 +21,7 @@ function(
   MediaChooserView,
   AlertDialog,
   Game,
+  util,
   vent
 )
 {
@@ -458,17 +460,21 @@ function(
     {
       var self = this;
 
-      var loc = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+      var loc;
+      if(self.model.get("latitude") == "0")
+        loc = new google.maps.LatLng(self.model.get("latitude"), self.model.get("longitude"));
+      else loc = util.default_location();
 
       var map = new google.maps.Map(self.ui.game_map_canvas.get(0), {
         zoom:8,
         center:loc,
-        scrollwheel:false
+        scrollwheel:false,
+        zoomControl:true,
       });
       var marker = new google.maps.Marker({
         position:loc,
         map:map,
-        draggable:true
+        draggable:true,
       });
 
       google.maps.event.addListener(marker, 'dragend', 
@@ -487,20 +493,24 @@ function(
     {
       var self = this;
 
-      var loc = new google.maps.LatLng(self.model.get("map_latitude"), self.model.get("map_longitude"));
+      var loc;
+      if(self.model.get("map_latitude") == "0")
+        loc = new google.maps.LatLng(self.model.get("map_latitude"), self.model.get("map_longitude"));
+      else loc = util.default_location();
 
       var map = new google.maps.Map(self.ui.tab_map_canvas.get(0), {
         zoom:8,
         center:loc,
-        scrollwheel:false
+        scrollwheel:false,
+        zoomControl:true,
       });
       var marker = new google.maps.Marker({
         position:loc,
         map:map,
-        draggable:true
+        draggable:true,
       });
 
-      google.maps.event.addListener(marker, 'dragend', 
+      google.maps.event.addListener(marker, 'dragend',
         function(event)
         {
           var center = marker.position;

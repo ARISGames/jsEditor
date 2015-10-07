@@ -1,3 +1,9 @@
+<style>
+.gmnoprint img
+{
+max-width:none;
+}
+</style>
 <div class="shrink-center well well-lg game-settings" style="max-width:100%;">
   <form class="form" role="form" onsubmit="return false;">
   <h4>

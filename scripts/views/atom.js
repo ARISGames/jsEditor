@@ -86,7 +86,7 @@ function(
       quantity:    ".quantity",
       latitude:    ".latitude",
       longitude:   ".longitude",
-      distance:    ".distance"
+      distance:    ".distance",
     },
 
     events:
@@ -98,7 +98,7 @@ function(
       "change @ui.distance":    "onChangeDistance",
       "change @ui.latitude":    "onChangeLatitude",
       "change @ui.longitude":   "onChangeLongitude",
-      "click .delete-atom":     "onClickDeleteAtom"
+      "click .delete-atom":     "onClickDeleteAtom",
     },
 
     /* Model bindings */

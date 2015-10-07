@@ -33,8 +33,8 @@ function(require)
       "trigger_on_enter",
       "qr_code",
       "seconds",
-      "icon_media_id"
-        ],
+      "icon_media_id",
+    ],
 
     defaults: function() {
       return {
@@ -51,7 +51,7 @@ function(require)
         qr_code: new Date().getTime(),
         seconds: "10",
         requirement_root_package_id: "0",
-        icon_media_id: "0"
+        icon_media_id: "0",
       }
     },
 

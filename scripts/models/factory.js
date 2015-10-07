@@ -13,7 +13,7 @@ function(require)
       read:   "factories.getFactory",
       update: "factories.updateFactory",
       create: "factories.createFactory",
-      delete: "factories.deleteFactory"
+      delete: "factories.deleteFactory",
     },
 
     amfphp_url_attributes:
@@ -43,7 +43,7 @@ function(require)
       "trigger_title",
       "trigger_icon_media_id",
       "trigger_show_title",
-      "trigger_requirement_root_package_id"
+      "trigger_requirement_root_package_id",
     ],
 
     defaults:

@@ -17,7 +17,7 @@ function(
       "qty",
       "latitude",
       "longitude",
-        "distance"
+      "distance",
     ],
 
     defaults: {
@@ -27,7 +27,7 @@ function(
       qty:"1",
       latitude:"86.75309",
       longitude:"3.141592",
-      distance: "5.0"
+      distance:"5.0",
     }
 
     // requirement types
