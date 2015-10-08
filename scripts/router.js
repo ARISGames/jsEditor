@@ -30,6 +30,7 @@ define([
   'models/game',
   'vent',
   'models/session',
+  'util',
   'storage',
 ],
 function(
@@ -64,6 +65,7 @@ function(
   Game,
   vent,
   session,
+  util,
   storage
 )
 {
@@ -208,6 +210,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           // TODO make game a promise and store it so we can access the same game instance in other tabs.
           // then 'intro scene' test can just be if this.model.is(game.intro_scene())
           var intro_scene = storage.scenes.get(game.get("intro_scene_id"));
@@ -228,6 +232,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",     new GameEditorView ({model:game, scenes:storage.scenes}));
           vent.trigger("application:nav:show", new GameNavMenu    ({model:game, active:".game"}));
           vent.trigger("application:info:hide");
@@ -244,6 +250,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",     new EditorSharingView ({model:game, collection:storage.editors}));
           vent.trigger("application:nav:show", new GameNavMenu       ({model:game, active:".game"}));
           vent.trigger("application:info:hide");
@@ -260,6 +268,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",     new TabsView    ({model:game, collection:storage.tabs}));
           vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".game"}));
           vent.trigger("application:list:hide");
@@ -276,6 +286,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",     new GroupsView  ({model:game, collection:storage.groups}));
           vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".game"}));
           vent.trigger("application:list:hide");
@@ -292,6 +304,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",     new TagsView    ({model:game, collection:storage.tags}));
           vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".game"}));
           vent.trigger("application:list:hide");
@@ -330,6 +344,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           // Just give non-note location triggers to view (until we filtering view is created)
           var location_selection = storage.triggers.filter(function(trigger)
           {
@@ -354,6 +370,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",     new QuestsView  ({model:game, collection:storage.quests}));
           vent.trigger("application:nav:show", new GameNavMenu ({model:game, active:".quests"}));
           vent.trigger("application:list:hide");
@@ -370,6 +388,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",      new MediaEditorView ({model:game, collection:storage.media}));
           vent.trigger("application:nav:show",  new GameNavMenu     ({model:game, active:".media"}));
           vent.trigger("application:list:show", new MediaOrganizerView({collection:storage.media}));
@@ -386,6 +406,8 @@ function(
       this.preloadStorage(game,
         function()
         {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
           vent.trigger("application.show",      new ConversationsView ({model:game, collection:storage.dialogs}));
           vent.trigger("application:nav:show",  new GameNavMenu       ({model:game, active:".conversations"}));
           vent.trigger("application:list:hide");
