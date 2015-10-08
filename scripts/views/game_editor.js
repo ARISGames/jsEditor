@@ -74,6 +74,8 @@ function(
       "network_levels":".network_level",
       "preload_media":  "#game-preload_media",
 
+      "game_network_tabs": ".network-game-tab",
+
       "map_type":         "#game-map_type",
       "map_focus":        "#game-map_focus",
       "map_zoom_level":   "#game-map_zoom_level",
@@ -449,12 +451,18 @@ function(
     onChangeNetworkLevel: function()
     {
       var self = this;
+
       var selected_radio = self.$el.find(".network_level:checked");
 
       self.model.set("network_level", selected_radio.val());
 
       self.ui.network_levels.parent().removeClass("active");
       selected_radio.parent().addClass("active");
+
+      self.ui.game_network_tabs.hide();
+
+      var display_tab = "#" + selected_radio.val() + "-fields";
+      self.$el.find(display_tab).show();
     },
 
     renderGameMap: function()

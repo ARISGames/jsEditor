@@ -103,24 +103,68 @@ max-width:none;
           <label class="btn btn-info  <%= tab_selected(network_level === "LOCAL") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="LOCAL" <%= radio_selected(network_level === "LOCAL") %>>
             <span class="glyphicon glyphicon-stats"></span>
-            &nbsp;Local
+            &nbsp;No Internet
           </label>
           <label class="btn btn-info <%= tab_selected(network_level === "REMOTE_WRITE") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="REMOTE_WRITE" <%= radio_selected(network_level === "REMOTE_WRITE") %>>
             <span class="glyphicon glyphicon-stats"></span>
-            &nbsp;Remote Write
+            &nbsp;Cloud Saving Only
           </label>
           <label class="btn btn-info <%= tab_selected(network_level === "HYBRID") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="HYBRID"    <%= radio_selected(network_level === "HYBRID") %>>
             <span class="glyphicon glyphicon-stats"></span>
-            &nbsp;Hybrid
+            &nbsp;Smart Cloud &trade; Technology
           </label>
           <label class="btn btn-info <%= tab_selected(network_level === "REMOTE") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="REMOTE" <%= radio_selected(network_level === "REMOTE") %>>
             <span class="glyphicon glyphicon-stats"></span>
-            &nbsp;Remote
+            &nbsp;Cloud Dependent
           </label>
         </div>
+
+
+        <!-- Info Boxes -->
+
+        <div id="LOCAL-fields" class="network-game-tab" <%= tab_visible(network_level === "LOCAL") %>>
+          <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <b>No Internet</b> - Once you are in the game, ARIS will make no attempt to contact the ARIS server. Any progress made by players will <b>not</b> be saved across devices/playthroughs.<br />
+            <br />
+            <b>Recommended for</b> games with static, unchanging content; especially in low-internet locations.<br />
+            <b>Not Recommended for</b> multiplayer games that rely on changing global content (such as notes, factories, world items, etc...)
+          </div>
+        </div>
+
+        <div id="REMOTE_WRITE-fields" class="network-game-tab" <%= tab_visible(network_level === "REMOTE_WRITE") %>>
+          <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <b>Cloud Saving Only</b> - Once you are in the game, ARIS will make no attempt to contact the ARIS server, except to save the player's progress.<br />
+            <br />
+            <b>Recommended for</b> games with static, unchanging content.<br />
+            <b>Not Recommended for</b> multiplayer games that rely on changing global content (such as notes, factories, world items, etc...)
+          </div>
+        </div>
+
+        <div id="HYBRID-fields" class="network-game-tab" <%= tab_visible(network_level === "HYBRID") %>>
+          <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <b>Smart Cloud &trade; Technology</b> - ARIS will maintain close contact with the ARIS server, but any downtime or sluggishness in connection speed will be mitigated using Smart Cloud &trade; prediction technology.<br />
+            <br />
+            <b>Recommended for</b> most games.<br />
+            <b>Not Recommended for</b> multiplayer games that <b>fundamentally</b> rely on <b>realtime</b> changing content (especially "race to grab this item" style games).
+          </div>
+        </div>
+
+        <div id="REMOTE-fields" class="network-game-tab" <%= tab_visible(network_level === "REMOTE") %>>
+          <div class="alert alert-info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <b>Cloud Dependent</b> - ARIS will not function without a constant connection to the internet. It will rely on the server to validate every action as it is taken.<br />
+            <br />
+            <b>Recommended for</b> multiplayer games that <b>fundamentally</b> rely on <b>realtime</b> changing content (especially "race to grab this item" style games).<br />
+            <b>Not Recommended for</b> anything else; this mode will result in potentially sluggish interaction in places that could otherwise be prevented using Smart Cloud &trade; prediction technology.
+          </div>
+        </div>
+
 
         <div class="checkbox">
           <input type="checkbox" id="game-preload_media" <%= is_checked(preload_media) %>>
