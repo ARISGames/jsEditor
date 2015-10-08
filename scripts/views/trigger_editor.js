@@ -10,6 +10,7 @@ define([
   'models/instance',
   'views/media_chooser',
   'collections/media',
+  'collections/events',
   'views/requirements',
   'models/requirement_package',
   'collections/and_packages',
@@ -29,6 +30,7 @@ function(
   Instance,
   MediaChooserView,
   MediaCollection,
+  EventsCollection,
   RequirementsEditorView,
   RequirementPackage,
   AndPackagesCollection,
@@ -192,6 +194,33 @@ function(
       var trigger     = self.model;
 
       // TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
+
+      /*this is terrible*/
+      if(game_object.type_name == 'EventPackage' && game_object.id) //game object already exists, need to slap on its collection otherwise save will override (this is ridiculous)
+      {
+        var events = new EventsCollection([], {parent:game_object});
+
+        $.when(
+          events.fetch()
+        ).done(function()
+        {
+          game_object.set("events", events);
+          self.finishSaving();
+        });
+      }
+      else
+        self.finishSaving();
+    },
+
+    //this is necessary because the above infrastructure is ridiculous
+    finishSaving: function()
+    {
+      var self = this;
+
+      var instance    = self.instance;
+      var game_object = self.game_object;
+      var trigger     = self.model;
+
       game_object.save({},
       {
         create: function()
