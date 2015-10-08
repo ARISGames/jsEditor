@@ -24,17 +24,17 @@
   <label class="btn btn-info <%= tab_selected(type === "LOCATION") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="LOCATION"  <%= radio_selected(type === "LOCATION") %>>
     <span class="glyphicon glyphicon-map-marker"></span>
-    Location
+    GPS
   </label>
   <label class="btn btn-info <%= tab_selected(type === "QR") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="QR"        <%= radio_selected(type === "QR") %>>
     <span class="glyphicon glyphicon-qrcode"></span>
-    QR Code
+    QR
   </label>
   <label class="btn btn-info  <%= tab_selected(type === "IMMEDIATE") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="IMMEDIATE" <%= radio_selected(type === "IMMEDIATE") %>>
     <span class="glyphicon glyphicon-link"></span>
-    Sequence
+    Locks
   </label>
   <label class="btn btn-info  <%= tab_selected(type === "TIMER") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="TIMER" <%= radio_selected(type === "TIMER") %>>
