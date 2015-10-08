@@ -205,6 +205,8 @@ max-width:none;
                 <label for="login-disable-exit">
                   Disable ability to leave this game.
                 </label>
+		
+                <div class="log_out_qr_image" style="padding:10px; display:none;">(scan this code to log out)</div>
               </div>
             </div>
           </div>

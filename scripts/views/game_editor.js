@@ -47,7 +47,7 @@ function(
         tab_selected: function(boolean_statement) { return boolean_statement ? "active" : ""; }, 
         tab_visible: function(boolean_statement) { return boolean_statement ? "" : "style='display:none;'"; }, 
 
-        scenes: self.scenes
+        scenes: self.scenes,
       };
     },
 
@@ -92,6 +92,7 @@ function(
       "media": ".change-media img",
 
       "qr_image":           ".qr_image",
+      "log_out_qr_image":   ".log_out_qr_image",
       "login_group":        "#login-group",
       "login_disable_exit": "#login-disable-exit",
 
@@ -147,12 +148,14 @@ function(
     initializeQR: function()
     {
       this.qr_code = new QRCode(this.ui.qr_image.get(0), this.loginQrString());
+      this.log_out_qr_code = new QRCode(this.ui.log_out_qr_image.get(0), "log-out");
     },
 
     onChangeLoginOptions: function()
     {
       this.qr_group_name    = this.ui.login_group.val();
       this.qr_disable_leave = this.ui.login_disable_exit.is(":checked") ? "1" : "0";
+      this.ui.log_out_qr_image.get(0).style.display = this.ui.login_disable_exit.is(":checked") ? "block" : "none";
 
       this.qr_code.makeCode(this.loginQrString());
     },
