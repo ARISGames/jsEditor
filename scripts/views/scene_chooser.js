@@ -8,6 +8,7 @@ define([
   'views/scene_chooser_row',
   'views/trigger_creator',
   'vent',
+  'util',
 ],
 function(
   Backbone,
@@ -18,7 +19,8 @@ function(
   Media,
   SceneChooserRowView,
   TriggerCreatorView,
-  vent
+  vent,
+  util
 )
 {
   return Backbone.Marionette.CompositeView.extend(
@@ -42,9 +44,10 @@ function(
     /* TODO move complex sets like this into a controller */
     onClickNewScene: function()
     {
-      var scene    = new Scene    ({game_id: this.options.parent.get("game_id")});
-      var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
+      var loc = util.default_location();
+      var trigger  = new Trigger  ({game_id:this.options.parent.get("game_id"), scene_id:this.options.parent.get("scene_id"), latitude:loc.latitude, longitude:loc.longitude });
       var instance = new Instance ({game_id: this.options.parent.get("game_id")});
+      var scene    = new Scene    ({game_id: this.options.parent.get("game_id")});
 
       // Scenes can only be immediate for now.
       trigger.set("type", "IMMEDIATE");

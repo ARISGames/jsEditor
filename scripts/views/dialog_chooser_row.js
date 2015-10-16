@@ -4,6 +4,7 @@ define([
   'models/trigger',
   'models/instance',
   'vent',
+  'util',
   'storage'
 ],
 function(
@@ -12,6 +13,7 @@ function(
   Trigger,
   Instance,
   vent,
+  util,
   storage
 )
 {
@@ -30,7 +32,8 @@ function(
     // TODO how to bubble up? or get scene passed to us
     onClickNewInstance: function()
     {
-      var trigger  = new Trigger  ({game_id: this.options.parent.get("game_id"), scene_id: this.options.parent.get("scene_id")});
+      var loc = util.default_location();
+      var trigger  = new Trigger  ({game_id:this.options.parent.get("game_id"), scene_id:this.options.parent.get("scene_id"), latitude:loc.latitude, longitude:loc.longitude });
       var instance = new Instance ({game_id: this.options.parent.get("game_id")});
       var dialog   = this.model;
 
