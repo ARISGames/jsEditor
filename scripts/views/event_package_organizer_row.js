@@ -4,7 +4,6 @@ define([
   'views/event_package_editor',
   'models/media',
   'models/game',
-  'collections/items',
   'collections/events',
   'vent',
   'storage'
@@ -15,7 +14,6 @@ function(
   EventPackageEditorView,
   Media,
   Game,
-  ItemsCollection,
   EventsCollection,
   vent,
   storage
@@ -43,10 +41,8 @@ function(
       var self = this;
       var event_package = self.model;
       var events = new EventsCollection([], {parent:event_package});
-      var items  = storage.items;
 
       $.when(
-        items.fetch(),
         events.fetch()
       ).done(
         function()

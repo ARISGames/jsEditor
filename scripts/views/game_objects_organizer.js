@@ -45,11 +45,27 @@ function(
     onShow: function()
     {
       var self = this;
+
+      var unused_event_packages_collection = new Backbone.Collection([]);
+      storage.event_packages.each(function(ep)
+      {
+        var found = false;
+        storage.plaques.each(function(p)
+        {
+          if(p.get("event_package_id") == ep.id) found = true;
+        });
+        storage.dialog_scripts.each(function(d)
+        {
+          if(d.get("event_package_id") == ep.id) found = true;
+        });
+        if(!found) unused_event_packages_collection.add(ep);
+      });
+
       self.dialogs_region.show       (new DialogOrganizerView      ({collection:storage.dialogs}));
       self.plaques_region.show       (new PlaqueOrganizerView      ({collection:storage.plaques}));
       self.items_region.show         (new ItemOrganizerView        ({collection:storage.items}));
       self.web_pages_region.show     (new WebPageOrganizerView     ({collection:storage.web_pages}));
-      self.event_packages_region.show(new EventPackageOrganizerView({collection:storage.event_packages}));
+      self.event_packages_region.show(new EventPackageOrganizerView({collection:unused_event_packages_collection/*storage.event_packages*/}));
       self.factories_region.show     (new FactoryOrganizerView     ({collection:storage.factories}));
     },
 
