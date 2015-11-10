@@ -38,14 +38,14 @@ function(
         content_quests:         this.isContentQuests(),
         content_event_packages: this.isContentEventPackages(),
 
-        items:          this.items,
-        tags:           this.tags,
-        plaques:        this.plaques,
-        dialogs:        this.dialogs,
-        dialog_scripts: this.dialog_scripts,
-        web_pages:      this.web_pages,
-        quests:         this.quests,
-        event_packages: this.event_packages,
+        items:          storage.items,
+        tags:           storage.tags,
+        plaques:        storage.plaques,
+        dialogs:        storage.dialogs,
+        dialog_scripts: storage.dialog_scripts,
+        web_pages:      storage.web_pages,
+        quests:         storage.quests,
+        event_packages: storage.event_packages,
 
         dialogfromscriptid: function(id)
         {
@@ -69,14 +69,6 @@ function(
 
     initialize: function(options)
     {
-      this.items          = options.contents.items;
-      this.tags           = options.contents.tags;
-      this.plaques        = options.contents.plaques;
-      this.dialogs        = options.contents.dialogs;
-      this.dialog_scripts = options.contents.dialog_scripts;
-      this.web_pages      = options.contents.web_pages;
-      this.quests         = options.contents.quests;
-      this.event_packages = options.contents.event_packages;
     },
 
     ui: {
