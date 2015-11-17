@@ -9,12 +9,12 @@
 			</h4>
 
 			<div class="form-group">
-				<label for="character-name">Name</label>
+				<label for="character-name">Name in editor</label>
 				<input type="text" autofocus <%= player_readonly %> class="form-control" id="character-name" placeholder="Name" value="<%= name %>">
 			</div>
 
 			<div class="form-group">
-				<label for="character-title">Title</label>
+				<label for="character-title">Name in game</label>
 				<input type="text" <%= player_readonly %> class="form-control" id="character-title" placeholder="title" value="<%= title %>">
 			</div>
 
