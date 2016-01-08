@@ -40,7 +40,21 @@ function(
         is_new: self.model.isNew(),
         icon_thumbnail_url:  self.model.icon_thumbnail(),
         media_thumbnail_url: self.model.media_thumbnail(),
-        tags: storage.tags
+        tags: storage.tags,
+
+        escape_for_html:  function(text) {
+        	  var characters = {
+        	    '&': '&amp;',
+        	    '"': '&quot;',
+        	    "'": '&#039;',
+        	    '<': '&lt;',
+        	    '>': '&gt;'
+        	  };
+        	  return (text + "").replace(/[<>&"']/g, function(m){
+        	    return characters[m];
+        	  });
+        	},
+
       }
     },
 

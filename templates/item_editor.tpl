@@ -6,7 +6,7 @@
 
   <div class="form-group">
     <label for="item-name">Name</label>
-    <input type="text" autofocus class="form-control" id="item-name" placeholder="Name" value="<%= name %>">
+    <input type="text" autofocus class="form-control" id="item-name" placeholder="Name" value="<%= escape_for_html(name) %>">
   </div>
 
   <div class="form-group">
