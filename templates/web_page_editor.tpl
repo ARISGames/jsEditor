@@ -14,6 +14,7 @@
 			<div class="form-group">
 				<label for="web_page-url">URL</label>
 				<input type="text" class="form-control" id="web_page-url" placeholder="URL" value="<%= url %>">
+				<span style="font-size:12px;">"<span style="font-family:Courier New">game_id={game_id}&user_id={user_id}&aris=1</span>"<br />will be appended automatically</span>
 			</div>
 
 
