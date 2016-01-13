@@ -214,8 +214,10 @@ function(
         var intro_script = scripts.findWhere({dialog_script_id:dialog.get("intro_dialog_script_id")});
         var character = new Character({name:"You", dialog_character_id:"0", title:"The Player"})
         characters.unshift(character);
+        storage.dialog_characters.unshift(character);
         var character_media = new Media({media_id:"0"});
         media.push(character_media);
+        storage.media.push(character_media);
 
         var conversations_editor = new ConversationEditorView(
           {
