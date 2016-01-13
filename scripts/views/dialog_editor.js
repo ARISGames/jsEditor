@@ -138,7 +138,7 @@ function(
       });
     },
 
-    onChangeName:              function() { var self = this; self.model.set("name",                self.ui.name.val()); },
+    onChangeName:              function() { console.log("hello"); var self = this; self.model.set("name",                self.ui.name.val()); },
     onChangeDescription:       function() { var self = this; self.model.set("description",         self.ui.description.val()); },
     onChangeBackButtonEnabled: function() { var self = this; self.model.set("back_button_enabled", self.ui.back_button_enabled.is(":checked") ? "1" : "0");   },
 
@@ -191,9 +191,10 @@ function(
 
     onClickEditConversation: function()
     {
-      var game = new Game({game_id: this.model.get("game_id")});
+      var self = this;
+      var game = new Game({game_id: self.model.get("game_id")});
 
-      var dialog     = this.model;
+      var dialog     = self.model;
       var characters = new CharactersCollection   ([], {parent:game});
       var media      = new MediaCollection        ([], {parent:game});
       var scripts    = new DialogScriptsCollection([], {parent:dialog, game:game});
@@ -208,7 +209,7 @@ function(
         tabs:       new TabsCollection     ([], {parent:game})
       };
 
-      $.when(characters.fetch(), media.fetch(), scripts.fetch(), options.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch(), contents.tabs.fetch()).done(function()
+      $.when(self.model.save(), characters.fetch(), media.fetch(), scripts.fetch(), options.fetch(), contents.plaques.fetch(), contents.items.fetch(), contents.web_pages.fetch(), contents.dialogs.fetch(), contents.tabs.fetch()).done(function()
       {
         var intro_script = scripts.findWhere({dialog_script_id:dialog.get("intro_dialog_script_id")});
         var character = new Character({name:"You", dialog_character_id:"0", title:"The Player"})
@@ -222,8 +223,8 @@ function(
             dialog:dialog,
             characters:characters,
             media:media,
-            scripts:scripts,
-            script_options:options,
+            my_scripts:scripts,
+            my_options:options,
             contents:contents,
             game:game
           });
@@ -231,11 +232,11 @@ function(
         vent.trigger("application:list:show", new CharactersOrganizerView({collection:characters, model:game}));
         vent.trigger("application:info:hide");
 
-        Backbone.history.navigate("#games/"+this.model.get('game_id')+"/conversations");
+        Backbone.history.navigate("#games/"+self.model.get('game_id')+"/conversations");
         vent.trigger("application:active_nav", ".conversations");
         vent.trigger("application:popup:hide");
 
-      }.bind(this));
+      }.bind(self));
     }
   });
 
