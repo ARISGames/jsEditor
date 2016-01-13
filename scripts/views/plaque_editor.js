@@ -158,27 +158,52 @@ function(
       var game  = new Game({game_id: self.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});
 
-      media.fetch(
+      function continueFetchingMedia()
       {
+        media.fetch(
+        {
+          success: function()
+          {
+            media.unshift(self.model.default_icon());
+            var icon_chooser = new MediaChooserView({collection: media, selected: self.model.icon(), context: self.model});
+
+            icon_chooser.on("media:choose", function(media)
+            {
+              self.unbindAssociations();
+              self.model.set("icon_media_id", media.id);
+              self.bindAssociations();
+              vent.trigger("application:popup:show", self, "Edit Plaque");
+            });
+
+            icon_chooser.on("cancel", function()
+            {
+              vent.trigger("application:popup:show", self, "Edit Plaque");
+            });
+
+            vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
+          }
+        });
+      }
+
+      self.model.save({},
+      {
+        create:function()
+        {
+          self.storePreviousAttributes();
+          storage.add_game_object(self.model);
+          vent.trigger("application:popup:hide");
+          continueFetchingMedia();
+        },
+
+        update:function()
+        {
+          self.storePreviousAttributes();
+          vent.trigger("application:popup:hide");
+          continueFetchingMedia();
+        },
         success: function()
         {
-          media.unshift(self.model.default_icon());
-          var icon_chooser = new MediaChooserView({collection: media, selected: self.model.icon(), context: self.model});
-
-          icon_chooser.on("media:choose", function(media)
-          {
-            self.unbindAssociations();
-            self.model.set("icon_media_id", media.id);
-            self.bindAssociations();
-            vent.trigger("application:popup:show", self, "Edit Plaque");
-          });
-
-          icon_chooser.on("cancel", function()
-          {
-            vent.trigger("application:popup:show", self, "Edit Plaque");
-          });
-
-          vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
+          continueFetchingMedia();
         }
       });
     },
