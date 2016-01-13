@@ -54,7 +54,7 @@ function(
       self.triggers    = storage.triggers;
 
       // This fails with undefined when .fetch is passed without a closure.
-      self.listenTo(self.collection, "remove", function() { view.model.fetch()});
+      self.listenTo(self.collection, "remove", function() { self.model.fetch()});
     },
 
     onClickNewScene: function()
