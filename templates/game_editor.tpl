@@ -132,6 +132,7 @@ max-width:none;
             <br />
             <b>Recommended for</b> games with static, unchanging content; especially in low-internet locations.<br />
             <b>Not Recommended for</b> multiplayer games that rely on changing global content (such as notes, factories, world items, etc...)
+            <b>WARNING</b> - Do not use notebook in this mode.<br />
           </div>
         </div>
 
@@ -142,6 +143,7 @@ max-width:none;
             <br />
             <b>Recommended for</b> games with static, unchanging content.<br />
             <b>Not Recommended for</b> multiplayer games that rely on changing global content (such as notes, factories, world items, etc...)
+            <b>WARNING</b> - Do not use notebook in this mode.<br />
           </div>
         </div>
 
@@ -152,6 +154,7 @@ max-width:none;
             <br />
             <b>Recommended for</b> most games.<br />
             <b>Not Recommended for</b> multiplayer games that <b>fundamentally</b> rely on <b>realtime</b> changing content (especially "race to grab this item" style games).
+            <b>WARNING</b> - Do not use notebook in this mode.<br />
           </div>
         </div>
 
