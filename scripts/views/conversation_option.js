@@ -110,6 +110,7 @@ function(
           option.set("parent_dialog_script_id",self.model.get("parent_dialog_script_id"));
           option.set("link_type","DIALOG_SCRIPT");
           option.set("link_id",script.get("dialog_script_id"));
+          option.set("link_info","");
           option.set("prompt","Continue");
           option.set("sort_index",self.model.get("sort_index"));
           option.save({},{

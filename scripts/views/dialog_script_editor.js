@@ -170,6 +170,7 @@ function(
         copied_child_options[i].set("dialog_id",  current_child_options[i].get("dialog_id"));
         copied_child_options[i].set("link_type",  current_child_options[i].get("link_type"));
         copied_child_options[i].set("link_id",    current_child_options[i].get("link_id"));
+        copied_child_options[i].set("link_info",  current_child_options[i].get("link_info"));
         copied_child_options[i].set("prompt",     current_child_options[i].get("prompt"));
         copied_child_options[i].set("sort_index", current_child_options[i].get("sort_index"));
         copied_child_options[i].set("parent_dialog_script_id", view.instance_parent_option.get("parent_dialog_script_id"));

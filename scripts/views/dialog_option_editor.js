@@ -137,6 +137,7 @@ function(
     ui: {
       link_type: ".link-type",
       link_id:   ".link-id",
+      link_info: ".link-info",
       prompt:    ".prompt"
     },
 
@@ -144,6 +145,7 @@ function(
     {
       "change @ui.link_type":     "onChangeLinkType",
       "change @ui.link_id":       "onChangeLinkId",
+      "change @ui.link_info":     "onChangeLinkInfo",
       "change @ui.prompt":        "onChangePrompt",
       "click .save":              "onClickSave",
       "click .cancel":            "onClickCancel",
@@ -178,6 +180,11 @@ function(
       this.model.set("link_id", value);
     },
 
+    onChangeLinkInfo: function()
+    {
+      this.model.set("link_info", this.ui.link_info.val());
+    },
+
     onChangePrompt: function()
     {
       this.model.set("prompt", this.ui.prompt.val());
@@ -204,6 +211,7 @@ function(
             option.set("dialog_id",view.model.get("dialog_id"));
             option.set("parent_dialog_script_id",script.get("dialog_script_id"));
             option.set("link_type","EXIT");
+            option.set("link_info","");
             option.set("prompt","Exit");
 
             option.save({}, {
@@ -213,6 +221,7 @@ function(
 
                 view.model.set("link_type","DIALOG_SCRIPT");
                 view.model.set("link_id",script.get("dialog_script_id"));
+                view.model.set("link_info","");
 
                 view.model.save({}, {
                   success:function()
@@ -408,6 +417,7 @@ findOptionlessScripts: function()
             option.set("dialog_id",view.model.get("dialog_id"));
             option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
             option.set("link_type","EXIT");
+            option.set("link_info","");
             option.set("prompt","Exit");
             option.save({}, {
               success:function()
@@ -439,6 +449,7 @@ findOptionlessScripts: function()
           option.set("dialog_id",view.model.get("dialog_id"));
           option.set("parent_dialog_script_id",TBA[i].get("dialog_script_id"));
           option.set("link_type","EXIT");
+          option.set("link_info","");
           option.set("prompt","Exit");
           option.save({}, {
             success:function()

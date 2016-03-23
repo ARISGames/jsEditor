@@ -131,6 +131,7 @@ function(
           option.set("parent_dialog_script_id",self.model.get("dialog_script_id"));
           option.set("link_type","DIALOG_SCRIPT");
           option.set("link_id",script.get("dialog_script_id"));
+          option.set("link_info","");
           option.set("prompt","Continue");
           option.save({}, {
             success:function()
@@ -143,6 +144,7 @@ function(
               option.set("dialog_id",self.model.get("dialog_id"));
               option.set("parent_dialog_script_id",script.get("dialog_script_id"));
               option.set("link_type","EXIT");
+              option.set("link_info","");
               option.set("prompt","Exit");
               option.save({}, {
                 success:function()

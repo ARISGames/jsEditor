@@ -75,12 +75,13 @@
 <% } %> <!-- link options visible -->
 
 
-<!-- For scanner tab only
-<div class="form-group">
-  <label>Destination</label>
-  <input type="text" class="form-control" value="<%= link_info %>">
-</div>
--->
+<!-- For scanner tab only -->
+<% if(link_tabs) { %>
+  <div class="form-group">
+    <label>Scanner Prompt</label>
+    <input type="text" class="form-control link-info" value="<%= link_info %>">
+  </div>
+<% } %>
 
 <hr>
 
