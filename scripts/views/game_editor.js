@@ -92,6 +92,7 @@ function(
       "media": ".change-media img",
 
       "qr_image":           ".qr_image",
+      "qr_image_locked":    ".qr_image_locked",
       "log_out_qr_image":   ".log_out_qr_image",
       "login_group":        "#login-group",
       "login_disable_exit": "#login-disable-exit",
@@ -132,7 +133,6 @@ function(
 
       /* QR settings */
 
-      this.qr_group_name = "";
       this.qr_disable_leave = "0";
     },
 
@@ -147,26 +147,18 @@ function(
     /* QR */
     initializeQR: function()
     {
-      this.qr_code = new QRCode(this.ui.qr_image.get(0), this.loginQrString());
+      this.qr_code = new QRCode(this.ui.qr_image.get(0), this.loginQrString(true));
+      this.qr_code_locked = new QRCode(this.ui.qr_image_locked.get(0), this.loginQrString(false));
       this.log_out_qr_code = new QRCode(this.ui.log_out_qr_image.get(0), "log-out");
     },
 
-    onChangeLoginOptions: function()
-    {
-      this.qr_group_name    = this.ui.login_group.val();
-      this.qr_disable_leave = this.ui.login_disable_exit.is(":checked") ? "1" : "0";
-      this.ui.log_out_qr_image.get(0).style.display = this.ui.login_disable_exit.is(":checked") ? "block" : "none";
-
-      this.qr_code.makeCode(this.loginQrString());
-    },
-
-    loginQrString: function()
+    loginQrString: function(can_leave)
     {
       //v1.0 (dep)  - // 1,group_name,game_id,disable_leave_game
       //var qr_string = "1,"+this.qr_group_name+","+this.model.id+","+this.qr_disable_leave;
 
       //v2.0 - // 2,pauto_profile_enabled,grgroup_name,ggame_id,lleave_game_enabled
-      var qr_string = "2,gr"+this.qr_group_name+",g"+this.model.id+",l"+(this.qr_disable_leave == "0" ? "1" : "0");
+      var qr_string = "2,gr,g"+this.model.id+",l"+(can_leave ? "1" : "0");
       return qr_string;
     },
 
@@ -186,9 +178,6 @@ function(
       "change @ui.game_published": "onChangePublished",
       "change @ui.network_levels": "onChangeNetworkLevel",
 
-      "change @ui.login_group":        "onChangeLoginOptions",
-      "keyup @ui.login_group":         "onChangeLoginOptions",
-      "change @ui.login_disable_exit": "onChangeLoginOptions",
       "change @ui.map_focus":          "onChangeMapFocus",
     },
 

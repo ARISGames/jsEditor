@@ -194,23 +194,15 @@ max-width:none;
           <div class="form-group row">
             <div class="col-xs-12 col-md-4 padded">
               <div class="qr_image"></div>
+              <p class="qr_instructions">Log in to the game</p>
             </div>
-
-            <div class="col-xs-12 col-md-8 padded">
-              <div class="form-group">
-                <label for="login-group">Player Group (optional)</label>
-                <input type="text" class="form-control" id="login-group" placeholder="Group Name" value="">
-              </div>
-
-              <label for="login-group">Access to ARIS</label>
-              <div class="checkbox">
-                <input type="checkbox" id="login-disable-exit">
-                <label for="login-disable-exit">
-                  Disable ability to leave this game.
-                </label>
-		
-                <div class="log_out_qr_image" style="padding:10px; display:none;">(scan this code to log out)</div>
-              </div>
+            <div class="col-xs-12 col-md-4 padded locked_codes">
+              <div class="qr_image_locked"></div>
+              <p class="qr_instructions">Log in to the game, can't log out</p>
+            </div>
+            <div class="col-xs-12 col-md-4 padded locked_codes">
+              <div class="log_out_qr_image"></div>
+              <p class="qr_instructions">Scan this code to log out</p>
             </div>
           </div>
         </div>
