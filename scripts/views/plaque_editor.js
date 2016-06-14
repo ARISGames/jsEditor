@@ -155,55 +155,30 @@ function(
     {
       var self = this;
 
-      var game  = new Game({game_id: self.model.get("game_id")});
-      var media = new MediaCollection([], {parent: game});
+      var game  = new Game({game_id:self.model.get("game_id")});
+      var media = new MediaCollection([], {parent:game});
 
-      function continueFetchingMedia()
+      media.fetch(
       {
-        media.fetch(
+        success:function()
         {
-          success: function()
+          media.unshift(self.model.default_icon());
+
+          var media_chooser = new MediaChooserView({collection:media, selected:self.model.media()});
+          vent.trigger("application:popup:show", media_chooser, "Choose Icon");
+
+          media_chooser.on("media:choose", function(media)
           {
-            media.unshift(self.model.default_icon());
-            var icon_chooser = new MediaChooserView({collection: media, selected: self.model.icon(), context: self.model});
+            self.unbindAssociations();
+            self.model.set("icon_media_id", media.id);
+            self.bindAssociations();
+            vent.trigger("application:popup:show", self, "Edit Plaque");
+          });
 
-            icon_chooser.on("media:choose", function(media)
-            {
-              self.unbindAssociations();
-              self.model.set("icon_media_id", media.id);
-              self.bindAssociations();
-              vent.trigger("application:popup:show", self, "Edit Plaque");
-            });
-
-            icon_chooser.on("cancel", function()
-            {
-              vent.trigger("application:popup:show", self, "Edit Plaque");
-            });
-
-            vent.trigger("application:popup:show", icon_chooser, "Choose Icon");
-          }
-        });
-      }
-
-      self.model.save({},
-      {
-        create:function()
-        {
-          self.storePreviousAttributes();
-          storage.add_game_object(self.model);
-          vent.trigger("application:popup:hide");
-          continueFetchingMedia();
-        },
-
-        update:function()
-        {
-          self.storePreviousAttributes();
-          vent.trigger("application:popup:hide");
-          continueFetchingMedia();
-        },
-        success: function()
-        {
-          continueFetchingMedia();
+          media_chooser.on("cancel", function()
+          {
+            vent.trigger("application:popup:show", self, "Edit Plaque");
+          });
         }
       });
     },
@@ -245,6 +220,8 @@ function(
       var self = this;
 
       var game = new Game({game_id:self.model.get("game_id")});
+
+      // TODO: fix this so that if the event package doesn't exist, we make a new one
 
       var event_package;
       if(self.model.get("event_package_id") == 0) event_package = new EventPackage({game_id:game.id});
