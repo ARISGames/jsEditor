@@ -24,6 +24,7 @@ function(require)
         "game_id",
         "media_id",
         "name",
+        "autoplay",
         "file_name",
         "data"
       ];
@@ -39,7 +40,8 @@ function(require)
     defaults:
     {
       "name": "Default",
-      "file_name": ""
+      "file_name": "",
+      "autoplay": false,
     },
 
     is_video: function() { return this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v|3gp)/); },

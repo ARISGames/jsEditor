@@ -29,6 +29,11 @@
 		</div>
 	</div>
 
+	<div class="form-group audio-video-autoplay">
+		<input type="checkbox" id="media-autoplay" <%= parseInt(autoplay) ? 'checked' : '' %>>
+		<label for="media-autoplay">Autoplay</label>
+	</div>
+
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary save">
 			Save

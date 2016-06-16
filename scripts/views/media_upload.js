@@ -23,7 +23,8 @@ function(
 
     ui: {
       name: "#media-name",
-      preview: ".upload-preview"
+      preview: ".upload-preview",
+      autoplay: "#media-autoplay",
     },
 
 
@@ -68,6 +69,7 @@ function(
       var view = this;
 
       this.model.set("name", this.ui.name.val());
+      this.model.set("autoplay", this.ui.autoplay.is(":checked"));
 
       this.showProgressBar();
 

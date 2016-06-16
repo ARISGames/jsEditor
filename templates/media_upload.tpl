@@ -34,6 +34,11 @@
 		</div>
 	</div>
 
+	<div class="form-group">
+		<input type="checkbox" id="media-autoplay" <%= parseInt(autoplay) ? 'checked' : '' %>>
+		<label for="media-autoplay">Autoplay audio/video</label>
+	</div>
+
 
 	<div class="form-group">
 		<div class="progress" style="opacity: 0">

@@ -23,7 +23,8 @@ function(
 
     ui: {
       name: "#media-name",
-      preview: ".upload-preview"
+      preview: ".upload-preview",
+      autoplay: "#media-autoplay",
     },
 
 
@@ -67,6 +68,7 @@ function(
       var view = this;
 
       this.model.set("name", this.ui.name.val());
+      this.model.set("autoplay", this.ui.autoplay.is(":checked"));
 
       this.model.save({}, {
         success: function()
@@ -98,8 +100,8 @@ function(
     {
       this.$el.find('.media-previewer').hide();
 
-      if     (this.model.is_video()) { this.$el.find('.video-preview').show(); }
-      else if(this.model.is_audio()) { this.$el.find('.audio-preview').show(); }
+      if     (this.model.is_video()) { this.$el.find('.video-preview, .audio-video-autoplay').show(); }
+      else if(this.model.is_audio()) { this.$el.find('.audio-preview, .audio-video-autoplay').show(); }
       else                           { this.$el.find('.image-preview').show(); }
     }
   });
