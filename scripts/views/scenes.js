@@ -32,7 +32,7 @@ function(
     template: _.template(Template),
 
     itemView: SceneView,
-    itemViewContainer: ".scenes",
+    itemViewContainer: ".scenes-inner",
     itemViewOptions: function(model, index)
     {
       var self = this;
@@ -84,34 +84,53 @@ function(
     onRender: function()
     {
       var self = this;
-      // make draggable
-      //$(self.$el.find(".scene")).draggable({ containment: "parent" });
-      //$(self.$el.find(".scene-item")).draggable({ containment: "parent", delay: 100 });
 
-      var scene_container = self.$el.find('.scenes').get(0);
-      var link_ends   = self.$el.find('.link-end'  );
-      var link_starts = self.$el.find('.link-start');
-      var link_lines  = self.$el.find('.link-line' );
+      var scene_container = self.$el.find('.scenes');
+      var link_container = self.$el.find('.scenes-links');
+      self.resizer = function(){
+        self.drawLinks(scene_container, link_container);
+      };
 
-      self.$el.find(".link-end, .link-start, .scene").on("drag", function(event, ui)
-      {
-        //self.drawLinks(link_starts, link_ends, link_lines, scene_container);
-      });
-
-      //setTimeout(function(){ self.drawLinks(link_starts, link_ends, link_lines, scene_container); },100);
+      self.$el.on('drag', self.resizer);
+      $(window).on('resize', self.resizer);
+      self.resizerID = setInterval(self.resizer, 250);
     },
 
-    drawLinks: function(link_starts, link_ends, link_lines, scene_container)
+    onClose: function()
+    {
+      var self = this;
+      self.$el.off('drag', self.resizer);
+      $(window).off('resize', self.resizer);
+      clearInterval(self.resizerID);
+    },
+
+    drawLinks: function(scene_container, link_container)
     {
       var self = this;
 
-      link_starts.each(function(index, link_start)
-      {
-        var end_pos   = self.getPos( link_ends.get(index), scene_container );
-        var start_pos = self.getPos( link_start,           scene_container );
-
-        $(link_lines.get(index)).attr("d", "M" + (start_pos[0] + 37) + " " + (start_pos[1] + 27) + " L" + (end_pos[0] + 37) + " " + (end_pos[1] + 27));
+      link_container.empty();
+      var link_starts = $(scene_container).find('.link-to-scene');
+      var link_end = $(scene_container).find('.scene-title');
+      var link_ends = {};
+      link_end.each(function(index, link_end){
+        link_ends[$(link_end).attr('data-scene-id')] = link_end;
+      })
+      var posn_svg = $(link_container).offset();
+      var link_html = '';
+      var posn_start, posn_end, x1, y1, x2, y2;
+      link_starts.each(function(index, link_start){
+        var scene_id = $(link_start).attr('data-link-scene-id');
+        var link_end = link_ends[scene_id];
+        posn_start = $(link_start).offset()
+        posn_end = $(link_end).offset()
+        x1 = posn_start.left - posn_svg.left    ;
+        x2 = posn_end.left   - posn_svg.left - 8;
+        y1 = posn_start.top  - posn_svg.top     ;
+        y2 = posn_end.top    - posn_svg.top  - 4;
+        link_html += '<line class="scenes-link" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" />';
       });
+
+      link_container.html(link_html);
     }
 
   });

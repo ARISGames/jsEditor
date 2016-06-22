@@ -7,6 +7,10 @@
 		</button>
 	</div>
 
-	<!-- Scenes insert here -->
+  <svg class="scenes-links"></svg>
+
+  <div class="scenes-inner">
+    <!-- Scenes insert here -->
+  </div>
 </div>
 

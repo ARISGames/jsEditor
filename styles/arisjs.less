@@ -159,6 +159,29 @@ body {
 	padding: 2em;
 }
 
+#main .scenes .scenes-inner {
+	.absolute;
+	position: absolute;
+	overflow-y: scroll;
+	width: calc(100% - 3em);
+	height: calc(100% - 4em);
+}
+
+#main .scenes .scenes-links {
+	.absolute;
+	position: absolute;
+	z-index: 3;
+	pointer-events: none;
+	overflow-y: visible;
+	height: 50000px; /* hack so firefox doesn't cut off the lines */
+}
+
+#main .scenes .scenes-link {
+	stroke: rgba(0,0,0,0.5);
+	stroke-width: 2px;
+	stroke-linecap: round;
+}
+
 /* Remove bootstraps gutter */
 
 #info, #list {

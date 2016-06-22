@@ -1,5 +1,5 @@
 <div class="panel-heading">
-	<div class="scene-title name">
+	<div class="scene-title name" data-scene-id="<%= scene_id %>">
 		<% if(is_intro_scene) { %><span class="intro_icon glyphicon glyphicon-play"></span><% } %>
 		<%= name || "Scene " + scene_id %>
 	</div>

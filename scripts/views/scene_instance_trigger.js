@@ -60,7 +60,8 @@ function(
         object_name: self.object_name,
         object_icon: self.object_icon,
         type_icon:   self.type_icon,
-        type_color:  self.type_color
+        type_color:  self.type_color,
+        scene_id:    self.scene_id,
       };
     },
 
@@ -186,6 +187,7 @@ function(
       if(type === "FACTORY")       { self.object_icon = "home";    }
       if(type === "EVENT_PACKAGE") { self.object_icon = "globe";    }
 
+      self.scene_id = self.game_object.get('scene_id');
       self.object_name = self.game_object.get("name");
 
       self.render();
