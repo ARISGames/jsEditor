@@ -55,6 +55,8 @@ function(
 
       // This fails with undefined when .fetch is passed without a closure.
       self.listenTo(self.collection, "remove", function() { self.model.fetch()});
+
+      self.sceneLinks = false;
     },
 
     onClickNewScene: function()
@@ -94,6 +96,19 @@ function(
       self.$el.on('drag', self.resizer);
       $(window).on('resize', self.resizer);
       self.resizerID = setInterval(self.resizer, 250);
+
+      var linksCheckbox = self.$el.find('.view-links-checkbox');
+      self.$el.find('.view-links-button').on('click', function(){
+        if (self.sceneLinks) {
+          linksCheckbox.prop('checked', false);
+          self.sceneLinks = false;
+          $(link_container).hide();
+        } else {
+          linksCheckbox.prop('checked', true);
+          self.sceneLinks = true;
+          $(link_container).show();
+        }
+      });
     },
 
     onClose: function()
@@ -107,6 +122,7 @@ function(
     drawLinks: function(scene_container, link_container)
     {
       var self = this;
+      if (!self.sceneLinks) return;
 
       link_container.empty();
       var link_starts = $(scene_container).find('.link-to-scene');
