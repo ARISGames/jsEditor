@@ -95,6 +95,7 @@ function(
 
       self.$el.on('drag', self.resizer);
       $(window).on('resize', self.resizer);
+      self.$el.find('.scenes-inner').on('scroll', self.resizer);
       self.resizerID = setInterval(self.resizer, 250);
 
       var linksCheckbox = self.$el.find('.view-links-checkbox');
@@ -116,6 +117,7 @@ function(
       var self = this;
       self.$el.off('drag', self.resizer);
       $(window).off('resize', self.resizer);
+      self.$el.find('.scenes-inner').off('scroll', self.resizer);
       clearInterval(self.resizerID);
     },
 
