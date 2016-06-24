@@ -518,7 +518,22 @@ h5:hover .object-id, h4:hover .object-id {
 .and-package-editor {
 	.list-group {
 		margin-bottom: 10px;
+		.list-group-item:not(:last-child):after {
+			content: "AND";
+			text-align: center;
+			display: block;
+			width: 100%;
+			font-weight: bold;
+		}
 	}
+}
+.and_packages > div:not(:last-child):after {
+	content: "OR";
+	text-align: center;
+	display: block;
+	width: 100%;
+	font-weight: bold;
+	margin-bottom: 20px;
 }
 
 /* Scrolling for tall areas */
