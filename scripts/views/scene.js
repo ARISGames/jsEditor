@@ -98,7 +98,21 @@ function(
     onRender: function()
     {
       var self = this;
-      $(self.$el).draggable({ containment: "parent" });
+      var el = $(self.$el);
+      el.draggable({ containment: 'parent', stack: '.panel' });
+      var left = parseInt(self.model.get('editor_x'));
+      var top = parseInt(self.model.get('editor_y'));
+      el.css({
+        left: left,
+        top: top,
+        position: 'absolute',
+      });
+      el.on('dragstop', function(){
+        var posn = el.position();
+        self.model.set('editor_x', posn.left);
+        self.model.set('editor_y', posn.top);
+        self.model.save();
+      });
     },
 
     onClickName: function()

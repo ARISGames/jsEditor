@@ -17,8 +17,10 @@ function(require)
     amfphp_url_attributes: [
       "scene_id",
       "name",
-      "game_id"
-        ],
+      "game_id",
+      "editor_x",
+      "editor_y",
+    ],
 
     defaults: {
       name: ""

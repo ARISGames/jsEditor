@@ -156,25 +156,23 @@ body {
 #main .scenes {
 	.absolute;
 	z-index: 2;
-	padding: 2em;
+	overflow: hidden;
 }
 
 #main .scenes .scenes-inner {
 	.absolute;
 	position: absolute;
-	overflow-y: scroll;
-	width: calc(100% - 3em);
-	height: calc(100% - 4em);
+	overflow: visible;
+	width: 4000px;
+	height: 4000px;
 }
 
 #main .scenes .scenes-links {
 	.absolute;
 	position: absolute;
-	z-index: 3;
+	z-index: 9999;
 	pointer-events: none;
-	overflow-y: visible;
-	height: 50000px; /* hack so firefox doesn't cut off the lines */
-
+	overflow: visible;
 	display: none;
 }
 
@@ -203,6 +201,15 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 #main .scenes, .media-editor, .conversation-editor {
 	background: rgba(175, 175, 175, 0.5);
 	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+#main .scenes {
+	background: rgb(160, 160, 160);
+	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+#main .scenes-inner {
+	background: rgb(211, 211, 211);
 }
 
 .scene-panel.panel-default:hover {
@@ -237,7 +244,6 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 
 .scene-panel {
 	max-width: 100%;
-	float: left;
 	margin: 0.5em;
 
 	.panel-body {
@@ -286,13 +292,18 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	}
 }
 
-.new-scene-button, .view-links {
-	float: right;
-	z-index: 4;
+.new-scene-button {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 10000;
 }
 
 .view-links {
-	margin-right: 1em;
+	position: absolute;
+	top: 20px;
+	right: 140px;
+	z-index: 10000;
 }
 
 .view-links-checkbox {

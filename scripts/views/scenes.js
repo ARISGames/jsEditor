@@ -96,7 +96,7 @@ function(
       self.$el.on('drag', self.resizer);
       $(window).on('resize', self.resizer);
       self.$el.find('.scenes-inner').on('scroll', self.resizer);
-      self.resizerID = setInterval(self.resizer, 250);
+      self.resizerID = setInterval(self.resizer, 1000);
 
       var linksCheckbox = self.$el.find('.view-links-checkbox');
       self.$el.find('.view-links-button').on('click', function(){
@@ -110,6 +110,8 @@ function(
           $(link_container).show();
         }
       });
+
+      self.$el.find('.scenes-inner').draggable();
     },
 
     onClose: function()
