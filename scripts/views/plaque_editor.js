@@ -108,6 +108,24 @@ function(
       });
     },
 
+    saveNoClose:function()
+    {
+      var self = this;
+      self.model.save({},
+      {
+        create:function()
+        {
+          self.storePreviousAttributes();
+          storage.add_game_object(self.model);
+        },
+
+        update:function()
+        {
+          self.storePreviousAttributes();
+        }
+      });
+    },
+
     onClickCancel:function()
     {
       var self = this;
@@ -154,6 +172,7 @@ function(
     onClickChangeIcon: function()
     {
       var self = this;
+      self.saveNoClose();
 
       var game  = new Game({game_id:self.model.get("game_id")});
       var media = new MediaCollection([], {parent:game});
@@ -186,6 +205,7 @@ function(
     onClickChangeMedia: function()
     {
       var self = this;
+      self.saveNoClose();
 
       var game  = new Game({game_id:self.model.get("game_id")});
       var media = new MediaCollection([], {parent:game});

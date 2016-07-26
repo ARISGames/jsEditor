@@ -11,3 +11,5 @@ node_modules
 # Temporary vim editor files
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
+
+.vagrant

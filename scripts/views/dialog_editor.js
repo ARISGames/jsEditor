@@ -121,6 +121,26 @@ function(
       });
     },
 
+    saveNoClose:function()
+    {
+      var view   = this;
+      var dialog = this.model;
+
+      dialog.save({},
+      {
+        create: function()
+        {
+          view.storePreviousAttributes();
+          storage.add_game_object(dialog);
+        },
+
+        update: function()
+        {
+          view.storePreviousAttributes();
+        }
+      });
+    },
+
     onClickCancel: function()
     {
       this.model.set(this.previous_attributes);
@@ -160,6 +180,7 @@ function(
     onClickChangeIcon: function()
     {
       var view = this;
+      view.saveNoClose();
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});

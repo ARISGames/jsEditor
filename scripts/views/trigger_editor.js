@@ -205,15 +205,42 @@ function(
         ).done(function()
         {
           game_object.set("events", events);
-          self.finishSaving();
+          self.finishSaving(true);
         });
       }
       else
-        self.finishSaving();
+        self.finishSaving(true);
+    },
+
+    saveNoClose: function()
+    {
+      var self = this;
+
+      var instance    = self.instance;
+      var game_object = self.game_object;
+      var trigger     = self.model;
+
+      // TODO unwravel unto promises with fail delete (or a single api call that has a transaction)
+
+      /*this is terrible*/
+      if(game_object.type_name == 'EventPackage' && game_object.id) //game object already exists, need to slap on its collection otherwise save will override (this is ridiculous)
+      {
+        var events = new EventsCollection([], {parent:game_object});
+
+        $.when(
+          events.fetch()
+        ).done(function()
+        {
+          game_object.set("events", events);
+          self.finishSaving(false);
+        });
+      }
+      else
+        self.finishSaving(false);
     },
 
     //this is necessary because the above infrastructure is ridiculous
-    finishSaving: function()
+    finishSaving: function(closeAfterSave)
     {
       var self = this;
 
@@ -275,7 +302,7 @@ function(
                 {
                   storage.add_game_object(trigger);
 
-                  vent.trigger("application:popup:hide");
+                  if (closeAfterSave) vent.trigger("application:popup:hide");
                 }
               }); /* Trigger save */
             }
@@ -471,6 +498,7 @@ function(
     onClickChangeIcon: function()
     {
       var self = this;
+      self.saveNoClose();
 
       var game  = self.model.game();
       var media = new MediaCollection([], {parent: game});

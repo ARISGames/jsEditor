@@ -112,6 +112,25 @@ function(
       });
     },
 
+    saveNoClose: function()
+    {
+      var view   = this;
+      var web_page = this.model;
+
+      web_page.save({}, {
+        create: function()
+        {
+          view.storePreviousAttributes();
+          storage.add_game_object(web_page);
+        },
+
+        update: function()
+        {
+          view.storePreviousAttributes();
+        }
+      });
+    },
+
     onClickCancel: function()
     {
       this.model.set(this.previous_attributes);
@@ -158,6 +177,7 @@ function(
     onClickChangeIcon: function()
     {
       var view = this;
+      view.saveNoClose();
 
       var game  = new Game({game_id: this.model.get("game_id")});
       var media = new MediaCollection([], {parent: game});

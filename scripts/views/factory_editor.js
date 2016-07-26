@@ -207,6 +207,23 @@ function(
       });
     },
 
+    saveNoClose: function()
+    {
+      var view    = this;
+      var factory = this.model;
+
+      factory.save({}, {
+        create: function()
+        {
+          storage.add_game_object(factory);
+        },
+
+        update: function()
+        {
+        }
+      });
+    },
+
     onClickDelete: function()
     {
       var view = this;
@@ -394,6 +411,7 @@ function(
     onClickChangeIcon: function()
     {
       var view = this;
+      view.saveNoClose();
 
       var media = new MediaCollection([], {parent: this.model.game()});
 

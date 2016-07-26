@@ -100,6 +100,24 @@ function(
       });
     },
 
+    saveNoClose: function()
+    {
+      var view = this;
+      var character = this.model;
+
+      character.save({}, {
+        create: function()
+        {
+          view.storePreviousAttributes();
+          vent.trigger("character:add", character);
+        },
+        update: function()
+        {
+          view.storePreviousAttributes();
+        }
+      });
+    },
+
     onClickCancel: function()
     {
       this.model.set(this.previous_attributes);
@@ -137,6 +155,7 @@ function(
       if(this.player_readonly()) { return }
 
       var view = this;
+      view.saveNoClose();
 
       var media = new MediaCollection([], {parent: this.model.game()});
 

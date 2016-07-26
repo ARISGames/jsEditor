@@ -2,7 +2,7 @@ define(
   [],
   function()
   {
-    var base_url = "http://arisgames.org/server/";
+    var base_url = "https://arisgames.org/server/";
 
     return {
       "base_url": base_url,
