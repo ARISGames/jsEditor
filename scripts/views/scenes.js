@@ -138,16 +138,58 @@ function(
       var posn_svg = $(link_container).offset();
       var link_html = '';
       var posn_start, posn_end, x1, y1, x2, y2;
+      var compare = function(a, b) {
+        if (a == b) return 'EQ';
+        if (a <  b) return 'LT';
+        if (a >  b) return 'GT';
+      }
       link_starts.each(function(index, link_start){
         var scene_id = $(link_start).attr('data-link-scene-id');
         var link_end = link_ends[scene_id];
         posn_start = $(link_start).offset()
         posn_end = $(link_end).offset()
-        x1 = posn_start.left - posn_svg.left    ;
-        x2 = posn_end.left   - posn_svg.left - 8;
-        y1 = posn_start.top  - posn_svg.top     ;
-        y2 = posn_end.top    - posn_svg.top  - 4;
-        link_html += '<line class="scenes-link" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" />';
+        var points;
+        var point_start      = {x: posn_start.left - posn_svg.left    , y: posn_start.top - posn_svg.top + 55};
+        var point_end        = {x: posn_end.left   - posn_svg.left - 8, y: posn_end.top   - posn_svg.top - 4 };
+        var point_turnaround = {x: posn_start.left - posn_svg.left    , y: posn_start.top - posn_svg.top + 80};
+        switch ( compare(point_turnaround.x, point_end.x - 25) + ',' + compare(point_turnaround.y, point_end.y) ) {
+          case 'EQ,LT':
+            // end is down: go down
+            points = [point_start, point_end];
+            break;
+          case 'EQ,EQ':
+          case 'LT,LT':
+            // end is down-right: go down, right
+            points = [point_start, {x: point_start.x, y: point_end.y}, point_end];
+            break;
+          case 'EQ,GT':
+            // end is up: go down, left, up, right
+          case 'GT,EQ':
+            // end is left: go down, left, up, right
+          case 'GT,GT':
+            // end is up-left: go down, left, up, right
+          case 'GT,LT':
+            // end is down-left: go down, left, down, right
+          case 'LT,EQ':
+            // end is right: go down, right, up, right
+          case 'LT,GT':
+            // end is up-right: go down, right, up, right
+            points =
+              [ point_start
+              , point_turnaround
+              , {x: point_end.x - 25, y: point_turnaround.y}
+              , {x: point_end.x - 25, y: point_end.y}
+              , point_end
+              ];
+            break;
+        }
+        for (var i = 0; i < points.length - 1; i++) {
+          x1 = points[i  ].x;
+          y1 = points[i  ].y;
+          x2 = points[i+1].x;
+          y2 = points[i+1].y;
+          link_html += '<line class="scenes-link" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" />';
+        }
       });
 
       link_container.html(link_html);
