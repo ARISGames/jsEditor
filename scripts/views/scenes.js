@@ -143,11 +143,16 @@ function(
         if (a <  b) return 'LT';
         if (a >  b) return 'GT';
       }
+      var distance = function(p1, p2) {
+        // speed hack because this is only for points on an orthogonal line
+        return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+      }
       link_starts.each(function(index, link_start){
         var scene_id = $(link_start).attr('data-link-scene-id');
         var link_end = link_ends[scene_id];
         posn_start = $(link_start).offset()
         posn_end = $(link_end).offset()
+        // first, figure out the points we're gonna draw a line between
         var points;
         var point_start      = {x: posn_start.left - posn_svg.left    , y: posn_start.top - posn_svg.top + 55};
         var point_end        = {x: posn_end.left   - posn_svg.left - 8, y: posn_end.top   - posn_svg.top - 4 };
@@ -183,12 +188,53 @@ function(
               ];
             break;
         }
+        // next, compute the curve radius for each turn
+        var curves = [];
+        for (var i = 1; i < points.length - 1; i++) {
+          var far1  = points[i - 1];
+          var point = points[i];
+          var far2  = points[i + 1];
+          curves[i] = Math.min(10, Math.min(distance(far1, point), distance(point, far2)) / 2);
+        }
         for (var i = 0; i < points.length - 1; i++) {
           x1 = points[i  ].x;
           y1 = points[i  ].y;
           x2 = points[i+1].x;
           y2 = points[i+1].y;
+          if (i !== 0) {
+            // shorten start point for curve
+            if (x1 < x2) x1 += curves[i];
+            if (x1 > x2) x1 -= curves[i];
+            if (y1 < y2) y1 += curves[i];
+            if (y1 > y2) y1 -= curves[i];
+          }
+          if (i !== points.length - 2) {
+            // shorten end point for curve
+            if (x1 < x2) x2 -= curves[i+1];
+            if (x1 > x2) x2 += curves[i+1];
+            if (y1 < y2) y2 -= curves[i+1];
+            if (y1 > y2) y2 += curves[i+1];
+          }
           link_html += '<line class="scenes-link" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" />';
+        }
+        for (var i = 1; i < curves.length; i++) {
+          var far1  = points[i - 1];
+          var point = points[i];
+          var far2  = points[i + 1];
+          var radius = curves[i];
+          var p1, p2, dir1, dir2;
+          // URDL = 0123
+          if (far1.x < point.x) { p1 = {x: point.x - radius, y: point.y}; dir1 = 1; }
+          if (far1.x > point.x) { p1 = {x: point.x + radius, y: point.y}; dir1 = 3; }
+          if (far1.y < point.y) { p1 = {x: point.x, y: point.y - radius}; dir1 = 2; }
+          if (far1.y > point.y) { p1 = {x: point.x, y: point.y + radius}; dir1 = 0; }
+          if (point.x < far2.x) { p2 = {x: point.x + radius, y: point.y}; dir2 = 1; }
+          if (point.x > far2.x) { p2 = {x: point.x - radius, y: point.y}; dir2 = 3; }
+          if (point.y < far2.y) { p2 = {x: point.x, y: point.y + radius}; dir2 = 2; }
+          if (point.y > far2.y) { p2 = {x: point.x, y: point.y - radius}; dir2 = 0; }
+          // if the we're making a right turn, e.g. up then right, sweep is 1
+          var sweep = ((dir1 + 1) % 4 === dir2) ? 1 : 0;
+          link_html += '<path class="scenes-link" fill-opacity="0" d="M '+p1.x+' '+p1.y+' A '+radius+' '+radius+' 0 0 '+sweep+' '+p2.x+' '+p2.y+' "/>';
         }
       });
 
