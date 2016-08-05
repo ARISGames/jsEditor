@@ -23,7 +23,9 @@ function(require)
     ],
 
     defaults: {
-      name: ""
+      name: "",
+      editor_x: 0,
+      editor_y: 0,
     },
 
 

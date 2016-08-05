@@ -155,7 +155,6 @@ body {
 
 #main .scenes {
 	.absolute;
-	z-index: 2;
 	overflow: hidden;
 }
 
@@ -170,7 +169,7 @@ body {
 #main .scenes .scenes-links {
 	.absolute;
 	position: absolute;
-	z-index: 9999;
+	z-index: 991;
 	pointer-events: none;
 	overflow: visible;
 	display: none;
@@ -225,13 +224,6 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	border-color: darken(@panel-info-border, 5%) !important;
 }
 
-.scenes-overlay {
-	.absolute;
-	z-index: 20;
-
-	pointer-events: none;
-}
-
 .scene-panel.panel-default {
 	.scene-title {
 		color: @gray-light;
@@ -243,7 +235,7 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 }
 
 .scene-panel {
-	max-width: 100%;
+	max-width: 640px;
 	margin: 0.5em;
 
 	.panel-body {
@@ -296,14 +288,14 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	position: absolute;
 	top: 20px;
 	right: 20px;
-	z-index: 10000;
+	z-index: 992;
 }
 
 .view-links {
 	position: absolute;
 	top: 20px;
 	right: 140px;
-	z-index: 10000;
+	z-index: 992;
 }
 
 .view-links-checkbox {
@@ -607,7 +599,12 @@ h5:hover .object-id, h4:hover .object-id {
 
 /* Modal spacing */
 
+.modal-backdrop {
+	z-index: 993;
+}
+
 .modal-dialog {
+	z-index: 994;
 	margin-top: 100px !important;
 }
 
