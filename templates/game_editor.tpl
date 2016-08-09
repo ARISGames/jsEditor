@@ -100,31 +100,36 @@ max-width:none;
       <div class="panel-body">
 
         <div class="btn-group btn-group-sm btn-group-justified network_levels">
+          <!--
           <label class="btn btn-info  <%= tab_selected(network_level === "LOCAL") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="LOCAL" <%= radio_selected(network_level === "LOCAL") %>>
             <span class="glyphicon glyphicon-stats"></span>
             &nbsp;No Internet
           </label>
+          -->
           <label class="btn btn-info <%= tab_selected(network_level === "REMOTE_WRITE") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="REMOTE_WRITE" <%= radio_selected(network_level === "REMOTE_WRITE") %>>
             <span class="glyphicon glyphicon-stats"></span>
-            &nbsp;Cloud Saving Only
+            &nbsp;Local Evaulation
           </label>
+          <!--
           <label class="btn btn-info <%= tab_selected(network_level === "HYBRID") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="HYBRID"    <%= radio_selected(network_level === "HYBRID") %>>
             <span class="glyphicon glyphicon-stats"></span>
             &nbsp;Smart Cloud &trade; Technology
           </label>
+          -->
           <label class="btn btn-info <%= tab_selected(network_level === "REMOTE") %>">
             <input type="radio" class="network_level item-type" name="network_level" value="REMOTE" <%= radio_selected(network_level === "REMOTE") %>>
             <span class="glyphicon glyphicon-stats"></span>
-            &nbsp;Cloud Dependent
+            &nbsp;Server Dependent
           </label>
         </div>
 
 
         <!-- Info Boxes -->
 
+        <!--
         <div id="LOCAL-fields" class="network-game-tab" <%= tab_visible(network_level === "LOCAL") %>>
           <div class="alert alert-info">
             <span class="glyphicon glyphicon-info-sign"></span>
@@ -135,18 +140,19 @@ max-width:none;
             <b>WARNING</b> - Do not use notebook in this mode.<br />
           </div>
         </div>
+        -->
 
         <div id="REMOTE_WRITE-fields" class="network-game-tab" <%= tab_visible(network_level === "REMOTE_WRITE") %>>
           <div class="alert alert-info">
             <span class="glyphicon glyphicon-info-sign"></span>
-            <b>Cloud Saving Only</b> - Once you are in the game, ARIS will make no attempt to contact the ARIS server, except to save the player's progress.<br />
+            <b>Local Evaluation</b> - Once you are in the game, ARIS will make few attempts to contact the ARIS server. This will result in faster event/requirement computation, but limits networked functionality.<br />
             <br />
             <b>Recommended for</b> games with static, unchanging content.<br />
-            <b>Not Recommended for</b> multiplayer games that rely on changing global content (such as notes, factories, world items, etc...)
-            <b>WARNING</b> - Do not use notebook in this mode.<br />
+            <b>Not Recommended for</b> games that rely on changing global content (such as notes, factories, world items, etc...)
           </div>
         </div>
 
+        <!--
         <div id="HYBRID-fields" class="network-game-tab" <%= tab_visible(network_level === "HYBRID") %>>
           <div class="alert alert-info">
             <span class="glyphicon glyphicon-info-sign"></span>
@@ -157,14 +163,14 @@ max-width:none;
             <b>WARNING</b> - Do not use notebook in this mode.<br />
           </div>
         </div>
+        -->
 
         <div id="REMOTE-fields" class="network-game-tab" <%= tab_visible(network_level === "REMOTE") %>>
           <div class="alert alert-info">
             <span class="glyphicon glyphicon-info-sign"></span>
-            <b>Cloud Dependent</b> - ARIS will not function without a constant connection to the internet. It will rely on the server to validate every action as it is taken.<br />
+            <b>Server Dependent</b> - ARIS will not function without a constant connection to the internet. It will rely on the server to validate every action as it is taken.<br />
             <br />
-            <b>Recommended for</b> multiplayer games that <b>fundamentally</b> rely on <b>realtime</b> changing content (especially "race to grab this item" style games).<br />
-            <b>Not Recommended for</b> anything else; this mode will result in potentially sluggish interaction in places that could otherwise be prevented using Smart Cloud &trade; prediction technology.
+            <b>Recommended for</b> multiplayer games that rely on realtime changing content (especially "race to grab this item" style games), or global state (group/game items, notebook, etc...).<br />
           </div>
         </div>
 
