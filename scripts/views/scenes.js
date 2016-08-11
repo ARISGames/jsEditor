@@ -232,7 +232,18 @@ function(
         ('height: ' + (fullH / fullsize * minisize) + 'px;') ;
       var viewport = '<div class="minimap-viewport" style="'+viewportStyle+'"></div>';
 
-      $(minimap).html(viewport);
+      var miniscenes = '';
+      $(self.$el.find('.scene-panel')).each(function(i, scenePanel){
+        scenePanel = $(scenePanel);
+        var sceneStyle =
+          ('left: ' + (parseInt(scenePanel.css('left')) / fullsize * minisize) + 'px;') +
+          ('top: ' + (parseInt(scenePanel.css('top')) / fullsize * minisize) + 'px;') +
+          ('width: ' + (scenePanel.width() / fullsize * minisize) + 'px;') +
+          ('height: ' + (scenePanel.height() / fullsize * minisize) + 'px;') ;
+        miniscenes += '<div class="minimap-scene" style="'+sceneStyle+'"></div>';
+      });
+
+      $(minimap).html(viewport+miniscenes);
     }
 
   });
