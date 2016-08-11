@@ -103,6 +103,33 @@ function(
           ui.position.top  = Math.min(0, ui.position.top );
         },
       });
+
+      var minimover = function(event){
+        var fullsize = 3000;
+        var minisize = 150;
+
+        var miniOffset = self.$el.find('.minimap').offset();
+        var miniX = event.pageX - miniOffset.left;
+        var miniY = event.pageY - miniOffset.top;
+
+        var scenes = self.$el.find('.scenes');
+        var fullX = (miniX / minisize * fullsize) - (scenes.width() / 2);
+        var fullY = (miniY / minisize * fullsize) - (scenes.height() / 2);
+        fullX = Math.min(fullX, fullsize - 100);
+        fullY = Math.min(fullY, fullsize - 100);
+
+        self.$el.find('.scenes-inner').css('left', Math.min(0, -fullX)+'px');
+        self.$el.find('.scenes-inner').css('top' , Math.min(0, -fullY)+'px');
+        self.resizer();
+        console.log(event);
+      };
+      var minimap = self.$el.find('.minimap');
+      minimap.on('mousedown', function(e){ self.minimapMoving = true; minimover(e); });
+      minimap.on('mousemove', function(e){ if (self.minimapMoving) minimover(e); });
+      self.stopMinimapMoving = function(){
+        self.minimapMoving = false;
+      };
+      window.addEventListener('mouseup', self.stopMinimapMoving);
     },
 
     onClose: function()
@@ -112,6 +139,11 @@ function(
       $(window).off('resize', self.resizer);
       self.$el.find('.scenes-inner').off('scroll', self.resizer);
       clearInterval(self.resizerID);
+
+      var minimap = self.$el.find('.minimap');
+      minimap.off('mousedown');
+      minimap.off('mousemove');
+      window.removeEventListener('mouseup', self.stopMinimapMoving);
     },
 
     drawLinks: function(scene_container, link_container)
@@ -214,7 +246,7 @@ function(
 
       // draw minimap
 
-      var fullsize = 4000;
+      var fullsize = 3000;
       var minisize = 150;
 
       var minimap = self.$el.find('.minimap');
