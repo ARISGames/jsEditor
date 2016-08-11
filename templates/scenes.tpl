@@ -12,12 +12,8 @@
       Add Scene
     </button>
   </div>
-  <div class="btn-group view-links">
-    <button type="button" class="view-links-button btn btn-primary">
-      <input type="checkbox" class="view-links-checkbox" />
-      <br />
-      Scene Links
-    </button>
+
+  <div class="minimap">
   </div>
 </div>
 

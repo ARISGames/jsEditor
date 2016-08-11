@@ -172,7 +172,6 @@ body {
 	z-index: 991;
 	pointer-events: none;
 	overflow: visible;
-	display: none;
 }
 
 #main .scenes .scenes-link {
@@ -291,15 +290,20 @@ nav, .scene-panel, .script-panel, .script-option-panel, .media-editor .thumbnail
 	z-index: 992;
 }
 
-.view-links {
+.minimap {
 	position: absolute;
-	top: 20px;
-	right: 140px;
+	bottom: 15px;
+	left: 15px;
+	width: 150px;
+	height: 150px;
+	background-color: rgba(255,255,255,0.75);
+	border: 1px solid rgba(0,0,0,0.7);
 	z-index: 992;
 }
 
-.view-links-checkbox {
-	pointer-events: none;
+.minimap-viewport {
+	position: absolute;
+	background-color: rgba(255,50,0,0.6);
 }
 
 .empty_scene {

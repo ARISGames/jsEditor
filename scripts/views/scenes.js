@@ -55,8 +55,6 @@ function(
 
       // This fails with undefined when .fetch is passed without a closure.
       self.listenTo(self.collection, "remove", function() { self.model.fetch()});
-
-      self.sceneLinks = false;
     },
 
     onClickNewScene: function()
@@ -98,19 +96,6 @@ function(
       self.$el.find('.scenes-inner').on('scroll', self.resizer);
       self.resizerID = setInterval(self.resizer, 1000);
 
-      var linksCheckbox = self.$el.find('.view-links-checkbox');
-      self.$el.find('.view-links-button').on('click', function(){
-        if (self.sceneLinks) {
-          linksCheckbox.prop('checked', false);
-          self.sceneLinks = false;
-          $(link_container).hide();
-        } else {
-          linksCheckbox.prop('checked', true);
-          self.sceneLinks = true;
-          $(link_container).show();
-        }
-      });
-
       self.$el.find('.scenes-inner').draggable({
         drag: function(event, ui) {
           // don't allow moving past the top-left corner
@@ -132,7 +117,6 @@ function(
     drawLinks: function(scene_container, link_container)
     {
       var self = this;
-      if (!self.sceneLinks) return;
 
       link_container.empty();
       var link_starts = $(scene_container).find('.link-to-scene');
@@ -227,6 +211,28 @@ function(
       });
 
       link_container.html(link_html);
+
+      // draw minimap
+
+      var fullsize = 4000;
+      var minisize = 150;
+
+      var minimap = self.$el.find('.minimap');
+      var scenes = self.$el.find('.scenes');
+      var scenesInner = self.$el.find('.scenes-inner');
+      var fullX = parseInt(scenesInner.css('left')) * -1;
+      var fullY = parseInt(scenesInner.css('top' )) * -1;
+      var fullW = scenes.width();
+      var fullH = scenes.height();
+
+      var viewportStyle =
+        ('left: ' + (fullX / fullsize * minisize) + 'px;') +
+        ('top: ' + (fullY / fullsize * minisize) + 'px;') +
+        ('width: ' + (fullW / fullsize * minisize) + 'px;') +
+        ('height: ' + (fullH / fullsize * minisize) + 'px;') ;
+      var viewport = '<div class="minimap-viewport" style="'+viewportStyle+'"></div>';
+
+      $(minimap).html(viewport);
     }
 
   });
