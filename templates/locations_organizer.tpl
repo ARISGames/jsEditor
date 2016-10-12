@@ -1,18 +1,21 @@
 <!-- nav here -->
 <br>
 
+<!--
 <table class="table table-hover table-condensed">
 	<thead>
 		<th class="text-muted"><span class="glyphicon glyphicon-filter"></span> Location Triggers</th>
 	</thead>
 	<tbody>
 		<tr class="info"><td>By Type</td></tr>
-<!--
 		<tr><td>By Scene</td></tr>
--->
 	</tbody>
 </table>
 
+<br>
+-->
+
+<div class="text-muted"><span class="glyphicon glyphicon-filter"></span> Location Triggers</div>
 <br>
 
 <div id="dialog-region"></div>
