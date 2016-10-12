@@ -8,8 +8,11 @@ function(
   Dialog
 )
 {
-  return JsonCollection.extend({
+  return JsonCollection.extend(
+  {
     model: Dialog,
-    amfphp_url: "dialogs.getDialogsForGame"
+    amfphp_url: "dialogs.getDialogsForGame",
+    comparator: function(o) { return o.get("name").toLowerCase(); },
   });
 });
+

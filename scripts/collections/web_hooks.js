@@ -7,9 +7,11 @@ function(
   WebHook
 )
 {
-  return JsonCollection.extend({
+  return JsonCollection.extend(
+  {
     model: WebHook,
-    amfphp_url: "web_hooks.getWebHooksForGame"
+    amfphp_url: "web_hooks.getWebHooksForGame",
+    comparator: function(o) { return o.get("name").toLowerCase(); },
   });
 });
 

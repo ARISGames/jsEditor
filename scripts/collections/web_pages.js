@@ -11,7 +11,8 @@ function(
   return JsonCollection.extend(
   {
     model: WebPage,
-    amfphp_url: "web_pages.getWebPagesForGame"
+    amfphp_url: "web_pages.getWebPagesForGame",
+    comparator: function(o) { return o.get("name").toLowerCase(); },
   });
 });
 

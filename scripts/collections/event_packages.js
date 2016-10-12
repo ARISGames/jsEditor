@@ -8,9 +8,11 @@ function(
   EventPackage
 )
 {
-  return JsonCollection.extend({
+  return JsonCollection.extend(
+  {
     model: EventPackage,
-    amfphp_url: "events.getEventPackagesForGame"
+    amfphp_url: "events.getEventPackagesForGame",
+    comparator: function(o) { return o.get("name").toLowerCase(); },
   });
 });
 

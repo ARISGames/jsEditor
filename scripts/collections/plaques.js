@@ -11,6 +11,8 @@ function(
   return JsonCollection.extend(
   {
     model: Plaque,
-    amfphp_url: "plaques.getPlaquesForGame"
+    amfphp_url: "plaques.getPlaquesForGame",
+    comparator: function(o) { return o.get("name").toLowerCase(); },
   });
 });
+

@@ -8,9 +8,11 @@ function(
   Item
 )
 {
-  return JsonCollection.extend({
+  return JsonCollection.extend(
+  {
     model: Item,
-    amfphp_url: "items.getItemsForGame"
+    amfphp_url: "items.getItemsForGame",
+    comparator: function(o) { return o.get("name").toLowerCase(); },
   });
 });
 
