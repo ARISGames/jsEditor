@@ -1,19 +1,20 @@
 <!-- nav here -->
 <br>
 
+<!--
 <table class="table table-hover table-condensed">
 	<thead>
 		<th class="text-muted"><span class="glyphicon glyphicon-filter"></span> Game Objects</th>
 	</thead>
 	<tbody>
 		<tr class="info"><td><span class="glyphicon glyphicon-"></span> By Type</td></tr>
-<!--
 		<tr><td>By Scene</td></tr>
 		<tr><td>Unused</td></tr>
--->
 	</tbody>
 </table>
+-->
 
+<div class="text-muted"><span class="glyphicon glyphicon-filter"></span> Game Objects</div>
 <br>
 
 <div id="dialog-region"></div>
