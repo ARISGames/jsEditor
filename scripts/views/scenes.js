@@ -121,7 +121,6 @@ function(
         self.$el.find('.scenes-inner').css('left', Math.min(0, -fullX)+'px');
         self.$el.find('.scenes-inner').css('top' , Math.min(0, -fullY)+'px');
         self.resizer();
-        console.log(event);
       };
       var minimap = self.$el.find('.minimap');
       minimap.on('mousedown', function(e){ self.minimapMoving = true; minimover(e); });
