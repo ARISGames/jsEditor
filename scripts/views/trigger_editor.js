@@ -65,6 +65,10 @@ function(
       "hidden":          "#trigger-hidden",
       "code":            "#trigger-code",
       "seconds":         "#trigger-seconds",
+      "beacon_uuid":     "#trigger-beacon-uuid",
+      "beacon_major":    "#trigger-beacon-major",
+      "beacon_minor":    "#trigger-beacon-minor",
+      "beacon_distance": "#trigger-beacon-distance",
       "quantity":        "#instance-infinite_quantity",
       "quantity_amount": "#instance-quantity",
 
@@ -293,8 +297,15 @@ function(
               trigger.set("type",              self.$el.find(".trigger-type:checked").val());
               trigger.set("trigger_on_enter",  self.$el.find(".trigger-enter:checked").val());
 
-              trigger.set("icon_media_id", self.icon.get("media_id"));
-              trigger.set("seconds",       self.ui.seconds.val());
+              trigger.set("icon_media_id",     self.icon.get("media_id"));
+              trigger.set("seconds",           self.ui.seconds.val());
+
+              if (trigger.get('type') === 'BEACON') {
+                trigger.set("beacon_uuid",       self.ui.beacon_uuid.val());
+                trigger.set("beacon_major",      self.ui.beacon_major.val());
+                trigger.set("beacon_minor",      self.ui.beacon_minor.val());
+                trigger.set("distance",          self.ui.beacon_distance.val());
+              }
 
               trigger.save({},
               {

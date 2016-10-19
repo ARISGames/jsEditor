@@ -33,6 +33,9 @@ function(require)
       "trigger_on_enter",
       "qr_code",
       "seconds",
+      "beacon_uuid",
+      "beacon_major",
+      "beacon_minor",
       "icon_media_id",
     ],
 
@@ -50,6 +53,9 @@ function(require)
         trigger_on_enter: "0",
         qr_code: new Date().getTime(),
         seconds: "10",
+        beacon_uuid: "",
+        beacon_major: "0",
+        beacon_minor: "0",
         requirement_root_package_id: "0",
         icon_media_id: "0",
       }

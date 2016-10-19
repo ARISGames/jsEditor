@@ -174,6 +174,8 @@ function(
       if(type === "QR")        { self.type_icon = "qrcode";     }
       if(type === "LOCATION")  { self.type_icon = "map-marker"; }
       if(type === "IMMEDIATE") { self.type_icon = "link"; }
+      if(type === "TIMER")     { self.type_icon = "time"; }
+      if(type === "BEACON")    { self.type_icon = "signal"; }
 
       self.type_color  = "text-primary";
       if(self.model.get("infinite_distance") === "1" && type === "LOCATION") { self.type_color = "text-success"; }
