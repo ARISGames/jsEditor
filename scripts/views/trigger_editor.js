@@ -68,12 +68,13 @@ function(
       "beacon_uuid":     "#trigger-beacon-uuid",
       "beacon_major":    "#trigger-beacon-major",
       "beacon_minor":    "#trigger-beacon-minor",
-      "beacon_distance": "#trigger-beacon-distance",
       "quantity":        "#instance-infinite_quantity",
       "quantity_amount": "#instance-quantity",
 
       "trigger_types": ".trigger-type",
       "trigger_enter": ".trigger-enter",
+      "beacon_enter": ".beacon-enter",
+      "beacon_distance": ".beacon-distance",
 
       "trigger_type_tabs":  ".type-trigger-tab",
       "trigger_enter_tabs": ".enter-trigger-tab",
@@ -183,6 +184,8 @@ function(
       "change @ui.show_title":    "onChangeShowTitle",
       "change @ui.trigger_types": "onChangeType",
       "change @ui.trigger_enter": "onChangeTriggerEnter",
+      "change @ui.beacon_enter": "onChangeBeaconEnter",
+      "change @ui.beacon_distance": "onChangeBeaconDistance",
 
       "change @ui.code": "onChangeCode",
       "keyup  @ui.code": "onChangeCode",
@@ -304,7 +307,8 @@ function(
                 trigger.set("beacon_uuid",       self.ui.beacon_uuid.val());
                 trigger.set("beacon_major",      self.ui.beacon_major.val());
                 trigger.set("beacon_minor",      self.ui.beacon_minor.val());
-                trigger.set("distance",          self.ui.beacon_distance.val());
+                trigger.set("distance",          self.$el.find(".beacon-distance:checked").val());
+                trigger.set("trigger_on_enter",  self.$el.find(".beacon-enter:checked").val());
               }
 
               trigger.save({},
@@ -472,6 +476,28 @@ function(
 
       var display_tab = "#" + selected_radio.val() + "-fields";
       self.$el.find(display_tab).show();
+    },
+
+    onChangeBeaconEnter: function()
+    {
+      var self = this;
+
+      // Hide radio buttons and add bootstrap classes
+      var selected_radio = self.$el.find(".beacon-enter:checked");
+
+      self.ui.beacon_enter.parent().removeClass("active");
+      selected_radio.parent().addClass("active");
+    },
+
+    onChangeBeaconDistance: function()
+    {
+      var self = this;
+
+      // Hide radio buttons and add bootstrap classes
+      var selected_radio = self.$el.find(".beacon-distance:checked");
+
+      self.ui.beacon_distance.parent().removeClass("active");
+      selected_radio.parent().addClass("active");
     },
 
     onChangeInfinity: function()

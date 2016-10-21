@@ -177,9 +177,43 @@
     <label for="trigger-beacon-minor">Minor value</label>
     <input type="number" class="form-control" id="trigger-beacon-minor" placeholder="0" min="0" value="<%= beacon_minor %>">
   </div>
+
   <div class="form-group">
-    <label for="trigger-beacon-distance">Distance (meters)</label>
-    <input type="number" class="form-control" id="trigger-beacon-distance" placeholder="0" min="0" value="<%= distance %>">
+    <label>
+      Distance
+    </label>
+    <div class="btn-group btn-group-sm btn-group-justified beacon-distance-group">
+      <label class="btn btn-info <%= tab_selected(distance === '1') %>">
+        <input type="radio" class="beacon-distance" name="beacon-distance" value="1" <%= radio_selected(distance === "1") %>>
+        Immediate
+      </label>
+      <label class="btn btn-info <%= tab_selected(distance === '2') %>">
+        <input type="radio" class="beacon-distance" name="beacon-distance" value="2" <%= radio_selected(distance === "2") %>>
+        Near
+      </label>
+      <label class="btn btn-info <%= tab_selected(distance === '3') %>">
+        <input type="radio" class="beacon-distance" name="beacon-distance" value="3" <%= radio_selected(distance === "3") %>>
+        Far
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>
+      When in range, trigger:
+    </label>
+    <div class="btn-group btn-group-sm btn-group-justified beacon-trigger_on_enter">
+      <label class="btn btn-info <%= tab_selected(trigger_on_enter === '1') %>">
+        <input type="radio" class="beacon-enter" name="beacon-trigger_on_enter" value="1" <%= radio_selected(trigger_on_enter === "1") %>>
+        <span class="glyphicon glyphicon-flash"></span>
+        Immediately
+      </label>
+      <label class="btn btn-info <%= tab_selected(trigger_on_enter === '0') %>">
+        <input type="radio" class="beacon-enter" name="beacon-trigger_on_enter" value="0" <%= radio_selected(trigger_on_enter === "0") %>>
+        <span class="glyphicon glyphicon-hand-up"></span>
+        By Touch
+      </label>
+    </div>
   </div>
 </div>
 
