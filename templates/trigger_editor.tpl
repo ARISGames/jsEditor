@@ -198,7 +198,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group hidden">
     <label>
       When in range, trigger:
     </label>
