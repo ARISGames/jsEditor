@@ -24,7 +24,7 @@
   <label class="btn btn-info <%= tab_selected(type === "LOCATION") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="LOCATION"  <%= radio_selected(type === "LOCATION") %>>
     <span class="glyphicon glyphicon-map-marker"></span>
-    GPS
+    MAP
   </label>
   <label class="btn btn-info <%= tab_selected(type === "QR") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="QR"        <%= radio_selected(type === "QR") %>>
