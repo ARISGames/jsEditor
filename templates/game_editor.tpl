@@ -185,7 +185,7 @@ max-width:none;
         <div class="checkbox">
           <input type="checkbox" id="game-ipad_two_x" <%= is_checked(ipad_two_x) %>>
           <label for="game-ipad_two_x">
-            Preload Media
+            Scale 2x on iPad
           </label>
         </div>
 
