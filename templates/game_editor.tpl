@@ -182,6 +182,13 @@ max-width:none;
           </label>
         </div>
 
+        <div class="checkbox">
+          <input type="checkbox" id="game-ipad_two_x" <%= is_checked(ipad_two_x) %>>
+          <label for="game-ipad_two_x">
+            Preload Media
+          </label>
+        </div>
+
       </div>
     </div>
 

@@ -73,6 +73,7 @@ function(
 
       "network_levels":".network_level",
       "preload_media":  "#game-preload_media",
+      "ipad_two_x":  "#game-ipad_two_x",
 
       "game_network_tabs": ".network-game-tab",
 
@@ -199,6 +200,7 @@ function(
       this.model.set("media_id",      this.media.id);
 
       this.model.set("preload_media",  this.ui.preload_media.is(":checked") ? "1" : "0");
+      this.model.set("ipad_two_x",  this.ui.ipad_two_x.is(":checked") ? "1" : "0");
 
       this.model.set("map_type",         this.ui.map_type.val());
       this.model.set("map_focus",        this.ui.map_focus.val());
