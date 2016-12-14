@@ -35,6 +35,13 @@ max-width:none;
         </select>
       </div>
 
+      <div class="checkbox">
+        <input type="checkbox" id="game-ipad_two_x" <%= is_checked(ipad_two_x) %>>
+        <label for="game-ipad_two_x">
+          Scale 2x on iPad
+        </label>
+      </div>
+
     </div> <!-- /fields col -->
 
 
@@ -179,13 +186,6 @@ max-width:none;
           <input type="checkbox" id="game-preload_media" <%= is_checked(preload_media) %>>
           <label for="game-preload_media">
             Preload Media
-          </label>
-        </div>
-
-        <div class="checkbox">
-          <input type="checkbox" id="game-ipad_two_x" <%= is_checked(ipad_two_x) %>>
-          <label for="game-ipad_two_x">
-            Scale 2x on iPad
           </label>
         </div>
 
