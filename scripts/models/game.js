@@ -57,7 +57,7 @@ function(require)
       intro_scene_id: "0",
       latitude:"43.073",
       longitude:"-89.4012",
-      network_level:'HYBRID',
+      network_level:'REMOTE',
       preload_media:'0',
       ipad_two_x:'0',
       map_type: "STREET",
