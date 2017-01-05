@@ -65,9 +65,10 @@ function(
       "hidden":          "#trigger-hidden",
       "code":            "#trigger-code",
       "seconds":         "#trigger-seconds",
-      "beacon_uuid":     "#trigger-beacon-uuid",
-      "beacon_major":    "#trigger-beacon-major",
-      "beacon_minor":    "#trigger-beacon-minor",
+      "ar_target_id":    "#trigger-ar_target_id",
+      "beacon_uuid":     "#trigger-beacon_uuid",
+      "beacon_major":    "#trigger-beacon_major",
+      "beacon_minor":    "#trigger-beacon_minor",
       "quantity":        "#instance-infinite_quantity",
       "quantity_amount": "#instance-quantity",
 
@@ -190,6 +191,7 @@ function(
       "change @ui.code": "onChangeCode",
       "keyup  @ui.code": "onChangeCode",
       "change @ui.seconds": "onChangeSeconds",
+      "change @ui.ar_target_id": "onChangeARTargetId",
     },
 
     onClickSave: function()
@@ -302,6 +304,7 @@ function(
 
               trigger.set("icon_media_id",     self.icon.get("media_id"));
               trigger.set("seconds",           self.ui.seconds.val());
+              trigger.set("ar_target_id",      self.ui.ar_target_id.val());
 
               if (trigger.get('type') === 'BEACON') {
                 trigger.set("beacon_uuid",       self.ui.beacon_uuid.val());
@@ -647,6 +650,11 @@ function(
     },
 
     onChangeSeconds: function()
+    {
+      var self = this;
+    },
+
+    onChangeARTargetId: function()
     {
       var self = this;
     },

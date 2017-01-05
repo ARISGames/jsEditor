@@ -43,6 +43,11 @@
     <span class="glyphicon glyphicon-time"></span>
     Timer
   </label>
+  <label class="btn btn-info  <%= tab_selected(type === "AR_TARGET") %>">
+    <input type="radio" class="trigger-type" name="trigger-type" value="AR_TARGET" <%= radio_selected(type === "AR_TARGET") %>>
+    <span class="glyphicon glyphicon-qrcode"></span>
+    AR
+  </label>
   <label class="btn btn-info  <%= tab_selected(type === "BEACON") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="BEACON" <%= radio_selected(type === "BEACON") %>>
     <span class="glyphicon glyphicon-signal"></span>
@@ -162,20 +167,33 @@
   </div>
 </div>
 
+<!-- Trigger AR Target Attributes -->
+
+<div id="AR_TARGET-fields" class="type-trigger-tab" <%= tab_visible(type === "AR_TARGET") %>>
+  <div class="alert alert-info">
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Will be triggered when clicked in AR viewer
+  </div>
+  <div class="form-group">
+    <label for="trigger-ar_target_id">Which AR trigger</label>
+    <input type="number" class="form-control" id="trigger-ar_target_id" placeholder="0" min="0" value="<%= ar_target_id %>">
+  </div>
+</div>
+
 <!-- Trigger Beacon Attributes -->
 
 <div id="BEACON-fields" class="type-trigger-tab" <%= tab_visible(type === "BEACON") %>>
   <div class="form-group">
-    <label for="trigger-beacon-uuid">Beacon UUID</label>
-    <input type="text" class="form-control" id="trigger-beacon-uuid" placeholder="UUID" min="0" value="<%= beacon_uuid %>">
+    <label for="trigger-beacon_uuid">Beacon UUID</label>
+    <input type="text" class="form-control" id="trigger-beacon_uuid" placeholder="UUID" min="0" value="<%= beacon_uuid %>">
   </div>
   <div class="form-group">
-    <label for="trigger-beacon-major">Major value</label>
-    <input type="number" class="form-control" id="trigger-beacon-major" placeholder="0" min="0" value="<%= beacon_major %>">
+    <label for="trigger-beacon_major">Major value</label>
+    <input type="number" class="form-control" id="trigger-beacon_major" placeholder="0" min="0" value="<%= beacon_major %>">
   </div>
   <div class="form-group">
-    <label for="trigger-beacon-minor">Minor value</label>
-    <input type="number" class="form-control" id="trigger-beacon-minor" placeholder="0" min="0" value="<%= beacon_minor %>">
+    <label for="trigger-beacon_minor">Minor value</label>
+    <input type="number" class="form-control" id="trigger-beacon_minor" placeholder="0" min="0" value="<%= beacon_minor %>">
   </div>
 
   <div class="form-group">
