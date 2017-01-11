@@ -24,6 +24,7 @@ function(
       self.quests.parent            = game;
       self.media.parent             = game;
       self.scenes.parent            = game;
+      self.ar_targets.parent        = game;
       self.instances.parent         = game;
       self.triggers.parent          = game;
       self.plaques.parent           = game;
@@ -84,6 +85,7 @@ function(
       if(type === "DIALOG_CHARACTER") { return self.dialog_characters.retrieve(id); }
       if(type === "WEB_PAGE")         { return self.web_pages.retrieve(id);      }
       if(type === "SCENE")            { return self.scenes.retrieve(id);         }
+      if(type === "AR_TARGET")        { return self.ar_targets.retrieve(id);     }
       if(type === "FACTORY")          { return self.factories.retrieve(id);      }
       if(type === "EVENT_PACKAGE")    { return self.event_packages.retrieve(id); }
 

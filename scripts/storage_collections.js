@@ -13,6 +13,7 @@ define([
   "collections/game_triggers",
   "collections/instances",
   "collections/scenes",
+  "collections/ar_targets",
   "collections/plaques",
   "collections/items",
   "collections/dialogs",
@@ -38,6 +39,7 @@ function(
   TriggersCollection,
   InstancesCollection,
   ScenesCollection,
+  ARTargetsCollection,
   PlaquesCollection,
   ItemsCollection,
   DialogsCollection,
@@ -67,6 +69,7 @@ function(
       storage.triggers          = new TriggersCollection();
       storage.instances         = new InstancesCollection();
       storage.scenes            = new ScenesCollection();
+      storage.ar_targets        = new ARTargetsCollection();
       storage.plaques           = new PlaquesCollection();
       storage.items             = new ItemsCollection();
       storage.dialogs           = new DialogsCollection();

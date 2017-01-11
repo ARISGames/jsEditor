@@ -11,11 +11,13 @@ define([
   'views/media_chooser',
   'collections/media',
   'collections/events',
+  'collections/ar_targets',
   'views/requirements',
   'models/requirement_package',
   'collections/and_packages',
   'collections/atoms',
   'views/trigger_editor_object_selector',
+  'views/trigger_editor_ar_target_selector',
   'util',
 ],
 function(
@@ -31,11 +33,13 @@ function(
   MediaChooserView,
   MediaCollection,
   EventsCollection,
+  ARTargetsCollection,
   RequirementsEditorView,
   RequirementPackage,
   AndPackagesCollection,
   AtomsCollection,
   TriggerObjectSelectorView,
+  TriggerARTargetSelectorView,
   util
 )
 {

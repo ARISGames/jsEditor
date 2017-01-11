@@ -96,6 +96,7 @@ function(
         storage.tabs.fetch(),
         storage.quests.fetch(),
         storage.scenes.fetch(),
+        storage.ar_targets.fetch(),
         storage.instances.fetch(),
         storage.triggers.fetch(),
         storage.plaques.fetch(),

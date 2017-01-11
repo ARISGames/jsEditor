@@ -124,6 +124,7 @@ prod_precompile_deploy: hack_config build unhack_config #hack->build->unhack ord
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 build: css js html
+build_prod: hack_config build unhack_config
 
 prod: prod_precompile_deploy #switch to just 'prod_make_deploy' if you want a simpler, less volatile (but slower) deploy
 beta: beta_precompile_deploy
