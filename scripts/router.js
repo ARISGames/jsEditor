@@ -12,6 +12,7 @@ define([
   'views/locations',
   'views/quests',
   'views/media_editor',
+  'views/ar_target_editor',
   'views/edit_json_model',
   'views/game_editor',
   'views/editors',
@@ -47,6 +48,7 @@ function(
   LocationsView,
   QuestsView,
   MediaEditorView,
+  ARTargetEditorView,
   EditJsonModelView,
   GameEditorView,
   EditorSharingView,
@@ -129,6 +131,7 @@ function(
       "games/:game_id/locations":    "listLocations",
       "games/:game_id/quests":       "listQuests",
       "games/:game_id/media":        "listMedia",
+      "games/:game_id/artargets":    "listARTargets",
       "games/:game_id/conversations":"listConversations",
 
       "*nomatch": function(url) { throw "Route not found: "+url; },
@@ -380,6 +383,24 @@ function(
         }
       );
     },
+
+    listARTargets: function(game_id)
+    {
+      var game  = new Game({game_id:game_id});
+      storage.for(game);
+
+      this.preloadStorage(game,
+        function()
+        {
+          //set game loc after we're sure we've loaded game- THISISBAD
+          util.game_location = { latitude:parseFloat(game.get("latitude")), longitude:parseFloat(game.get("longitude")) };
+          vent.trigger("application.show",      new ARTargetEditorView ({model:game, collection:storage.ar_targets}));
+          vent.trigger("application:nav:show",  new GameNavMenu     ({model:game, active:".ar_targets"}));
+          vent.trigger("application:list:show", new ARTargetOrganizerView({collection:storage.ar_targets}));
+          vent.trigger("application:info:hide");
+        }
+      );
+    }
 
     listMedia: function(game_id)
     {
