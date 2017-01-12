@@ -69,7 +69,6 @@ function(
       "hidden":          "#trigger-hidden",
       "code":            "#trigger-code",
       "seconds":         "#trigger-seconds",
-      "ar_target_id":    "#trigger-ar_target_id",
       "beacon_uuid":     "#trigger-beacon_uuid",
       "beacon_major":    "#trigger-beacon_major",
       "beacon_minor":    "#trigger-beacon_minor",
@@ -169,6 +168,10 @@ function(
 
       self.listenTo(self.object_selector_view, "game_object:choose", self.onChangeGameObject);
 
+      self.ar_target_selector_view = new TriggerARTargetSelectorView({model:self.model, el:self.$el.find('#trigger_ar_target_selector')});
+      self.ar_target_selector_view.render();
+      self.listenTo(self.ar_target_selector_view, "trigger_target:choose", self.onChangeARTarget);
+
       self.hide_type_tabs();
 
       setTimeout(function() {self.renderMap()}, 300);
@@ -195,7 +198,6 @@ function(
       "change @ui.code": "onChangeCode",
       "keyup  @ui.code": "onChangeCode",
       "change @ui.seconds": "onChangeSeconds",
-      "change @ui.ar_target_id": "onChangeARTargetId",
     },
 
     onClickSave: function()
@@ -308,7 +310,6 @@ function(
 
               trigger.set("icon_media_id",     self.icon.get("media_id"));
               trigger.set("seconds",           self.ui.seconds.val());
-              trigger.set("ar_target_id",      self.ui.ar_target_id.val());
 
               if (trigger.get('type') === 'BEACON') {
                 trigger.set("beacon_uuid",       self.ui.beacon_uuid.val());
@@ -431,6 +432,13 @@ function(
       {
         self.$el.find('#instance-quantity-fields').addClass('hidden');
       }
+    },
+
+    onChangeARTarget: function(trigger_target_id)
+    {
+      var self = this;
+
+      self.instance.set("ar_target_id", trigger_target_id);
     },
 
     hide_type_tabs: function()
@@ -654,11 +662,6 @@ function(
     },
 
     onChangeSeconds: function()
-    {
-      var self = this;
-    },
-
-    onChangeARTargetId: function()
     {
       var self = this;
     },

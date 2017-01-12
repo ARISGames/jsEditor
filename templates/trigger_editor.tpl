@@ -175,8 +175,11 @@
     Will be triggered when clicked in AR viewer
   </div>
   <div class="form-group">
-    <label for="trigger-ar_target_id">Which AR trigger</label>
-    <input type="number" class="form-control" id="trigger-ar_target_id" placeholder="0" min="0" value="<%= ar_target_id %>">
+    <label for="trigger-ar_target_id">Which AR Target</label>
+
+    <div class="form-group" id="trigger_ar_target_selector">
+    </div>
+
   </div>
 </div>
 
