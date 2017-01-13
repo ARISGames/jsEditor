@@ -20,17 +20,13 @@ function(
       this.reader.onload = this.onReadFile.bind(this);
     },
 
-
     ui: {
-      preview: ".upload-preview",
     },
-
 
     events: {
       "click .save": "onClickSave",
       "change #uploader": "onChangeFile"
     },
-
 
     /* File selected from browser file picker */
     onChangeFile: function(event)
@@ -43,23 +39,17 @@ function(
       vent.trigger("application:alert:hide");
     },
 
-
     /* FileReader onload callback */
     onReadFile: function(event)
     {
       var data = event.target.result;
-
-      // Preview
-      this.ui.preview.attr("src", data);
 
       // strip base64 header
       var start = data.indexOf(",") + 1;
       var data  = data.substr(start);
 
       this.model.set("data", data);
-
     },
-
 
     onClickSave: function(event)
     {
