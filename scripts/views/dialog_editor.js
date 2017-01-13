@@ -158,7 +158,7 @@ function(
       });
     },
 
-    onChangeName:              function() { console.log("hello"); var self = this; self.model.set("name",                self.ui.name.val()); },
+    onChangeName:              function() { var self = this; self.model.set("name",                self.ui.name.val()); },
     onChangeDescription:       function() { var self = this; self.model.set("description",         self.ui.description.val()); },
     onChangeBackButtonEnabled: function() { var self = this; self.model.set("back_button_enabled", self.ui.back_button_enabled.is(":checked") ? "1" : "0");   },
 

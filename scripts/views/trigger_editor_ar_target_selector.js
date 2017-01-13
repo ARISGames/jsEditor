@@ -23,7 +23,7 @@ function(
       var self = this;
 
       return {
-        trigger_target_id: this.model.ar_target_id,
+        trigger_target_id: self.model.get("ar_target_id"),
 
         ar_targets: storage.ar_targets,
 

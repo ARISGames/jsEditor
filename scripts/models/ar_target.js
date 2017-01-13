@@ -38,7 +38,6 @@ function(
     thumbnail: function()
     {
       var url = "http://www.arisgames.org/server/gamedatav2/"+this.get("game_id")+"/ar/thumbs/"+this.get("name")+".jpg";
-      console.log(url);
       return url;
     },
   },

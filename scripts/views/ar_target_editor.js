@@ -42,10 +42,6 @@ function(
     initialize: function()
     {
       var view = this;
-      vent.on("ar_target:upload", function(ar_target)
-      {
-        view.collection.add(ar_target);
-      });
 
       this.reader = new FileReader();
       this.reader.onload = this.onReadFile.bind(this);

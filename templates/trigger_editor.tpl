@@ -43,8 +43,8 @@
     <span class="glyphicon glyphicon-time"></span>
     Timer
   </label>
-  <label class="btn btn-info  <%= tab_selected(type === "AR_TARGET") %>">
-    <input type="radio" class="trigger-type" name="trigger-type" value="AR_TARGET" <%= radio_selected(type === "AR_TARGET") %>>
+  <label class="btn btn-info  <%= tab_selected(type === "AR") %>">
+    <input type="radio" class="trigger-type" name="trigger-type" value="AR" <%= radio_selected(type === "AR") %>>
     <span class="glyphicon glyphicon-qrcode"></span>
     AR
   </label>
@@ -169,7 +169,7 @@
 
 <!-- Trigger AR Target Attributes -->
 
-<div id="AR_TARGET-fields" class="type-trigger-tab" <%= tab_visible(type === "AR_TARGET") %>>
+<div id="AR-fields" class="type-trigger-tab" <%= tab_visible(type === "AR") %>>
   <div class="alert alert-info">
     <span class="glyphicon glyphicon-info-sign"></span>
     Will be triggered when clicked in AR viewer

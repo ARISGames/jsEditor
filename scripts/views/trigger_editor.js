@@ -438,7 +438,7 @@ function(
     {
       var self = this;
 
-      self.instance.set("ar_target_id", trigger_target_id);
+      self.model.set("ar_target_id", trigger_target_id);
     },
 
     hide_type_tabs: function()
