@@ -8,7 +8,7 @@
 	<div class="form-group">
 		<label for="uploader">File</label>
 		<input type="file" id="uploader" name="uploader">
-		<p class="help-block">Select an image to upload.</p>
+		<p class="help-block">Select an AR Target Database to upload.</p>
 	</div>
 
 	<div class="form-group">

@@ -2,7 +2,7 @@ define([
   'underscore',
   'backbone',
   'text!templates/ar_target_editor.tpl',
-  'collections/ar_target',
+  'collections/ar_targets',
   'models/ar_target',
   'views/ar_target_editor_thumbnail',
   'views/ar_target_upload',

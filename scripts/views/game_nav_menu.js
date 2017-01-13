@@ -20,6 +20,7 @@ function(
       "click .locations":    "onClickLocations",
       "click .quests":       "onClickQuests",
       "click .media":        "onClickMedia",
+      "click .artargets":    "onClickARTargets",
       "click .scenes":       "onClickScenes",
       "click .conversations":"onClickConversations",
       "click .sharing":      "onClickSharing",
@@ -53,6 +54,7 @@ function(
     onClickLocations: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/locations", {trigger: true}); }, 
     onClickQuests: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/quests", {trigger: true}); },
     onClickMedia: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/media", {trigger: true}); },
+    onClickARTargets: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/artargets", {trigger: true}); },
     onClickScenes: function() { Backbone.history.navigate("#games/"+this.model.get('game_id')+"/scenes", {trigger: true}); },
 
     onClickConversations: function()

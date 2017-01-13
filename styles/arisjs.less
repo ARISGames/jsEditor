@@ -70,6 +70,10 @@ table.organizer {
 	overflow-x: hidden;
 }
 
+.ar_target-organizer {
+	overflow-x: hidden;
+}
+
 
 /* Navbar */
 .aris-nav li {
@@ -78,18 +82,18 @@ table.organizer {
 .nav-name-wrapper {
 	display: inline-block;
 }
-@media (max-width: 767px) {
+@media (max-width: 867px) {
 	.aris-nav li {
 		text-align: left !important;
 	}
 }
 
-@media (min-width: 768px) and (max-width: 880px) {
+@media (min-width: 868px) and (max-width: 980px) {
 	.nav-name {
 		display: none !important;
 	}
 }
-@media (min-width: 881px) and (max-width: 960px) {
+@media (min-width: 981px) and (max-width: 1060px) {
 	.nav-name {
 		font-size: 80%;
 	}
@@ -100,7 +104,7 @@ table.organizer {
 		padding-top: 70px !important;
 	}
 }
-@media (min-width: 961px) and (max-width: 1100px) {
+@media (min-width: 1061px) and (max-width: 1200px) {
 	.nav-name-wrapper {
 		display: block;
 	}
@@ -484,6 +488,14 @@ h5:hover .object-id, h4:hover .object-id {
 	background: rgba(0,0,0,0.25);
 }
 
+.ar_target-editor .ar_target-drop-target {
+	padding: 2em 1em;
+}
+
+.ar_target-drop-target.ar_target-hover {
+	background: rgba(0,0,0,0.25);
+}
+
 
 /* Media Selector */
 
@@ -549,7 +561,7 @@ h5:hover .object-id, h4:hover .object-id {
 }
 
 /* Scrolling for tall areas */
-.scenes, .media-editor, .media-editor .media-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container, .notes-editor, .tabs-editor, .scroll-area {
+.scenes, .media-editor, .media-editor .media-drop-target, .ar_target-editor .ar_target-drop-target, .quests-editor, .conversation-editor, .conversations-editor, .games-list-container, .notes-editor, .tabs-editor, .scroll-area {
 	height: 100%;
 	overflow-x: auto;
 }

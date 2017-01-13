@@ -41,6 +41,12 @@
 			<span class="nav-name"> Media</span>
 		</span>
 	</a></li>
+	<li><a class="artargets">
+		<span class="glyphicon glyphicon-picture"></span>
+		<span class="nav-name-wrapper">
+			<span class="nav-name"> AR Targets</span>
+		</span>
+	</a></li>
 	<li><a class="notes">
 		<span class="glyphicon glyphicon-book"></span>
 		<span class="nav-name-wrapper">

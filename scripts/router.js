@@ -19,6 +19,7 @@ define([
   'views/game_objects_organizer',
   'views/locations_organizer',
   'views/media_organizer',
+  'views/ar_target_organizer',
   'views/conversations',
   'views/tabs',
   'views/groups',
@@ -55,6 +56,7 @@ function(
   GameObjectsOrganizerView,
   LocationsOrganizerView,
   MediaOrganizerView,
+  ARTargetOrganizerView,
   ConversationsView,
   TabsView,
   GroupsView,
@@ -400,7 +402,7 @@ function(
           vent.trigger("application:info:hide");
         }
       );
-    }
+    },
 
     listMedia: function(game_id)
     {

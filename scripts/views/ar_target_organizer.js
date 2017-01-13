@@ -16,7 +16,7 @@ function(
     template: _.template(Template),
 
     itemView: ARTargetOrganizerRowView,
-    itemViewContainer: ".ar_target",
+    itemViewContainer: ".ar_targets",
 
     className: 'ar_target-organizer',
 
