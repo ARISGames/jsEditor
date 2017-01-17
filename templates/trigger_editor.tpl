@@ -181,6 +181,14 @@
     </div>
 
   </div>
+  <div class="form-group">
+    <label for="trigger-ar_target_img_scale_x">X Scale</label>
+    <input type="text" class="form-control" id="trigger-ar_target_img_scale_x" placeholder="1.0" min="0" value="<%= ar_target_img_scale_x %>">
+  </div>
+  <div class="form-group">
+    <label for="trigger-ar_target_img_scale_y">Y Scale</label>
+    <input type="text" class="form-control" id="trigger-ar_target_img_scale_y" placeholder="1.0" min="0" value="<%= ar_target_img_scale_y %>">
+  </div>
 </div>
 
 <!-- Trigger Beacon Attributes -->

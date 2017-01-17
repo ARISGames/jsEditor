@@ -69,6 +69,8 @@ function(
       "hidden":          "#trigger-hidden",
       "code":            "#trigger-code",
       "seconds":         "#trigger-seconds",
+      "ar_target_img_scale_x": "#trigger-ar_target_img_scale_x",
+      "ar_target_img_scale_y": "#trigger-ar_target_img_scale_y",
       "beacon_uuid":     "#trigger-beacon_uuid",
       "beacon_major":    "#trigger-beacon_major",
       "beacon_minor":    "#trigger-beacon_minor",
@@ -311,7 +313,13 @@ function(
               trigger.set("icon_media_id",     self.icon.get("media_id"));
               trigger.set("seconds",           self.ui.seconds.val());
 
-              if (trigger.get('type') === 'BEACON') {
+              if (trigger.get('type') === 'AR')
+              {
+                trigger.set("ar_target_img_scale_x", self.ui.ar_target_img_scale_x.val());
+                trigger.set("ar_target_img_scale_y", self.ui.ar_target_img_scale_y.val());
+              }
+              if (trigger.get('type') === 'BEACON')
+              {
                 trigger.set("beacon_uuid",       self.ui.beacon_uuid.val());
                 trigger.set("beacon_major",      self.ui.beacon_major.val());
                 trigger.set("beacon_minor",      self.ui.beacon_minor.val());
