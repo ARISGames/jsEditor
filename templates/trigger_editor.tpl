@@ -181,6 +181,19 @@
     </div>
 
   </div>
+
+  <div class="form-group">
+    <div class="thumbnail change-icon">
+      <img src=<%= icon_thumbnail_url %>>
+      <div class="caption">
+        <button type="button" class="btn btn-link btn-info btn-block change-icon">
+          <span class="glyphicon glyphicon-picture"></span>
+          Icon
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="form-group">
     <label for="trigger-ar_target_img_scale_x">X Scale</label>
     <input type="text" class="form-control" id="trigger-ar_target_img_scale_x" placeholder="1.0" min="0" value="<%= ar_target_img_scale_x %>">
