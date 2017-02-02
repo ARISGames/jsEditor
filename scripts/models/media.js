@@ -34,6 +34,7 @@ function(require)
 
       // FIXME temporary fix for optional attribute, might need to remove the fixed attribute logic and make it a white list (with non nulls) that gets sent? (make sure nothing ever needs to be nulled out)
       if(!this.get("data")) { attribute_list = _.without(attribute_list, "data"); }
+      if(!this.get("raw_upload_id")) { attribute_list = _.without(attribute_list, "raw_upload_id"); }
 
       return attribute_list;
     },
