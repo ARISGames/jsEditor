@@ -13,7 +13,7 @@ function(require)
     {
       read:   "media.getMedia",
       update: "media.updateMedia",
-      create: "media.createMedia",
+      create: "media.createMediaFromRawUpload",
       delete: "media.deleteMedia"
     },
 
@@ -26,7 +26,8 @@ function(require)
         "name",
         "autoplay",
         "file_name",
-        "data"
+        "data",
+        "raw_upload_id"
       ];
 
       if(this.id === "0") { attribute_list = _.without(attribute_list, "game_id"); }

@@ -2,13 +2,15 @@ define([
   'underscore',
   'backbone',
   'text!templates/media_upload.tpl',
-  'vent'
+  'vent',
+  'config'
 ],
 function(
   _,
   Backbone,
   Template,
-  vent
+  vent,
+  config
 )
 {
   return Backbone.Marionette.CompositeView.extend({
@@ -41,6 +43,7 @@ function(
 
       this.model.set("file_name", input_file.name.toLowerCase());
       this.reader.readAsDataURL(input_file);
+      this.input_file = input_file;
 
       vent.trigger("application:alert:hide");
     },
@@ -54,13 +57,6 @@ function(
       // Preview
       this.ui.preview.attr("src", data);
       this.switchMediaPreviewer();
-
-      // strip base64 header
-      var start = data.indexOf(",") + 1;
-      var data  = data.substr(start);
-
-      this.model.set("data", data);
-
     },
 
 
@@ -68,31 +64,50 @@ function(
     {
       var view = this;
 
-      this.model.set("name", this.ui.name.val());
-      this.model.set("autoplay", this.ui.autoplay.is(":checked"));
+      view.model.set("name", view.ui.name.val());
+      view.model.set("autoplay", view.ui.autoplay.is(":checked"));
 
-      this.showProgressBar();
+      view.showProgressBar();
 
-      this.model.save({}, {
-        success: function()
-        {
-          vent.trigger("media:upload", view.model);
-          vent.trigger("application:popup:hide");
+      var formData = new FormData;
+      formData.append('raw_upload', view.input_file);
+      $.ajax({
+        url: config.base_url + 'rawupload.php',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        xhr: function() {
+          var xhr = new window.XMLHttpRequest();
+          xhr.upload.addEventListener("progress", function(evt) {
+            if (evt.lengthComputable) {
+              view.showProgressPercent(evt.loaded / evt.total);
+            }
+          }, false);
+          return xhr;
         },
-
-        progress: function(event)
-        {
-          if (event.lengthComputable) {
-            var percentComplete = event.loaded / event.total;
-            view.showProgressPercent(percentComplete);
-          }
-        },
-
-        amf_error: function(code, message)
-        {
-          vent.trigger("application:alert", {text: "Cannot save media: " + message});
+        error: function() {
+          // TODO: error message
+          vent.trigger("application:alert", {text: "Error when uploading media."});
           view.resetProgressBar();
-        }
+        },
+        success: function(e) {
+          view.model.set('raw_upload_id', e);
+          view.model.save({}, {
+            success: function()
+            {
+              vent.trigger("media:upload", view.model);
+              vent.trigger("application:popup:hide");
+            },
+
+            amf_error: function(code, message)
+            {
+              vent.trigger("application:alert", {text: "Cannot save media: " + message});
+              view.resetProgressBar();
+            }
+          });
+        },
       });
 
       event.preventDefault();
