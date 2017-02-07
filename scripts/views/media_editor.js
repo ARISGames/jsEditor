@@ -6,7 +6,8 @@ define([
   'models/media',
   'views/media_editor_thumbnail',
   'views/media_upload',
-  'vent'
+  'vent',
+  'config'
 ],
 function(
   _,
@@ -16,7 +17,8 @@ function(
   Media,
   MediaThumbnailView,
   MediaUploadView,
-  vent
+  vent,
+  config
 )
 {
   return Backbone.Marionette.CompositeView.extend({
@@ -44,9 +46,6 @@ function(
       {
         view.collection.add(media);
       });
-
-      this.reader = new FileReader();
-      this.reader.onload = this.onReadFile.bind(this);
     },
 
     onRender: function()
@@ -101,30 +100,33 @@ function(
       this.model.set("file_name",    file.name.toLowerCase());
       this.model.set("display_name", file.name.toLowerCase());
 
-      this.reader.readAsDataURL(file);
+      var view = this;
+      var formData = new FormData;
+      formData.append('raw_upload', file);
+      $.ajax({
+        url: config.base_url + 'rawupload.php',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function() {
+          // TODO: error message
+          vent.trigger("application:alert", {text: "Error when uploading media."});
+          view.resetProgressBar();
+        },
+        success: function(e) {
+          view.model.set('raw_upload_id', e);
+          view.model.save({}, {
+            success: function()
+            {
+              vent.trigger("media:upload", view.model);
+            },
+          });
+        },
+      });
 
       return false;
-    },
-
-    // TODO or pop up editor? single vs multiple file workflow.
-    onReadFile: function(event)
-    {
-      var view = this;
-
-      var data = event.target.result;
-
-      // strip base64 header
-      var start = data.indexOf(",") + 1;
-      var data  = data.substr(start);
-
-      this.model.set("data", data);
-
-      this.model.save({}, {
-        success: function()
-        {
-          vent.trigger("media:upload", view.model);
-        }
-      });
     }
   });
 });
