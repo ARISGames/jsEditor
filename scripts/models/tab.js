@@ -77,6 +77,7 @@ function(require)
       'MAP':       'Map',
       'DECODER':   'Decoder',
       'SCANNER':   'Scanner',
+      'AUGMENTED': 'Augmented',
       'QUESTS':    'Quests',
       'INVENTORY': 'Inventory',
       'PLAYER':    'Player',
