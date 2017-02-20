@@ -172,6 +172,7 @@ function(
       var self = this;
       var type = self.model.get("type");
       if(type === "QR")        { self.type_icon = "qrcode";     }
+      if(type === "AR")        { self.type_icon = "sunglasses";     }
       if(type === "LOCATION")  { self.type_icon = "map-marker"; }
       if(type === "IMMEDIATE") { self.type_icon = "link"; }
       if(type === "TIMER")     { self.type_icon = "time"; }

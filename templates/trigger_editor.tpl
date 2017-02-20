@@ -45,7 +45,7 @@
   </label>
   <label class="btn btn-info  <%= tab_selected(type === "AR") %>">
     <input type="radio" class="trigger-type" name="trigger-type" value="AR" <%= radio_selected(type === "AR") %>>
-    <span class="glyphicon glyphicon-qrcode"></span>
+    <span class="glyphicon glyphicon-sunglasses"></span>
     AR
   </label>
   <label class="btn btn-info  <%= tab_selected(type === "BEACON") %>">
@@ -188,7 +188,7 @@
       <div class="caption">
         <button type="button" class="btn btn-link btn-info btn-block change-icon">
           <span class="glyphicon glyphicon-picture"></span>
-          Icon
+          Media
         </button>
       </div>
     </div>

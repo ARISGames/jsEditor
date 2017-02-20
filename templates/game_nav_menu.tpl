@@ -42,7 +42,7 @@
 		</span>
 	</a></li>
 	<li><a class="artargets">
-		<span class="glyphicon glyphicon-picture"></span>
+		<span class="glyphicon glyphicon-sunglasses"></span>
 		<span class="nav-name-wrapper">
 			<span class="nav-name"> AR Targets</span>
 		</span>
