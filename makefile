@@ -84,12 +84,17 @@ hack_config:
 	@cp ./scripts/config.js ./scripts/config.js.local >/dev/null
 	@scp $(arisprod1):/var/www/html/editor/scripts/config.js ./scripts/config.js >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
+hack_config_beta:
+	@echo "Fetching remote (beta) config."
+	@cp ./scripts/config.js ./scripts/config.js.local >/dev/null
+	@scp $(arisprod1):/var/www/html/beta-editor/scripts/config.js ./scripts/config.js >/dev/null
+	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 unhack_config:
 	@echo "Restoring local config.."
 	@mv ./scripts/config.js.local ./scripts/config.js >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
-beta_precompile_deploy: hack_config build unhack_config #hack->build->unhack order is intentional
+beta_precompile_deploy: hack_config_beta build unhack_config #hack->build->unhack order is intentional
 	@echo "Pushing to Github."
 	@git checkout master >/dev/null
 	@git push >/dev/null
