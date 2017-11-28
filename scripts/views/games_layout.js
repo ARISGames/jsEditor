@@ -19,7 +19,6 @@ function(
 
     regions: {
       games: ".games_region",
-      migration_games: ".migration_games_region"
     }
   });
 });

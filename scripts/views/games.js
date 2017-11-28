@@ -35,11 +35,6 @@ function(
 
     onClickNew: function()
     {
-      if(window.running_migrations && Object.keys(window.running_migrations).length > 0) {
-        alert(window.onbeforeunload.call());
-        return;
-      }
-
       var game = new Game();
       vent.trigger("application.show", new GameCreateView({model: game}));
     },

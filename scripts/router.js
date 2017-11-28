@@ -5,8 +5,6 @@ define([
   'views/login',
   'views/games_layout',
   'views/games',
-  'views/migration_games',
-  'views/migration_link_user',
   'views/scenes',
   'views/game_nav_menu',
   'views/locations',
@@ -25,7 +23,6 @@ define([
   'views/groups',
   'views/tags',
   'views/notes',
-  'collections/migration_games',
   'collections/editors',
   'collections/game_triggers',
   'collections/notes',
@@ -42,8 +39,6 @@ function(
   LoginView,
   GamesLayoutView,
   GamesView,
-  MigrationGamesView,
-  MigrationLinkUserView,
   ScenesView,
   GameNavMenu,
   LocationsView,
@@ -62,7 +57,6 @@ function(
   GroupsView,
   TagsView,
   NotesView,
-  MigrationGameCollection,
   EditorsCollection,
   GameTriggersCollection,
   NotesCollection,
@@ -152,7 +146,6 @@ function(
       if(!session.logged_in()) { return false; }
 
       var games           = storage.games;
-      var migration_games = new MigrationGameCollection;
 
       var games_layout    = new GamesLayoutView();
       var games_view      = new GamesView({collection: games});
@@ -165,45 +158,7 @@ function(
       vent.trigger("application:info:hide");
       vent.trigger("application:list:hide");
 
-      // Conditionally add migration table.
-      var migration_list_added = false;
-      migration_games.on(
-        "add",
-        function()
-        {
-          if(migration_list_added) return;
-
-          var migrations_view = new MigrationGamesView({collection: migration_games});
-          games_layout.migration_games.show(migrations_view);
-          migration_list_added = true;
-        }
-      );
-
       // Conditionally add link user fields.
-      migration_games.fetch(
-      {
-        amf_error: function(code, description)
-        {
-          if(code === 2)
-          {
-            var link_user_view = new MigrationLinkUserView();
-            games_layout.migration_games.show(link_user_view);
-
-            // Display game list once migrated
-            vent.on(
-              "application:user_migrated",
-              function()
-              {
-                migration_games.fetch();
-
-                var migrations_view = new MigrationGamesView({collection: migration_games});
-                games_layout.migration_games.show(migrations_view);
-                migration_list_added = true;
-              }
-            );
-          }
-        }
-      });
       games.fetch();
     },
 
