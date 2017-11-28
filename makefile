@@ -2,7 +2,8 @@ OK_COLOR=\033[0;32m
 INFO_COLOR=\033[1;36m
 CLEAR=\033[m\017
 
-host=root@neo.arisgames.org
+host="fieldday-deploy@fieldday-web.ad.education.wisc.edu"
+repo="/var/www/arisgames.org/editor"
 
 help:
 	@echo "Aris Javascript Editor"
@@ -41,10 +42,9 @@ prod_make_deploy:
 	@git push >/dev/null
 	@git checkout master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
-	@echo "Deploying to server 1."
-	@deploy/deploy.sh $(host) >/dev/null
+	@echo "Deploying to server."
+	@ssh $(host) "cd $(repo) && git checkout master && git pull && make build" > /dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
-	@echo "Deploying to server 2."
 
 # note- this needs to be updated to explicitly scp any essential files
 # for this reason, 'make prod' is a more simple, elegant, and robust deploy script
@@ -54,7 +54,7 @@ prod_make_deploy:
 hack_config:
 	@echo "Fetching remote config."
 	@cp ./scripts/config.js ./scripts/config.js.local >/dev/null
-	@scp $(host):/var/www/html/editor/scripts/config.js ./scripts/config.js >/dev/null
+	@scp $(host):$(repo)/scripts/config.js ./scripts/config.js >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 unhack_config:
 	@echo "Restoring local config.."
@@ -70,8 +70,11 @@ prod_precompile_deploy: hack_config build unhack_config #hack->build->unhack ord
 	@git push >/dev/null
 	@git checkout master >/dev/null
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
-	@echo "Deploying to server 1."
-	@deploy/precompile_deploy.sh $(host) >/dev/null
+	@echo "Deploying to server."
+	@ssh $(host) "cd $(repo) && git checkout master && git pull"
+	@scp dist/aris.js* $(host):$(repo)/dist/
+	@scp styles/arisjs.css $(host):$(repo)/styles/
+	@scp index.html $(host):$(repo)
 	@echo "   $(OK_COLOR)(Done)$(CLEAR)"
 
 build: css js html
