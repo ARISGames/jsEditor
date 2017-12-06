@@ -189,6 +189,10 @@ max-width:none;
           </label>
         </div>
 
+        <p>
+          Note: if your game uses AR triggers, media will always be preloaded.
+        </p>
+
       </div>
     </div>
 
