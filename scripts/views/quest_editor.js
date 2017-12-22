@@ -71,13 +71,15 @@ function(
         complete_icon_thumbnail_url:  self.model.complete_icon_thumbnail(),
         complete_media_thumbnail_url: self.model.complete_media_thumbnail(),
         option_selected: function(boolean_statement) { return boolean_statement ? "selected" : ""; },
-        function_types: Quest.function_types
+        function_types: Quest.function_types,
+        quests: storage.quests,
       };
     },
 
     ui:
     {
       "name": "#name",
+      "category": "#select-category",
       "description": "#description",
 
       "active_description":"#active-description",
@@ -118,6 +120,7 @@ function(
       "click .edit-complete-requirements":     "onClickCompleteRequirements",
       "click .edit-complete-events":           "onClickCompleteEvents",
       "change @ui.name":                       "onChangeName",
+      "change @ui.category":                   "onChangeCategory",
       "change @ui.description":                "onChangeDescription",
       "change @ui.active_description":         "onChangeActiveDescription",
       "change @ui.active_notification_type":   "onChangeActiveNotificationType",
@@ -168,6 +171,7 @@ function(
     },
 
     onChangeName:                     function() { var self = this; self.model.set("name",                       self.ui.name.val()); },
+    onChangeCategory:                 function() { var self = this; self.model.set("parent_quest_id",            self.ui.category.find("option:selected").val()) },
     onChangeDescription:              function() { var self = this; self.model.set("description",                self.ui.description.val()); },
     onChangeActiveDescription:        function() { var self = this; self.model.set("active_description",         self.ui.active_description.val()); },
     onChangeCompleteDescription:      function() { var self = this; self.model.set("complete_description",       self.ui.complete_description.val()); },

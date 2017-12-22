@@ -5,5 +5,8 @@
 		<a class="list-group-item active foot new">
 			New Quest
 		</a>
+		<a class="list-group-item new-category">
+			New Category
+		</a>
 	</div>
 </div>

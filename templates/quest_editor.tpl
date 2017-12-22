@@ -10,6 +10,25 @@
     <input type="text" autofocus class="form-control" id="name" placeholder="Name" value="<%= name %>">
   </div>
 
+  <% if (quest_type !== 'CATEGORY') { %>
+
+  <div class="form-group row">
+    <div class="padded">
+      <label for="select-category">Quest Category</label>
+
+      <select class="form-control" id="select-category">
+        <option value="0">None</option>
+        <% quests.each(function(object) { %>
+          <% if (object.get("quest_type") === 'CATEGORY') { %>
+            <option value="<%= object.id %>" <%= option_selected(parent_quest_id === object.id) %>>
+              <%= object.get("name") %>
+            </option>
+          <% } %>
+        <% }) %>
+      </select>
+    </div>
+  </div>
+
   <div class="form-group">
     <label for="description">Description</label>
   </div>
@@ -173,6 +192,8 @@
 
     </div> <!-- Body -->
   </div> <!-- End Panel -->
+
+  <% } %>
 
   <div class="form-group">
     <button type="submit" class="btn btn-primary save">

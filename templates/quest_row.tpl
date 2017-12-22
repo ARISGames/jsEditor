@@ -7,7 +7,7 @@
 			<%= name || "(unnamed)" %>
 		</h4>
 		<div class="description">
-			<%= sanitize_html(description || active_description) %>
+			<%= quest_type === 'CATEGORY' ? 'Category' : sanitize_html(description || active_description) %>
 		</div>
 	</div>
 </div>

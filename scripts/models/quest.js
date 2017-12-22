@@ -22,6 +22,7 @@ function(require)
       "quest_id",
       "name",
       "description",
+      "quest_type",
       "active_icon_media_id",
       "active_media_id",
       "active_description",
@@ -36,12 +37,14 @@ function(require)
       "complete_function",
       "complete_event_package_id",
       "complete_requirement_root_package_id",
+      "parent_quest_id",
     ],
 
     defaults:
     {
       name: "",
       description: "",
+      quest_type: "QUEST",
       active_description: "",
       active_icon_media_id: "0",
       active_media_id: "0",
@@ -55,7 +58,8 @@ function(require)
       complete_notification_type: "NONE",
       complete_function: "NONE",
       complete_event_package_id: "0",
-      complete_requirement_root_package_id: "0"
+      complete_requirement_root_package_id: "0",
+      parent_quest_id: "0"
     },
 
     active_icon:    function() { return storage.media.retrieve(this.get('active_icon_media_id')); },
