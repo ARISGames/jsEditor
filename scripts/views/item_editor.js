@@ -10,6 +10,7 @@ define([
   'models/session',
   'vent',
   'storage',
+  'config',
 ],
 function(
   _,
@@ -22,7 +23,8 @@ function(
   EventInferenceRow,
   session,
   vent,
-  storage
+  storage,
+  config
 )
 {
 
@@ -235,7 +237,7 @@ function(
         }
       }
       xhr.timeout = 0;
-      xhr.open("POST","http://www.arisgames.org/server/json.php/v2."+method,true);
+      xhr.open("POST",config.aris_api_url+method,true);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(JSON.stringify(data));
     },

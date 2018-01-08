@@ -1,10 +1,12 @@
 define([
   'models/json_base',
   'storage',
+  'config',
 ],
 function(
   JsonBaseModel,
-  storage
+  storage,
+  config
 )
 {
   return JsonBaseModel.extend(
@@ -37,7 +39,7 @@ function(
 
     thumbnail: function()
     {
-      var url = "http://www.arisgames.org/server/gamedatav2/"+this.get("game_id")+"/ar/thumbs/"+this.get("name")+".jpg";
+      var url = config.base_url+"gamedatav2/"+this.get("game_id")+"/ar/thumbs/"+this.get("name")+".jpg";
       return url;
     },
   },
