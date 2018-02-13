@@ -30,38 +30,43 @@ function(
     {
       "click .new": "onClickNew",
       "click .new-category": "onClickNewCategory",
+      "click .new-compound": "onClickNewCompound",
     },
 
     onClickNew: function()
     {
       var view = this;
-
       var quest = new Quest({game_id: this.model.get("game_id")});
-
       var quest_editor = new QuestEditorView({model: quest});
-
       quest_editor.on("quest:add", function(quest)
       {
         view.collection.add(quest);
       });
-
       vent.trigger("application:popup:show", quest_editor, "Create Quest");
     },
 
     onClickNewCategory: function()
     {
       var view = this;
-
       var quest = new Quest({game_id: this.model.get("game_id"), quest_type: 'CATEGORY'});
-
       var quest_editor = new QuestEditorView({model: quest});
-
       quest_editor.on("quest:add", function(quest)
       {
         view.collection.add(quest);
       });
-
       vent.trigger("application:popup:show", quest_editor, "Create Quest Category");
+    },
+
+    onClickNewCompound: function()
+    {
+      var view = this;
+      var quest = new Quest({game_id: this.model.get("game_id"), quest_type: 'COMPOUND'});
+      var quest_editor = new QuestEditorView({model: quest});
+      quest_editor.on("quest:add", function(quest)
+      {
+        view.collection.add(quest);
+      });
+      vent.trigger("application:popup:show", quest_editor, "Create Compound Quest");
     },
 
     onRender: function()

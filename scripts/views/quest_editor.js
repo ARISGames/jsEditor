@@ -81,6 +81,7 @@ function(
       "name": "#name",
       "category": "#select-category",
       "description": "#description",
+      "prompt": "#prompt",
 
       "active_description":"#active-description",
       "active_notification_type":"#active-notification-type",
@@ -122,6 +123,7 @@ function(
       "change @ui.name":                       "onChangeName",
       "change @ui.category":                   "onChangeCategory",
       "change @ui.description":                "onChangeDescription",
+      "change @ui.prompt":                     "onChangePrompt",
       "change @ui.active_description":         "onChangeActiveDescription",
       "change @ui.active_notification_type":   "onChangeActiveNotificationType",
       "change @ui.active_function":            "onChangeActiveFunction",
@@ -173,6 +175,7 @@ function(
     onChangeName:                     function() { var self = this; self.model.set("name",                       self.ui.name.val()); },
     onChangeCategory:                 function() { var self = this; self.model.set("parent_quest_id",            self.ui.category.find("option:selected").val()) },
     onChangeDescription:              function() { var self = this; self.model.set("description",                self.ui.description.val()); },
+    onChangePrompt:                   function() { var self = this; self.model.set("prompt",                     self.ui.prompt.val()); },
     onChangeActiveDescription:        function() { var self = this; self.model.set("active_description",         self.ui.active_description.val()); },
     onChangeCompleteDescription:      function() { var self = this; self.model.set("complete_description",       self.ui.complete_description.val()); },
     onChangeActiveNotificationType:   function() { var self = this; self.model.set("active_notification_type",   self.ui.active_notification_type.find("option:selected").val()) },

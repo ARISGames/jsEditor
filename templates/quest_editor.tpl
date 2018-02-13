@@ -10,7 +10,7 @@
     <input type="text" autofocus class="form-control" id="name" placeholder="Name" value="<%= name %>">
   </div>
 
-  <% if (quest_type !== 'CATEGORY') { %>
+  <% if (quest_type === 'QUEST') { %>
 
   <div class="form-group row">
     <div class="padded">
@@ -19,7 +19,7 @@
       <select class="form-control" id="select-category">
         <option value="0">None</option>
         <% quests.each(function(object) { %>
-          <% if (object.get("quest_type") === 'CATEGORY') { %>
+          <% if (['CATEGORY', 'COMPOUND'].indexOf(object.get("quest_type")) !== -1) { %>
             <option value="<%= object.id %>" <%= option_selected(parent_quest_id === object.id) %>>
               <%= object.get("name") %>
             </option>
@@ -192,6 +192,30 @@
 
     </div> <!-- Body -->
   </div> <!-- End Panel -->
+
+  <div class="form-group">
+    <label for="prompt">Current Quest Prompt</label>
+    <input type="text" class="form-control" id="prompt" placeholder="Prompt" value="<%= prompt %>">
+  </div>
+
+  <% } else if (quest_type === 'COMPOUND') { %>
+
+  <div class="form-group row">
+    <div class="padded">
+      <label for="select-category">Quest Category</label>
+
+      <select class="form-control" id="select-category">
+        <option value="0">None</option>
+        <% quests.each(function(object) { %>
+          <% if (object.get("quest_type") === 'CATEGORY') { %>
+            <option value="<%= object.id %>" <%= option_selected(parent_quest_id === object.id) %>>
+              <%= object.get("name") %>
+            </option>
+          <% } %>
+        <% }) %>
+      </select>
+    </div>
+  </div>
 
   <% } %>
 

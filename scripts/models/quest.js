@@ -22,6 +22,7 @@ function(require)
       "quest_id",
       "name",
       "description",
+      "prompt",
       "quest_type",
       "active_icon_media_id",
       "active_media_id",
@@ -44,6 +45,7 @@ function(require)
     {
       name: "",
       description: "",
+      prompt: "",
       quest_type: "QUEST",
       active_description: "",
       active_icon_media_id: "0",
