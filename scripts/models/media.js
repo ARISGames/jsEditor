@@ -55,7 +55,11 @@ function(require)
            if(this.id === "0") return "images/default128.png";
       else if(this.is_video()) return "images/video128.png";
       else if(this.is_audio()) return "images/audio128.png";
-      else                     return this.get("thumb_url");
+      else {
+        var url = this.get("thumb_url");
+        if (url) url = url.replace('http://', 'https://');
+        return url;
+      }
     },
 
     thumbnail_for: function(object)
@@ -118,7 +122,9 @@ function(require)
 
     content: function()
     {
-      return this.get("url");
+      var url = this.get("url");
+      if (url) url = url.replace('http://', 'https://');
+      return url;
     }
   });
 });
