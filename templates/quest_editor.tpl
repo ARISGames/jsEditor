@@ -14,7 +14,7 @@
 
   <div class="form-group row">
     <div class="padded">
-      <label for="select-category">Quest Category</label>
+      <label for="select-category">Parent Quest</label>
 
       <select class="form-control" id="select-category">
         <option value="0">None</option>
