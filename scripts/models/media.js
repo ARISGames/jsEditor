@@ -48,6 +48,7 @@ function(require)
 
     is_video: function() { return this.get("file_name").match(/\.(avi|mp4|mkv|mpeg|mpg|mov|m4v|3gp)/); },
     is_audio: function() { return this.get("file_name").match(/\.(wav|mp3|alac|flac|caf|m4a)/); },
+    is_3d: function() { return this.get("file_name").match(/\.zip/); },
 
     // TODO show video in place!
     thumbnail: function()
@@ -55,6 +56,7 @@ function(require)
            if(this.id === "0") return "images/default128.png";
       else if(this.is_video()) return "images/video128.png";
       else if(this.is_audio()) return "images/audio128.png";
+      else if(this.is_3d()) return "images/video128.png";
       else {
         var url = this.get("thumb_url");
         if (url) url = url.replace('http://', 'https://');
