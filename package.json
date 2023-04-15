@@ -2,7 +2,7 @@
 	"name": "arisJS-editor",
 	"version": "0.0.0",
 	"dependencies": {
-		"less": "^2.7.3",
+		"less": "^4.1.3",
 		"require.js": "^1.0.0",
 		"requirejs": "^2.3.5"
 	}
